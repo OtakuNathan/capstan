@@ -33,7 +33,10 @@ python3 scripts/fetch_deps.py
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCAPSTAN_UV_WORKER=ON
 cmake --build build --parallel 2
 ctest --test-dir build --output-on-failure
+# Table-managed shared/exclusive authority and destruction.
 python3 scripts/run_demo.py --build-dir build
+# Holder-initiated A -> B -> A, with Table stopped after bootstrap.
+python3 scripts/run_direct_demo.py --build-dir build
 ```
 
 The build exports locked commits into its own `_deps` directory. Existing sibling
@@ -101,3 +104,9 @@ object migration, distributed GC, or multi-object transaction support.
 
 MIT licensed. Dependencies retain their own licenses; exact revisions are in
 [`deps.lock.json`](deps.lock.json).
+
+Holder-initiated exclusive transfer is implemented on the same Host drain barrier.
+See [protocol and SDK](docs/direct-transfer.md),
+[latest direct-transfer measurements](bench/direct-transfer/latest/README.md), and
+[the narrated direct-transfer demo](docs/direct-transfer-demo.md).
+`scripts/run_direct_transfer.py` provides the separate transfer fault suite.

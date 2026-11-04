@@ -113,4 +113,48 @@ int main() {
     CHECK(host.dispatch_failed(queued.pin)==status::ok);
     replies.flush();CHECK(callbacks==72 && host.inspect().gate==host_authority::phase::dead);
     CHECK(host.ack(6,ack)==status::ok && ack.installed==destroy);
+    auto mint=[](grant& target) {target.grant_id=99;target.secret[0]=99;return true;};
+    auto source=g;source.epoch=1;
+    transition bootstrap{key,4,1,0,1,false,{source}};
+    transfer_request transfer{source,{authority_origin::holder_transfer,1,1},2};
+#if CAPSTAN_HAS_EXCEPTIONS
+    bool transfer_success=false;
+    for(int allocation=0;allocation<3000 && !transfer_success;++allocation) {
+        host_authority candidate(key,4);CHECK(candidate.set_authority(bootstrap)==status::ok);
+        app::authority_replies candidate_replies(candidate);unsigned count=0;
+        io_completion done=[&](io_result){++count;};
+        fail_after=allocation;auto code=candidate_replies.transfer(transfer,1,mint,std::move(done));fail_after=-1;
+        if(code==status::ok) {
+            CHECK(candidate.inspect().epoch==2 && count==0);candidate_replies.flush();CHECK(count==1);transfer_success=true;
+        } else CHECK(count==1 && candidate.inspect().epoch==1 && candidate.inspect().gate==host_authority::phase::open && candidate_replies.size()==0);
+    }
+    CHECK(transfer_success);
+#endif
+    {
+        host_authority candidate(key,4);CHECK(candidate.set_authority(bootstrap)==status::ok);
+        auto adapter=std::unique_ptr<app::authority_replies>(new app::authority_replies(candidate));
+        unsigned count=0;
+        CHECK(adapter->transfer(transfer,1,mint,[&](io_result result){
+            auto decoded=wire::decode_reply(result.payload);transfer_receipt receipt;
+            CHECK(wire::try_decode_transfer_receipt(wire::string(decoded.values[0]),receipt));
+            CHECK(receipt.usability==transfer_usability::closed);++count;
+        })==status::ok);
+        grant successor;CHECK(candidate.claim_transfer(transfer.reference(),2,successor)==status::ok);
+        auto pin=candidate.admit({successor,1,method::version},2);CHECK(pin.code==status::ok);
+        transition tombstone{key,4,2,2,3,true,{}};
+        CHECK(adapter->set(tombstone,[&](io_result){++count;adapter.reset();})==status::pending);
+        adapter->flush();CHECK(count==1); // Old Installed receipt must not wait on a newer transition.
+        CHECK(candidate.dispatch_failed(pin.pin)==status::ok);
+        adapter->flush();CHECK(count==2 && !adapter); // Safe inline public-adapter destruction.
+    }
+    {
+        host_authority candidate(key,4);CHECK(candidate.set_authority(bootstrap)==status::ok);
+        app::authority_replies adapter(candidate);
+        auto pin=candidate.admit({source,1,method::version},1);CHECK(pin.code==status::ok);unsigned count=0;
+        for(unsigned i=0;i<64;++i) CHECK(adapter.transfer(transfer,1,mint,[&](io_result r){CHECK(wire::decode_reply(r.payload).code==status::ok);++count;})==status::pending);
+        CHECK(adapter.transfer(transfer,1,mint,[](io_result r){CHECK(wire::decode_reply(r.payload).code==status::busy);})==status::busy);
+        CHECK(candidate.inspect().epoch==1 && candidate.inspect().active==1);
+        CHECK(candidate.dispatch_failed(pin.pin)==status::ok);adapter.flush();CHECK(count==64 && candidate.inspect().epoch==2);
+    }
+
 }

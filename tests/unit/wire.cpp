@@ -68,13 +68,13 @@ void check_transitions_and_replies() {
     CHECK(wire::decode_transition(wire::encode_transition(t))==t);
     auto parsed=wire::decode(wire::encode_transition(t));
     auto a=parsed.args;a[7]=wire::u(0);
-    malformed([&]{wire::decode_transition(wire::command(801,a));});
-    a=parsed.args;a[8]=wire::value::string("invalid grant");
-    malformed([&]{wire::decode_transition(wire::command(801,a));});
+    malformed([&]{wire::decode_transition(wire::command(1801,a));});
+    a=parsed.args;a[10]=wire::value::string("invalid grant");
+    malformed([&]{wire::decode_transition(wire::command(1801,a));});
     a=parsed.args;a.resize(7);
-    malformed([&]{wire::decode_transition(wire::command(801,a));});
-    a=parsed.args;a.resize(73);
-    malformed([&]{wire::decode_transition(wire::command(801,a));});
+    malformed([&]{wire::decode_transition(wire::command(1801,a));});
+    a=parsed.args;a.resize(75);
+    malformed([&]{wire::decode_transition(wire::command(1801,a));});
     t.grants.push_back(g);
     auto decoded=wire::decode_transition(wire::encode_transition(t));
     host_authority host(g.key,17);
@@ -92,7 +92,7 @@ void check_transitions_and_replies() {
     malformed_reply(900,{});
     malformed_reply(901,{wire::u(0),wire::u(0)});
     malformed_reply(900,{wire::u(4),wire::u(0)});
-    malformed_reply(900,{wire::u(0),wire::u(static_cast<id>(status::invalid)+1)});
+    malformed_reply(900,{wire::u(0),wire::u(static_cast<id>(status::superseded)+1)});
     malformed_reply(900,{wire::value::boolean(false),wire::u(0)});
     auto response=wire::encode_reply(outcome::completed,status::ok);response.push_back(0);
     malformed([&]{wire::decode_reply(response);});

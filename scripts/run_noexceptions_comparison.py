@@ -45,7 +45,7 @@ for iteration in range(len(modes)):
                 rows.append(dict(run=name,mode=mode,workload='handoff',sample=index,ns=handoff['ns'],pending='status=pending' in line))
                 xs.append(handoff['ns'])
                 lab.a.command_result('exclusive 2');lab.b.command_result('fetch')
-            assert lab.a.command_result('table_stats')['v0']-controls==200
+            assert lab.a.command_result('table_stats')['v0']-controls==700
             runs.append(dict(run=name,mode=mode,workload='handoff',n=100,**{f'p{int(q*100)}_ns':percentile(xs,q) for q in [.5,.95,.99]}))
             stats=values(lab.a.command_result('stats'));assert stats[0]==stats[1]==2235 and stats[4]==0
         print(name,'version',runs[-3]['p50_ns'],runs[-3]['p99_ns'],'summary',runs[-2]['p50_ns'],'handoff',runs[-1]['p50_ns'],flush=True)
@@ -60,7 +60,7 @@ report=dict(passed=True,summary=summary,runs=runs,expected_summary=expected_summ
     binary_sha256={m:{n:hashlib.sha256((getattr(a,m)/n).read_bytes()).hexdigest() for n in ['capstan_host','capstan_client','capstan_table']} for m in modes},
     build_flags={m:[line for line in (getattr(a,m)/'CMakeCache.txt').read_text().splitlines() if line.startswith(('CMAKE_BUILD_TYPE:','CMAKE_CXX_FLAGS_RELEASE:','CAPSTAN_LTO:','CAPSTAN_NATIVE_ARCH:','CAPSTAN_FAST_RUNNER:','CAPSTAN_UV_WORKER:','CAPSTAN_VECTORIZATION_REPORT:','CAPSTAN_NO_EXCEPTIONS:','CAPSTAN_NO_EXCEPTION_STRICT:'))] for m in modes},
     dependencies=json.loads(Path('deps.lock.json').read_text()),
-    scope='Three rotated orders, same source/compiler/O3/LTO/native/debug symbols, libuv worker, GIO TCP, full grants, protocol/codec/Lease/serial lane, 64MiB data, normal FF runner, no requested cancellation. Only exception compilation and static policy differ. All results checked equal; one ACK RPC per transition.',
+    scope='Three rotated orders, same source/compiler/O3/LTO/native/debug symbols, libuv worker, GIO TCP, full grants, protocol/codec/Lease/serial lane, 64MiB data, normal FF runner, no requested cancellation. Only exception compilation and static policy differ. All results checked equal; three Host control RPCs per transition (snapshot, set/ACK, current observation), plus one Host query per fetch.',
     limitations=['One machine, Python paced, logging enabled, no saturation throughput claim.',
         'No-exception modes have fail-stop general allocator exhaustion; bounded rejection, protocol errors and FF nothrow submission failures remain explicit results.',
         'Strict/relaxed relax selected static constraints; mandatory Lease topology and FF transform/awaitable contracts remain enforced.',

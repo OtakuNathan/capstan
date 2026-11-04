@@ -1,0 +1,44 @@
+[
+  {
+    "stage": "P1 codec fixture",
+    "exit_code": 8,
+    "reason": "Existing invalid-status/transition fixtures assumed old enum/schema bounds.",
+    "resolution": "Updated schema-aware invalid fixtures; old schema remains explicitly rejected."
+  },
+  {
+    "stage": "P2 integration compile",
+    "exit_code": 2,
+    "reason": "New loopback used wrong try_decode_call overload.",
+    "resolution": "Decode into checked wire::call."
+  },
+  {
+    "stage": "P2 registry regression",
+    "exit_code": 8,
+    "reason": "Initial registry change raised the old 64-live-session limit.",
+    "resolution": "Restored 64 live limit, separately bounded tombstone history at 4096; exhaustive exhaustion test added."
+  },
+  {
+    "stage": "P4 TLA mutation",
+    "exit_code": 75,
+    "reason": "Boolean update disjunction lacked parentheses; successor state not fully specified.",
+    "resolution": "Fixed operator grouping; all four new mutants now fail with required invariant/exit 12."
+  },
+  {
+    "stage": "Table observation test fixture",
+    "exit_code": 8,
+    "reason": "Port-zero failed construction throws in EH mode; fixture had assumed no-EH behavior.",
+    "resolution": "Open a valid loopback connection, then explicitly close it before injecting observed outcomes."
+  },
+  {
+    "stage": "Review",
+    "exit_code": null,
+    "reason": "Rejected/NotSubmitted retry cannot settle a prior Unknown; replayed ACK may already be observed.",
+    "resolution": "Preserve uncertainty across rejected retries; permit matching duplicate ACK and re-observe Host. Actual Table handler regression test added."
+  },
+  {
+    "stage": "Final build diagnostics",
+    "exit_code": 0,
+    "reason": "Debug no-exception compiler warning in pre-existing async/detachable.hpp: control reaches end of non-void function.",
+    "resolution": "File unchanged; build warning retained in logs. ASan/UBSan and TSan selected tests passed."
+  }
+]

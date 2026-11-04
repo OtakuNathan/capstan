@@ -1,4 +1,4 @@
-#include <capstan/async/io.hpp>
+#include <capstan/access/transfer.hpp>
 #include "tests/check.hpp"
 #include <atomic>
 #include <cstdlib>
@@ -45,5 +45,14 @@ int main() {
         CHECK(fail_size.load()==0);
     }
     CHECK(callbacks==2 && endpoint.submitted==0);
+    capstan::grant g{{4,5,6},1,2,1,capstan::access_mode::exclusive,{}};g.secret[0]=4;
+    capstan::status code;auto source=capstan::exclusive_capability::try_create(g,code);CHECK(source);
+    auto transfer=capstan::transfer_plan::prepare(*source,2,1,code);CHECK(transfer);
+    for(auto size:{sizeof(std::shared_ptr<capstan::async_detail::state>),sizeof(capstan::io_result)}) {
+        capstan::io_completion done=[&](capstan::io_result r){CHECK(r.state==capstan::outcome::not_submitted);++callbacks;};
+        fail_size.store(size);transfer->start(endpoint,std::move(done));
+        CHECK(fail_size.load()==0 && !transfer->sealed() && source->try_version());
+    }
+    CHECK(callbacks==4 && endpoint.submitted==0);
     std::cout<<"allocation: FF context holder failure and response allocation failure produce NotSubmitted and zero transport submissions\n";
 }

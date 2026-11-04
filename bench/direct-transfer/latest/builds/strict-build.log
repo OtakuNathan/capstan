@@ -1,0 +1,51 @@
+[  1%] Building CXX object CMakeFiles/authority_test.dir/tests/unit/authority.cpp.o
+[  3%] Building CXX object CMakeFiles/direct_transfer_test.dir/tests/unit/direct_transfer.cpp.o
+[  7%] Built target probe_object
+[ 11%] Built target probe_lease
+[ 14%] Built target probe_readonly
+[ 24%] Built target sealed_registry_test
+[ 24%] Built target probe_async
+[ 24%] Building CXX object CMakeFiles/direct_transfer_integration_test.dir/tests/integration/direct_transfer.cpp.o
+[ 25%] Building CXX object CMakeFiles/authority_replies_test.dir/tests/integration/authority_replies.cpp.o
+[ 27%] Building CXX object CMakeFiles/authority_faults_test.dir/tests/unit/authority_faults.cpp.o
+[ 31%] Building CXX object CMakeFiles/benchmark_policy_test.dir/tests/unit/benchmark_policy.cpp.o
+[ 31%] Building CXX object CMakeFiles/wire_test.dir/tests/unit/wire.cpp.o
+[ 33%] Building CXX object CMakeFiles/checked_errors_test.dir/tests/integration/checked_errors.cpp.o
+[ 35%] Linking CXX executable benchmark_policy_test
+[ 37%] Linking CXX executable authority_test
+[ 38%] Linking CXX executable authority_faults_test
+[ 40%] Linking CXX executable wire_test
+[ 42%] Linking CXX executable direct_transfer_test
+[ 44%] Linking CXX executable authority_replies_test
+[ 44%] Built target benchmark_policy_test
+[ 46%] Building CXX object CMakeFiles/loopback_test.dir/tests/integration/loopback.cpp.o
+[ 46%] Built target authority_test
+[ 48%] Linking CXX executable checked_errors_test
+[ 48%] Built target authority_faults_test
+[ 51%] Built target callback_test
+[ 55%] Built target allocation_test
+[ 59%] Built target capstan_gio
+[ 62%] Built target worker_test
+[ 64%] Building CXX object CMakeFiles/capstan_host.dir/src/apps/host.cpp.o
+[ 66%] Linking CXX executable direct_transfer_integration_test
+[ 70%] Built target capstan_table
+[ 74%] Built target capstan_client
+[ 75%] Building CXX object CMakeFiles/capstan_bench_host.dir/src/apps/host.cpp.o
+[ 75%] Built target wire_test
+[ 75%] Built target direct_transfer_test
+[ 79%] Built target capstan_load
+[ 83%] Built target transport_test
+[ 85%] Building CXX object CMakeFiles/table_observation_test.dir/tests/integration/table_observation.cpp.o
+[ 85%] Built target authority_replies_test
+[ 88%] Built target control_probe
+[ 92%] Built target wire_fault_probe
+[ 94%] Linking CXX executable loopback_test
+[ 94%] Built target checked_errors_test
+[ 94%] Built target direct_transfer_integration_test
+[ 96%] Linking CXX executable capstan_host
+[ 98%] Linking CXX executable capstan_bench_host
+[100%] Linking CXX executable table_observation_test
+[100%] Built target loopback_test
+[100%] Built target capstan_host
+[100%] Built target capstan_bench_host
+[100%] Built target table_observation_test

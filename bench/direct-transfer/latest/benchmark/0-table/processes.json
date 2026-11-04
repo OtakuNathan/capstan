@@ -1,0 +1,67 @@
+{
+  "processes": [
+    {
+      "name": "host",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_host",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/0-table/.private-07jvsb8x/lab.conf",
+        "--port",
+        "0",
+        "--bytes",
+        "67108864",
+        "--work-delay-ms",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "table",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_table",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/0-table/.private-07jvsb8x/lab.conf",
+        "--host-port",
+        "45827",
+        "--port",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "client_A",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/0-table/.private-07jvsb8x/A.credential",
+        "--host-port",
+        "45827",
+        "--table-port",
+        "40219"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    },
+    {
+      "name": "client_B",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/0-table/.private-07jvsb8x/B.credential",
+        "--host-port",
+        "45827",
+        "--table-port",
+        "40219"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    }
+  ],
+  "credentials": "temporary 0600 files deleted; values never logged",
+  "cluster_session": 2447057052439897861,
+  "host_incarnation": 2300467042339712288,
+  "object": 5792493492004568034,
+  "control_session": 48222761126562950
+}

@@ -2,6 +2,7 @@
 #include <capstan/error_policy.hpp>
 #include <capstan/protocol/types.hpp>
 #include <algorithm>
+#include <chrono>
 #include <deque>
 #include <limits>
 #include <map>
@@ -19,6 +20,8 @@ public:
     // Never enable this definition on the production/demo Host target.
     enum class benchmark_validation { checked, omit_grant_checks };
 #endif
+    struct transfer_timing {id close_ns=0,drain_ns=0,install_ns=0;};
+    static id monotonic_ns() noexcept {return static_cast<id>(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count());}
     struct admission { status code; id pin=0; };
     struct snapshot { phase gate; id epoch; std::size_t active; id executing; std::vector<grant> grants; };
     struct operation { id pin; request call; bool executing=false; };
@@ -31,8 +34,9 @@ private:
     std::vector<grant> grants_;
     std::vector<grant> pending_grants_; // Fully allocated before Close commits.
     std::deque<operation> active_;
-    std::map<id, transition> transactions_; // Bounded, never silently evicted.
-    id pending_=0;
+    struct transaction_record {transition target; transfer_request source; transfer_timing timing;};
+    std::map<authority_tx_key, transaction_record> transactions_; // Bounded, never silently evicted.
+    authority_tx_key pending_{};
     std::map<std::pair<id,id>, bool> requests_; // holder/request dedup, through epochs.
     std::size_t queue_limit_, history_limit_;
 #ifdef CAPSTAN_BENCHMARK_BUILD
@@ -40,21 +44,50 @@ private:
 #endif
     status validate(const transition& t) const {
         if (t.key!=key_) return status::wrong_object;
-        if (t.control_session!=control_) return status::wrong_control;
+        if (t.control_session!=control_ || t.origin!=authority_origin::directory || (t.issuer && t.issuer!=control_)) return status::wrong_control;
         if (!t.tx || t.expected_epoch==std::numeric_limits<id>::max() || t.next_epoch!=t.expected_epoch+1) return status::invalid;
         return validate_target(key_,t.next_epoch,t.destroy,t.grants);
     }
     void install_if_drained() noexcept {
         if (phase_!=phase::closing || !active_.empty()) return;
-        auto& t=transactions_.at(pending_);
+        auto& record=transactions_.at(pending_);
+        auto& t=record.target;
+        record.timing.drain_ns=monotonic_ns();
         // All storage was staged before Close. Completion cannot fail due to
         // allocation after removing the final pin.
         grants_.swap(pending_grants_);
         pending_grants_.clear();
         epoch_=t.next_epoch; // INSTALL linearization point, active is empty.
         phase_=t.destroy ? phase::dead : phase::open;
-        pending_=0;
+        record.timing.install_ns=monotonic_ns();
+        pending_={};
     }
+    status commit_locked(const transition& t,const transfer_request& source={}) {
+        if(transactions_.size()>=history_limit_) return status::exhausted;
+        auto staged=t.grants;
+        transactions_.emplace(t.identity(),transaction_record{t,source,{}});
+        pending_grants_.swap(staged);
+        pending_=t.identity();
+        phase_=phase::closing; // Shared CLOSE point for every authority origin.
+        transactions_.at(pending_).timing.close_ns=monotonic_ns();
+        install_if_drained();
+        return pending_.sequence ? status::pending : status::ok;
+    }
+    transfer_receipt receipt_locked(const transaction_record& record) const {
+        transfer_receipt result; result.reference=record.source.reference();
+        if(pending_==record.target.identity()) {
+            result.observation=transfer_observation::pending;result.code=status::pending;
+            return result;
+        }
+        result.observation=transfer_observation::installed;
+        result.installed_epoch=record.target.next_epoch;result.code=status::ok;
+        if(phase_==phase::dead) result.usability=transfer_usability::dead;
+        else if(epoch_!=record.target.next_epoch || grants_!=record.target.grants) result.usability=transfer_usability::superseded;
+        else if(phase_==phase::closing) result.usability=transfer_usability::closed;
+        else result.usability=transfer_usability::current;
+        return result;
+    }
+    static bool business_holder(id holder) noexcept {return holder==1 || holder==2;}
 public:
     host_authority(object_key key, id control, std::size_t queue_limit=64, std::size_t history_limit=4096)
         : key_(key), control_(control), queue_limit_(queue_limit), history_limit_(history_limit) {}
@@ -68,32 +101,108 @@ public:
         std::lock_guard<std::mutex> lock(mutex_);
         auto valid=validate(t);
         if(valid!=status::ok) return valid;
-        auto prior=transactions_.find(t.tx);
+        auto prior=transactions_.find(t.identity());
         if(prior!=transactions_.end()) {
-            if(!(prior->second==t)) return status::conflict;
+            if(!(prior->second.target==t)) return status::conflict;
             install_if_drained();
-            return pending_==t.tx ? status::pending : status::ok; // Lost ACK retry.
+            return pending_==t.identity() ? status::pending : status::ok; // Lost ACK retry.
         }
         if(phase_==phase::dead) return status::dead;
         if(phase_==phase::closing) return status::busy;
         if(t.expected_epoch!=epoch_) return status::stale;
-        if(transactions_.size()>=history_limit_) return status::exhausted;
-        auto staged_grants=t.grants;
-        transactions_.emplace(t.tx,t); // All allocations before CLOSE commit.
-        pending_grants_.swap(staged_grants);
-        pending_=t.tx;
-        phase_=phase::closing; // CLOSE linearization point.
-        install_if_drained();
-        return pending_ ? status::pending : status::ok;
+        return commit_locked(t);
+    }
+    transfer_timing timing(authority_tx_key key) const noexcept {
+        std::lock_guard<std::mutex> lock(mutex_);
+        auto record=transactions_.find(key);return record==transactions_.end() ? transfer_timing{} : record->second.timing;
+    }
+    status transaction_status(authority_tx_key key) const noexcept {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(!transactions_.count(key)) return status::not_seen;
+        return pending_==key ? status::pending : status::ok;
     }
     status ack(id tx, acknowledgement& out) const {
         std::lock_guard<std::mutex> lock(mutex_);
-        auto it=transactions_.find(tx);
+        authority_tx_key key{authority_origin::directory,control_,tx};
+        auto it=transactions_.find(key);
         if(it==transactions_.end()) return status::invalid;
-        if(pending_==tx) return status::pending;
-        out.installed=it->second;
+        if(pending_==key) return status::pending;
+        out.installed=it->second.target;
         return status::ok;
     }
+    // mint runs only for a new, authenticated, currently valid request, before
+    // any Close. It belongs to Host (OS randomness in the app; deterministic in
+    // tests), never to a client-provided wire payload. It must not reenter Host.
+    template<class Mint>
+    status transfer_exclusive(const transfer_request& request,id caller,Mint mint,transfer_receipt& out) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        out={};out.reference=request.reference();
+        auto reject=[&](status code) {out.observation=transfer_observation::rejected;out.code=code;return code;};
+        if(request.source.key!=key_) return reject(status::wrong_object);
+        if(request.transaction.origin!=authority_origin::holder_transfer || !request.transaction.sequence ||
+           request.transaction.sequence==std::numeric_limits<id>::max()) return reject(status::invalid);
+        if(!business_holder(caller) || caller!=request.source.holder || caller!=request.transaction.issuer)
+            return reject(status::forbidden);
+        auto prior=transactions_.find(request.transaction);
+        if(prior!=transactions_.end()) {
+            if(!(prior->second.source==request)) return reject(status::conflict);
+            out=receipt_locked(prior->second);return out.code;
+        }
+        if(!business_holder(request.recipient) || request.recipient==caller) return reject(status::invalid);
+        if(phase_==phase::dead) return reject(status::dead);
+        if(phase_==phase::closing) return reject(status::busy);
+        if(request.source.epoch!=epoch_) return reject(status::stale);
+        if(request.source.mode!=access_mode::exclusive) return reject(status::forbidden);
+        if(grants_.size()!=1 || !(grants_.front()==request.source)) return reject(status::bad_grant);
+        if(epoch_==std::numeric_limits<id>::max() || transactions_.size()>=history_limit_) return reject(status::exhausted);
+        grant successor;successor.key=key_;successor.epoch=epoch_+1;successor.holder=request.recipient;successor.mode=access_mode::exclusive;
+        if(!mint(successor)) return reject(status::exhausted);
+        if(successor.key!=key_ || successor.epoch!=epoch_+1 || successor.holder!=request.recipient ||
+           successor.mode!=access_mode::exclusive || !successor.grant_id || successor.secret==token{} ||
+           successor.secret==request.source.secret) return reject(status::invalid);
+        transition target{key_,control_,request.transaction.sequence,epoch_,epoch_+1,false,{successor}};
+        target.origin=authority_origin::holder_transfer;target.issuer=caller;
+        auto code=commit_locked(target,request);
+        if(code!=status::ok && code!=status::pending) return reject(code);
+        out=receipt_locked(transactions_.at(request.transaction));return code;
+    }
+    transfer_receipt query_transfer(const transfer_ref& reference,id caller,bool control=false) const {
+        std::lock_guard<std::mutex> lock(mutex_);
+        transfer_receipt out;out.reference=reference;
+        auto reject=[&](status code) {out.code=code;out.observation=transfer_observation::rejected;return out;};
+        if(reference.key!=key_) return reject(status::wrong_object);
+        if(!control && caller!=reference.from_holder && caller!=reference.to_holder) return reject(status::forbidden);
+        if(reference.transaction.origin!=authority_origin::holder_transfer || reference.transaction.issuer!=reference.from_holder ||
+           !reference.transaction.sequence) return reject(status::invalid);
+        auto record=transactions_.find(reference.transaction);
+        if(record==transactions_.end()) return out;
+        if(!(record->second.source.reference()==reference)) return reject(status::conflict);
+        return receipt_locked(record->second);
+    }
+    status claim_transfer(const transfer_ref& reference,id caller,grant& out) const {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(reference.key!=key_) return status::wrong_object;
+        if(!business_holder(caller) || caller!=reference.to_holder) return status::forbidden;
+        auto record=transactions_.find(reference.transaction);
+        if(record==transactions_.end()) return status::not_seen;
+        if(record->first.origin!=authority_origin::holder_transfer || !(record->second.source.reference()==reference)) return status::conflict;
+        auto receipt=receipt_locked(record->second);
+        if(receipt.observation==transfer_observation::pending) return status::pending;
+        if(receipt.usability==transfer_usability::dead) return status::dead;
+        if(receipt.usability==transfer_usability::closed) return status::closed;
+        if(receipt.usability!=transfer_usability::current) return status::superseded;
+        out=record->second.target.grants.front();return status::ok;
+    }
+    status fetch_current(const object_key& key,id caller,grant& out) const {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(key!=key_) return status::wrong_object;
+        if(!business_holder(caller)) return status::forbidden;
+        if(phase_==phase::dead) return status::dead;
+        if(phase_!=phase::open) return status::closed;
+        for(const auto& g:grants_) if(g.holder==caller) {out=g;return status::ok;}
+        return status::bad_grant;
+    }
+
     admission admit(const request& r, id bound_holder) {
         std::lock_guard<std::mutex> lock(mutex_);
 #ifdef CAPSTAN_BENCHMARK_BUILD

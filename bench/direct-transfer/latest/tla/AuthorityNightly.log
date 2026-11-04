@@ -1,0 +1,27 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 2 and seed 8693221129852318298 with 2 workers on 4 cores with 341MB heap and 64MB offheap memory [pid: 173025] (Linux 6.18.39+rpt-rpi-v8 aarch64, Debian 21.0.10 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/nathan/Documents/coding/capstan/models/tla/Authority.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/Integers.tla
+Parsing file /tmp/Sequences.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/TLC.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Authority
+Starting... (2026-11-04 15:14:48)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-04 15:14:49.
+Progress(12) at 2026-11-04 15:14:52: 22,189 states generated (22,189 s/min), 5,587 distinct states found (5,587 ds/min), 2,263 states left on queue.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 7.3E-10
+  based on the actual fingerprints:  val = 4.5E-10
+356003 states generated, 43018 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 19.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 10 and the 95th percentile is 4).
+Finished in 09s at (2026-11-04 15:14:56)

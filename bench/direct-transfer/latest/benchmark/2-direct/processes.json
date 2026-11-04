@@ -1,0 +1,67 @@
+{
+  "processes": [
+    {
+      "name": "host",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_host",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/2-direct/.private-ibr38_e1/lab.conf",
+        "--port",
+        "0",
+        "--bytes",
+        "67108864",
+        "--work-delay-ms",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "table",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_table",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/2-direct/.private-ibr38_e1/lab.conf",
+        "--host-port",
+        "41173",
+        "--port",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "client_A",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/2-direct/.private-ibr38_e1/A.credential",
+        "--host-port",
+        "41173",
+        "--table-port",
+        "41421"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    },
+    {
+      "name": "client_B",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/2-direct/.private-ibr38_e1/B.credential",
+        "--host-port",
+        "41173",
+        "--table-port",
+        "41421"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    }
+  ],
+  "credentials": "temporary 0600 files deleted; values never logged",
+  "cluster_session": 7899171720090741732,
+  "host_incarnation": 5304873759215329535,
+  "object": 3500548563066510130,
+  "control_session": 2850460682715066664
+}

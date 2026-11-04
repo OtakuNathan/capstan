@@ -45,13 +45,18 @@ The runner requires TLA+ tools **v1.7.4**, SHA256
 Java 21 was used locally. The jar is not vendored. `--workers`, `--heap`, and
 `--timeout` bound checker resources; default output is `build-tla/`.
 
-The command must also find three intentional counterexamples:
+The command also checks `DirectTransfer.tla` and requires seven intentional
+counterexamples across both models:
 
 | Mutant | Broken rule | Required violated invariant |
 |---|---|---|
 | MissingDrain | Install while old operations are active | ActiveEpoch |
 | MissingPermission | Admit shared writes | AuthorizedOperations |
 | EarlyAck | Produce ACK before installation | AckIsInstalled |
+| BypassSourceCheck | Accept a stale holder transfer | SourceCurrent |
+| DirectMissingDrain | Install a direct transfer before drain | ActiveEpoch |
+| EarlyClaim | Issue before installation/currentness | ClaimCurrent |
+| TxKeyCollision | Alias directory and holder transaction keys | NamespaceIsolation |
 
 A mutant passes the harness only when TLC exits 12 with the expected invariant
 violation. A syntax error, tool crash, timeout, or unexpectedly safe mutant fails.
@@ -68,7 +73,7 @@ not an implementation proof.
 
 `authority/host.hpp` supplies the shared serialization point for admission and
 transition decisions. `authority_replies.hpp` holds bounded completion waiters
-until actual install. The Table publishes only a matching installed response.
+until actual install. Table observes current Host state rather than republishing historical ACK grants.
 The model queue corresponds to all Host pins, not just currently running work.
 The Python model in `models/authority_model.py` remains a smaller independent
 sanity check run by ordinary CTest; it does not model ACKs.
@@ -79,3 +84,22 @@ TCP framing, allocator behavior, C++ memory ordering, callback lifetime, crash
 recovery, split-brain safety, or unbounded liveness. Deterministic C++ tests,
 compile-negative tests, sanitizers and real TCP fault tests provide separate
 implementation evidence. No cross-machine validation is claimed.
+
+## Holder-transfer model
+
+`DirectTransfer.tla` explores directory and holder competition over one Close /
+Drain / Install slot, retained old source grants, origin/issuer/sequence keys,
+accepted and installed transaction histories, historical receipts, current-only
+claim and monotonic directory observations. The normal bound is two epochs;
+nightly explores three epochs, two holders and two sequence numbers per origin.
+The direct model represents at most one active old pin; the original model and
+C++ queue tests cover multiple queued/executing pins. Namespaced collisions are
+checked as a functional isolation property, not as a liveness proof.
+
+The latest nightly direct model explored **19,292 distinct / 219,609 generated
+states** with no safety violation. Its four mutants each exited 12 with the
+expected invariant; the original model and its three mutants also passed the
+harness. Logs and exact commands are in `bench/direct-transfer/latest/tla`.
+This model does not prove credential secrecy, callback safety, bounded allocation
+behavior or the C++ implementation. The directory publication variable records
+snapshot observations, not a promise that a grant remains current after delivery.

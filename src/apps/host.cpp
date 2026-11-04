@@ -3,6 +3,7 @@
 #include "worker.hpp"
 #include "authority_replies.hpp"
 #include <capstan/authority/host.hpp>
+#include <capstan/protocol/random.hpp>
 #include <capstan/bridge/dataset.hpp>
 #include <chrono>
 #include <thread>
@@ -80,6 +81,56 @@ struct host_runtime {
             if(!app::try_authenticate(config,frame,auth) || !wire::try_decode(auth.payload,decoded)) {app::reply(std::move(done),status::invalid);return;}
             if(decoded.method==wire::info) {
                 app::reply(std::move(done),status::ok,{wire::u(config.key.cluster),wire::u(config.key.incarnation),wire::u(config.key.object),wire::u(dataset ? dataset->resource_bytes():0)}); return;
+            }
+            if(decoded.method==wire::query_current_authority || decoded.method==wire::fetch_my_grant) {
+                ++control_calls;
+                const bool administrative=decoded.method==wire::query_current_authority;
+                const auto offset=administrative ? 1u : 0u;
+                if(decoded.args.size()!=offset+3) {app::reply(std::move(done),status::invalid);return;}
+                for(const auto& a:decoded.args) if(!wire::is_number(a)) {app::reply(std::move(done),status::invalid);return;}
+                if(administrative && (auth.holder!=3 || wire::number(decoded.args[0])!=config.control)) {app::reply(std::move(done),status::wrong_control);return;}
+                object_key key{wire::number(decoded.args[offset]),wire::number(decoded.args[offset+1]),wire::number(decoded.args[offset+2])};
+                if(key!=config.key) {app::reply(std::move(done),status::wrong_object);return;}
+                if(administrative) {
+                    auto snapshot=authority.inspect();
+                    authority_view view{config.key,snapshot.epoch,static_cast<unsigned>(snapshot.gate),std::move(snapshot.grants)};
+                    app::reply(std::move(done),status::ok,{wire::value::string(wire::encode_authority_view(view))});
+                } else {
+                    grant current;const auto code=authority.fetch_current(key,auth.holder,current);
+                    app::reply(std::move(done),code,code==status::ok ? std::vector<wire::value>{wire::value::string(wire::encode_grant(current))} : std::vector<wire::value>{});
+                }
+                return;
+            }
+            if(decoded.method==wire::transfer_exclusive || decoded.method==wire::query_transfer || decoded.method==wire::claim_transfer) {
+                ++control_calls;
+                if(decoded.args.size()!=1 || !wire::is_string(decoded.args[0])) {app::reply(std::move(done),status::invalid);return;}
+                if(decoded.method==wire::transfer_exclusive) {
+                    transfer_request request;
+                    if(!wire::try_decode_transfer_request(wire::string(decoded.args[0]),request)) {app::reply(std::move(done),status::invalid);return;}
+                    const auto code=control_replies.transfer(request,auth.holder,[](grant& successor) {
+                        return try_random_id(successor.grant_id) && try_random_token(successor.secret);
+                    },[this,transaction=request.transaction,done=std::move(done)](io_result io) mutable {
+                        auto timing=authority.timing(transaction);
+                        if(timing.install_ns) std::cout<<"TRANSFER_TIMING issuer="<<transaction.issuer<<" tx="<<transaction.sequence
+                            <<" close_ns="<<timing.close_ns<<" drain_ns="<<timing.drain_ns<<" install_ns="<<timing.install_ns
+                            <<" reply_ns="<<host_authority::monotonic_ns()<<'\n'<<std::flush;
+                        done(std::move(io));
+                    });
+                    std::cout<<"TRANSFER issuer="<<request.transaction.issuer<<" tx="<<request.transaction.sequence
+                             <<" from="<<request.source.holder<<" to="<<request.recipient<<" status="<<status_name(code)
+                             <<" epoch="<<authority.inspect().epoch<<" active="<<authority.inspect().active<<'\n'<<std::flush;
+                    collect_resource();return;
+                }
+                transfer_ref reference;
+                if(!wire::try_decode_transfer_ref(wire::string(decoded.args[0]),reference)) {app::reply(std::move(done),status::invalid);return;}
+                if(decoded.method==wire::query_transfer) {
+                    auto result=authority.query_transfer(reference,auth.holder,auth.holder==3);
+                    app::reply(std::move(done),result.code,{wire::value::string(wire::encode_transfer_receipt(result))});
+                } else {
+                    grant successor;auto code=authority.claim_transfer(reference,auth.holder,successor);
+                    app::reply(std::move(done),code,code==status::ok ? std::vector<wire::value>{wire::value::string(wire::encode_grant(successor))} : std::vector<wire::value>{});
+                }
+                return;
             }
             if(decoded.method==wire::set_authority || decoded.method==wire::query_ack) {
                 if(auth.holder!=3) {app::reply(std::move(done),status::wrong_control);return;}

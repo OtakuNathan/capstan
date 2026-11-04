@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "counts": {
+    "clang-strict": 32,
+    "asan": 11,
+    "strict": 32,
+    "offline": 25,
+    "eh": 33,
+    "fast-strict": 32,
+    "relaxed": 32,
+    "tsan": 11
+  },
+  "tla_checks": 9,
+  "source_files_verified": 99,
+  "dependency_lock_unchanged": true,
+  "github_at_measurement": "not pushed or dispatched"
+}

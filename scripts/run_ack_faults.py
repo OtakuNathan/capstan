@@ -14,7 +14,7 @@ try:
     with DemoCluster(a.build_dir,a.output/'processes',1024*1024,1000) as lab:
         malformed=lab.spawn('wire_faults','wire_fault_probe','--config',lab.config,
             '--host-port',lab.host_port,'--table-port',lab.table_port)
-        malformed.wait_line(lambda s:s=='WIRE_FAULTS completed=14 alive=1')
+        malformed.wait_line(lambda s:s=='WIRE_FAULTS completed=21 alive=1')
         assert malformed.process.wait(timeout=3)==0
         report['checked_wire_cases']=14
         lab.a.command_result('exclusive 2');lab.b.command_result('fetch')

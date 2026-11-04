@@ -1,0 +1,8 @@
+-- dynabridge: cached locked snapshot 1aadab8f4c718d410dbe7ffd77cf7ac967df09b8
+flux_foundry: cached locked snapshot 81f4b3cb0f20b018f0d3fb8db0bf096057f030e8
+lease: cached locked snapshot 5105f106d4f30df59207954434bbe5e1d8975780
+
+-- authority_allocation_test: throwing allocation rollback is EH-only; see checked_errors_test and allocation_test
+-- Configuring done (0.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/nathan/capstan-direct-transfer/build-strict

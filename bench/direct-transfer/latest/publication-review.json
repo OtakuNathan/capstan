@@ -1,0 +1,78 @@
+{
+  "reviewed_at": "2026-11-04T15:49:37.031905+00:00",
+  "base_commit": "92008504dc38246b5bc0549a9f674e9ed610a7c2",
+  "finding": "Table previously accepted an ACK or authority snapshot with code=ok but a non-Completed envelope.",
+  "correction": "Require Completed before recording installation or observing current authority; retain uncertainty for contradictory envelopes.",
+  "regression": "New Table observation cases failed before the fix (CTest exit 8), then passed with the fix.",
+  "passed": true,
+  "tests": {
+    "eh": 34,
+    "strict": 33,
+    "relaxed": 33,
+    "fast-strict": 33,
+    "clang-strict": 33,
+    "offline": 25,
+    "asan": 12,
+    "tsan": 12
+  },
+  "tla": {
+    "AuthorityNightly": {
+      "passed": true,
+      "exit_code": 0,
+      "distinct_states": 43018
+    },
+    "MissingDrain": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 802
+    },
+    "MissingPermission": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 77
+    },
+    "EarlyAck": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 11
+    },
+    "DirectTransferNightly": {
+      "passed": true,
+      "exit_code": 0,
+      "distinct_states": 19292
+    },
+    "BypassSourceCheck": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 39
+    },
+    "DirectMissingDrain": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 19
+    },
+    "EarlyClaim": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 19
+    },
+    "TxKeyCollision": {
+      "passed": true,
+      "exit_code": 12,
+      "distinct_states": 18
+    }
+  },
+  "workflows": {
+    "release": "Both demos, transfer contracts and fault suites in the full GCC/Clang matrix.",
+    "sanitizers": "12-test lifecycle and transfer selection including the narrated demo.",
+    "nightly": "Both safe models plus seven required mutations at 02:23 UTC and manual dispatch; missing model coverage fails."
+  },
+  "workflow_summary_smoke": "Complete results pass; deliberately omitted mutation fails.",
+  "changes_since_measurement": "Narrated demo and final Table envelope validation. Earlier benchmark samples and source hashes are preserved as measured; no new performance claim is inferred.",
+  "reviewed_files_sha256": {
+    "src/apps/table.cpp": "bb53141eb49dbd14afe19319cfc9ec32874f34e1bfdf338a25f3038a769a50e0",
+    "tests/integration/table_observation.cpp": "e3a97f81b1cfe532722a7a2d4283e27223cd67b4f378449c821a39ea72467d51",
+    ".github/workflows/ci.yml": "5717e38a083de4041955a42ca4732253419154dd35ee1a688d870c8bc7376a06",
+    ".github/workflows/formal-nightly.yml": "461247c4fc5df96ae349620ed6acb25d1b174f9aa7c38225c08ed71f44f81772"
+  }
+}

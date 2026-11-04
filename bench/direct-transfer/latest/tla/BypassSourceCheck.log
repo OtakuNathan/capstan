@@ -1,0 +1,86 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 53 and seed 2874242636134953173 with 2 workers on 4 cores with 341MB heap and 64MB offheap memory [pid: 173189] (Linux 6.18.39+rpt-rpi-v8 aarch64, Debian 21.0.10 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/nathan/Documents/coding/capstan/models/tla/DirectTransfer.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/TLC.tla
+Parsing file /tmp/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module DirectTransfer
+Starting... (2026-11-04 15:15:16)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-04 15:15:17.
+Error: Invariant SourceCurrent is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ holder = 1
+/\ pending = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ epoch = 0
+/\ badClaim = FALSE
+/\ observed = 0
+/\ published = {}
+/\ held = {[who |-> 1, at |-> 0]}
+/\ accepted = {}
+/\ receipt = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ badSource = FALSE
+/\ installed = {}
+/\ gate = "Open"
+/\ pins = {}
+/\ collision = FALSE
+
+State 2: <Transfer line 31, col 13 to line 32, col 106 of module DirectTransfer>
+/\ holder = 1
+/\ pending = [origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2]
+/\ epoch = 0
+/\ badClaim = FALSE
+/\ observed = 0
+/\ published = {}
+/\ held = {[who |-> 1, at |-> 0]}
+/\ accepted = {[origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2]}
+/\ receipt = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ badSource = FALSE
+/\ installed = {}
+/\ gate = "Closing"
+/\ pins = {}
+/\ collision = FALSE
+
+State 3: <Install line 35, col 12 to line 38, col 102 of module DirectTransfer>
+/\ holder = 2
+/\ pending = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ epoch = 1
+/\ badClaim = FALSE
+/\ observed = 0
+/\ published = {}
+/\ held = {[who |-> 1, at |-> 0]}
+/\ accepted = {[origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2]}
+/\ receipt = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ badSource = FALSE
+/\ installed = {[origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2]}
+/\ gate = "Open"
+/\ pins = {}
+/\ collision = FALSE
+
+State 4: <Transfer line 31, col 13 to line 32, col 106 of module DirectTransfer>
+/\ holder = 2
+/\ pending = [origin |-> 1, issuer |-> 1, seq |-> 1, source |-> 0, from |-> 1, to |-> 2]
+/\ epoch = 1
+/\ badClaim = FALSE
+/\ observed = 0
+/\ published = {}
+/\ held = {[who |-> 1, at |-> 0]}
+/\ accepted = { [origin |-> 1, issuer |-> 1, seq |-> 1, source |-> 0, from |-> 1, to |-> 2],
+  [origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2] }
+/\ receipt = [origin |-> 0, issuer |-> 0, seq |-> 0, source |-> 0, from |-> 0, to |-> 0]
+/\ badSource = TRUE
+/\ installed = {[origin |-> 1, issuer |-> 1, seq |-> 2, source |-> 0, from |-> 1, to |-> 2]}
+/\ gate = "Closing"
+/\ pins = {}
+/\ collision = FALSE
+
+82 states generated, 39 distinct states found, 19 states left on queue.
+The depth of the complete state graph search is 4.
+The average outdegree of the complete state graph is 2 (minimum is 0, the maximum 8 and the 95th percentile is 8).
+Finished in 02s at (2026-11-04 15:15:17)

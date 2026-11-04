@@ -1,0 +1,56 @@
+[  1%] Building CXX object CMakeFiles/authority_test.dir/tests/unit/authority.cpp.o
+[  5%] Built target probe_object
+[  7%] Building CXX object CMakeFiles/direct_transfer_test.dir/tests/unit/direct_transfer.cpp.o
+[ 11%] Built target probe_readonly
+[ 14%] Built target probe_lease
+[ 20%] Built target probe_async
+[ 20%] Building CXX object CMakeFiles/direct_transfer_integration_test.dir/tests/integration/direct_transfer.cpp.o
+[ 24%] Built target sealed_registry_test
+[ 27%] Building CXX object CMakeFiles/authority_faults_test.dir/tests/unit/authority_faults.cpp.o
+[ 27%] Building CXX object CMakeFiles/authority_replies_test.dir/tests/integration/authority_replies.cpp.o
+[ 29%] Building CXX object CMakeFiles/benchmark_policy_test.dir/tests/unit/benchmark_policy.cpp.o
+[ 31%] Building CXX object CMakeFiles/wire_test.dir/tests/unit/wire.cpp.o
+[ 33%] Building CXX object CMakeFiles/checked_errors_test.dir/tests/integration/checked_errors.cpp.o
+[ 35%] Linking CXX executable benchmark_policy_test
+[ 35%] Built target benchmark_policy_test
+[ 37%] Building CXX object CMakeFiles/loopback_test.dir/tests/integration/loopback.cpp.o
+[ 38%] Linking CXX executable authority_faults_test
+[ 40%] Linking CXX executable authority_test
+[ 40%] Built target authority_faults_test
+[ 44%] Built target callback_test
+[ 44%] Built target authority_test
+[ 48%] Built target allocation_test
+[ 51%] Built target capstan_gio
+[ 55%] Built target worker_test
+[ 59%] Built target transport_test
+[ 61%] Building CXX object CMakeFiles/table_observation_test.dir/tests/integration/table_observation.cpp.o
+[ 64%] Built target control_probe
+[ 68%] Built target wire_fault_probe
+[ 70%] Building CXX object CMakeFiles/capstan_host.dir/src/apps/host.cpp.o
+[ 72%] Linking CXX executable wire_test
+[ 72%] Built target wire_test
+[ 75%] Built target capstan_table
+[ 79%] Built target capstan_client
+[ 81%] Linking CXX executable direct_transfer_test
+[ 83%] Building CXX object CMakeFiles/capstan_bench_host.dir/src/apps/host.cpp.o
+[ 83%] Built target direct_transfer_test
+[ 87%] Built target capstan_load
+In file included from /home/nathan/capstan-direct-transfer/tests/integration/loopback.cpp:3:
+/home/nathan/capstan-direct-transfer/include/capstan/async/detachable.hpp: In member function ‘virtual bool capstan::detachable_endpoint::submit_owned(capstan::bytes, capstan::io_completion, std::shared_ptr<void>)’:
+/home/nathan/capstan-direct-transfer/include/capstan/async/detachable.hpp:85:5: warning: control reaches end of non-void function [-Wreturn-type]
+   85 |     }
+      |     ^
+[ 88%] Linking CXX executable authority_replies_test
+[ 88%] Built target authority_replies_test
+[ 90%] Linking CXX executable checked_errors_test
+[ 90%] Built target checked_errors_test
+[ 92%] Linking CXX executable table_observation_test
+[ 92%] Built target table_observation_test
+[ 94%] Linking CXX executable direct_transfer_integration_test
+[ 94%] Built target direct_transfer_integration_test
+[ 96%] Linking CXX executable capstan_host
+[ 96%] Built target capstan_host
+[ 98%] Linking CXX executable loopback_test
+[100%] Linking CXX executable capstan_bench_host
+[100%] Built target loopback_test
+[100%] Built target capstan_bench_host

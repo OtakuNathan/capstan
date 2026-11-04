@@ -1,0 +1,67 @@
+{
+  "processes": [
+    {
+      "name": "host",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_host",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/inflight/.private-1ty9s3ms/lab.conf",
+        "--port",
+        "0",
+        "--bytes",
+        "67108864",
+        "--work-delay-ms",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "table",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_table",
+        "--config",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/inflight/.private-1ty9s3ms/lab.conf",
+        "--host-port",
+        "34365",
+        "--port",
+        "0"
+      ],
+      "exit_code": -15,
+      "expected_exit": "supervisor SIGTERM cleanup"
+    },
+    {
+      "name": "client_A",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/inflight/.private-1ty9s3ms/A.credential",
+        "--host-port",
+        "34365",
+        "--table-port",
+        "43361"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    },
+    {
+      "name": "client_B",
+      "command": [
+        "/home/nathan/capstan-direct-transfer/build-fast-strict/capstan_client",
+        "--credential",
+        "/home/nathan/capstan-direct-transfer/results/benchmark-verified/inflight/.private-1ty9s3ms/B.credential",
+        "--host-port",
+        "34365",
+        "--table-port",
+        "43361"
+      ],
+      "exit_code": 0,
+      "expected_exit": "normal client quit"
+    }
+  ],
+  "credentials": "temporary 0600 files deleted; values never logged",
+  "cluster_session": 8382080468518336585,
+  "host_incarnation": 2665481412116007844,
+  "object": 574706035245029704,
+  "control_session": 1932316695753795233
+}

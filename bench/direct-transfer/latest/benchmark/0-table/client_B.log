@@ -1,0 +1,109 @@
+READY client trusted_lab=1
+RESULT command=fetch status=ok outcome=2 ns=204083 v0=2 v1=2
+RESULT command=version status=ok outcome=2 ns=61781 v0=0
+RESULT command=fetch status=ok outcome=2 ns=66801 v0=4 v1=2
+RESULT command=version status=ok outcome=2 ns=47980 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64421 v0=6 v1=2
+RESULT command=version status=ok outcome=2 ns=45571 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64271 v0=8 v1=2
+RESULT command=version status=ok outcome=2 ns=50091 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62251 v0=10 v1=2
+RESULT command=version status=ok outcome=2 ns=45781 v0=0
+RESULT command=fetch status=ok outcome=2 ns=56241 v0=12 v1=2
+RESULT command=version status=ok outcome=2 ns=50211 v0=0
+RESULT command=fetch status=ok outcome=2 ns=56051 v0=14 v1=2
+RESULT command=version status=ok outcome=2 ns=43680 v0=0
+RESULT command=fetch status=ok outcome=2 ns=56661 v0=16 v1=2
+RESULT command=version status=ok outcome=2 ns=43511 v0=0
+RESULT command=fetch status=ok outcome=2 ns=56121 v0=18 v1=2
+RESULT command=version status=ok outcome=2 ns=43021 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61991 v0=20 v1=2
+RESULT command=version status=ok outcome=2 ns=51051 v0=0
+RESULT command=fetch status=ok outcome=2 ns=65321 v0=22 v1=2
+RESULT command=version status=ok outcome=2 ns=44021 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63201 v0=24 v1=2
+RESULT command=version status=ok outcome=2 ns=45141 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63001 v0=26 v1=2
+RESULT command=version status=ok outcome=2 ns=44580 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64401 v0=28 v1=2
+RESULT command=version status=ok outcome=2 ns=45161 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62981 v0=30 v1=2
+RESULT command=version status=ok outcome=2 ns=49891 v0=0
+RESULT command=fetch status=ok outcome=2 ns=66491 v0=32 v1=2
+RESULT command=version status=ok outcome=2 ns=44101 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64001 v0=34 v1=2
+RESULT command=version status=ok outcome=2 ns=43171 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63861 v0=36 v1=2
+RESULT command=version status=ok outcome=2 ns=42551 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63221 v0=38 v1=2
+RESULT command=version status=ok outcome=2 ns=44961 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62491 v0=40 v1=2
+RESULT command=version status=ok outcome=2 ns=47991 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62681 v0=42 v1=2
+RESULT command=version status=ok outcome=2 ns=44081 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63110 v0=44 v1=2
+RESULT command=version status=ok outcome=2 ns=43910 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63121 v0=46 v1=2
+RESULT command=version status=ok outcome=2 ns=45770 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62101 v0=48 v1=2
+RESULT command=version status=ok outcome=2 ns=43961 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64151 v0=50 v1=2
+RESULT command=version status=ok outcome=2 ns=45761 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63350 v0=52 v1=2
+RESULT command=version status=ok outcome=2 ns=43740 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61591 v0=54 v1=2
+RESULT command=version status=ok outcome=2 ns=43281 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62001 v0=56 v1=2
+RESULT command=version status=ok outcome=2 ns=43901 v0=0
+RESULT command=fetch status=ok outcome=2 ns=68041 v0=58 v1=2
+RESULT command=version status=ok outcome=2 ns=43861 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62401 v0=60 v1=2
+RESULT command=version status=ok outcome=2 ns=43480 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62331 v0=62 v1=2
+RESULT command=version status=ok outcome=2 ns=43261 v0=0
+RESULT command=fetch status=ok outcome=2 ns=64560 v0=64 v1=2
+RESULT command=version status=ok outcome=2 ns=48521 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62021 v0=66 v1=2
+RESULT command=version status=ok outcome=2 ns=43560 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62761 v0=68 v1=2
+RESULT command=version status=ok outcome=2 ns=44340 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60961 v0=70 v1=2
+RESULT command=version status=ok outcome=2 ns=44121 v0=0
+RESULT command=fetch status=ok outcome=2 ns=66871 v0=72 v1=2
+RESULT command=version status=ok outcome=2 ns=45791 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63841 v0=74 v1=2
+RESULT command=version status=ok outcome=2 ns=44601 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62571 v0=76 v1=2
+RESULT command=version status=ok outcome=2 ns=43510 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62691 v0=78 v1=2
+RESULT command=version status=ok outcome=2 ns=44361 v0=0
+RESULT command=fetch status=ok outcome=2 ns=65640 v0=80 v1=2
+RESULT command=version status=ok outcome=2 ns=44381 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61201 v0=82 v1=2
+RESULT command=version status=ok outcome=2 ns=42870 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61211 v0=84 v1=2
+RESULT command=version status=ok outcome=2 ns=43541 v0=0
+RESULT command=fetch status=ok outcome=2 ns=63370 v0=86 v1=2
+RESULT command=version status=ok outcome=2 ns=43410 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60821 v0=88 v1=2
+RESULT command=version status=ok outcome=2 ns=42940 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61291 v0=90 v1=2
+RESULT command=version status=ok outcome=2 ns=39831 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60981 v0=92 v1=2
+RESULT command=version status=ok outcome=2 ns=46431 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61111 v0=94 v1=2
+RESULT command=version status=ok outcome=2 ns=39730 v0=0
+RESULT command=fetch status=ok outcome=2 ns=62031 v0=96 v1=2
+RESULT command=version status=ok outcome=2 ns=43850 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60781 v0=98 v1=2
+RESULT command=version status=ok outcome=2 ns=39941 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60931 v0=100 v1=2
+RESULT command=version status=ok outcome=2 ns=40281 v0=0
+RESULT command=fetch status=ok outcome=2 ns=61061 v0=102 v1=2
+RESULT command=version status=ok outcome=2 ns=44360 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60881 v0=104 v1=2
+RESULT command=version status=ok outcome=2 ns=39781 v0=0
+RESULT command=fetch status=ok outcome=2 ns=60840 v0=106 v1=2
+RESULT command=version status=ok outcome=2 ns=40020 v0=0
+RESULT command=fetch status=ok outcome=2 ns=68131 v0=108 v1=2
+RESULT command=version status=ok outcome=2 ns=47120 v0=0

@@ -95,7 +95,7 @@ jobs:
           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
           TSAN_OPTIONS: halt_on_error=1
-        run: ctest --test-dir build -R '^(authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults)$' --output-on-failure --timeout 90
+        run: ctest --test-dir build -R '^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults)$' --output-on-failure --timeout 90
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -103,4 +103,6 @@ jobs:
           path: |
             build/Testing/Temporary/
             build/ctest-ack-faults/
+            build/ctest-direct-transfer/
+            build/ctest-direct-demo/
           retention-days: 14

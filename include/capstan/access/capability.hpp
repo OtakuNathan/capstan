@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <mutex>
 namespace capstan {
+class transfer_plan;
 class capability_busy : public std::logic_error { public: capability_busy():std::logic_error("capability has active borrow/write or is closed"){} };
 namespace access_detail {
 struct backing {
@@ -31,13 +32,29 @@ struct read_frame {
     read_frame(std::shared_ptr<backing> b,read_lease r):storage(std::move(b)),access(std::move(r)) {}
 };
 struct exclusive_state {
+    const grant identity;
     std::shared_ptr<backing> storage;
     std::unique_ptr<write_lease> write;
     std::mutex mutex;
     unsigned readers=0;
     bool closed=false;
-    explicit exclusive_state(grant g):storage(std::make_shared<backing>(g)),write(new write_lease(lease::access::make_rw<lease::access::shared>(storage->facade))) {}
+    explicit exclusive_state(grant g):identity(g),storage(std::make_shared<backing>(g)),write(new write_lease(lease::access::make_rw<lease::access::shared>(storage->facade))) {}
 };
+struct registry_entry {grant identity; std::weak_ptr<exclusive_state> state; bool sealed=false;};
+struct exclusive_registry {std::mutex mutex; std::vector<registry_entry> entries;};
+inline exclusive_registry& registry() {static exclusive_registry value;return value;}
+// Sealed entries are bounded tombstones: destroying all wrappers does not
+// make a submitted source grant materializable again. No silent eviction.
+inline bool seal(const std::shared_ptr<exclusive_state>& owner) noexcept {
+    auto& local=registry();
+    std::lock_guard<std::mutex> registry_lock(local.mutex);
+    std::lock_guard<std::mutex> state_lock(owner->mutex);
+    if(owner->closed) return false;
+    for(auto& entry:local.entries) if(entry.identity==owner->identity) {
+        entry.sealed=true;owner->closed=true;return true;
+    }
+    return false;
+}
 // Raw grants are materialized only once as a live exclusive session in this
 // process. Weak entries include operation-held states after wrapper destruction.
 // The registry is local topology bookkeeping: no acquire/release I/O occurs.
@@ -47,24 +64,20 @@ inline std::shared_ptr<exclusive_state> materialize_exclusive(grant g,status* er
         if(error) {*error=status::invalid;return {};}
         CAPSTAN_RAISE(std::invalid_argument("exclusive capability needs exclusive grant"));
     }
-    struct registry {
-        std::mutex mutex;
-        std::vector<std::pair<grant,std::weak_ptr<exclusive_state>>> entries;
-    };
-    static registry local;
+    auto& local=registry();
     std::lock_guard<std::mutex> lock(local.mutex);
     auto& entries=local.entries;
-    entries.erase(std::remove_if(entries.begin(),entries.end(),[](const std::pair<grant,std::weak_ptr<exclusive_state>>& e){return e.second.expired();}),entries.end());
-    for(const auto& entry:entries) if(entry.first==g) {
+    entries.erase(std::remove_if(entries.begin(),entries.end(),[](const registry_entry& e){return !e.sealed && e.state.expired();}),entries.end());
+    for(const auto& entry:entries) if(entry.identity==g) {
         if(error) {*error=status::duplicate;return {};}
         CAPSTAN_RAISE(std::logic_error("exclusive grant already materialized locally"));
     }
-    if(entries.size()>=64) {
+    if(entries.size()>=4096 || std::count_if(entries.begin(),entries.end(),[](const registry_entry& e){return !e.state.expired();})>=64) {
         if(error) {*error=status::exhausted;return {};}
         CAPSTAN_RAISE(std::length_error("local exclusive session bound reached"));
     }
     auto state=std::make_shared<exclusive_state>(g);
-    entries.emplace_back(g,state);
+    entries.push_back({g,state,false});
     return state;
 }
 struct read_guard {
@@ -141,6 +154,7 @@ public:
     }
 };
 class exclusive_capability {
+    friend class transfer_plan;
     std::shared_ptr<access_detail::exclusive_state> owner_;
     explicit exclusive_capability(std::shared_ptr<access_detail::exclusive_state> owner):owner_(std::move(owner)) {}
 public:

@@ -39,17 +39,17 @@ inline bool try_decode_grant(const std::string& s,grant& out) {
 }
 inline grant decode_grant(const std::string& s) {grant out;require(try_decode_grant(s,out));return out;}
 inline bytes encode_transition(const transition& t) {
-    std::vector<value> a{u(t.key.cluster),u(t.key.incarnation),u(t.key.object),u(t.control_session),u(t.tx),u(t.expected_epoch),u(t.next_epoch),value::boolean(t.destroy)};
+    std::vector<value> a{u(t.key.cluster),u(t.key.incarnation),u(t.key.object),u(t.control_session),u(t.tx),u(t.expected_epoch),u(t.next_epoch),value::boolean(t.destroy),u(static_cast<unsigned>(t.origin)),u(t.issuer)};
     for(const auto& g:t.grants) a.push_back(value::string(encode_grant(g)));
-    return codec::encode_request(801,a);
+    return codec::encode_request(1801,a); // Authority schema v2; legacy 801 is rejected.
 }
 inline bool try_decode_transition(const bytes& b,transition& out) {
-    codec::request r;if(!try_decode(b,r) || r.method!=801 || r.args.size()<8 || r.args.size()>72) return false;
+    codec::request r;if(!try_decode(b,r) || r.method!=1801 || r.args.size()<10 || r.args.size()>74) return false;
     auto& a=r.args;for(unsigned i=0;i<7;++i) if(!is_number(a[i])) return false;
-    if(!is_boolean(a[7])) return false;
+    if(!is_boolean(a[7]) || !is_number(a[8]) || !is_number(a[9]) || number(a[8])>1) return false;
     transition t;t.key={number(a[0]),number(a[1]),number(a[2])};t.control_session=number(a[3]);
-    t.tx=number(a[4]);t.expected_epoch=number(a[5]);t.next_epoch=number(a[6]);t.destroy=boolean(a[7]);
-    for(std::size_t i=8;i<a.size();++i) {
+    t.tx=number(a[4]);t.expected_epoch=number(a[5]);t.next_epoch=number(a[6]);t.destroy=boolean(a[7]);t.origin=static_cast<authority_origin>(number(a[8]));t.issuer=number(a[9]);
+    for(std::size_t i=10;i<a.size();++i) {
         grant g;if(!is_string(a[i]) || !try_decode_grant(string(a[i]),g)) return false;
         t.grants.push_back(g);
     }
@@ -68,7 +68,7 @@ inline bool try_decode_reply(const bytes& b,reply& out) {
     codec::request r;if(!try_decode(binary(string(encoded)),r) || r.method!=900 || r.args.size()<2) return false;
     if(!is_number(r.args[0]) || !is_number(r.args[1])) return false;
     auto state=number(r.args[0]),code=number(r.args[1]);
-    if(state>static_cast<unsigned>(outcome::unknown) || code>static_cast<unsigned>(status::invalid)) return false;
+    if(state>static_cast<unsigned>(outcome::unknown) || code>static_cast<unsigned>(status::superseded)) return false;
     out={static_cast<outcome>(state),static_cast<status>(code),{r.args.begin()+2,r.args.end()}};return true;
 }
 inline reply decode_reply(const bytes& b) {reply out;require(try_decode_reply(b,out));return out;}
@@ -83,8 +83,55 @@ inline bool try_decode_call(const bytes& b,call& out) {
     out={{g,number(r.args[1]),static_cast<method>(r.method)},{r.args.begin()+2,r.args.end()}};return true;
 }
 inline call decode_call(const bytes& b) {call out;require(try_decode_call(b,out));return out;}
+inline std::string encode_transfer_ref(const transfer_ref& ref) {
+    return binary(codec::encode_request(1802,{u(ref.key.cluster),u(ref.key.incarnation),u(ref.key.object),
+        u(static_cast<unsigned>(ref.transaction.origin)),u(ref.transaction.issuer),u(ref.transaction.sequence),
+        u(ref.from_holder),u(ref.to_holder),u(ref.source_epoch)}));
+}
+inline bool try_decode_transfer_ref(const std::string& bytes,transfer_ref& out) {
+    codec::request r;if(!try_decode(binary(bytes),r) || r.method!=1802 || r.args.size()!=9) return false;
+    for(const auto& v:r.args) if(!is_number(v)) return false;
+    const auto& a=r.args;if(number(a[3])!=1 || !number(a[4]) || !number(a[5]) || !number(a[6]) || !number(a[7]) || number(a[4])!=number(a[6])) return false;
+    out={{number(a[0]),number(a[1]),number(a[2])},{authority_origin::holder_transfer,number(a[4]),number(a[5])},number(a[6]),number(a[7]),number(a[8])};return true;
+}
+inline std::string encode_transfer_request(const transfer_request& request) {
+    return binary(codec::encode_request(1803,{value::string(encode_transfer_ref(request.reference())),value::string(encode_grant(request.source))}));
+}
+inline bool try_decode_transfer_request(const std::string& bytes,transfer_request& out) {
+    codec::request r;transfer_ref ref;grant source;
+    if(!try_decode(binary(bytes),r) || r.method!=1803 || r.args.size()!=2 || !is_string(r.args[0]) || !is_string(r.args[1]) ||
+       !try_decode_transfer_ref(string(r.args[0]),ref) || !try_decode_grant(string(r.args[1]),source)) return false;
+    transfer_request staged{source,ref.transaction,ref.to_holder};if(!(staged.reference()==ref)) return false;
+    out=staged;return true;
+}
+inline std::string encode_transfer_receipt(const transfer_receipt& r) {
+    return binary(codec::encode_request(1804,{value::string(encode_transfer_ref(r.reference)),u(static_cast<unsigned>(r.observation)),
+        u(static_cast<unsigned>(r.usability)),u(r.installed_epoch),u(static_cast<unsigned>(r.code))}));
+}
+inline bool try_decode_transfer_receipt(const std::string& bytes,transfer_receipt& out) {
+    codec::request r;transfer_ref ref;
+    if(!try_decode(binary(bytes),r) || r.method!=1804 || r.args.size()!=5 || !is_string(r.args[0]) || !try_decode_transfer_ref(string(r.args[0]),ref)) return false;
+    for(unsigned i=1;i<5;++i) if(!is_number(r.args[i])) return false;
+    if(number(r.args[1])>3 || number(r.args[2])>4 || number(r.args[4])>static_cast<unsigned>(status::superseded)) return false;
+    out={ref,static_cast<transfer_observation>(number(r.args[1])),static_cast<transfer_usability>(number(r.args[2])),number(r.args[3]),static_cast<status>(number(r.args[4]))};return true;
+}
+inline std::string encode_authority_view(const authority_view& view) {
+    std::vector<value> args{u(view.key.cluster),u(view.key.incarnation),u(view.key.object),u(view.epoch),u(view.gate)};
+    for(const auto& g:view.grants) args.push_back(value::string(encode_grant(g)));
+    return binary(codec::encode_request(1805,args));
+}
+inline bool try_decode_authority_view(const std::string& bytes,authority_view& out) {
+    codec::request r;if(!try_decode(binary(bytes),r) || r.method!=1805 || r.args.size()<5 || r.args.size()>69) return false;
+    for(unsigned i=0;i<5;++i) if(!is_number(r.args[i])) return false;
+    if(number(r.args[4])>2) return false;
+    authority_view staged{{number(r.args[0]),number(r.args[1]),number(r.args[2])},number(r.args[3]),static_cast<unsigned>(number(r.args[4])),{}};
+    for(std::size_t i=5;i<r.args.size();++i) {grant g;if(!is_string(r.args[i]) || !try_decode_grant(string(r.args[i]),g)) return false;staged.grants.push_back(g);}
+    if(validate_target(staged.key,staged.epoch,staged.gate==2,staged.grants)!=status::ok) return false;
+    out=std::move(staged);return true;
+}
 // Control methods are a separate namespace from business method/effect IDs.
 constexpr id hello=1000, info=1001, set_authority=1002, query_ack=1003, stats=1004;
 constexpr id configure_grants=2000, fetch_grant=2001;
+constexpr id transfer_exclusive=3100, query_transfer=3101, claim_transfer=3102, query_current_authority=3103, fetch_my_grant=3104;
 inline bytes command(id m,const std::vector<value>& args={}) { return codec::encode_request(m,args); }
 }}

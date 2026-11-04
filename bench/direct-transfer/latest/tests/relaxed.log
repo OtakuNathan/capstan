@@ -1,0 +1,69 @@
+Test project /home/nathan/capstan-direct-transfer/build-relaxed
+      Start 21: wire_test
+      Start 30: tcp_direct_transfer
+      Start 32: tcp_fault_suite
+      Start 24: p2_compile_negative
+ 1/32 Test #24: p2_compile_negative ................   Passed    1.93 sec
+      Start 31: four_process_demo
+ 2/32 Test #32: tcp_fault_suite ....................   Passed    2.21 sec
+      Start 28: tcp_ack_faults
+ 3/32 Test #30: tcp_direct_transfer ................   Passed    2.25 sec
+      Start 17: noexception_policy_matrix
+ 4/32 Test #17: noexception_policy_matrix ..........   Passed    0.87 sec
+      Start 23: callback_test
+ 5/32 Test #31: four_process_demo ..................   Passed    1.30 sec
+      Start  6: negative_readonly_write
+ 6/32 Test #28: tcp_ack_faults .....................   Passed    1.09 sec
+      Start  5: negative_exclusive_copy
+ 7/32 Test #23: callback_test ......................   Passed    0.67 sec
+      Start 22: loopback_test
+ 8/32 Test  #5: negative_exclusive_copy ............   Passed    0.52 sec
+      Start  9: negative_async_return
+ 9/32 Test  #6: negative_readonly_write ............   Passed    0.63 sec
+      Start  7: negative_wrong_receiver
+10/32 Test  #7: negative_wrong_receiver ............   Passed    0.26 sec
+      Start  8: negative_const_generated
+11/32 Test  #9: negative_async_return ..............   Passed    0.33 sec
+      Start 20: negative_production_benchmark
+12/32 Test #22: loopback_test ......................   Passed    0.37 sec
+      Start  2: probe_object
+13/32 Test  #2: probe_object .......................   Passed    0.18 sec
+      Start 16: checked_errors_test
+14/32 Test #20: negative_production_benchmark ......   Passed    0.22 sec
+      Start 10: authority_model
+15/32 Test  #8: negative_const_generated ...........   Passed    0.27 sec
+      Start 26: transport_test
+16/32 Test #16: checked_errors_test ................   Passed    0.08 sec
+      Start 14: sealed_registry_test
+17/32 Test #26: transport_test .....................   Passed    0.05 sec
+      Start 11: authority_test
+18/32 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 12: direct_transfer_test
+19/32 Test #10: authority_model ....................   Passed    0.07 sec
+      Start 29: worker_test
+20/32 Test #12: direct_transfer_test ...............   Passed    0.00 sec
+      Start 27: table_observation_test
+21/32 Test #29: worker_test ........................   Passed    0.00 sec
+      Start 15: authority_replies_test
+22/32 Test #27: table_observation_test .............   Passed    0.00 sec
+      Start 13: direct_transfer_integration_test
+23/32 Test #15: authority_replies_test .............   Passed    0.00 sec
+      Start  4: probe_async
+24/32 Test #13: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start  1: probe_lease
+25/32 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start 25: allocation_test
+26/32 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start 18: authority_faults_test
+27/32 Test #25: allocation_test ....................   Passed    0.00 sec
+      Start  3: probe_readonly
+28/32 Test #18: authority_faults_test ..............   Passed    0.00 sec
+      Start 19: benchmark_policy_test
+29/32 Test  #3: probe_readonly .....................   Passed    0.00 sec
+30/32 Test #14: sealed_registry_test ...............   Passed    0.04 sec
+31/32 Test #19: benchmark_policy_test ..............   Passed    0.00 sec
+32/32 Test #21: wire_test ..........................   Passed    4.76 sec
+
+100% tests passed out of 32
+
+Total Test time (real) =   4.76 sec

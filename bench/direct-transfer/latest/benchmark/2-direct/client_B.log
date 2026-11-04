@@ -1,0 +1,163 @@
+READY client trusted_lab=1
+RESULT command=claim status=ok outcome=2 ns=120822 v0=2 v1=2
+RESULT command=version status=ok outcome=2 ns=59601 v0=0
+RESULT command=transfer status=ok outcome=2 ns=49510 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=2 v6=2 v7=3 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=36271 v0=4 v1=2
+RESULT command=version status=ok outcome=2 ns=50221 v0=0
+RESULT command=transfer status=ok outcome=2 ns=43660 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=4 v6=4 v7=5 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34350 v0=6 v1=2
+RESULT command=version status=ok outcome=2 ns=49940 v0=0
+RESULT command=transfer status=ok outcome=2 ns=42400 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=6 v6=6 v7=7 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33691 v0=8 v1=2
+RESULT command=version status=ok outcome=2 ns=46891 v0=0
+RESULT command=transfer status=ok outcome=2 ns=39641 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=8 v6=8 v7=9 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=36580 v0=10 v1=2
+RESULT command=version status=ok outcome=2 ns=47241 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40480 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=10 v6=10 v7=11 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33640 v0=12 v1=2
+RESULT command=version status=ok outcome=2 ns=46670 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40340 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=12 v6=12 v7=13 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33901 v0=14 v1=2
+RESULT command=version status=ok outcome=2 ns=46081 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40731 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=14 v6=14 v7=15 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33391 v0=16 v1=2
+RESULT command=version status=ok outcome=2 ns=47551 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40461 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=16 v6=16 v7=17 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34510 v0=18 v1=2
+RESULT command=version status=ok outcome=2 ns=46160 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40090 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=18 v6=18 v7=19 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33830 v0=20 v1=2
+RESULT command=version status=ok outcome=2 ns=46290 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40000 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=20 v6=20 v7=21 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33561 v0=22 v1=2
+RESULT command=version status=ok outcome=2 ns=48591 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41011 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=22 v6=22 v7=23 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33891 v0=24 v1=2
+RESULT command=version status=ok outcome=2 ns=42221 v0=0
+RESULT command=transfer status=ok outcome=2 ns=42281 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=24 v6=24 v7=25 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33910 v0=26 v1=2
+RESULT command=version status=ok outcome=2 ns=46381 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41850 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=26 v6=26 v7=27 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34180 v0=28 v1=2
+RESULT command=version status=ok outcome=2 ns=52291 v0=0
+RESULT command=transfer status=ok outcome=2 ns=44681 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=28 v6=28 v7=29 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33791 v0=30 v1=2
+RESULT command=version status=ok outcome=2 ns=49241 v0=0
+RESULT command=transfer status=ok outcome=2 ns=47960 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=30 v6=30 v7=31 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33380 v0=32 v1=2
+RESULT command=version status=ok outcome=2 ns=47941 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41631 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=32 v6=32 v7=33 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33811 v0=34 v1=2
+RESULT command=version status=ok outcome=2 ns=54021 v0=0
+RESULT command=transfer status=ok outcome=2 ns=43190 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=34 v6=34 v7=35 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33361 v0=36 v1=2
+RESULT command=version status=ok outcome=2 ns=48481 v0=0
+RESULT command=transfer status=ok outcome=2 ns=42291 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=36 v6=36 v7=37 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=32850 v0=38 v1=2
+RESULT command=version status=ok outcome=2 ns=44310 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41510 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=38 v6=38 v7=39 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=38060 v0=40 v1=2
+RESULT command=version status=ok outcome=2 ns=53870 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40580 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=40 v6=40 v7=41 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34360 v0=42 v1=2
+RESULT command=version status=ok outcome=2 ns=47230 v0=0
+RESULT command=transfer status=ok outcome=2 ns=39660 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=42 v6=42 v7=43 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34411 v0=44 v1=2
+RESULT command=version status=ok outcome=2 ns=48021 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41101 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=44 v6=44 v7=45 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=33710 v0=46 v1=2
+RESULT command=version status=ok outcome=2 ns=45200 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38220 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=46 v6=46 v7=47 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34441 v0=48 v1=2
+RESULT command=version status=ok outcome=2 ns=44291 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38381 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=48 v6=48 v7=49 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34300 v0=50 v1=2
+RESULT command=version status=ok outcome=2 ns=45020 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40710 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=50 v6=50 v7=51 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=35490 v0=52 v1=2
+RESULT command=version status=ok outcome=2 ns=45910 v0=0
+RESULT command=transfer status=ok outcome=2 ns=37670 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=52 v6=52 v7=53 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31641 v0=54 v1=2
+RESULT command=version status=ok outcome=2 ns=41791 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34410 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=54 v6=54 v7=55 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=32420 v0=56 v1=2
+RESULT command=version status=ok outcome=2 ns=42530 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34810 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=56 v6=56 v7=57 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=32200 v0=58 v1=2
+RESULT command=version status=ok outcome=2 ns=41911 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34871 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=58 v6=58 v7=59 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31421 v0=60 v1=2
+RESULT command=version status=ok outcome=2 ns=40800 v0=0
+RESULT command=transfer status=ok outcome=2 ns=41240 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=60 v6=60 v7=61 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31500 v0=62 v1=2
+RESULT command=version status=ok outcome=2 ns=41910 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34590 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=62 v6=62 v7=63 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31401 v0=64 v1=2
+RESULT command=version status=ok outcome=2 ns=42421 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34261 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=64 v6=64 v7=65 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34081 v0=66 v1=2
+RESULT command=version status=ok outcome=2 ns=41840 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34600 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=66 v6=66 v7=67 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31470 v0=68 v1=2
+RESULT command=version status=ok outcome=2 ns=40841 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34371 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=68 v6=68 v7=69 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31661 v0=70 v1=2
+RESULT command=version status=ok outcome=2 ns=43891 v0=0
+RESULT command=transfer status=ok outcome=2 ns=35140 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=70 v6=70 v7=71 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31400 v0=72 v1=2
+RESULT command=version status=ok outcome=2 ns=41000 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34171 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=72 v6=72 v7=73 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=31451 v0=74 v1=2
+RESULT command=version status=ok outcome=2 ns=40501 v0=0
+RESULT command=transfer status=ok outcome=2 ns=34120 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=74 v6=74 v7=75 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=37520 v0=76 v1=2
+RESULT command=version status=ok outcome=2 ns=47421 v0=0
+RESULT command=transfer status=ok outcome=2 ns=40350 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=76 v6=76 v7=77 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29060 v0=78 v1=2
+RESULT command=version status=ok outcome=2 ns=44720 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38170 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=78 v6=78 v7=79 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=38411 v0=80 v1=2
+RESULT command=version status=ok outcome=2 ns=57271 v0=0
+RESULT command=transfer status=ok outcome=2 ns=43310 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=80 v6=80 v7=81 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29611 v0=82 v1=2
+RESULT command=version status=ok outcome=2 ns=44451 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38761 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=82 v6=82 v7=83 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=34000 v0=84 v1=2
+RESULT command=version status=ok outcome=2 ns=44281 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38240 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=84 v6=84 v7=85 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29350 v0=86 v1=2
+RESULT command=version status=ok outcome=2 ns=43561 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38131 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=86 v6=86 v7=87 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29211 v0=88 v1=2
+RESULT command=version status=ok outcome=2 ns=43981 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38191 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=88 v6=88 v7=89 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29750 v0=90 v1=2
+RESULT command=version status=ok outcome=2 ns=44360 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38630 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=90 v6=90 v7=91 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29150 v0=92 v1=2
+RESULT command=version status=ok outcome=2 ns=43951 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38231 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=92 v6=92 v7=93 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29411 v0=94 v1=2
+RESULT command=version status=ok outcome=2 ns=45191 v0=0
+RESULT command=transfer status=ok outcome=2 ns=37780 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=94 v6=94 v7=95 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29160 v0=96 v1=2
+RESULT command=version status=ok outcome=2 ns=44590 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38240 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=96 v6=96 v7=97 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29361 v0=98 v1=2
+RESULT command=version status=ok outcome=2 ns=43891 v0=0
+RESULT command=transfer status=ok outcome=2 ns=39661 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=98 v6=98 v7=99 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29320 v0=100 v1=2
+RESULT command=version status=ok outcome=2 ns=46490 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38720 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=100 v6=100 v7=101 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=28940 v0=102 v1=2
+RESULT command=version status=ok outcome=2 ns=43481 v0=0
+RESULT command=transfer status=ok outcome=2 ns=37781 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=102 v6=102 v7=103 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=32140 v0=104 v1=2
+RESULT command=version status=ok outcome=2 ns=47520 v0=0
+RESULT command=transfer status=ok outcome=2 ns=38570 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=104 v6=104 v7=105 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29190 v0=106 v1=2
+RESULT command=version status=ok outcome=2 ns=44700 v0=0
+RESULT command=transfer status=ok outcome=2 ns=37900 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=106 v6=106 v7=107 v8=1 v9=2
+RESULT command=claim status=ok outcome=2 ns=29560 v0=108 v1=2
+RESULT command=version status=ok outcome=2 ns=45181 v0=0
+RESULT command=transfer status=ok outcome=2 ns=42821 v0=7899171720090741732 v1=5304873759215329535 v2=3500548563066510130 v3=2 v4=1 v5=108 v6=108 v7=109 v8=1 v9=2

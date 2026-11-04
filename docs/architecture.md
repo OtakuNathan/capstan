@@ -7,7 +7,10 @@ grant and contact Host directly.
 
 The demo creates one Dataset of 64 MiB. `version()` returns a scalar;
 `summary()` scans local storage and returns a small result; `add_range()` mutates
-a bounded range under exclusive authority. A control-plane transition can change
+a bounded range under exclusive authority. A holder can transfer its exclusive
+authority directly to another authenticated holder, who claims its successor from
+Host. Table snapshots Host for fetch/management and never supplies cached authority.
+A control-plane transition can change
 readers, transfer exclusive authority, revoke access or install a tombstone.
 
 ## Typed access
@@ -64,4 +67,10 @@ generic distributed closure or arbitrary workflow migration framework.
 | `src/apps` | Host, Table, clients, business worker and ACK completion adapter |
 | `tests` | Compile probes/negatives, state machine, callback and TCP tests |
 | `models` | Independent bounded Python and TLA+ safety models |
-| `bench/latest` | Latest measurements and validation metadata |
+| `bench/latest` | Published baseline measurements |
+| `bench/direct-transfer/latest` | Direct-transfer measurements and validation |
+
+The direct-transfer SDK seals at submission, retains bounded source tombstones,
+and permits existing Lease guards to finish. Its separate control connection
+keeps transfer admission independent of pending business I/O. See
+[direct transfer](direct-transfer.md).

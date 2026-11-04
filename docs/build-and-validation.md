@@ -32,7 +32,7 @@ The UV checked constructor reports parameter/libuv setup errors but does not
 promise recoverable standard-allocator OOM.
 
 The exception-only exhaustive throwing-allocation rollback test is omitted in
-no-exception builds. This is why the full Release suites contain 28 and 27 tests,
+no-exception builds. This is why the full Release suites contain 34 and 33 tests,
 respectively; it is not counted as a passed no-exception OOM test. Backend-wide
 Python/Node no-exception compatibility is not claimed.
 
@@ -58,6 +58,7 @@ GCC's `CAPSTAN_VECTORIZATION_REPORT=ON` emits optimization diagnostics.
 
 ```sh
 python3 scripts/run_demo.py --build-dir build-strict
+python3 scripts/run_direct_demo.py --build-dir build-strict
 python3 scripts/run_fault_suite.py --build-dir build-strict
 python3 scripts/run_ack_faults.py --build-dir build-strict --output build-strict/ack-faults
 python3 scripts/check_tla.py --download-tools --nightly
@@ -71,7 +72,8 @@ Private session credentials are created in temporary storage and not published.
 For sanitizer builds, use Debug with either `CAPSTAN_ASAN=ON` (ASan+UBSan) or
 `CAPSTAN_TSAN=ON`, never both. The CI lifecycle selection includes
 `authority_replies_test`, `checked_errors_test`, `callback_test`, `allocation_test`,
-`worker_test`, and `tcp_ack_faults`. Full sanitizer coverage is not claimed.
+`worker_test`, `tcp_ack_faults`, `direct_transfer_test`,
+`direct_transfer_integration_test`, `sealed_registry_test`, `table_observation_test`, `tcp_direct_transfer`, and `direct_transfer_demo`. Full sanitizer coverage is not claimed.
 
 ## CI baseline
 
@@ -83,9 +85,25 @@ selection. Failures retain test artifacts. There are no flaky latency thresholds
 or performance claims derived from shared GitHub runners.
 
 `.github/workflows/formal-nightly.yml` runs TLA+ at 02:23 UTC and on manual
-request, using a hash-pinned jar. The safe model must complete and each of three
+request, using a hash-pinned jar. Both safe models must complete and each of seven
 mutants must fail for its expected invariant. See [formal verification](formal-verification.md).
 
 Latest actual local results, upstream revisions and tool versions are recorded
 in `bench/latest/verification.json` and [the measurement report](benchmarks.md).
 Windows/macOS Capstan TCP and cross-machine RPC are not validated.
+
+## Direct-transfer validation
+
+The same CI matrix includes holder transfers and Table compatibility. Run
+`python3 scripts/run_direct_transfer.py --build-dir build-strict --output build-strict/direct`
+for the Table-pause and disconnect scenarios. The benchmark script
+`bench_direct_transfer.py` uses ABBA ordering and reports Installed, recipient-ready
+including claim, first-call and Host-local drain segments independently. Current
+local results are in [the direct-transfer report](../bench/direct-transfer/latest/README.md).
+The nightly workflow verifies that both safe models and all seven mutations ran,
+and publishes their outcomes and state counts in the Actions summary.
+
+`direct_transfer_demo` is also a CTest entry in every GIO-enabled full suite.
+It checks actual business updates and a return transfer with Table stopped; see
+[the walkthrough](direct-transfer-demo.md). The recorded benchmark matrix predates
+this additional demo entry and retains its actual 33/32 test counts.

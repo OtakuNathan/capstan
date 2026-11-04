@@ -32,6 +32,11 @@ int main(int argc,char** argv) {
     check(table,authenticated(wire::command(2002,{wire::u(1),wire::value::string("broken grant")}),0),status::invalid);
     check(host,authenticated(wire::command(wire::stats),0),status::ok);
     check(table,authenticated(wire::command(wire::stats),0),status::ok);
-    CHECK(completed==14);g_main_loop_unref(loop);
+    for(auto method:{wire::transfer_exclusive,wire::query_transfer,wire::claim_transfer}) {
+        check(host,authenticated(wire::command(method),0),status::invalid);
+        check(host,authenticated(wire::command(method,{wire::value::string("truncated")}),0),status::invalid);
+    }
+    check(host,authenticated(wire::command(wire::stats),0),status::ok);
+    CHECK(completed==21);g_main_loop_unref(loop);
     std::cout<<"WIRE_FAULTS completed="<<completed<<" alive=1\n";
 }

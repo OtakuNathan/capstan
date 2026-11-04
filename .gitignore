@@ -10,3 +10,6 @@ __pycache__/
 /CODEX_START.md
 /VALIDATION.md
 /MANIFEST.sha256.json
+
+# Local implementation task package; keep publication focused on Capstan.
+/capstan_next/

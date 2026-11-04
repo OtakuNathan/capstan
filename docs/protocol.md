@@ -19,10 +19,14 @@ can coexist; exclusive authority has one holder. All work is serialized per obje
    epoch/grants or a tombstone. Destroy the resource only after that barrier.
 4. **Ack:** complete the pending control RPC after installation. Bounded deferred
    completions handle inline/reentrant completion and control-client loss.
-5. **Grant:** Table validates the matching transaction result before publishing
-   capabilities. There is no periodic ACK polling timer on the normal path.
+5. **Grant:** Table observes current Host authority after the matching ACK and
+   fetches current grants by authenticated holder. A direct-transfer recipient
+   claims its current successor from Host. Historical ACKs cannot republish old
+   grants. There is no periodic ACK polling timer on the normal path.
 
-Control transaction IDs support idempotent retry/query. Duplicate messages must
+Directory and holder transactions use `(origin, issuer, sequence)` identities
+in the same Host history. Accepted transfers are deduplicated before checking
+source currentness. Control transaction IDs support idempotent retry/query. Duplicate messages must
 not repeat installation; identical IDs with different payloads are rejected.
 Old messages cannot roll back an epoch. An uncertain control result can leave
 Table pending indefinitely rather than grant conflicting authority. There is no
@@ -60,3 +64,13 @@ claim. No firewall, service installation or automatic host discovery is performe
 Compile-time access constraints, deterministic transition tests, callback races,
 real TCP fault scenarios and the bounded formal model each test different parts
 of these guarantees. Their limits are documented separately.
+
+## Direct exclusive transfer
+
+A current exclusive holder can transfer to another registered business holder
+without Table on the transfer/claim path. The source is sealed at actual local
+submission and receives no recipient secret. Unknown/NotSeen cannot restore it.
+Only the recipient may claim an installed, still-current, Open successor. Table
+management uses a Host snapshot and expected epoch; it never rebases stale
+commands automatically. See [direct transfer](direct-transfer.md) for API, bounds,
+wire versioning, failure semantics and validation evidence.

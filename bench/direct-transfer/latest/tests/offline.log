@@ -1,0 +1,55 @@
+Test project /home/nathan/capstan-direct-transfer/build-offline
+      Start 21: wire_test
+      Start 24: p2_compile_negative
+      Start 17: noexception_policy_matrix
+      Start 23: callback_test
+ 1/25 Test #23: callback_test ......................   Passed    0.75 sec
+      Start  6: negative_readonly_write
+ 2/25 Test #17: noexception_policy_matrix ..........   Passed    0.95 sec
+      Start  5: negative_exclusive_copy
+ 3/25 Test  #6: negative_readonly_write ............   Passed    0.66 sec
+      Start 22: loopback_test
+ 4/25 Test  #5: negative_exclusive_copy ............   Passed    0.52 sec
+      Start  9: negative_async_return
+ 5/25 Test #22: loopback_test ......................   Passed    0.37 sec
+      Start  8: negative_const_generated
+ 6/25 Test  #9: negative_async_return ..............   Passed    0.33 sec
+      Start  7: negative_wrong_receiver
+ 7/25 Test #24: p2_compile_negative ................   Passed    2.05 sec
+      Start 14: sealed_registry_test
+ 8/25 Test  #8: negative_const_generated ...........   Passed    0.28 sec
+      Start 20: negative_production_benchmark
+ 9/25 Test  #7: negative_wrong_receiver ............   Passed    0.28 sec
+      Start  2: probe_object
+10/25 Test  #2: probe_object .......................   Passed    0.18 sec
+      Start 16: checked_errors_test
+11/25 Test #20: negative_production_benchmark ......   Passed    0.21 sec
+      Start 10: authority_model
+12/25 Test #14: sealed_registry_test ...............   Passed    0.26 sec
+      Start 11: authority_test
+13/25 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 15: authority_replies_test
+14/25 Test #15: authority_replies_test .............   Passed    0.01 sec
+      Start 12: direct_transfer_test
+15/25 Test #12: direct_transfer_test ...............   Passed    0.00 sec
+      Start 13: direct_transfer_integration_test
+16/25 Test #13: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start 25: allocation_test
+17/25 Test #25: allocation_test ....................   Passed    0.00 sec
+      Start  4: probe_async
+18/25 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start 18: authority_faults_test
+19/25 Test #18: authority_faults_test ..............   Passed    0.00 sec
+      Start  1: probe_lease
+20/25 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start  3: probe_readonly
+21/25 Test  #3: probe_readonly .....................   Passed    0.00 sec
+      Start 19: benchmark_policy_test
+22/25 Test #19: benchmark_policy_test ..............   Passed    0.00 sec
+23/25 Test #16: checked_errors_test ................   Passed    0.09 sec
+24/25 Test #10: authority_model ....................   Passed    0.08 sec
+25/25 Test #21: wire_test ..........................   Passed    4.71 sec
+
+100% tests passed out of 25
+
+Total Test time (real) =   4.71 sec

@@ -90,3 +90,11 @@ dependency commits. Verification commands normalize the working directory to the
 repository root; TLA log paths are similarly normalized. Session credentials and
 private machine configuration are not included. Optimization history and older
 benchmark runs are not part of this repository.
+
+## Holder-transfer follow-up
+
+The measurements above describe the published pre-direct-transfer baseline.
+[Latest direct-transfer measurements](../bench/direct-transfer/latest/README.md)
+compare the updated Table snapshot path with conditional holder transfer, including
+recipient claim. The paths have different administrative semantics and RPC counts;
+those numbers must not be treated as an isolated instruction-cost comparison.

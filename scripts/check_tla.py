@@ -45,14 +45,19 @@ def main():
     cases = [('AuthorityNightly' if args.nightly else 'Authority', None),
              ('MissingDrain', 'ActiveEpoch'),
              ('MissingPermission', 'AuthorizedOperations'),
-             ('EarlyAck', 'AckIsInstalled')]
+             ('EarlyAck', 'AckIsInstalled'),
+             ('DirectTransferNightly' if args.nightly else 'DirectTransfer', None),
+             ('BypassSourceCheck', 'SourceCurrent'),
+             ('DirectMissingDrain', 'ActiveEpoch'),
+             ('EarlyClaim', 'ClaimCurrent'),
+             ('TxKeyCollision', 'NamespaceIsolation')]
     records = []
     for name, invariant in cases:
         meta = out / (name + '-states')
         command = ['java', '-Xmx' + args.heap, '-XX:+UseParallelGC', '-cp', str(jar),
                    'tlc2.TLC', '-workers', str(args.workers), '-metadir', str(meta),
                    '-config', str(ROOT / 'models/tla' / (name + '.cfg')),
-                   str(ROOT / 'models/tla/Authority.tla')]
+                   str(ROOT / 'models/tla' / ('Authority.tla' if name in ('Authority','AuthorityNightly','MissingDrain','MissingPermission','EarlyAck') else 'DirectTransfer.tla'))]
         start = time.monotonic()
         log = out / (name + '.log')
         with log.open('w') as stream:
@@ -75,7 +80,7 @@ def main():
         print(f'{name}: exit={code}, expected={invariant or "safe"}, passed={passed}', flush=True)
     report = dict(passed=all(row['passed'] for row in records), tools_version=TOOLS_VERSION,
                   tools_sha256=TOOLS_SHA256, nightly=args.nightly, checks=records,
-                  scope='Bounded single-Host/single-directory safety; no liveness, authentication, crash recovery or C++ memory-model proof.')
+                  scope='Bounded single-Host directory/holder-transfer safety; no liveness, authentication, crash recovery or C++ memory-model proof.')
     (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     return 0 if report['passed'] else 1
 

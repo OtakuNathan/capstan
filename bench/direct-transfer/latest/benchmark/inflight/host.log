@@ -1,0 +1,122 @@
+READY host port=34365 resource_bytes=67108864 trusted_lab=1
+TRANSITION tx=1 epoch=1 status=ok active=0
+ADMIT pin=1 epoch=1 active=1
+TRANSFER issuer=1 tx=1000 from=1 to=2 status=pending epoch=1 active=1
+COMPLETE pin=1 active=0
+TRANSFER_TIMING issuer=1 tx=1000 close_ns=16257599819814 drain_ns=16257602376659 install_ns=16257602376699 reply_ns=16257602380969
+ADMIT pin=2 epoch=2 active=1
+COMPLETE pin=2 active=0
+ADMIT pin=3 epoch=2 active=1
+TRANSFER issuer=2 tx=1001 from=2 to=1 status=pending epoch=2 active=1
+COMPLETE pin=3 active=0
+TRANSFER_TIMING issuer=2 tx=1001 close_ns=16257602853765 drain_ns=16257605360559 install_ns=16257605360609 reply_ns=16257605363549
+ADMIT pin=4 epoch=3 active=1
+COMPLETE pin=4 active=0
+ADMIT pin=5 epoch=3 active=1
+TRANSFER issuer=1 tx=1002 from=1 to=2 status=pending epoch=3 active=1
+COMPLETE pin=5 active=0
+TRANSFER_TIMING issuer=1 tx=1002 close_ns=16257605680223 drain_ns=16257608043386 install_ns=16257608043416 reply_ns=16257608046326
+ADMIT pin=6 epoch=4 active=1
+COMPLETE pin=6 active=0
+ADMIT pin=7 epoch=4 active=1
+TRANSFER issuer=2 tx=1003 from=2 to=1 status=pending epoch=4 active=1
+COMPLETE pin=7 active=0
+TRANSFER_TIMING issuer=2 tx=1003 close_ns=16257608382720 drain_ns=16257610743642 install_ns=16257610743672 reply_ns=16257610748202
+ADMIT pin=8 epoch=5 active=1
+COMPLETE pin=8 active=0
+ADMIT pin=9 epoch=5 active=1
+TRANSFER issuer=1 tx=1004 from=1 to=2 status=pending epoch=5 active=1
+COMPLETE pin=9 active=0
+TRANSFER_TIMING issuer=1 tx=1004 close_ns=16257611125977 drain_ns=16257613482039 install_ns=16257613482069 reply_ns=16257613485059
+ADMIT pin=10 epoch=6 active=1
+COMPLETE pin=10 active=0
+ADMIT pin=11 epoch=6 active=1
+TRANSFER issuer=2 tx=1005 from=2 to=1 status=pending epoch=6 active=1
+COMPLETE pin=11 active=0
+TRANSFER_TIMING issuer=2 tx=1005 close_ns=16257613869345 drain_ns=16257616246307 install_ns=16257616246337 reply_ns=16257616249197
+ADMIT pin=12 epoch=7 active=1
+COMPLETE pin=12 active=0
+ADMIT pin=13 epoch=7 active=1
+TRANSFER issuer=1 tx=1006 from=1 to=2 status=pending epoch=7 active=1
+COMPLETE pin=13 active=0
+TRANSFER_TIMING issuer=1 tx=1006 close_ns=16257616578302 drain_ns=16257618969704 install_ns=16257618969734 reply_ns=16257618972624
+ADMIT pin=14 epoch=8 active=1
+COMPLETE pin=14 active=0
+ADMIT pin=15 epoch=8 active=1
+TRANSFER issuer=2 tx=1007 from=2 to=1 status=pending epoch=8 active=1
+COMPLETE pin=15 active=0
+TRANSFER_TIMING issuer=2 tx=1007 close_ns=16257619340489 drain_ns=16257621688721 install_ns=16257621688751 reply_ns=16257621691281
+ADMIT pin=16 epoch=9 active=1
+COMPLETE pin=16 active=0
+ADMIT pin=17 epoch=9 active=1
+TRANSFER issuer=1 tx=1008 from=1 to=2 status=pending epoch=9 active=1
+COMPLETE pin=17 active=0
+TRANSFER_TIMING issuer=1 tx=1008 close_ns=16257622068646 drain_ns=16257624416808 install_ns=16257624416838 reply_ns=16257624419568
+ADMIT pin=18 epoch=10 active=1
+COMPLETE pin=18 active=0
+ADMIT pin=19 epoch=10 active=1
+TRANSFER issuer=2 tx=1009 from=2 to=1 status=pending epoch=10 active=1
+COMPLETE pin=19 active=0
+TRANSFER_TIMING issuer=2 tx=1009 close_ns=16257624755913 drain_ns=16257627111735 install_ns=16257627111755 reply_ns=16257627114435
+ADMIT pin=20 epoch=11 active=1
+COMPLETE pin=20 active=0
+ADMIT pin=21 epoch=11 active=1
+TRANSFER issuer=1 tx=1010 from=1 to=2 status=pending epoch=11 active=1
+COMPLETE pin=21 active=0
+TRANSFER_TIMING issuer=1 tx=1010 close_ns=16257627525070 drain_ns=16257629863102 install_ns=16257629863132 reply_ns=16257629867772
+ADMIT pin=22 epoch=12 active=1
+COMPLETE pin=22 active=0
+ADMIT pin=23 epoch=12 active=1
+TRANSFER issuer=2 tx=1011 from=2 to=1 status=pending epoch=12 active=1
+COMPLETE pin=23 active=0
+TRANSFER_TIMING issuer=2 tx=1011 close_ns=16257630240567 drain_ns=16257632595199 install_ns=16257632595229 reply_ns=16257632598189
+ADMIT pin=24 epoch=13 active=1
+COMPLETE pin=24 active=0
+ADMIT pin=25 epoch=13 active=1
+TRANSFER issuer=1 tx=1012 from=1 to=2 status=pending epoch=13 active=1
+COMPLETE pin=25 active=0
+TRANSFER_TIMING issuer=1 tx=1012 close_ns=16257632941504 drain_ns=16257635295306 install_ns=16257635295336 reply_ns=16257635298386
+ADMIT pin=26 epoch=14 active=1
+COMPLETE pin=26 active=0
+ADMIT pin=27 epoch=14 active=1
+TRANSFER issuer=2 tx=1013 from=2 to=1 status=pending epoch=14 active=1
+COMPLETE pin=27 active=0
+TRANSFER_TIMING issuer=2 tx=1013 close_ns=16257635641661 drain_ns=16257637989683 install_ns=16257637989713 reply_ns=16257637992693
+ADMIT pin=28 epoch=15 active=1
+COMPLETE pin=28 active=0
+ADMIT pin=29 epoch=15 active=1
+TRANSFER issuer=1 tx=1014 from=1 to=2 status=pending epoch=15 active=1
+COMPLETE pin=29 active=0
+TRANSFER_TIMING issuer=1 tx=1014 close_ns=16257638357948 drain_ns=16257640702869 install_ns=16257640702899 reply_ns=16257640705879
+ADMIT pin=30 epoch=16 active=1
+COMPLETE pin=30 active=0
+ADMIT pin=31 epoch=16 active=1
+TRANSFER issuer=2 tx=1015 from=2 to=1 status=pending epoch=16 active=1
+COMPLETE pin=31 active=0
+TRANSFER_TIMING issuer=2 tx=1015 close_ns=16257641050984 drain_ns=16257643413226 install_ns=16257643413256 reply_ns=16257643417386
+ADMIT pin=32 epoch=17 active=1
+COMPLETE pin=32 active=0
+ADMIT pin=33 epoch=17 active=1
+TRANSFER issuer=1 tx=1016 from=1 to=2 status=pending epoch=17 active=1
+COMPLETE pin=33 active=0
+TRANSFER_TIMING issuer=1 tx=1016 close_ns=16257643812352 drain_ns=16257646154354 install_ns=16257646154384 reply_ns=16257646158964
+ADMIT pin=34 epoch=18 active=1
+COMPLETE pin=34 active=0
+ADMIT pin=35 epoch=18 active=1
+TRANSFER issuer=2 tx=1017 from=2 to=1 status=pending epoch=18 active=1
+COMPLETE pin=35 active=0
+TRANSFER_TIMING issuer=2 tx=1017 close_ns=16257646512868 drain_ns=16257648864070 install_ns=16257648864100 reply_ns=16257648866630
+ADMIT pin=36 epoch=19 active=1
+COMPLETE pin=36 active=0
+ADMIT pin=37 epoch=19 active=1
+TRANSFER issuer=1 tx=1018 from=1 to=2 status=pending epoch=19 active=1
+COMPLETE pin=37 active=0
+TRANSFER_TIMING issuer=1 tx=1018 close_ns=16257649213505 drain_ns=16257651608718 install_ns=16257651608738 reply_ns=16257651611628
+ADMIT pin=38 epoch=20 active=1
+COMPLETE pin=38 active=0
+ADMIT pin=39 epoch=20 active=1
+TRANSFER issuer=2 tx=1019 from=2 to=1 status=pending epoch=20 active=1
+COMPLETE pin=39 active=0
+TRANSFER_TIMING issuer=2 tx=1019 close_ns=16257651964983 drain_ns=16257654327055 install_ns=16257654327085 reply_ns=16257654330095
+ADMIT pin=40 epoch=21 active=1
+COMPLETE pin=40 active=0

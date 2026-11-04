@@ -171,9 +171,9 @@ def main() -> int:
                                 '--host-port', lab.host_port, '--table-port', new_port)
             client2.wait_line(lambda line: line.startswith('READY client '))
             before_takeover = lifecycle_call(a, 'stats')
-            refused = lifecycle_call(client2, 'shared', 'pending')
-            assert refused['outcome'] == 3
-            lifecycle_call(client2, 'fetch', 'busy')
+            refused = lifecycle_call(client2, 'shared', 'wrong_control')
+            assert refused['outcome'] == 1
+            lifecycle_call(client2, 'fetch', 'wrong_control')
             new_table_stats = lifecycle_call(client2, 'table_stats')
             assert new_table_stats['v3'] == 0
             after_takeover = lifecycle_call(a, 'stats')

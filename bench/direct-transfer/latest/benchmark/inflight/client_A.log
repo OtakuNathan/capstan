@@ -1,0 +1,43 @@
+READY client trusted_lab=1
+RESULT command=exclusive status=ok outcome=2 ns=365465 v0=1 v1=1
+RESULT command=fetch status=ok outcome=2 ns=68651 v0=1 v1=2
+RESULT command=transfer status=ok outcome=2 ns=2634526 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=1 v6=1000 v7=2 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2703657 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=40971 v0=3 v1=2
+RESULT command=version status=ok outcome=2 ns=53021 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2408993 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=3 v6=1002 v7=4 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2456163 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=45351 v0=5 v1=2
+RESULT command=version status=ok outcome=2 ns=62441 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2403633 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=5 v6=1004 v7=6 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2454473 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=39120 v0=7 v1=2
+RESULT command=version status=ok outcome=2 ns=65750 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2434433 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=7 v6=1006 v7=8 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2484834 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=52761 v0=9 v1=2
+RESULT command=version status=ok outcome=2 ns=60310 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2400732 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=9 v6=1008 v7=10 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2465384 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=50391 v0=11 v1=2
+RESULT command=version status=ok outcome=2 ns=64721 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2400413 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=11 v6=1010 v7=12 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2461834 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=42461 v0=13 v1=2
+RESULT command=version status=ok outcome=2 ns=57230 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2405972 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=13 v6=1012 v7=14 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2464894 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=48451 v0=15 v1=2
+RESULT command=version status=ok outcome=2 ns=57091 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2394973 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=15 v6=1014 v7=16 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2451413 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=48710 v0=17 v1=2
+RESULT command=version status=ok outcome=2 ns=65801 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2400253 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=17 v6=1016 v7=18 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2461243 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=46200 v0=19 v1=2
+RESULT command=version status=ok outcome=2 ns=52061 v0=0
+RESULT command=transfer status=ok outcome=2 ns=2437913 v0=8382080468518336585 v1=2665481412116007844 v2=574706035245029704 v3=1 v4=2 v5=19 v6=1018 v7=20 v8=1 v9=2
+RESULT command=summary status=ok outcome=2 ns=2492244 v0=8388608 v1=3249939835078574080 v2=16493647825528160256 v3=0
+RESULT command=claim status=ok outcome=2 ns=42691 v0=21 v1=2
+RESULT command=version status=ok outcome=2 ns=56091 v0=0

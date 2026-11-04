@@ -1,0 +1,2 @@
+READY table port=43361 trusted_lab=1
+GRANT tx=1 epoch=1 holders=1
