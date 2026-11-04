@@ -1,0 +1,439 @@
+{
+  "passed": true,
+  "command_exit_code": 0,
+  "platform": "Linux-7.3.1-1-cachyos-x86_64-with-glibc2.44",
+  "machine": "x86_64",
+  "compiler": "c++ (GCC) 16.2.1 20260810",
+  "build_flags": [
+    "CAPSTAN_ASAN:BOOL=OFF",
+    "CAPSTAN_FAST_RUNNER:BOOL=OFF",
+    "CAPSTAN_LTO:BOOL=ON",
+    "CAPSTAN_NATIVE_ARCH:BOOL=ON",
+    "CAPSTAN_NO_EXCEPTIONS:BOOL=ON",
+    "CAPSTAN_NO_EXCEPTION_STRICT:BOOL=ON",
+    "CAPSTAN_TSAN:BOOL=OFF",
+    "CAPSTAN_UV_WORKER:BOOL=ON",
+    "CMAKE_BUILD_TYPE:STRING=Release",
+    "CMAKE_CXX_FLAGS:STRING=",
+    "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -g -DNDEBUG"
+  ],
+  "binary_sha256": {
+    "capstan_bench_host": "7cc2f6435347a24fdb0964e7d455bbe6c5fed77b6a459e94efafde4e9856c417",
+    "capstan_table": "c7c0f0a405fd5fc63e4eac16860f929f12af79608c0f9286c878896d647a5b2a",
+    "capstan_client": "4b28dbf1af916f4111ef989afe20a06626db18facec59cc0a975ee39ca4cc1fb",
+    "capstan_host": "c7648fb6ac168638bd8bfb35a3424ab4b7adfd129627d9a5429d951f02c51c40",
+    "capstan_load": "deb3a4d5aba0bceea151d9854db0914437e12160bd3dee706759661a67c67517"
+  },
+  "dependencies": {
+    "schema_version": 1,
+    "verified_at": "2026-11-04",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "dynabridge",
+        "repository": "https://github.com/OtakuNathan/dynabridge.git",
+        "commit": "1aadab8f4c718d410dbe7ffd77cf7ac967df09b8"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "81f4b3cb0f20b018f0d3fb8db0bf096057f030e8"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "samples_per_round": 1000,
+  "rounds": 4,
+  "order": "AB then BA, repeated if requested",
+  "summary": {
+    "warm_version/omit": {
+      "n": 4000,
+      "p50_ns": 40050,
+      "p95_ns": 44790,
+      "p99_ns": 51900
+    },
+    "resource_summary/omit": {
+      "n": 40,
+      "p50_ns": 2474619,
+      "p95_ns": 2674809,
+      "p99_ns": 2739079
+    },
+    "two_shared_readers/omit": {
+      "n": 240,
+      "p50_ns": 52800,
+      "p95_ns": 69710,
+      "p99_ns": 81340
+    },
+    "warm_version/checked": {
+      "n": 4000,
+      "p50_ns": 41080,
+      "p95_ns": 45500,
+      "p99_ns": 58100
+    },
+    "resource_summary/checked": {
+      "n": 40,
+      "p50_ns": 2492099,
+      "p95_ns": 2721169,
+      "p99_ns": 2826079
+    },
+    "two_shared_readers/checked": {
+      "n": 240,
+      "p50_ns": 53750,
+      "p95_ns": 75480,
+      "p99_ns": 101030
+    },
+    "write_every_1/checked": {
+      "n": 4,
+      "p50_ns": 46800,
+      "p95_ns": 66520,
+      "p99_ns": 66520
+    },
+    "handoff_every_1/checked": {
+      "n": 4,
+      "p50_ns": 74840,
+      "p95_ns": 84370,
+      "p99_ns": 84370
+    },
+    "write_every_10/checked": {
+      "n": 40,
+      "p50_ns": 45220,
+      "p95_ns": 56130,
+      "p99_ns": 67010
+    },
+    "handoff_every_10/checked": {
+      "n": 4,
+      "p50_ns": 73820,
+      "p95_ns": 76030,
+      "p99_ns": 76030
+    },
+    "write_every_100/checked": {
+      "n": 400,
+      "p50_ns": 41530,
+      "p95_ns": 47400,
+      "p99_ns": 54280
+    },
+    "handoff_every_100/checked": {
+      "n": 4,
+      "p50_ns": 75340,
+      "p95_ns": 83300,
+      "p99_ns": 83300
+    },
+    "write_every_1000/checked": {
+      "n": 2000,
+      "p50_ns": 44060,
+      "p95_ns": 47280,
+      "p99_ns": 52290
+    },
+    "handoff_every_1000/checked": {
+      "n": 2,
+      "p50_ns": 82130,
+      "p95_ns": 87730,
+      "p99_ns": 87730
+    },
+    "overload_1/checked": {
+      "n": 2,
+      "p50_ns": 3310,
+      "p95_ns": 5158398,
+      "p99_ns": 5158398
+    },
+    "overload_8/checked": {
+      "n": 16,
+      "p50_ns": 5120,
+      "p95_ns": 40674288,
+      "p99_ns": 40674288
+    },
+    "overload_32/checked": {
+      "n": 64,
+      "p50_ns": 2730,
+      "p95_ns": 147202336,
+      "p99_ns": 162392992
+    },
+    "overload_80/checked": {
+      "n": 160,
+      "p50_ns": 1220,
+      "p95_ns": 274800820,
+      "p99_ns": 310886509
+    }
+  },
+  "grant_validation_increment_ns": {
+    "p50_ns": 1030,
+    "p95_ns": 710,
+    "p99_ns": 6200
+  },
+  "workloads": [
+    {
+      "run": "round0-omit",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 65170361,
+      "driver_throughput_per_s": 15344.398659998216
+    },
+    {
+      "run": "round0-omit",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round0-checked",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 70109300,
+      "driver_throughput_per_s": 14263.442938383352
+    },
+    {
+      "run": "round0-checked",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round1-checked",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 67538240,
+      "driver_throughput_per_s": 14806.426699896236
+    },
+    {
+      "run": "round1-checked",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round1-omit",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 69098750,
+      "driver_throughput_per_s": 14472.041824200873
+    },
+    {
+      "run": "round1-omit",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round2-omit",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 66757141,
+      "driver_throughput_per_s": 14979.670863975436
+    },
+    {
+      "run": "round2-omit",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round2-checked",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 72040369,
+      "driver_throughput_per_s": 13881.106022652382
+    },
+    {
+      "run": "round2-checked",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round3-checked",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 68984649,
+      "driver_throughput_per_s": 14495.978663311022
+    },
+    {
+      "run": "round3-checked",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "round3-omit",
+      "workload": "warm_version",
+      "count": 1000,
+      "wall_ns": 72388959,
+      "driver_throughput_per_s": 13814.261370991673
+    },
+    {
+      "run": "round3-omit",
+      "workload": "resource_and_version_wire",
+      "resource_bytes": 67108864,
+      "bytes_delta": 257030,
+      "version_calls": 1000,
+      "summary_calls": 10,
+      "table_delta": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "run": "handoff-1",
+      "workload": "handoff",
+      "interval": 1,
+      "writes": 4,
+      "wall_ns": 1224510,
+      "control_rpc_delta": 4,
+      "drain_note": "quiescent handoffs; nonzero drain separately evidenced in demo/fault logs",
+      "driver_throughput_per_s": 3266.612767556002
+    },
+    {
+      "run": "handoff-10",
+      "workload": "handoff",
+      "interval": 10,
+      "writes": 40,
+      "wall_ns": 3932029,
+      "control_rpc_delta": 4,
+      "drain_note": "quiescent handoffs; nonzero drain separately evidenced in demo/fault logs",
+      "driver_throughput_per_s": 10172.864950894309
+    },
+    {
+      "run": "handoff-100",
+      "workload": "handoff",
+      "interval": 100,
+      "writes": 400,
+      "wall_ns": 28424571,
+      "control_rpc_delta": 4,
+      "drain_note": "quiescent handoffs; nonzero drain separately evidenced in demo/fault logs",
+      "driver_throughput_per_s": 14072.3319975524
+    },
+    {
+      "run": "handoff-1000",
+      "workload": "handoff",
+      "interval": 1000,
+      "writes": 2000,
+      "wall_ns": 148523026,
+      "control_rpc_delta": 2,
+      "drain_note": "quiescent handoffs; nonzero drain separately evidenced in demo/fault logs",
+      "driver_throughput_per_s": 13465.925478787376
+    }
+  ],
+  "overload": [
+    {
+      "concurrency": 1,
+      "attempts": 2,
+      "ok": 1,
+      "not_submitted": 1,
+      "unknown": 0,
+      "rejected": 0,
+      "wall_ns": 5162888,
+      "host_peak_rss_kib": 73664,
+      "observed_peak_active": 0,
+      "backpressure_note": "Second pending call per connection rejected locally; above the server session limit connections may be rejected before submit or finish Unknown. No timeout releases Host pins."
+    },
+    {
+      "concurrency": 8,
+      "attempts": 16,
+      "ok": 8,
+      "not_submitted": 8,
+      "unknown": 0,
+      "rejected": 0,
+      "wall_ns": 40764938,
+      "host_peak_rss_kib": 73744,
+      "observed_peak_active": 8,
+      "backpressure_note": "Second pending call per connection rejected locally; above the server session limit connections may be rejected before submit or finish Unknown. No timeout releases Host pins."
+    },
+    {
+      "concurrency": 32,
+      "attempts": 64,
+      "ok": 32,
+      "not_submitted": 32,
+      "unknown": 0,
+      "rejected": 0,
+      "wall_ns": 162754422,
+      "host_peak_rss_kib": 73796,
+      "observed_peak_active": 32,
+      "backpressure_note": "Second pending call per connection rejected locally; above the server session limit connections may be rejected before submit or finish Unknown. No timeout releases Host pins."
+    },
+    {
+      "concurrency": 80,
+      "attempts": 160,
+      "ok": 61,
+      "not_submitted": 99,
+      "unknown": 0,
+      "rejected": 0,
+      "wall_ns": 316759527,
+      "host_peak_rss_kib": 73876,
+      "observed_peak_active": 61,
+      "backpressure_note": "Second pending call per connection rejected locally; above the server session limit connections may be rejected before submit or finish Unknown. No timeout releases Host pins."
+    }
+  ],
+  "scope": "Same executable, protocol, GIO TCP, Dynabridge typed object/codec, FF path, Lease, serial lane, authentication envelope and business operation; omit skips only Host grant/effect admission validation.",
+  "limitations": [
+    "Localhost on one machine; no cross-machine result.",
+    "Wall throughput includes Python driver/stdin pacing; client ns excludes driver round trip.",
+    "Host/client stdout logging enabled identically; scheduler and logging may dominate the small validation increment.",
+    "No significance claim for small or negative quantile differences; p99 has few tail samples.",
+    "Summary has only 10 samples per round; its p99 is descriptive, not a reliable tail estimate.",
+    "Shared readers execute serially; no parallel-read claim.",
+    "Overload RSS is a 10ms observed high-water sample, not a proof of total memory bound; queue/session limits are separately tested.",
+    "Overload percentiles combine successes and local rejection attempts; they are not service-only latency.",
+    "Cancellation capability is identical in both modes; neither retries writes."
+  ]
+}

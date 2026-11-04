@@ -1,0 +1,106 @@
+name: C++ contracts and TCP
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cpp-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  release:
+    name: ${{ matrix.compiler }} / ${{ matrix.mode }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+        mode: [exceptions, strict, relaxed, fast-strict]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev pkg-config clang llvm lld
+      - name: Fetch locked upstream commits
+        run: python3 scripts/fetch_deps.py
+      - name: Configure optimized baseline
+        shell: bash
+        run: |
+          options=(-DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DCAPSTAN_UV_WORKER=ON -DCAPSTAN_LTO=ON -DCAPSTAN_NATIVE_ARCH=ON)
+          if [[ '${{ matrix.compiler }}' == 'clang++' ]]; then
+            options+=(-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld)
+          fi
+          if [[ '${{ matrix.mode }}' != 'exceptions' ]]; then
+            options+=(-DCAPSTAN_NO_EXCEPTIONS=ON)
+          fi
+          if [[ '${{ matrix.mode }}' == 'relaxed' ]]; then
+            options+=(-DCAPSTAN_NO_EXCEPTION_STRICT=OFF)
+          fi
+          if [[ '${{ matrix.mode }}' == 'fast-strict' ]]; then
+            options+=(-DCAPSTAN_FAST_RUNNER=ON)
+          fi
+          cmake -S . -B build "${options[@]}"
+      - run: cmake --build build --parallel 2
+      - name: Run full contracts, compile negatives, model and real TCP tests
+        run: ctest --test-dir build --output-on-failure --timeout 90
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-${{ matrix.compiler }}-${{ matrix.mode }}
+          path: |
+            build/Testing/Temporary/
+            build/compile-negative/
+            build/noexception-policy/
+            build/model_report.json
+            build/ctest-*/
+          retention-days: 14
+  offline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/fetch_deps.py
+      - name: Configure without network libraries
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DISABLE_FIND_PACKAGE_PkgConfig=ON -DCAPSTAN_NO_EXCEPTIONS=ON
+      - run: cmake --build build --parallel 2
+      - run: ctest --test-dir build --output-on-failure --timeout 90
+  sanitizers:
+    name: ${{ matrix.sanitizer }} / strict
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        sanitizer: [ASAN, TSAN]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev pkg-config
+      - run: python3 scripts/fetch_deps.py
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCAPSTAN_NO_EXCEPTIONS=ON -DCAPSTAN_UV_WORKER=ON -DCAPSTAN_${{ matrix.sanitizer }}=ON
+      - run: cmake --build build --parallel 2
+      - name: Run lifecycle and TCP fault selection
+        env:
+          ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+          TSAN_OPTIONS: halt_on_error=1
+        run: ctest --test-dir build -R '^(authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults)$' --output-on-failure --timeout 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sanitizer-${{ matrix.sanitizer }}
+          path: |
+            build/Testing/Temporary/
+            build/ctest-ack-faults/
+          retention-days: 14

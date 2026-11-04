@@ -1,0 +1,584 @@
+{
+  "tla": {
+    "passed": true,
+    "tools_version": "1.7.4",
+    "tools_sha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+    "nightly": true,
+    "checks": [
+      {
+        "model": "AuthorityNightly",
+        "exit_code": 0,
+        "expected_counterexample": null,
+        "passed": true,
+        "seconds": 9.544,
+        "states_generated": 356003,
+        "distinct_states": 43018
+      },
+      {
+        "model": "MissingDrain",
+        "exit_code": 12,
+        "expected_counterexample": "ActiveEpoch",
+        "passed": true,
+        "seconds": 4.13,
+        "states_generated": 2037,
+        "distinct_states": 802
+      },
+      {
+        "model": "MissingPermission",
+        "exit_code": 12,
+        "expected_counterexample": "AuthorizedOperations",
+        "passed": true,
+        "seconds": 3.165,
+        "states_generated": 114,
+        "distinct_states": 77
+      },
+      {
+        "model": "EarlyAck",
+        "exit_code": 12,
+        "expected_counterexample": "AckIsInstalled",
+        "passed": true,
+        "seconds": 3.005,
+        "states_generated": 11,
+        "distinct_states": 11
+      }
+    ],
+    "scope": "Bounded single-Host/single-directory safety; no liveness, authentication, crash recovery or C++ memory-model proof."
+  },
+  "date": "2026-11-04",
+  "dependencies": {
+    "schema_version": 1,
+    "verified_at": "2026-11-04",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "dynabridge",
+        "repository": "https://github.com/OtakuNathan/dynabridge.git",
+        "commit": "1aadab8f4c718d410dbe7ffd77cf7ac967df09b8"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "81f4b3cb0f20b018f0d3fb8db0bf096057f030e8"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "source_manifest_match": true,
+  "upstream_review": {
+    "flux_foundry": {
+      "tests_passed": 26,
+      "package_consumer": "passed",
+      "github_ci": "https://github.com/OtakuNathan/flux_foundry/actions/runs/41837448807"
+    },
+    "dynabridge": {
+      "tests_passed": 14,
+      "package_consumer": "passed",
+      "github_ci": "https://github.com/OtakuNathan/dynabridge/actions/runs/41837449150"
+    },
+    "lease": {
+      "tests_passed": 3,
+      "github_ci": "https://github.com/OtakuNathan/lease/actions/runs/41837451586"
+    }
+  },
+  "capstan": {
+    "exceptions": {
+      "ctest_exit_code": 0,
+      "tests_passed": 28,
+      "scope": "all configured tests"
+    },
+    "strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 27,
+      "scope": "all configured tests"
+    },
+    "relaxed": {
+      "ctest_exit_code": 0,
+      "tests_passed": 27,
+      "scope": "all configured tests"
+    },
+    "fast-strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 27,
+      "scope": "all configured tests"
+    },
+    "clang-strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 27,
+      "scope": "all configured tests"
+    },
+    "offline-strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 22,
+      "scope": "all configured tests"
+    },
+    "asan-ubsan-strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 6,
+      "scope": "selected lifecycle/TCP tests"
+    },
+    "tsan-strict": {
+      "ctest_exit_code": 0,
+      "tests_passed": 6,
+      "scope": "selected lifecycle/TCP tests"
+    }
+  },
+  "successful_commands": [
+    {
+      "name": "fetch-deps",
+      "command": [
+        "python3",
+        "scripts/fetch_deps.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "eh-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-eh",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "eh-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-eh",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "eh-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-eh",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "eh-size",
+      "command": [
+        "size",
+        "-A",
+        "build-eh/capstan_host"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "strict-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-strict",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "strict-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-strict",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "strict-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-strict",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "strict-size",
+      "command": [
+        "size",
+        "-A",
+        "build-strict/capstan_host"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "relaxed-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-relaxed",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_NO_EXCEPTION_STRICT=OFF"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "relaxed-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-relaxed",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "relaxed-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-relaxed",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "relaxed-size",
+      "command": [
+        "size",
+        "-A",
+        "build-relaxed/capstan_host"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "fast-strict-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-fast-strict",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_FAST_RUNNER=ON"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "fast-strict-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-fast-strict",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "fast-strict-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-fast-strict",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "clang-strict-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-clang-strict",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCMAKE_CXX_COMPILER=clang++",
+        "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "clang-strict-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-clang-strict",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-clang-strict-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-clang-strict",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCMAKE_CXX_COMPILER=clang++",
+        "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-clang-strict-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-clang-strict",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-clang-strict-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-clang-strict",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-offline-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-offline",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_UV_WORKER=OFF",
+        "-DCAPSTAN_LTO=OFF",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_DISABLE_FIND_PACKAGE_PkgConfig=ON"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-offline-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-offline",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-offline-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-offline",
+        "--output-on-failure"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-asan-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-asan",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCAPSTAN_LTO=OFF",
+        "-DCAPSTAN_NATIVE_ARCH=OFF",
+        "-DCAPSTAN_ASAN=ON"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-asan-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-asan",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-asan-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-asan",
+        "--output-on-failure",
+        "-R",
+        "^(authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults)$"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-tsan-configure",
+      "command": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-tsan",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -g -DNDEBUG",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON",
+        "-DCAPSTAN_LEASE_SOURCE=build-deps/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=build-deps/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=build-deps/flux_foundry",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCAPSTAN_LTO=OFF",
+        "-DCAPSTAN_NATIVE_ARCH=OFF",
+        "-DCAPSTAN_TSAN=ON"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-tsan-build",
+      "command": [
+        "cmake",
+        "--build",
+        "build-tsan",
+        "-j8"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "followup-tsan-tests",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "build-tsan",
+        "--output-on-failure",
+        "-R",
+        "^(authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults)$"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "exception-comparison",
+      "command": [
+        "python3",
+        "scripts/run_noexceptions_comparison.py",
+        "--eh",
+        "build-eh",
+        "--strict",
+        "build-strict",
+        "--relaxed",
+        "build-relaxed",
+        "--output",
+        "results/exceptions"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "cap-increment",
+      "command": [
+        "python3",
+        "scripts/run_benchmark.py",
+        "--build-dir",
+        "build-strict",
+        "--output",
+        "results/cap-increment",
+        "--samples",
+        "1000",
+        "--rounds",
+        "4"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limitations": [
+    "Local validation is loopback TCP, not cross-machine RPC.",
+    "Exception-only throwing-allocation rollback test is omitted without exceptions.",
+    "Sanitizers cover a selected lifecycle/TCP suite; TLA+ is a bounded safety model.",
+    "GitHub Capstan workflows are configured; live run status is available in GitHub Actions."
+  ]
+}

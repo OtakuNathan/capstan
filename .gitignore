@@ -1,0 +1,12 @@
+/build*/
+/work/
+/evidence/
+__pycache__/
+*.pyc
+*.core
+/core
+/.cache/
+**/AGENTS.md
+/CODEX_START.md
+/VALIDATION.md
+/MANIFEST.sha256.json

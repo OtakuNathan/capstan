@@ -1,0 +1,13 @@
+BEGIN_CLASS(dataset)
+    BEGIN_MEMBER_CALLABLE_GROUP(version)
+        DECL_MEMBER_FUNCTION(std::uint64_t)
+    END_MEMBER_CALLABLE_GROUP
+    BEGIN_MEMBER_CALLABLE_GROUP(summary)
+        DECL_MEMBER_FUNCTION(capstan::summary_t)
+    END_MEMBER_CALLABLE_GROUP
+    BEGIN_MEMBER_CALLABLE_GROUP(add_range)
+        DECL_MEMBER_FUNCTION(std::uint64_t, std::uint64_t, std::uint64_t, std::uint64_t)
+    END_MEMBER_CALLABLE_GROUP
+END_CLASS
+BEGIN_CLASS(other_resource)
+END_CLASS

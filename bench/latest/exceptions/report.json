@@ -1,0 +1,400 @@
+{
+  "passed": true,
+  "summary": {
+    "eh/version": {
+      "n": 6000,
+      "pending": 0,
+      "p50_ns": 39200,
+      "p95_ns": 43339,
+      "p99_ns": 48110
+    },
+    "eh/summary": {
+      "n": 300,
+      "pending": 0,
+      "p50_ns": 2465529,
+      "p95_ns": 2484969,
+      "p99_ns": 2562420
+    },
+    "eh/handoff": {
+      "n": 300,
+      "pending": 300,
+      "p50_ns": 2464549,
+      "p95_ns": 2488839,
+      "p99_ns": 2511070
+    },
+    "strict/version": {
+      "n": 6000,
+      "pending": 0,
+      "p50_ns": 39220,
+      "p95_ns": 43840,
+      "p99_ns": 49100
+    },
+    "strict/summary": {
+      "n": 300,
+      "pending": 0,
+      "p50_ns": 2456850,
+      "p95_ns": 2508959,
+      "p99_ns": 2571679
+    },
+    "strict/handoff": {
+      "n": 300,
+      "pending": 300,
+      "p50_ns": 2452600,
+      "p95_ns": 2482349,
+      "p99_ns": 2535430
+    },
+    "relaxed/version": {
+      "n": 6000,
+      "pending": 0,
+      "p50_ns": 38860,
+      "p95_ns": 43850,
+      "p99_ns": 51660
+    },
+    "relaxed/summary": {
+      "n": 300,
+      "pending": 0,
+      "p50_ns": 2447379,
+      "p95_ns": 2508439,
+      "p99_ns": 2547159
+    },
+    "relaxed/handoff": {
+      "n": 300,
+      "pending": 300,
+      "p50_ns": 2442369,
+      "p95_ns": 2474509,
+      "p99_ns": 2506699
+    }
+  },
+  "runs": [
+    {
+      "run": "0-eh",
+      "mode": "eh",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 39329,
+      "p95_ns": 42770,
+      "p99_ns": 46330
+    },
+    {
+      "run": "0-eh",
+      "mode": "eh",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2460449,
+      "p95_ns": 2475909,
+      "p99_ns": 2506339
+    },
+    {
+      "run": "0-eh",
+      "mode": "eh",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2441689,
+      "p95_ns": 2471809,
+      "p99_ns": 2510399
+    },
+    {
+      "run": "0-strict",
+      "mode": "strict",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 38470,
+      "p95_ns": 44090,
+      "p99_ns": 49040
+    },
+    {
+      "run": "0-strict",
+      "mode": "strict",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2455910,
+      "p95_ns": 2525399,
+      "p99_ns": 2563869
+    },
+    {
+      "run": "0-strict",
+      "mode": "strict",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2454210,
+      "p95_ns": 2482849,
+      "p99_ns": 2546469
+    },
+    {
+      "run": "0-relaxed",
+      "mode": "relaxed",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 38170,
+      "p95_ns": 44180,
+      "p99_ns": 50570
+    },
+    {
+      "run": "0-relaxed",
+      "mode": "relaxed",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2450499,
+      "p95_ns": 2515539,
+      "p99_ns": 2530129
+    },
+    {
+      "run": "0-relaxed",
+      "mode": "relaxed",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2447739,
+      "p95_ns": 2477479,
+      "p99_ns": 2506699
+    },
+    {
+      "run": "1-strict",
+      "mode": "strict",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 38920,
+      "p95_ns": 43530,
+      "p99_ns": 48520
+    },
+    {
+      "run": "1-strict",
+      "mode": "strict",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2464490,
+      "p95_ns": 2522769,
+      "p99_ns": 2565569
+    },
+    {
+      "run": "1-strict",
+      "mode": "strict",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2449249,
+      "p95_ns": 2473759,
+      "p99_ns": 2495849
+    },
+    {
+      "run": "1-relaxed",
+      "mode": "relaxed",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 39070,
+      "p95_ns": 43260,
+      "p99_ns": 55160
+    },
+    {
+      "run": "1-relaxed",
+      "mode": "relaxed",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2433349,
+      "p95_ns": 2454180,
+      "p99_ns": 2488349
+    },
+    {
+      "run": "1-relaxed",
+      "mode": "relaxed",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2439290,
+      "p95_ns": 2475159,
+      "p99_ns": 2544359
+    },
+    {
+      "run": "1-eh",
+      "mode": "eh",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 38720,
+      "p95_ns": 43640,
+      "p99_ns": 48110
+    },
+    {
+      "run": "1-eh",
+      "mode": "eh",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2473099,
+      "p95_ns": 2487449,
+      "p99_ns": 2553340
+    },
+    {
+      "run": "1-eh",
+      "mode": "eh",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2469769,
+      "p95_ns": 2484350,
+      "p99_ns": 2496980
+    },
+    {
+      "run": "2-relaxed",
+      "mode": "relaxed",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 40150,
+      "p95_ns": 44090,
+      "p99_ns": 51540
+    },
+    {
+      "run": "2-relaxed",
+      "mode": "relaxed",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2452539,
+      "p95_ns": 2489159,
+      "p99_ns": 2563949
+    },
+    {
+      "run": "2-relaxed",
+      "mode": "relaxed",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2432769,
+      "p95_ns": 2459889,
+      "p99_ns": 2474680
+    },
+    {
+      "run": "2-eh",
+      "mode": "eh",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 39460,
+      "p95_ns": 43080,
+      "p99_ns": 51729
+    },
+    {
+      "run": "2-eh",
+      "mode": "eh",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2460809,
+      "p95_ns": 2487880,
+      "p99_ns": 2565039
+    },
+    {
+      "run": "2-eh",
+      "mode": "eh",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2468869,
+      "p95_ns": 2494399,
+      "p99_ns": 2515149
+    },
+    {
+      "run": "2-strict",
+      "mode": "strict",
+      "workload": "version",
+      "n": 2000,
+      "p50_ns": 39640,
+      "p95_ns": 43770,
+      "p99_ns": 49650
+    },
+    {
+      "run": "2-strict",
+      "mode": "strict",
+      "workload": "summary",
+      "n": 100,
+      "p50_ns": 2452159,
+      "p95_ns": 2478779,
+      "p99_ns": 2571679
+    },
+    {
+      "run": "2-strict",
+      "mode": "strict",
+      "workload": "handoff",
+      "n": 100,
+      "p50_ns": 2451849,
+      "p95_ns": 2490799,
+      "p99_ns": 2535430
+    }
+  ],
+  "expected_summary": [
+    8388608,
+    3249939835078574080,
+    16493647825528160256,
+    0
+  ],
+  "binary_sha256": {
+    "eh": {
+      "capstan_host": "e564bfc5ce15b40be5a010d6661ed2a473e1888f009d321cfed73c10245edf54",
+      "capstan_client": "7f33254c38aa42b8a84286c5ef8feb2aa3dbe792962911bf146101e632b9a5bf",
+      "capstan_table": "2d9f4cc67512da5c979a69824899f67d7922a6affea3e43030151f2cef218a64"
+    },
+    "strict": {
+      "capstan_host": "c7648fb6ac168638bd8bfb35a3424ab4b7adfd129627d9a5429d951f02c51c40",
+      "capstan_client": "4b28dbf1af916f4111ef989afe20a06626db18facec59cc0a975ee39ca4cc1fb",
+      "capstan_table": "c7c0f0a405fd5fc63e4eac16860f929f12af79608c0f9286c878896d647a5b2a"
+    },
+    "relaxed": {
+      "capstan_host": "9b0f1147439590410a21a5850c1bde69ff57f5e65bd4c2e41f1f30b2e11c0ec8",
+      "capstan_client": "bc7150b843474876ea2c90038a206701b053425620f3ad611d64d62c91fae071",
+      "capstan_table": "ba76f17d171b8703c422c7fc71816c04fc18acdee40b593de602eabbd680da81"
+    }
+  },
+  "build_flags": {
+    "eh": [
+      "CAPSTAN_FAST_RUNNER:BOOL=OFF",
+      "CAPSTAN_LTO:BOOL=ON",
+      "CAPSTAN_NATIVE_ARCH:BOOL=ON",
+      "CAPSTAN_NO_EXCEPTIONS:BOOL=OFF",
+      "CAPSTAN_NO_EXCEPTION_STRICT:BOOL=ON",
+      "CAPSTAN_UV_WORKER:BOOL=ON",
+      "CAPSTAN_VECTORIZATION_REPORT:BOOL=OFF",
+      "CMAKE_BUILD_TYPE:STRING=Release",
+      "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -g -DNDEBUG"
+    ],
+    "strict": [
+      "CAPSTAN_FAST_RUNNER:BOOL=OFF",
+      "CAPSTAN_LTO:BOOL=ON",
+      "CAPSTAN_NATIVE_ARCH:BOOL=ON",
+      "CAPSTAN_NO_EXCEPTIONS:BOOL=ON",
+      "CAPSTAN_NO_EXCEPTION_STRICT:BOOL=ON",
+      "CAPSTAN_UV_WORKER:BOOL=ON",
+      "CAPSTAN_VECTORIZATION_REPORT:BOOL=OFF",
+      "CMAKE_BUILD_TYPE:STRING=Release",
+      "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -g -DNDEBUG"
+    ],
+    "relaxed": [
+      "CAPSTAN_FAST_RUNNER:BOOL=OFF",
+      "CAPSTAN_LTO:BOOL=ON",
+      "CAPSTAN_NATIVE_ARCH:BOOL=ON",
+      "CAPSTAN_NO_EXCEPTIONS:BOOL=ON",
+      "CAPSTAN_NO_EXCEPTION_STRICT:BOOL=OFF",
+      "CAPSTAN_UV_WORKER:BOOL=ON",
+      "CAPSTAN_VECTORIZATION_REPORT:BOOL=OFF",
+      "CMAKE_BUILD_TYPE:STRING=Release",
+      "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -g -DNDEBUG"
+    ]
+  },
+  "dependencies": {
+    "schema_version": 1,
+    "verified_at": "2026-11-04",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "dynabridge",
+        "repository": "https://github.com/OtakuNathan/dynabridge.git",
+        "commit": "1aadab8f4c718d410dbe7ffd77cf7ac967df09b8"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "81f4b3cb0f20b018f0d3fb8db0bf096057f030e8"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "scope": "Three rotated orders, same source/compiler/O3/LTO/native/debug symbols, libuv worker, GIO TCP, full grants, protocol/codec/Lease/serial lane, 64MiB data, normal FF runner, no requested cancellation. Only exception compilation and static policy differ. All results checked equal; one ACK RPC per transition.",
+  "limitations": [
+    "One machine, Python paced, logging enabled, no saturation throughput claim.",
+    "No-exception modes have fail-stop general allocator exhaustion; bounded rejection, protocol errors and FF nothrow submission failures remain explicit results.",
+    "Strict/relaxed relax selected static constraints; mandatory Lease topology and FF transform/awaitable contracts remain enforced.",
+    "Power policy unchanged; descriptive three-round percentiles, not a significance claim."
+  ]
+}
