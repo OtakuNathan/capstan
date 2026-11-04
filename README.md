@@ -110,3 +110,7 @@ See [protocol and SDK](docs/direct-transfer.md),
 [latest direct-transfer measurements](bench/direct-transfer/latest/README.md), and
 [the narrated direct-transfer demo](docs/direct-transfer-demo.md).
 `scripts/run_direct_transfer.py` provides the separate transfer fault suite.
+
+A matched [GCC / Clang comparison](bench/compiler-comparison/latest/README.md)
+records three ABBA cycles on the same 3700X configuration; it found no consistent
+latency advantage for Clang in this experiment.

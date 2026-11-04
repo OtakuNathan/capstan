@@ -1,0 +1,113 @@
+[
+  {
+    "mode": "gcc",
+    "stage": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      ".",
+      "-B",
+      "build-gcc",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCAPSTAN_NO_EXCEPTIONS=ON",
+      "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+      "-DCAPSTAN_FAST_RUNNER=ON",
+      "-DCAPSTAN_UV_WORKER=ON",
+      "-DCAPSTAN_LTO=ON",
+      "-DCAPSTAN_NATIVE_ARCH=ON",
+      "-DCAPSTAN_LEASE_SOURCE=<dependency-root>/lease",
+      "-DCAPSTAN_DYNABRIDGE_SOURCE=<dependency-root>/dynabridge",
+      "-DCAPSTAN_FF_SOURCE=<dependency-root>/flux_foundry",
+      "-DCMAKE_CXX_COMPILER=g++"
+    ],
+    "exit_code": 0,
+    "seconds": 0.7716881099986495
+  },
+  {
+    "mode": "gcc",
+    "stage": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "build-gcc",
+      "-j",
+      "8",
+      "--target",
+      "capstan_host",
+      "capstan_table",
+      "capstan_client"
+    ],
+    "exit_code": 0,
+    "seconds": 10.249040096998215
+  },
+  {
+    "mode": "gcc",
+    "stage": "test",
+    "command": [
+      "ctest",
+      "--test-dir",
+      "build-gcc",
+      "-R",
+      "^(four_process_demo|direct_transfer_demo|tcp_direct_transfer)$",
+      "--output-on-failure"
+    ],
+    "exit_code": 0,
+    "seconds": 5.665794910000841
+  },
+  {
+    "mode": "clang",
+    "stage": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      ".",
+      "-B",
+      "build-clang",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCAPSTAN_NO_EXCEPTIONS=ON",
+      "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+      "-DCAPSTAN_FAST_RUNNER=ON",
+      "-DCAPSTAN_UV_WORKER=ON",
+      "-DCAPSTAN_LTO=ON",
+      "-DCAPSTAN_NATIVE_ARCH=ON",
+      "-DCAPSTAN_LEASE_SOURCE=<dependency-root>/lease",
+      "-DCAPSTAN_DYNABRIDGE_SOURCE=<dependency-root>/dynabridge",
+      "-DCAPSTAN_FF_SOURCE=<dependency-root>/flux_foundry",
+      "-DCMAKE_CXX_COMPILER=clang++",
+      "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld"
+    ],
+    "exit_code": 0,
+    "seconds": 0.8438289770019765
+  },
+  {
+    "mode": "clang",
+    "stage": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "build-clang",
+      "-j",
+      "8",
+      "--target",
+      "capstan_host",
+      "capstan_table",
+      "capstan_client"
+    ],
+    "exit_code": 0,
+    "seconds": 7.72294550299921
+  },
+  {
+    "mode": "clang",
+    "stage": "test",
+    "command": [
+      "ctest",
+      "--test-dir",
+      "build-clang",
+      "-R",
+      "^(four_process_demo|direct_transfer_demo|tcp_direct_transfer)$",
+      "--output-on-failure"
+    ],
+    "exit_code": 0,
+    "seconds": 5.658097414001531
+  }
+]

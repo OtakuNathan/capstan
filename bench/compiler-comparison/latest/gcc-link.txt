@@ -1,0 +1,1 @@
+/usr/bin/g++ -O3 -DNDEBUG -flto=auto -fno-fat-lto-objects -Wl,--dependency-file=CMakeFiles/capstan_host.dir/link.d CMakeFiles/capstan_host.dir/src/apps/host.cpp.o -o capstan_host  libcapstan_gio.a /usr/lib/libgio-2.0.so /usr/lib/libgobject-2.0.so /usr/lib/libglib-2.0.so /usr/lib/libuv.so
