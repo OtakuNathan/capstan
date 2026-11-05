@@ -1,0 +1,15 @@
+{
+  "command": [
+    "c++",
+    "-std=c++14",
+    "-O3",
+    "-DNDEBUG",
+    "-pthread",
+    "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+    "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+    "/tmp/capstan-async-20261105/final/build/_deps/dynabridge/benchmarks/async_invocation.cpp",
+    "-o",
+    "/tmp/capstan-async-20261105/results/micro/bench"
+  ],
+  "binary_sha256": "2f61995e6bcbb4250a07a71dad0ee77213e2b81beed906a28604cf5d69329825"
+}

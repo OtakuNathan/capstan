@@ -1,0 +1,11 @@
+mode,scenario,iterations,ns_per_call,new_calls_per_call
+erased,discard,20000,8.62,1.000
+erased,inline,20000,73.80,2.000
+erased,ff_inline,10000,167.96,3.000
+erased,move_only_64k,2000,1176.81,3.000
+erased,thread_create_join,500,22567.89,3.000
+static,discard,20000,12.51,0.000
+static,inline,20000,104.48,1.000
+static,ff_inline,10000,220.37,2.000
+static,move_only_64k,2000,1317.13,2.000
+static,thread_create_join,500,22827.02,2.000

@@ -149,3 +149,6 @@ then released before normal completion reentry. A timeout can deliver Unknown wh
 the detachable endpoint still retains access until transport retirement. Allocation
 fault tests cover pre-submit release and post-submit decode failure as Unknown.
 The optional erased build retains these same lifecycle rules.
+
+The [owned invocation comparison](../bench/async-invocation/latest/README.md) records
+the final component pins, desktop sanitizer checks and matched concrete/erased measurements.

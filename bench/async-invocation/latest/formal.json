@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "tools_version": "1.7.4",
+  "tools_sha256": "936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88",
+  "nightly": false,
+  "scope": "Bounded single-Host directory/holder-transfer safety; no liveness, authentication, crash recovery or C++ memory-model proof.",
+  "checks": [
+    {
+      "model": "Authority",
+      "exit_code": 0,
+      "expected_counterexample": null,
+      "passed": true,
+      "seconds": 11.196,
+      "states_generated": 39935,
+      "distinct_states": 6442
+    },
+    {
+      "model": "MissingDrain",
+      "exit_code": 12,
+      "expected_counterexample": "ActiveEpoch",
+      "passed": true,
+      "seconds": 6.839,
+      "states_generated": 2003,
+      "distinct_states": 789
+    },
+    {
+      "model": "MissingPermission",
+      "exit_code": 12,
+      "expected_counterexample": "AuthorizedOperations",
+      "passed": true,
+      "seconds": 5.335,
+      "states_generated": 102,
+      "distinct_states": 68
+    },
+    {
+      "model": "EarlyAck",
+      "exit_code": 12,
+      "expected_counterexample": "AckIsInstalled",
+      "passed": true,
+      "seconds": 4.011,
+      "states_generated": 10,
+      "distinct_states": 10
+    },
+    {
+      "model": "DirectTransfer",
+      "exit_code": 0,
+      "expected_counterexample": null,
+      "passed": true,
+      "seconds": 7.558,
+      "states_generated": 19677,
+      "distinct_states": 2340
+    },
+    {
+      "model": "BypassSourceCheck",
+      "exit_code": 12,
+      "expected_counterexample": "SourceCurrent",
+      "passed": true,
+      "seconds": 5.425,
+      "states_generated": 80,
+      "distinct_states": 37
+    },
+    {
+      "model": "DirectMissingDrain",
+      "exit_code": 12,
+      "expected_counterexample": "ActiveEpoch",
+      "passed": true,
+      "seconds": 5.599,
+      "states_generated": 56,
+      "distinct_states": 29
+    },
+    {
+      "model": "EarlyClaim",
+      "exit_code": 12,
+      "expected_counterexample": "ClaimCurrent",
+      "passed": true,
+      "seconds": 4.807,
+      "states_generated": 20,
+      "distinct_states": 18
+    },
+    {
+      "model": "TxKeyCollision",
+      "exit_code": 12,
+      "expected_counterexample": "NamespaceIsolation",
+      "passed": true,
+      "seconds": 6.645,
+      "states_generated": 19,
+      "distinct_states": 17
+    }
+  ]
+}

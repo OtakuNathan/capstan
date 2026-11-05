@@ -1,0 +1,54 @@
+Internal ctest changing into directory: /home/nathan/Documents/coding/bridge/build-async-invocation
+Test project /home/nathan/Documents/coding/bridge/build-async-invocation
+      Start  1: ff_python_executor
+ 1/24 Test  #1: ff_python_executor ................   Passed    0.22 sec
+      Start  2: ff_python_executor_lifetime
+ 2/24 Test  #2: ff_python_executor_lifetime .......   Passed    0.15 sec
+      Start  3: ff_uv_executor
+ 3/24 Test  #3: ff_uv_executor ....................   Passed    0.10 sec
+      Start  4: fake_backend_callable_group
+ 4/24 Test  #4: fake_backend_callable_group .......   Passed    0.01 sec
+      Start  5: custom_def_config
+ 5/24 Test  #5: custom_def_config .................   Passed    0.01 sec
+      Start  6: optional
+ 6/24 Test  #6: optional ..........................   Passed    0.01 sec
+      Start  7: rpc_backend
+ 7/24 Test  #7: rpc_backend .......................   Passed    0.01 sec
+      Start  8: rpc_checked
+ 8/24 Test  #8: rpc_checked .......................   Passed    0.01 sec
+      Start  9: rpc_noexceptions_0
+ 9/24 Test  #9: rpc_noexceptions_0 ................   Passed    0.01 sec
+      Start 10: rpc_noexceptions_1
+10/24 Test #10: rpc_noexceptions_1 ................   Passed    0.01 sec
+      Start 11: python_backend
+11/24 Test #11: python_backend ....................   Passed    0.14 sec
+      Start 12: python_runtime
+12/24 Test #12: python_runtime ....................   Passed    0.20 sec
+      Start 13: napi_backend
+13/24 Test #13: napi_backend ......................   Passed    0.01 sec
+      Start 14: napi_backend_real_header
+14/24 Test #14: napi_backend_real_header ..........   Passed    0.00 sec
+      Start 15: napi_runtime
+15/24 Test #15: napi_runtime ......................   Passed    0.37 sec
+      Start 16: async_contract
+16/24 Test #16: async_contract ....................   Passed    0.03 sec
+      Start 17: async_contract_noexceptions_0
+17/24 Test #17: async_contract_noexceptions_0 .....   Passed    0.05 sec
+      Start 18: async_contract_noexceptions_1
+18/24 Test #18: async_contract_noexceptions_1 .....   Passed    0.02 sec
+      Start 19: async_projection
+19/24 Test #19: async_projection ..................   Passed    0.01 sec
+      Start 20: async_projection_noexceptions_0
+20/24 Test #20: async_projection_noexceptions_0 ...   Passed    0.01 sec
+      Start 21: async_projection_noexceptions_1
+21/24 Test #21: async_projection_noexceptions_1 ...   Passed    0.01 sec
+      Start 22: ff_async
+22/24 Test #22: ff_async ..........................   Passed    0.02 sec
+      Start 23: ff_async_noexceptions_0
+23/24 Test #23: ff_async_noexceptions_0 ...........   Passed    0.01 sec
+      Start 24: ff_async_noexceptions_1
+24/24 Test #24: ff_async_noexceptions_1 ...........   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 24
+
+Total Test time (real) =   1.41 sec

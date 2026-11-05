@@ -1,0 +1,871 @@
+{
+  "passed": true,
+  "options": {
+    "build_dir": "/tmp/capstan-async-20261105/baseline/build",
+    "output": "/tmp/capstan-async-20261105/results/baseline",
+    "overwrite": false,
+    "workloads": "version,summary",
+    "concurrency": "1,4,16",
+    "rounds": 3,
+    "samples": 30000,
+    "summary_samples": 512,
+    "warmup": 128,
+    "history_limit": 65536,
+    "inline_version": 1,
+    "trace_requests": 0,
+    "resource_bytes": 67108864
+  },
+  "platform": "Linux-7.3.1-1-cachyos-x86_64-with-glibc2.44",
+  "binary_sha256": {
+    "host": "58202d0a6a5941abb46a1fc8bcfc71ee34027f3dfb276ebbd67f12f4366a0882",
+    "table": "7dcd0a12dccad6b3965808504c4b9448ae5841520ef0aefd9aefa88a94632c2d",
+    "client": "fb51d3d3f770bb4fdf4424cd5bed11d60c2f6202bf0e619fa78cb3dab9ab2f1c",
+    "throughput": "05c16e1557949fd35beb3b605eb1986a6eec471343d3152f9d17f7bafa3e3b24"
+  },
+  "source_sha256": {
+    "src/apps/host.cpp": "80228f11dce7960e85d53b4c834c93ef2462388ab30fbb02c68e4f9797cefe1d",
+    "src/apps/throughput.cpp": "e7da7fb54dbcf03392dadcd56645ab2d42b85d9d3889c39cd38b36c510a8d6ca",
+    "src/apps/common.hpp": "14229ad3efc4b87f115e6d09e48f5b8c4c31be2f09fce54f288f0d87fb49472f",
+    "src/apps/authority_replies.hpp": "1e46451e500741a567c40d2a0315bd6805394b21f866254d584108f698fdef54",
+    "include/capstan/transport/context_dispatch.hpp": "b2329cb7aa23d41e61d2a8240b6c70192d30508a592bcb1276a03b801127ad3e",
+    "src/transport/gio.cpp": "7555e079a87c285e300e9b8911b3e60b4f825ec375a50a8eb0c6b0d56389e1a9",
+    "include/capstan/authority/host.hpp": "64e2e00973a146f76c2e615460d7e189c765efcd82ce060c4dbf543374c973f0",
+    "scripts/bench_concurrency.py": "a68623b0a99bdda5c360dc855b040052801d4aaa63c30fb4a1f0e413572fcbc1",
+    "scripts/run_demo.py": "a08f4747368e7f3e9bc3533fc3439fca35ce05499078afb2308b51b9757413c0",
+    "deps.lock.json": "b53161c0d9e8a4cd943bc42f06f049a563008aa29a322030b42835f5dbd49be5"
+  },
+  "runs": [
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 906906505
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 26.291,
+        "p95_us": 31.442,
+        "p99_us": 35.451
+      },
+      "success_per_second": 33079.48485825449,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 447718911
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 56.543,
+        "p95_us": 63.832,
+        "p99_us": 68.252
+      },
+      "success_per_second": 67006.32754822366,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 541492685
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 283.891,
+        "p95_us": 293.941,
+        "p99_us": 300.152
+      },
+      "success_per_second": 55402.41046838887,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r1-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 571734148
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 286.961,
+        "p95_us": 347.844,
+        "p99_us": 355.364
+      },
+      "success_per_second": 52471.94015775318,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r1-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 420670336
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 47.792,
+        "p95_us": 57.082,
+        "p99_us": 68.163
+      },
+      "success_per_second": 71314.75037022815,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r1-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 897308029
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 27.051,
+        "p95_us": 30.581,
+        "p99_us": 33.771
+      },
+      "success_per_second": 33433.3350760645,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r2-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 867063568
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 27.001,
+        "p95_us": 30.521,
+        "p99_us": 32.831
+      },
+      "success_per_second": 34599.53930390488,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r2-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 481996413
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 247.439,
+        "p95_us": 258.45,
+        "p99_us": 262.17
+      },
+      "success_per_second": 62241.127093201,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "version-r2-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 416799361
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 45.031,
+        "p95_us": 56.993,
+        "p99_us": 63.052
+      },
+      "success_per_second": 71977.07771917626,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      }
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1643194480
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 3240.752,
+        "p95_us": 3269.232,
+        "p99_us": 3289.693
+      },
+      "success_per_second": 311.5881937480705,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r0-c4",
+      "workload": "summary",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1656563078
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 12914.226,
+        "p95_us": 13030.735,
+        "p99_us": 13065.557
+      },
+      "success_per_second": 309.0736518274615,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r0-c16",
+      "workload": "summary",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1661392882
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 52159.059,
+        "p95_us": 52864.802,
+        "p99_us": 52952.776
+      },
+      "success_per_second": 308.17514962725113,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r1-c16",
+      "workload": "summary",
+      "concurrency": 16,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1548901703
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 48348.216,
+        "p95_us": 50055.795,
+        "p99_us": 50627.324
+      },
+      "success_per_second": 330.5568061603455,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r1-c4",
+      "workload": "summary",
+      "concurrency": 4,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1573557893
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 12568.923,
+        "p95_us": 12769.891,
+        "p99_us": 12803.061
+      },
+      "success_per_second": 325.3772881681958,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r1-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1659082726
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 3210.276,
+        "p95_us": 3358.621,
+        "p99_us": 3454.593
+      },
+      "success_per_second": 308.60426184679596,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r2-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1676702818
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 3277.995,
+        "p95_us": 3325.207,
+        "p99_us": 3391.69
+      },
+      "success_per_second": 305.3612092157884,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r2-c16",
+      "workload": "summary",
+      "concurrency": 16,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1655022637
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 52175.767,
+        "p95_us": 52341.553,
+        "p99_us": 52367.839
+      },
+      "success_per_second": 309.36132748497266,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    },
+    {
+      "name": "summary-r2-c4",
+      "workload": "summary",
+      "concurrency": 4,
+      "repeat": 2,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1609683995
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 12521.231,
+        "p95_us": 12981.451,
+        "p99_us": 13004.286
+      },
+      "success_per_second": 318.0748529465251,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        642,
+        642,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      }
+    }
+  ],
+  "scope": "One shared object, loopback TCP, native closed-loop batches; one outstanding RPC per connection.",
+  "limitations": [
+    "Bounded history is not retired: longer batches require an explicit larger finite capacity.",
+    "No open-loop arrival-rate, cross-machine, multiple-object, or indefinite-service claim.",
+    "One load-generator event loop; throughput includes its scheduling and response validation.",
+    "Wall time includes batch ramp-up/drain, excludes setup, warmup and sample-file output.",
+    "Host logging and inline-scalar policy are explicit options; comparisons must identify both."
+  ],
+  "summary": {
+    "version/1": {
+      "latency": {
+        "n": 90000,
+        "p50_us": 26.801,
+        "p95_us": 31.121,
+        "p99_us": 33.941
+      },
+      "throughput_median": 33433.3350760645,
+      "throughput_min": 33079.48485825449,
+      "throughput_max": 34599.53930390488
+    },
+    "version/4": {
+      "latency": {
+        "n": 90000,
+        "p50_us": 50.502,
+        "p95_us": 60.722,
+        "p99_us": 67.662
+      },
+      "throughput_median": 71314.75037022815,
+      "throughput_min": 67006.32754822366,
+      "throughput_max": 71977.07771917626
+    },
+    "version/16": {
+      "latency": {
+        "n": 90000,
+        "p50_us": 280.391,
+        "p95_us": 336.634,
+        "p99_us": 350.734
+      },
+      "throughput_median": 55402.41046838887,
+      "throughput_min": 52471.94015775318,
+      "throughput_max": 62241.127093201
+    },
+    "summary/1": {
+      "latency": {
+        "n": 1536,
+        "p50_us": 3246.42,
+        "p95_us": 3314.637,
+        "p99_us": 3428.932
+      },
+      "throughput_median": 308.60426184679596,
+      "throughput_min": 305.3612092157884,
+      "throughput_max": 311.5881937480705
+    },
+    "summary/4": {
+      "latency": {
+        "n": 1536,
+        "p50_us": 12723.079,
+        "p95_us": 13012.565,
+        "p99_us": 13044.396
+      },
+      "throughput_median": 318.0748529465251,
+      "throughput_min": 309.0736518274615,
+      "throughput_max": 325.3772881681958
+    },
+    "summary/16": {
+      "latency": {
+        "n": 1536,
+        "p50_us": 51874.829,
+        "p95_us": 52787.51,
+        "p99_us": 52920.735
+      },
+      "throughput_median": 309.36132748497266,
+      "throughput_min": 308.17514962725113,
+      "throughput_max": 330.5568061603455
+    }
+  }
+}

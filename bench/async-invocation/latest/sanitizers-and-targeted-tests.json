@@ -1,0 +1,154 @@
+[
+  {
+    "name": "bridge_asan_ubsan",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/build/_deps/dynabridge/tests/async_contract.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/bridge_asan_ubsan"
+    ]
+  },
+  {
+    "name": "typed_asan_ubsan",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/tests/integration/async_typed.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/typed_asan_ubsan"
+    ]
+  },
+  {
+    "name": "callback_asan_ubsan",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-fsanitize=address,undefined",
+      "-fno-omit-frame-pointer",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/tests/integration/callback.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/callback_asan_ubsan"
+    ]
+  },
+  {
+    "name": "allocation_exceptions",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/tests/integration/allocation.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/allocation_exceptions"
+    ]
+  },
+  {
+    "name": "bridge_tsan",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-fsanitize=thread",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/build/_deps/dynabridge/tests/async_contract.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/bridge_tsan"
+    ]
+  },
+  {
+    "name": "clang_erased_strict",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "clang++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-fno-exceptions",
+      "-DDYNABRIDGE_NO_EXCEPTION_STRICT=1",
+      "-DFLUX_FOUNDRY_NO_EXCEPTION_STRICT=1",
+      "-DCAPSTAN_NO_EXCEPTION_STRICT=1",
+      "-DCAPSTAN_ERASED_INVOCATIONS=1",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/tests/integration/async_typed.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/clang_erased_strict"
+    ]
+  },
+  {
+    "name": "cuda_completion_cpu",
+    "compile_exit": 0,
+    "run_exit": 0,
+    "command": [
+      "c++",
+      "-std=c++14",
+      "-O1",
+      "-g",
+      "-pthread",
+      "-I/tmp/capstan-async-20261105/final/include",
+      "-I/tmp/capstan-async-20261105/final",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/dynabridge",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/flux_foundry",
+      "-I/tmp/capstan-async-20261105/final/build/_deps/lease/lease",
+      "/tmp/capstan-async-20261105/final/build/_deps/flux_foundry/test/cuda_completion_condition.cpp",
+      "-o",
+      "/tmp/capstan-async-20261105/final/validation/cuda_completion_cpu"
+    ]
+  }
+]

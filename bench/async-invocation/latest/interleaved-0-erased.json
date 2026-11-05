@@ -1,0 +1,208 @@
+{
+  "passed": true,
+  "options": {
+    "build_dir": "/tmp/capstan-async-20261105/final/build-erased",
+    "output": "/tmp/capstan-async-20261105/results/interleaved-0-erased",
+    "overwrite": false,
+    "workloads": "version",
+    "concurrency": "1,4,16",
+    "rounds": 1,
+    "samples": 50000,
+    "summary_samples": 256,
+    "warmup": 128,
+    "history_limit": 65536,
+    "inline_version": 1,
+    "trace_requests": 0,
+    "resource_bytes": 67108864
+  },
+  "platform": "Linux-7.3.1-1-cachyos-x86_64-with-glibc2.44",
+  "binary_sha256": {
+    "host": "1dc061b8620d83dd9047300c8554e8e23a8c412340187176ad23178d0041e985",
+    "table": "02b4a549eb54c2e7eee132ed7a338d67db07a1939d2cf99e6f27d63428a85014",
+    "client": "4658fadc53e75913fdf1cb0361f5f8e6daa0d5bc01ccef24648721d854f85366",
+    "throughput": "f5e9de69c01d9592c1fe573edf0fae7b0aeeb628cb7545c650fc6575d9e00498"
+  },
+  "source_sha256": {
+    "src/apps/host.cpp": "80228f11dce7960e85d53b4c834c93ef2462388ab30fbb02c68e4f9797cefe1d",
+    "src/apps/throughput.cpp": "d64efb4c6925d73eb27f5271dd37c714467ce16f822be60f3fa3cfa7d764823f",
+    "src/apps/common.hpp": "14229ad3efc4b87f115e6d09e48f5b8c4c31be2f09fce54f288f0d87fb49472f",
+    "src/apps/authority_replies.hpp": "1e46451e500741a567c40d2a0315bd6805394b21f866254d584108f698fdef54",
+    "include/capstan/transport/context_dispatch.hpp": "b2329cb7aa23d41e61d2a8240b6c70192d30508a592bcb1276a03b801127ad3e",
+    "src/transport/gio.cpp": "7555e079a87c285e300e9b8911b3e60b4f825ec375a50a8eb0c6b0d56389e1a9",
+    "include/capstan/authority/host.hpp": "64e2e00973a146f76c2e615460d7e189c765efcd82ce060c4dbf543374c973f0",
+    "scripts/bench_concurrency.py": "a68623b0a99bdda5c360dc855b040052801d4aaa63c30fb4a1f0e413572fcbc1",
+    "scripts/run_demo.py": "a08f4747368e7f3e9bc3533fc3439fca35ce05499078afb2308b51b9757413c0",
+    "deps.lock.json": "ac63050772296e137187ab30c00691b08071fbd2dee71f3075da26c3badba4fb"
+  },
+  "runs": [
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1514339530
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 27.0,
+        "p95_us": 32.35,
+        "p99_us": 33.791
+      },
+      "success_per_second": 33017.69451927336,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        50130,
+        50130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      }
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 748145886
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 54.261,
+        "p95_us": 60.841,
+        "p99_us": 66.211
+      },
+      "success_per_second": 66831.88524543995,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        50130,
+        50130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      }
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 846071307
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 256.683,
+        "p95_us": 319.194,
+        "p99_us": 325.684
+      },
+      "success_per_second": 59096.6737511641,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        50130,
+        50130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      }
+    }
+  ],
+  "scope": "One shared object, loopback TCP, native closed-loop batches; one outstanding RPC per connection.",
+  "limitations": [
+    "Bounded history is not retired: longer batches require an explicit larger finite capacity.",
+    "No open-loop arrival-rate, cross-machine, multiple-object, or indefinite-service claim.",
+    "One load-generator event loop; throughput includes its scheduling and response validation.",
+    "Wall time includes batch ramp-up/drain, excludes setup, warmup and sample-file output.",
+    "Host logging and inline-scalar policy are explicit options; comparisons must identify both."
+  ],
+  "summary": {
+    "version/1": {
+      "latency": {
+        "n": 50000,
+        "p50_us": 27.0,
+        "p95_us": 32.35,
+        "p99_us": 33.791
+      },
+      "throughput_median": 33017.69451927336,
+      "throughput_min": 33017.69451927336,
+      "throughput_max": 33017.69451927336
+    },
+    "version/4": {
+      "latency": {
+        "n": 50000,
+        "p50_us": 54.261,
+        "p95_us": 60.841,
+        "p99_us": 66.211
+      },
+      "throughput_median": 66831.88524543995,
+      "throughput_min": 66831.88524543995,
+      "throughput_max": 66831.88524543995
+    },
+    "version/16": {
+      "latency": {
+        "n": 50000,
+        "p50_us": 256.683,
+        "p95_us": 319.194,
+        "p99_us": 325.684
+      },
+      "throughput_median": 59096.6737511641,
+      "throughput_min": 59096.6737511641,
+      "throughput_max": 59096.6737511641
+    }
+  }
+}
