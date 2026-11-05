@@ -139,13 +139,19 @@ For the one-command Linux/M1 Max migration benchmark, run
 configuration, runs tests, measures four object sizes and creates a shareable
 result archive. See [the machine benchmark guide](docs/benchmark-your-machine.md).
 
-## M1 Max migration measurements
+## Migration measurements on real hardware
 
-User-reported full benchmark on an Apple M1 Max running macOS 15.3.2 arm64,
-revision `ad935d959a1b84014259441db9717c3a4d91e0e5`. The build uses Release/O3,
+Both tables are full benchmark runs on physical machines, with two separate
+Host processes and a coordinator communicating over local loopback TCP.
+Both builds use Release/O3,
 exceptions enabled, FF fast runner, erased invocations, UV worker and OpenSSL
 SHA-256; LTO and native tuning are off. Each size has five measured rounds after
 one discarded warm-up, using fresh Host processes over loopback TCP.
+
+### Apple M1 Max
+
+macOS 15.3.2 arm64, revision `ad935d959a1b84014259441db9717c3a4d91e0e5`.
+Results supplied from the full `bench_machine.py --migration` summary.
 
 | Native MiB | Copy ms | Paste #1 ms | Paste #2 ms | Cut median ms | Cut min–max ms | Package MiB/s |
 |---:|---:|---:|---:|---:|---:|---:|
@@ -153,6 +159,19 @@ one discarded warm-up, using fresh Host processes over loopback TCP.
 | 8 | 5.72 | 12.29 | 9.14 | 15.21 | 14.40–15.53 | 526.10 |
 | 32 | 18.93 | 40.84 | 34.87 | 55.26 | 54.11–56.91 | 579.09 |
 | 64 | 35.99 | 78.36 | 70.69 | **111.73** | 105.36–116.52 | **572.80** |
+
+### AMD Ryzen 7 3700X
+
+8 cores / 16 threads, 32 GiB RAM, Linux x86_64, GCC 16.2.1. Results from the
+full one-command migration benchmark validation run, using the same workload
+and build-option profile as the M1 Max run.
+
+| Native MiB | Copy ms | Paste #1 ms | Paste #2 ms | Cut median ms | Cut min–max ms | Package MiB/s |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 2.03 | 3.08 | 2.12 | 3.99 | 3.95–4.23 | 250.91 |
+| 8 | 6.93 | 12.34 | 10.18 | 18.13 | 17.31–18.43 | 441.23 |
+| 32 | 23.69 | 43.47 | 42.22 | 64.29 | 63.96–64.78 | 497.74 |
+| 64 | 45.23 | 84.32 | 79.10 | **124.73** | 123.88–125.81 | **513.12** |
 
 Values except ranges are medians. Cut includes reservations, Drain, capture,
 transfer, validation/restoration, activation and cleanup. At 64 MiB, the same
