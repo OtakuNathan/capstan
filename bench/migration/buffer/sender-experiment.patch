@@ -1,0 +1,62 @@
+--- a/include/capstan/migration/wire.hpp
++++ b/include/capstan/migration/wire.hpp
+@@ -21,6 +21,18 @@
+ }
+ inline bool try_decode_chunk_reply(bytes&&,chunk_reply_view&)=delete;
+ inline bool try_decode_chunk_reply(const bytes&&,chunk_reply_view&)=delete;
++// Synchronous capture into an owning transport frame. The transport never sees
++// a pointer into the export/snapshot buffer, so release and late sends stay safe.
++inline bytes encode_chunk_reply(std::uint64_t offset,const std::uint8_t* data,std::size_t size) {
++    namespace w=capstan::wire;
++    if(!data || size>transfer_receiver::chunk_bytes)
++        CAPSTAN_RAISE(dynabridge::rpc::protocol_error("invalid chunk buffer"));
++    auto out=w::detail::reply_writer(outcome::completed,status::ok,2,14+size);
++    w::codec::encode_value(out,w::u(offset));
++    out.integer<std::uint8_t>(static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string));
++    out.raw(reinterpret_cast<const char*>(data),size);
++    return out.finish();
++}
+ // New schema namespace; existing grant and business RPC formats are unchanged.
+ inline std::string encode_manifest(const manifest& m) {
+     namespace w=capstan::wire;
+--- a/src/apps/migration_peer.hpp
++++ b/src/apps/migration_peer.hpp
+@@ -6,6 +6,14 @@
+ #include <capstan/migration/clipboard.hpp>
+ namespace app {
+ inline gio_limits transfer_limits() noexcept {gio_limits limits;limits.max_inflight=4;return limits;}
++inline void reply_chunk(io_completion done,std::uint64_t offset,const std::uint8_t* data,std::size_t size) noexcept {
++    io_result result{outcome::unknown,{}};
++    CAPSTAN_TRY {result={outcome::completed,migration::encode_chunk_reply(offset,data,size)};}
++    CAPSTAN_CATCH_ALL {}
++    // Finish capture before invoking a continuation that could release source
++    // storage. Even allocation failure must consume the accepted completion.
++    if(done) {CAPSTAN_TRY {done(std::move(result));} CAPSTAN_CATCH_ALL {}}
++}
+ // Four accepted exchanges at most. The receiver owns offsets, duplicate checks
+ // and ordered digest progress; transport callbacks retain this operation until
+ // every accepted exchange has completed, even after the first failure.
+--- a/src/apps/host.cpp
++++ b/src/apps/host.cpp
+@@ -493,8 +493,8 @@
+         auto offset=wire::number(r.args[1]);
+         if(offset>=ref.size || offset%migration::transfer_receiver::chunk_bytes) {app::reply(std::move(done),status::invalid);return;}
+         auto size=std::min<std::uint64_t>(std::uint64_t(migration::transfer_receiver::chunk_bytes),ref.size-offset);
+-        auto first=record.payload->begin()+static_cast<std::size_t>(offset);
+-        app::reply(std::move(done),status::ok,{wire::u(offset),wire::value::string(std::string(first,first+static_cast<std::size_t>(size)))});
++        auto first=record.payload->data()+static_cast<std::size_t>(offset);
++        app::reply_chunk(std::move(done),offset,first,static_cast<std::size_t>(size));
+     }
+     void handle(id,bytes frame,io_completion done) {
+         CAPSTAN_TRY {
+@@ -578,8 +578,8 @@
+                     auto offset=wire::number(decoded.args[1]);
+                     if(offset>=record.payload->size() || offset%migration::transfer_receiver::chunk_bytes) {app::reply(std::move(done),status::invalid);return;}
+                     auto length=std::min<std::uint64_t>(std::uint64_t(migration::transfer_receiver::chunk_bytes),record.payload->size()-offset);
+-                    auto first=record.payload->begin()+static_cast<std::size_t>(offset);
+-                    app::reply(std::move(done),status::ok,{wire::u(offset),wire::value::string(std::string(first,first+static_cast<std::size_t>(length)))});return;
++                    auto first=record.payload->data()+static_cast<std::size_t>(offset);
++                    app::reply_chunk(std::move(done),offset,first,static_cast<std::size_t>(length));return;
+                 }
+                 if(decoded.method==migration::freeze_command) {
+                     if(trace_migration_metrics && metric_sequence!=ticket.sequence) {

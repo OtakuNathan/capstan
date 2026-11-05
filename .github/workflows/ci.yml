@@ -10,6 +10,27 @@ concurrency:
   group: cpp-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  formal:
+    name: Bounded authority, Lease and data-transfer contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: python3 scripts/check_tla.py --download-tools --workers 2 --heap 512m --output build-tla
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bounded-formal-results
+          path: |
+            build-tla/*.log
+            build-tla/report.json
   macos:
     name: Apple Silicon / fast-strict
     runs-on: macos-15
@@ -24,18 +45,24 @@ jobs:
       - name: Check native architecture and install dependencies
         run: |
           test "$(uname -m)" = arm64
-          brew install cmake pkgconf glib libuv
+          brew install cmake pkgconf glib libuv openssl@3
       - name: Build, run full tests and validate machine benchmark entry point
         run: |
           python_executable="$(command -v python3)"
           # Reproduce a native Python invocation from a shell missing Homebrew's PATH.
           PATH=/usr/bin:/bin:/usr/sbin:/sbin "$python_executable" scripts/bench_machine.py --quick --jobs 3 --build-dir build-macos --output work/macos-smoke
+      - name: Validate migration benchmark and result bundle
+        run: |
+          python_executable="$(command -v python3)"
+          PATH=/usr/bin:/bin:/usr/sbin:/sbin "$python_executable" scripts/bench_machine.py --migration --quick --jobs 3 --build-dir build-macos --output work/macos-migration-smoke
+          tar -tzf work/macos-migration-smoke/capstan-migration-results.tar.gz
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: macos-arm64-validation
           path: |
             work/macos-smoke/
+            work/macos-migration-smoke/
             build-macos/Testing/Temporary/
           retention-days: 14
   release:
@@ -53,13 +80,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install build dependencies
-        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev pkg-config clang llvm lld
+        run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev libssl-dev pkg-config clang llvm lld
       - name: Fetch locked upstream commits
         run: python3 scripts/fetch_deps.py
       - name: Configure optimized baseline
         shell: bash
         run: |
-          options=(-DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DCAPSTAN_UV_WORKER=ON -DCAPSTAN_LTO=ON -DCAPSTAN_NATIVE_ARCH=ON)
+          options=(-DCAPSTAN_SHA256_BACKEND=OPENSSL -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DCAPSTAN_UV_WORKER=ON -DCAPSTAN_LTO=ON -DCAPSTAN_NATIVE_ARCH=ON)
           if [[ '${{ matrix.compiler }}' == 'clang++' ]]; then
             options+=(-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld)
           fi
@@ -67,7 +94,7 @@ jobs:
             options+=(-DCAPSTAN_NO_EXCEPTIONS=ON)
           fi
           if [[ '${{ matrix.mode }}' == 'relaxed' ]]; then
-            options+=(-DCAPSTAN_NO_EXCEPTION_STRICT=OFF)
+            options+=(-DCAPSTAN_NO_EXCEPTION_STRICT=OFF -DCAPSTAN_SHA256_BACKEND=GLIB)
           fi
           if [[ '${{ matrix.mode }}' == 'fast-strict' ]]; then
             options+=(-DCAPSTAN_FAST_RUNNER=ON)
@@ -117,7 +144,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev pkg-config
+      - run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev libssl-dev pkg-config
       - run: python3 scripts/fetch_deps.py
       - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCAPSTAN_NO_EXCEPTIONS=ON -DCAPSTAN_UV_WORKER=ON -DCAPSTAN_${{ matrix.sanitizer }}=ON
       - run: cmake --build build --parallel 2
@@ -126,7 +153,7 @@ jobs:
           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
           TSAN_OPTIONS: halt_on_error=1
-        run: ctest --test-dir build -R '^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|async_typed_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
+        run: ctest --test-dir build -R '^(reply_codec_test|snapshot_digest_test|migration_wire_test|migration_authority_test|migration_host_test|migration_capture_abort_test|migration_peer_test|clipboard_test|migration_process_demo|migration_profile_read|migration_profile_write|migration_test|direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|async_typed_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
       - uses: actions/upload-artifact@v4
         if: always()
         with:

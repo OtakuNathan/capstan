@@ -20,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--jar', type=Path, default=os.environ.get('TLA2TOOLS_JAR'))
     parser.add_argument('--download-tools', action='store_true')
-    parser.add_argument('--nightly', action='store_true', help='Explore three epochs instead of two')
+    parser.add_argument('--nightly', action='store_true', help='Increase epoch, chunk, pin, Lease reader and value bounds')
     parser.add_argument('--workers', type=int, default=2)
     parser.add_argument('--heap', default='512m')
     parser.add_argument('--timeout', type=int, default=600, help='Per model, seconds')
@@ -50,14 +50,59 @@ def main():
              ('BypassSourceCheck', 'SourceCurrent'),
              ('DirectMissingDrain', 'ActiveEpoch'),
              ('EarlyClaim', 'ClaimCurrent'),
-             ('TxKeyCollision', 'NamespaceIsolation')]
+             ('TxKeyCollision', 'NamespaceIsolation'),
+             ('DataTransferNightly' if args.nightly else 'DataTransfer', None),
+             ('EarlySeal', 'PreparedComplete'),
+             ('ObjectMigrationNightly' if args.nightly else 'ObjectMigration', None),
+             ('MigrationMissingDrain', 'DrainBeforeFreeze'),
+             ('EarlyActivation', 'ActivationFenced'),
+             ('MigrationTimeoutReopens', 'CommittedSourceClosed'),
+             ('MigrationRollback', 'ActivationCommitted'),
+             ('MigrationDropsDedup', 'DedupPreserved'),
+             ('MigrationCaptureReleasedEarly', 'CaptureProtected'),
+             ('ImportReservation', None), ('ImportOpenDuringReceive', 'ReservedGate'),
+             ('Clipboard', None), ('CloneUsesLiveData', 'CopyTimeValue'),
+             ('CloneReusesIdentity', 'CloneIdentity'), ('CloneResurrectsAbort', 'AbortTerminal'),
+             ('PlacementReplay', None), ('RetireLaterPlacement', 'ActiveData'), ('PublishOldPlacement', 'CurrentRoute'),
+             ('LeaseCopyCutNightly' if args.nightly else 'LeaseCopyCut', None),
+             ('LeaseCopyWriteWithReaders', 'WriteExclusion'),
+             ('LeaseCopyDetachReleasesBorrow', 'CopyBorrowHeld'),
+             ('LeaseCutReadOnly', 'CutRequiresWriteAuthority'),
+             ('LeaseCutWithReaders', 'CutHasNoReaders'),
+             ('LeaseCutMissingDrain', 'FrozenHasNoPins'),
+             ('LeaseCommitBeforePrepared', 'CommitHasPreparedAck'),
+             ('LeaseCutDuplicatesWriter', 'SingleWriteAuthority'),
+             ('LeaseDisconnectRollsBack', 'CommitIsStable'),
+             ('LeaseAbortReopensOld', 'SealedNeverReopens'),
+             ('LeaseSharedCopyWitness', 'NoSharedCopyCompletion'),
+             ('LeaseLostAckWitness', 'NoCommittedLostAck'),
+             ('LeaseAbortWitness', 'NoFreshAbortCompletion'),
+             ('WindowedDataTransferNightly' if args.nightly else 'WindowedDataTransfer', None),
+             ('WindowUnbounded', 'WindowBound'), ('WindowWrongBinding', 'BindingIsolation'),
+             ('WindowOverwriteDuplicate', 'DuplicatesPreserved'), ('WindowEarlyReady', 'ReadyComplete'),
+             ('WindowAbortResurrect', 'AbortTerminal'), ('WindowHashOutOfOrder', 'HashedPrefix'),
+             ('WindowReorderWitness', 'NoReordering'),
+             ('CaptureOverlapNightly' if args.nightly else 'CaptureOverlap', None),
+             ('CaptureAllowsWriter', 'CaptureExcludesWriters'), ('CaptureDropsPin', 'CaptureProtected'),
+             ('CaptureEarlyHistory', 'CommittedImage'), ('CaptureOverlapWitness', 'NoOverlap')]
+    modules = {name: 'DataTransfer' for name in ('DataTransfer', 'DataTransferNightly', 'EarlySeal')}
+    modules.update({name: 'ObjectMigration' for name in ('ObjectMigration', 'ObjectMigrationNightly',
+        'MigrationMissingDrain', 'EarlyActivation', 'MigrationTimeoutReopens', 'MigrationRollback', 'MigrationDropsDedup', 'MigrationCaptureReleasedEarly')})
+    modules.update({name: 'ImportReservation' for name in ('ImportReservation', 'ImportOpenDuringReceive')})
+    modules.update({name: 'Clipboard' for name in ('Clipboard', 'CloneUsesLiveData', 'CloneReusesIdentity', 'CloneResurrectsAbort')})
+    modules.update({name: 'PlacementReplay' for name in ('PlacementReplay', 'RetireLaterPlacement', 'PublishOldPlacement')})
+    lease_cases = {name for name, _ in cases if name.startswith('Lease')}
+    modules.update({name: 'LeaseCopyCut' for name in lease_cases})
+    modules.update({name: 'WindowedDataTransfer' for name, _ in cases if name.startswith('Window')})
+    modules.update({name: 'CaptureOverlap' for name, _ in cases if name.startswith('Capture')})
+    witnesses = {'LeaseSharedCopyWitness', 'LeaseLostAckWitness', 'LeaseAbortWitness', 'WindowReorderWitness', 'CaptureOverlapWitness'}
     records = []
     for name, invariant in cases:
         meta = out / (name + '-states')
         command = ['java', '-Xmx' + args.heap, '-XX:+UseParallelGC', '-cp', str(jar),
                    'tlc2.TLC', '-workers', str(args.workers), '-metadir', str(meta),
                    '-config', str(ROOT / 'models/tla' / (name + '.cfg')),
-                   str(ROOT / 'models/tla' / ('Authority.tla' if name in ('Authority','AuthorityNightly','MissingDrain','MissingPermission','EarlyAck') else 'DirectTransfer.tla'))]
+                   str(ROOT / 'models/tla' / (modules[name] + '.tla' if name in modules else 'Authority.tla' if name in ('Authority','AuthorityNightly','MissingDrain','MissingPermission','EarlyAck') else 'DirectTransfer.tla'))]
         start = time.monotonic()
         log = out / (name + '.log')
         with log.open('w') as stream:
@@ -72,15 +117,16 @@ def main():
         else:
             passed = code == 0 and 'Model checking completed. No error has been found.' in text
         states = re.findall(r'(\d+) states generated, (\d+) distinct states found', text)
-        records.append(dict(model=name, command=command, exit_code=code,
+        records.append(dict(model=name, kind='reachability' if name in witnesses else 'mutant' if invariant else 'safety',
+                            command=command, exit_code=code,
                             expected_counterexample=invariant, passed=passed,
                             seconds=round(time.monotonic()-start, 3),
                             states_generated=int(states[-1][0]) if states else None,
                             distinct_states=int(states[-1][1]) if states else None))
-        print(f'{name}: exit={code}, expected={invariant or "safe"}, passed={passed}', flush=True)
+        print(f'{name}: kind={records[-1]["kind"]}, exit={code}, expected={invariant or "safe"}, passed={passed}', flush=True)
     report = dict(passed=all(row['passed'] for row in records), tools_version=TOOLS_VERSION,
                   tools_sha256=TOOLS_SHA256, nightly=args.nightly, checks=records,
-                  scope='Bounded single-Host directory/holder-transfer safety; no liveness, authentication, crash recovery or C++ memory-model proof.')
+                  scope='Bounded authority, data receiver, clipboard, Lease permissions, placement and migration-decision safety with bounded reachability witnesses; no authentication, crash recovery, general liveness or C++ memory-model proof.')
     (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     return 0 if report['passed'] else 1
 

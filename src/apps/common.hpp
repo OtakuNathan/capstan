@@ -62,8 +62,13 @@ public:
         CAPSTAN_CATCH_ALL {return false;}
     }
 };
-inline void reply(io_completion done,status code,std::vector<wire::value> values={}) {
-    done({outcome::completed,wire::encode_reply(code==status::ok ? outcome::completed : outcome::rejected,code,values)});
+inline void reply(io_completion done,status code,std::vector<wire::value> values={}) noexcept {
+    io_result result{outcome::unknown,{}};
+    CAPSTAN_TRY {result={outcome::completed,wire::encode_reply(code==status::ok ? outcome::completed : outcome::rejected,code,values)};}
+    CAPSTAN_CATCH_ALL {}
+    // Keep the callback until encoding finishes; a failed encoding must still
+    // retire the accepted completion rather than leave the connection pending.
+    if(done) {CAPSTAN_TRY {done(std::move(result));} CAPSTAN_CATCH_ALL {}}
 }
 inline void post(GMainContext* context,std::function<void()> work) {
     post_context(context,std::move(work));

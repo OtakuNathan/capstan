@@ -12,6 +12,8 @@ struct transport_stats {
 };
 struct gio_limits {
     std::size_t max_frame=65536, max_connections=64, max_queued_frames=8;
+    // Opt-in pipelining; ordinary RPC retains one exchange at a time.
+    std::size_t max_inflight=1;
 };
 // Wire: u32 big-endian length, u64 big-endian exchange sequence, payload.
 // max_frame bounds payload bytes; sequence is echoed to fence duplicate replies.

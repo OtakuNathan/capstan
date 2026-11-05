@@ -172,7 +172,7 @@ struct channel : std::enable_shared_from_this<channel> {
     }
 };
 bool validate_limits(const gio_limits& limits) {
-    if(!limits.max_frame || limits.max_frame>65536 || !limits.max_connections || limits.max_connections>1024 || !limits.max_queued_frames || limits.max_queued_frames>64)
+    if(!limits.max_frame || limits.max_frame>65536 || !limits.max_connections || limits.max_connections>1024 || !limits.max_queued_frames || limits.max_queued_frames>64 || !limits.max_inflight || limits.max_inflight>limits.max_queued_frames)
         return false;
     return true;
 }
@@ -180,13 +180,22 @@ bool validate_limits(const gio_limits& limits) {
 struct gio_client::state : std::enable_shared_from_this<state> {
     std::shared_ptr<counters> counts=std::make_shared<counters>();
     std::shared_ptr<channel> wire;
-    io_completion pending;
-    std::uint64_t next_sequence=1,pending_sequence=0,completed_sequence=0;
-    void finish(io_result result) noexcept {
-        auto callback=std::move(pending);
-        pending={};
-        if(callback) completed_sequence=pending_sequence;
+    struct exchange {std::uint64_t sequence=0;io_completion completion;};
+    std::array<exchange,64> pending{};
+    std::size_t pending_count=0;
+    std::uint64_t next_sequence=1;
+    exchange* find(std::uint64_t sequence) noexcept {
+        for(std::size_t i=0;i<wire->limits.max_inflight;++i) if(pending[i].sequence==sequence) return &pending[i];
+        return nullptr;
+    }
+    void finish(exchange& slot,io_result result) noexcept {
+        auto callback=std::exchange(slot.completion,nullptr);slot.sequence=0;--pending_count;
         if(callback) callback(std::move(result));
+    }
+    void disconnected() noexcept {
+        // The socket is already closed: reentrant submit cannot acquire a slot.
+        for(std::size_t i=0;i<wire->limits.max_inflight;++i)
+            if(pending[i].sequence) finish(pending[i],{outcome::unknown,{}});
     }
 };
 gio_client::gio_client(GMainContext* context,const std::string& address,unsigned short port,gio_limits limits) {
@@ -221,32 +230,32 @@ gio_client::gio_client(GMainContext* context,const std::string& address,unsigned
     std::weak_ptr<state> weak=state_;
     state_->wire->on_frame=[weak](std::uint64_t sequence,bytes frame) {
         if(auto s=weak.lock()) {
-            // A stale duplicate is a different exchange, even if completion of
-            // its original reply reentrantly submitted the next request.
-            if(sequence<=s->completed_sequence) return;
-            if(!s->pending || sequence!=s->pending_sequence) { ++s->counts->protocol_errors; s->wire->close(); return; }
-            s->finish({outcome::completed,std::move(frame)});
+            // Match live exchanges before considering stale duplicates: replies
+            // may arrive out of order when a peer supports parallel dispatch.
+            if(auto* slot=s->find(sequence)) {s->finish(*slot,{outcome::completed,std::move(frame)});return;}
+            if(sequence<s->next_sequence) return;
+            ++s->counts->protocol_errors;s->wire->close();
         }
     };
-    state_->wire->on_close=[weak] { if(auto s=weak.lock()) s->finish({outcome::unknown,{}}); };
+    state_->wire->on_close=[weak] { if(auto s=weak.lock()) s->disconnected(); };
     state_->wire->attach();
 }
 bool gio_client::valid() const noexcept {return setup_error_.empty() && state_ && state_->wire && !state_->wire->closed;}
 gio_client::~gio_client() { close(); }
 bool gio_client::submit(bytes request,io_completion completion) noexcept {
     auto s=state_;
-    if(!s || s->wire->closed || s->pending || !completion || request.empty() || request.size()>s->wire->limits.max_frame || s->next_sequence==std::numeric_limits<std::uint64_t>::max()) return false;
+    if(!s || s->wire->closed || s->pending_count>=s->wire->limits.max_inflight || !completion || request.empty() || request.size()>s->wire->limits.max_frame || s->next_sequence==std::numeric_limits<std::uint64_t>::max()) return false;
+    const auto sequence=s->next_sequence;
+    auto* slot=s->find(0);
+    if(!slot) return false;
+    slot->completion=std::move(completion);slot->sequence=sequence;++s->pending_count;++s->next_sequence;
     CAPSTAN_TRY {
-        // All allocations in framing happen before any byte can be sent.
-        s->pending=std::move(completion);
-        s->pending_sequence=s->next_sequence++;
-        if(!s->wire->send(std::move(request),s->pending_sequence)) { s->pending={}; return false; }
+        if(!s->wire->send(std::move(request),sequence)) {slot->completion=nullptr;slot->sequence=0;--s->pending_count;return false;}
         return true;
     } CAPSTAN_CATCH_ALL {
-        // A source-holder allocation can fail after bytes were sent. Retain
-        // accepted-submit semantics and finish unknown exactly once.
-        s->wire->close();
-        return true;
+        // Framing/dispatch failure after responsibility was accepted completes
+        // all affected exchanges as Unknown, exactly once.
+        s->wire->close();return true;
     }
 }
 void gio_client::close() noexcept { if(state_ && state_->wire) state_->wire->close(); }

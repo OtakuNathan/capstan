@@ -21,7 +21,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Check both authority models and require seven mutant counterexamples
+      - name: Check authority, Lease and migration models, mutants and reachability
         run: python3 scripts/check_tla.py --download-tools --nightly --workers 2 --heap 1g --timeout 600 --output build-tla
       - name: Verify coverage and publish model results
         if: always()
@@ -32,16 +32,35 @@ jobs:
           report = json.loads(Path('build-tla/report.json').read_text())
           expected = {'AuthorityNightly', 'DirectTransferNightly', 'MissingDrain',
                       'MissingPermission', 'EarlyAck', 'BypassSourceCheck',
-                      'DirectMissingDrain', 'EarlyClaim', 'TxKeyCollision'}
+                      'DirectMissingDrain', 'EarlyClaim', 'TxKeyCollision',
+                      'DataTransferNightly', 'EarlySeal', 'ObjectMigrationNightly',
+                      'MigrationMissingDrain', 'EarlyActivation', 'MigrationTimeoutReopens',
+                      'MigrationRollback', 'MigrationDropsDedup', 'MigrationCaptureReleasedEarly',
+                      'ImportReservation', 'ImportOpenDuringReceive', 'Clipboard', 'CloneUsesLiveData',
+                      'CloneReusesIdentity', 'CloneResurrectsAbort', 'PlacementReplay',
+                      'RetireLaterPlacement', 'PublishOldPlacement', 'LeaseCopyCutNightly',
+                      'LeaseCopyWriteWithReaders', 'LeaseCopyDetachReleasesBorrow',
+                      'LeaseCutReadOnly', 'LeaseCutWithReaders', 'LeaseCutMissingDrain',
+                      'LeaseCommitBeforePrepared', 'LeaseCutDuplicatesWriter',
+                      'LeaseDisconnectRollsBack', 'LeaseAbortReopensOld',
+                      'LeaseSharedCopyWitness', 'LeaseLostAckWitness', 'LeaseAbortWitness',
+                      'WindowedDataTransferNightly', 'WindowUnbounded', 'WindowWrongBinding',
+                      'WindowOverwriteDuplicate', 'WindowEarlyReady', 'WindowAbortResurrect',
+                      'WindowHashOutOfOrder', 'WindowReorderWitness', 'CaptureOverlapNightly',
+                      'CaptureAllowsWriter', 'CaptureDropsPin', 'CaptureEarlyHistory', 'CaptureOverlapWitness'}
           checks = report['checks']
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
-              summary.write('## Nightly authority and direct-transfer verification\n\n')
-              summary.write('| Model | Expected result | Exit | Passed | Distinct states |\n')
-              summary.write('|---|---|---:|---|---:|\n')
+              summary.write('## Nightly authority, migration and clipboard verification\n\n')
+              summary.write('| Model | Kind | Expected result | Exit | Passed | Distinct states |\n')
+              summary.write('|---|---|---|---:|---|---:|\n')
               for check in checks:
-                  summary.write(f"| {check['model']} | {check['expected_counterexample'] or 'Safe'} | {check['exit_code']} | {check['passed']} | {check['distinct_states']} |\n")
+                  summary.write(f"| {check['model']} | {check['kind']} | {check['expected_counterexample'] or 'Safe'} | {check['exit_code']} | {check['passed']} | {check['distinct_states']} |\n")
           if len(checks) != len(expected) or {c['model'] for c in checks} != expected:
               raise SystemExit('Nightly model coverage is incomplete')
+          kinds = {kind: sum(c['kind'] == kind for c in checks)
+                   for kind in ('safety', 'mutant', 'reachability')}
+          if kinds != {'safety': 10, 'mutant': 38, 'reachability': 5}:
+              raise SystemExit('Nightly safety, mutation or reachability coverage is incomplete')
           if not report['passed'] or not all(c['passed'] for c in checks):
               raise SystemExit('An authority safety or mutation check failed')
           PYCODE

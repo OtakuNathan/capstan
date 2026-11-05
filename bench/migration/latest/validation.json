@@ -1,0 +1,38 @@
+{
+  "captured_date": "2026-11-05",
+  "runtime_machine": "AMD Ryzen 7 3700X",
+  "release_full": {
+    "passed": true,
+    "tests": 48
+  },
+  "asan_ubsan_strict_selection": {
+    "passed": true,
+    "tests": 4
+  },
+  "tsan_strict_selection": {
+    "passed": true,
+    "tests": 3
+  },
+  "formal": {
+    "changed": false,
+    "rerun_this_change": false,
+    "note": "Memory/copy optimization does not change protocol state transitions; prior bounded/nightly 53-check evidence is unchanged."
+  },
+  "paired_benchmark": {
+    "passed": true,
+    "measured_runs": 40,
+    "warmup_runs": 8
+  },
+  "window8_experiment": {
+    "passed": true,
+    "measured_runs": 20,
+    "warmup_runs": 4,
+    "adopted": false
+  },
+  "perf": {
+    "basic_counter": true,
+    "sampling": false,
+    "reason": "Host denied cycles:u and cpu-clock:u perf record requests; no permissions changed."
+  },
+  "scope": "Local validation, not a claim that GitHub Actions has run."
+}

@@ -15,6 +15,32 @@ use `--jobs 4` on a machine with enough memory.
 
 ## Apple Silicon / M1 Max
 
+For the current **Copy/Paste and object migration** comparison, use:
+
+```sh
+git pull --ff-only
+brew install cmake pkgconf glib libuv openssl@3 python
+"$(brew --prefix)/bin/python3" scripts/bench_machine.py --migration --jobs 4
+```
+
+This fetches locked dependencies into a cache keyed by the lock file, builds,
+runs all tests, then measures 1, 8, 32 and 64 MiB objects. Each size gets one
+discarded warm-up and five measured rounds. It deliberately matches the latest
+[3700X migration configuration](../bench/migration/buffer/README.md): Release/O3,
+exceptions enabled, fast runner, erased invocations, UV worker and OpenSSL SHA-256,
+with LTO/native tuning off. Apple Clang, macOS and OpenSSL build differences still
+matter; this is not an isolated CPU comparison. No perf or TLA+ installation is
+needed on the benchmark machine.
+
+At the end, send back `SUMMARY.md` or the printed
+`capstan-migration-results.tar.gz` path's file. The archive contains the summary,
+machine/build metadata, test results and raw migration measurements. It uses an
+explicit file allowlist and excludes temporary session credentials. macOS peak
+RSS is reported as unavailable, not zero. Add `--quick` for a 1 MiB two-round
+workflow check, whose timings are not the full comparison.
+
+The commands below without `--migration` retain the earlier RPC throughput test.
+
 Install Xcode Command Line Tools if they are missing (`xcode-select --install`),
 and use a native arm64 terminal and Homebrew installation. Install the prerequisites
 once with [Homebrew](https://formulae.brew.sh/formula/glib):

@@ -212,5 +212,27 @@ int main() {
         close(peer); close(listener);
         std::cout << "TCP duplicate reply cannot complete reentrant next request; unmatched reply fails closed\n";
     }
+    // Opt-in exchange window routes out-of-order replies and duplicates by
+    // sequence, rejects excess submissions, and settles every accepted call.
+    {
+        int listener=socket(AF_INET,SOCK_STREAM,0);CHECK(listener>=0);
+        sockaddr_in address{};address.sin_family=AF_INET;address.sin_addr.s_addr=htonl(INADDR_LOOPBACK);
+        CHECK(bind(listener,reinterpret_cast<sockaddr*>(&address),sizeof(address))==0);CHECK(listen(listener,1)==0);
+        socklen_t length=sizeof(address);CHECK(getsockname(listener,reinterpret_cast<sockaddr*>(&address),&length)==0);
+        gio_limits limits;limits.max_inflight=4;
+        gio_client client(context,"127.0.0.1",ntohs(address.sin_port),limits);
+        int peer=accept(listener,nullptr,nullptr);CHECK(peer>=0);suppress_sigpipe(peer);CHECK(fcntl(peer,F_SETFL,O_NONBLOCK)==0);
+        unsigned replies=0,unknown=0;
+        for(unsigned i=1;i<=4;++i) CHECK(client.submit({static_cast<unsigned char>(i)},[&,i](io_result r) {
+            CHECK(r.state==outcome::completed && r.payload==bytes({static_cast<unsigned char>(40+i)}));++replies;
+        }));
+        CHECK(!client.submit({5},[](io_result) {CHECK(false);}));
+        CHECK(receive_n(context,peer,52).size()==52);
+        for(unsigned i=4;i>=1;--i) {write_all(peer,frame({static_cast<unsigned char>(40+i)},i));write_all(peer,frame({static_cast<unsigned char>(40+i)},i));}
+        until(context,[&]{return replies==4;});CHECK(client.stats().protocol_errors==0);
+        for(unsigned i=0;i<4;++i) CHECK(client.submit({9},[&](io_result r) {CHECK(r.state==outcome::unknown);++unknown;}));
+        client.close();CHECK(unknown==4);pump(context);CHECK(replies==4 && unknown==4);
+        close(peer);close(listener);
+    }
     pump(context); g_main_context_unref(context);
 }

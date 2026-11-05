@@ -1,0 +1,1639 @@
+{
+  "passed": true,
+  "captured_utc": "2026-11-05T10:34:02.261682+00:00",
+  "builds": {
+    "before": {
+      "binary_sha256": {
+        "capstan_host": "dc4f771e06e37e77c9f37340ada22c3fa4496a2dcfe874e1a84aae92be31f52a",
+        "capstan_migration_demo": "4a9d0422f487b4322071bc1d8cfed3d2a34a87fc245beb641f7af9f533467f42"
+      },
+      "samples": [
+        {
+          "round": 1,
+          "phase_seconds": {
+            "copy_seconds": 0.044465,
+            "first_paste_seconds": 0.0757304,
+            "second_paste_seconds": 0.0742929
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 6891,
+                "cpu_ns": 7670,
+                "process_cpu_ns": 7170
+              },
+              "source_full_barrier": {
+                "wall_ns": 9811,
+                "cpu_ns": 10610,
+                "process_cpu_ns": 10100
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 43304444,
+                "cpu_ns": 43078264,
+                "process_cpu_ns": 43077714
+              },
+              "source_hash": {
+                "wall_ns": 34311507,
+                "cpu_ns": 34147229,
+                "process_cpu_ns": 34146469
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 89898583,
+                "cpu_ns": 48623027,
+                "process_cpu_ns": 48622767
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 79731082,
+                "cpu_ns": 68125288,
+                "process_cpu_ns": 68124858
+              },
+              "target_hash": {
+                "wall_ns": 35606141,
+                "cpu_ns": 35534213,
+                "process_cpu_ns": 35520092
+              },
+              "target_reply_decode": {
+                "wall_ns": 2953201,
+                "cpu_ns": 3162721,
+                "process_cpu_ns": 2987441
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42158616,
+                "cpu_ns": 42024287,
+                "process_cpu_ns": 42024235
+              },
+              "target_restore": {
+                "wall_ns": 9773693,
+                "cpu_ns": 9741985,
+                "process_cpu_ns": 9742935
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 62702,
+                "cpu_ns": 15820,
+                "process_cpu_ns": 15860
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 149883,
+                "cpu_ns": 14740,
+                "process_cpu_ns": 14790
+              },
+              "rpc_freeze": {
+                "wall_ns": 68281,
+                "cpu_ns": 22060,
+                "process_cpu_ns": 22660
+              },
+              "rpc_export": {
+                "wall_ns": 43510637,
+                "cpu_ns": 36530,
+                "process_cpu_ns": 36920
+              },
+              "rpc_pull": {
+                "wall_ns": 89657027,
+                "cpu_ns": 39240,
+                "process_cpu_ns": 39810
+              },
+              "rpc_fence": {
+                "wall_ns": 178584,
+                "cpu_ns": 27630,
+                "process_cpu_ns": 27720
+              },
+              "rpc_activate": {
+                "wall_ns": 171113,
+                "cpu_ns": 14730,
+                "process_cpu_ns": 14800
+              },
+              "rpc_retire": {
+                "wall_ns": 309176,
+                "cpu_ns": 13140,
+                "process_cpu_ns": 13190
+              },
+              "rpc_release": {
+                "wall_ns": 149853,
+                "cpu_ns": 12840,
+                "process_cpu_ns": 12860
+              },
+              "driver_cut": {
+                "wall_ns": 134355899,
+                "cpu_ns": 298971,
+                "process_cpu_ns": 298211
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.133639,
+          "host_peak_rss_kib": [
+            143260,
+            274792
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.134355,
+          "MiB_per_second": 476.356
+        },
+        {
+          "round": 2,
+          "phase_seconds": {
+            "copy_seconds": 0.0449463,
+            "first_paste_seconds": 0.0864647,
+            "second_paste_seconds": 0.0742131
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 8550,
+                "cpu_ns": 9550,
+                "process_cpu_ns": 9040
+              },
+              "source_full_barrier": {
+                "wall_ns": 12080,
+                "cpu_ns": 13100,
+                "process_cpu_ns": 12570
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 44183651,
+                "cpu_ns": 43978635,
+                "process_cpu_ns": 43978405
+              },
+              "source_hash": {
+                "wall_ns": 34280586,
+                "cpu_ns": 34125709,
+                "process_cpu_ns": 34125229
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 94585735,
+                "cpu_ns": 45183013,
+                "process_cpu_ns": 45182943
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 83886145,
+                "cpu_ns": 71158411,
+                "process_cpu_ns": 71157971
+              },
+              "target_hash": {
+                "wall_ns": 35746567,
+                "cpu_ns": 35616138,
+                "process_cpu_ns": 35607225
+              },
+              "target_reply_decode": {
+                "wall_ns": 3015060,
+                "cpu_ns": 3209111,
+                "process_cpu_ns": 3030150
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42161179,
+                "cpu_ns": 42012749,
+                "process_cpu_ns": 42011970
+              },
+              "target_restore": {
+                "wall_ns": 10423285,
+                "cpu_ns": 10374016,
+                "process_cpu_ns": 10374976
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 61951,
+                "cpu_ns": 17610,
+                "process_cpu_ns": 17680
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 157583,
+                "cpu_ns": 17690,
+                "process_cpu_ns": 17760
+              },
+              "rpc_freeze": {
+                "wall_ns": 74652,
+                "cpu_ns": 15990,
+                "process_cpu_ns": 16030
+              },
+              "rpc_export": {
+                "wall_ns": 44379935,
+                "cpu_ns": 29660,
+                "process_cpu_ns": 30340
+              },
+              "rpc_pull": {
+                "wall_ns": 94459993,
+                "cpu_ns": 43100,
+                "process_cpu_ns": 43460
+              },
+              "rpc_fence": {
+                "wall_ns": 55512,
+                "cpu_ns": 31110,
+                "process_cpu_ns": 31140
+              },
+              "rpc_activate": {
+                "wall_ns": 212834,
+                "cpu_ns": 16580,
+                "process_cpu_ns": 16500
+              },
+              "rpc_retire": {
+                "wall_ns": 291706,
+                "cpu_ns": 12840,
+                "process_cpu_ns": 12880
+              },
+              "rpc_release": {
+                "wall_ns": 156953,
+                "cpu_ns": 12640,
+                "process_cpu_ns": 12680
+              },
+              "driver_cut": {
+                "wall_ns": 139953580,
+                "cpu_ns": 300640,
+                "process_cpu_ns": 299660
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.139238,
+          "host_peak_rss_kib": [
+            143280,
+            274520
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.139952,
+          "MiB_per_second": 457.303
+        },
+        {
+          "round": 3,
+          "phase_seconds": {
+            "copy_seconds": 0.0455665,
+            "first_paste_seconds": 0.0854914,
+            "second_paste_seconds": 0.0725774
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 7000,
+                "cpu_ns": 8040,
+                "process_cpu_ns": 7400
+              },
+              "source_full_barrier": {
+                "wall_ns": 9910,
+                "cpu_ns": 10970,
+                "process_cpu_ns": 10320
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 43949907,
+                "cpu_ns": 43717545,
+                "process_cpu_ns": 43716275
+              },
+              "source_hash": {
+                "wall_ns": 34364478,
+                "cpu_ns": 34178749,
+                "process_cpu_ns": 34178139
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 89833272,
+                "cpu_ns": 43941894,
+                "process_cpu_ns": 43942154
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 79946186,
+                "cpu_ns": 68286687,
+                "process_cpu_ns": 68285957
+              },
+              "target_hash": {
+                "wall_ns": 35642370,
+                "cpu_ns": 35553710,
+                "process_cpu_ns": 35535410
+              },
+              "target_reply_decode": {
+                "wall_ns": 3021691,
+                "cpu_ns": 3198452,
+                "process_cpu_ns": 3027492
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42245412,
+                "cpu_ns": 42121011,
+                "process_cpu_ns": 42119391
+              },
+              "target_restore": {
+                "wall_ns": 9663881,
+                "cpu_ns": 9629426,
+                "process_cpu_ns": 9630536
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 46621,
+                "cpu_ns": 16270,
+                "process_cpu_ns": 16300
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 122332,
+                "cpu_ns": 14560,
+                "process_cpu_ns": 14580
+              },
+              "rpc_freeze": {
+                "wall_ns": 65781,
+                "cpu_ns": 13130,
+                "process_cpu_ns": 13160
+              },
+              "rpc_export": {
+                "wall_ns": 44090119,
+                "cpu_ns": 15680,
+                "process_cpu_ns": 16030
+              },
+              "rpc_pull": {
+                "wall_ns": 89739660,
+                "cpu_ns": 28310,
+                "process_cpu_ns": 29030
+              },
+              "rpc_fence": {
+                "wall_ns": 75002,
+                "cpu_ns": 33140,
+                "process_cpu_ns": 33560
+              },
+              "rpc_activate": {
+                "wall_ns": 282115,
+                "cpu_ns": 27370,
+                "process_cpu_ns": 27480
+              },
+              "rpc_retire": {
+                "wall_ns": 340797,
+                "cpu_ns": 20190,
+                "process_cpu_ns": 20360
+              },
+              "rpc_release": {
+                "wall_ns": 179054,
+                "cpu_ns": 17410,
+                "process_cpu_ns": 17350
+              },
+              "driver_cut": {
+                "wall_ns": 135028533,
+                "cpu_ns": 276230,
+                "process_cpu_ns": 275530
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.134296,
+          "host_peak_rss_kib": [
+            143280,
+            274768
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.135027,
+          "MiB_per_second": 473.983
+        },
+        {
+          "round": 4,
+          "phase_seconds": {
+            "copy_seconds": 0.0442828,
+            "first_paste_seconds": 0.086137,
+            "second_paste_seconds": 0.0727949
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 8710,
+                "cpu_ns": 9520,
+                "process_cpu_ns": 9030
+              },
+              "source_full_barrier": {
+                "wall_ns": 12530,
+                "cpu_ns": 13350,
+                "process_cpu_ns": 12850
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 43279414,
+                "cpu_ns": 43117334,
+                "process_cpu_ns": 43116924
+              },
+              "source_hash": {
+                "wall_ns": 34227405,
+                "cpu_ns": 34105799,
+                "process_cpu_ns": 34106239
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 94034225,
+                "cpu_ns": 44987410,
+                "process_cpu_ns": 44987230
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 83346744,
+                "cpu_ns": 70651402,
+                "process_cpu_ns": 70651102
+              },
+              "target_hash": {
+                "wall_ns": 35713008,
+                "cpu_ns": 35589029,
+                "process_cpu_ns": 35562960
+              },
+              "target_reply_decode": {
+                "wall_ns": 2983862,
+                "cpu_ns": 3148960,
+                "process_cpu_ns": 2995810
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42166825,
+                "cpu_ns": 41999541,
+                "process_cpu_ns": 42000961
+              },
+              "target_restore": {
+                "wall_ns": 10370694,
+                "cpu_ns": 10320866,
+                "process_cpu_ns": 10321936
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 64151,
+                "cpu_ns": 17890,
+                "process_cpu_ns": 17970
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 155003,
+                "cpu_ns": 17760,
+                "process_cpu_ns": 17820
+              },
+              "rpc_freeze": {
+                "wall_ns": 77181,
+                "cpu_ns": 19240,
+                "process_cpu_ns": 19420
+              },
+              "rpc_export": {
+                "wall_ns": 43463528,
+                "cpu_ns": 29570,
+                "process_cpu_ns": 30110
+              },
+              "rpc_pull": {
+                "wall_ns": 93859691,
+                "cpu_ns": 37310,
+                "process_cpu_ns": 37680
+              },
+              "rpc_fence": {
+                "wall_ns": 119792,
+                "cpu_ns": 25560,
+                "process_cpu_ns": 25590
+              },
+              "rpc_activate": {
+                "wall_ns": 409428,
+                "cpu_ns": 14370,
+                "process_cpu_ns": 14400
+              },
+              "rpc_retire": {
+                "wall_ns": 304326,
+                "cpu_ns": 12820,
+                "process_cpu_ns": 12870
+              },
+              "rpc_release": {
+                "wall_ns": 147013,
+                "cpu_ns": 12480,
+                "process_cpu_ns": 12520
+              },
+              "driver_cut": {
+                "wall_ns": 138696726,
+                "cpu_ns": 286800,
+                "process_cpu_ns": 285830
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.137979,
+          "host_peak_rss_kib": [
+            143332,
+            274812
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.138695,
+          "MiB_per_second": 461.447
+        },
+        {
+          "round": 5,
+          "phase_seconds": {
+            "copy_seconds": 0.0449998,
+            "first_paste_seconds": 0.0868841,
+            "second_paste_seconds": 0.0733489
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 7240,
+                "cpu_ns": 8030,
+                "process_cpu_ns": 7540
+              },
+              "source_full_barrier": {
+                "wall_ns": 10580,
+                "cpu_ns": 11390,
+                "process_cpu_ns": 10880
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 44006359,
+                "cpu_ns": 43803355,
+                "process_cpu_ns": 43802275
+              },
+              "source_hash": {
+                "wall_ns": 34309417,
+                "cpu_ns": 34154570,
+                "process_cpu_ns": 34154340
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 89278331,
+                "cpu_ns": 45298253,
+                "process_cpu_ns": 45298343
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 79389166,
+                "cpu_ns": 68177049,
+                "process_cpu_ns": 68176539
+              },
+              "target_hash": {
+                "wall_ns": 35702849,
+                "cpu_ns": 35598570,
+                "process_cpu_ns": 35578699
+              },
+              "target_reply_decode": {
+                "wall_ns": 2968565,
+                "cpu_ns": 3159651,
+                "process_cpu_ns": 2982130
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42318552,
+                "cpu_ns": 42177426,
+                "process_cpu_ns": 42176605
+              },
+              "target_restore": {
+                "wall_ns": 9672681,
+                "cpu_ns": 9643525,
+                "process_cpu_ns": 9644505
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 51811,
+                "cpu_ns": 14750,
+                "process_cpu_ns": 14800
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 135273,
+                "cpu_ns": 15100,
+                "process_cpu_ns": 15100
+              },
+              "rpc_freeze": {
+                "wall_ns": 64451,
+                "cpu_ns": 19170,
+                "process_cpu_ns": 19620
+              },
+              "rpc_export": {
+                "wall_ns": 44165662,
+                "cpu_ns": 25790,
+                "process_cpu_ns": 26070
+              },
+              "rpc_pull": {
+                "wall_ns": 89194679,
+                "cpu_ns": 33430,
+                "process_cpu_ns": 33870
+              },
+              "rpc_fence": {
+                "wall_ns": 65092,
+                "cpu_ns": 27630,
+                "process_cpu_ns": 27710
+              },
+              "rpc_activate": {
+                "wall_ns": 209434,
+                "cpu_ns": 17600,
+                "process_cpu_ns": 17620
+              },
+              "rpc_retire": {
+                "wall_ns": 356337,
+                "cpu_ns": 15510,
+                "process_cpu_ns": 15540
+              },
+              "rpc_release": {
+                "wall_ns": 165193,
+                "cpu_ns": 14590,
+                "process_cpu_ns": 14510
+              },
+              "driver_cut": {
+                "wall_ns": 134491913,
+                "cpu_ns": 270250,
+                "process_cpu_ns": 269370
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.133744,
+          "host_peak_rss_kib": [
+            143380,
+            274876
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.134491,
+          "MiB_per_second": 475.874
+        }
+      ],
+      "environment": {
+        "system": "Linux",
+        "architecture": "x86_64",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor",
+        "compiler": "c++ (GCC) 16.2.1 20260810",
+        "build": {
+          "CMAKE_BUILD_TYPE": "Release",
+          "CMAKE_CXX_FLAGS": "",
+          "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+          "CAPSTAN_NO_EXCEPTIONS": "OFF",
+          "CAPSTAN_NO_EXCEPTION_STRICT": "ON",
+          "CAPSTAN_FAST_RUNNER": "ON",
+          "CAPSTAN_ERASED_INVOCATIONS": "ON",
+          "CAPSTAN_UV_WORKER": "ON",
+          "CAPSTAN_SHA256_BACKEND": "OPENSSL",
+          "CAPSTAN_SHA256_PROVIDER": "OpenSSL",
+          "CAPSTAN_ASAN": "OFF",
+          "CAPSTAN_TSAN": "OFF",
+          "CAPSTAN_LTO": "OFF",
+          "CAPSTAN_NATIVE_ARCH": "OFF"
+        }
+      },
+      "passed": true,
+      "rounds": 5,
+      "discarded_runs_per_size": 1,
+      "summary": [
+        {
+          "native_mib": 64,
+          "samples": 5,
+          "copy_ms": {
+            "median": 44.9463,
+            "min": 44.282799999999995,
+            "max": 45.566500000000005
+          },
+          "first_paste_ms": {
+            "median": 86.137,
+            "min": 75.7304,
+            "max": 86.8841
+          },
+          "second_paste_ms": {
+            "median": 73.3489,
+            "min": 72.5774,
+            "max": 74.29289999999999
+          },
+          "cut_ms": {
+            "median": 135.02700000000002,
+            "min": 134.355,
+            "max": 139.952
+          },
+          "close_to_activation_ms": {
+            "median": 134.296,
+            "min": 133.639,
+            "max": 139.238
+          },
+          "cut_package_mib_per_second": {
+            "median": 473.983,
+            "min": 457.303,
+            "max": 476.356
+          },
+          "paste_native_mib_per_second": {
+            "first_paste": {
+              "median": 743.0024263672985,
+              "min": 736.6134885439337,
+              "max": 845.1031554039065
+            },
+            "second_paste": {
+              "median": 872.5420558454183,
+              "min": 861.4551323208544,
+              "max": 881.8172048048015
+            }
+          },
+          "host_peak_rss_mib": [
+            {
+              "median": 139.921875,
+              "min": 139.90234375,
+              "max": 140.01953125
+            },
+            {
+              "median": 268.3515625,
+              "min": 268.0859375,
+              "max": 268.43359375
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "binary_sha256": {
+        "capstan_host": "24d1f93fa697ad09b9f71f567b39c306a8a60f3a41c86df6d14e51cd3f605183",
+        "capstan_migration_demo": "2657db4b08310a5ebc9f51f04ef2e0befb0cd18fbdca13a9a9b5ba66c5e622d7"
+      },
+      "samples": [
+        {
+          "round": 1,
+          "phase_seconds": {
+            "copy_seconds": 0.044469,
+            "first_paste_seconds": 0.0840015,
+            "second_paste_seconds": 0.082303
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 7741,
+                "cpu_ns": 8580,
+                "process_cpu_ns": 8020
+              },
+              "source_full_barrier": {
+                "wall_ns": 10681,
+                "cpu_ns": 11530,
+                "process_cpu_ns": 10950
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 43273354,
+                "cpu_ns": 43093504,
+                "process_cpu_ns": 43093084
+              },
+              "source_hash": {
+                "wall_ns": 34309627,
+                "cpu_ns": 34162300,
+                "process_cpu_ns": 34162410
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 93652946,
+                "cpu_ns": 33934654,
+                "process_cpu_ns": 33934604
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 82700970,
+                "cpu_ns": 69081999,
+                "process_cpu_ns": 69081389
+              },
+              "target_hash": {
+                "wall_ns": 35846114,
+                "cpu_ns": 35684640,
+                "process_cpu_ns": 35673431
+              },
+              "target_reply_decode": {
+                "wall_ns": 1458018,
+                "cpu_ns": 1718690,
+                "process_cpu_ns": 1487140
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42295311,
+                "cpu_ns": 42110124,
+                "process_cpu_ns": 42109305
+              },
+              "target_restore": {
+                "wall_ns": 10707172,
+                "cpu_ns": 10656136,
+                "process_cpu_ns": 10657196
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 59071,
+                "cpu_ns": 17310,
+                "process_cpu_ns": 17380
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 152153,
+                "cpu_ns": 16720,
+                "process_cpu_ns": 16690
+              },
+              "rpc_freeze": {
+                "wall_ns": 71141,
+                "cpu_ns": 14180,
+                "process_cpu_ns": 14080
+              },
+              "rpc_export": {
+                "wall_ns": 43450817,
+                "cpu_ns": 20190,
+                "process_cpu_ns": 20620
+              },
+              "rpc_pull": {
+                "wall_ns": 93550015,
+                "cpu_ns": 37180,
+                "process_cpu_ns": 37540
+              },
+              "rpc_fence": {
+                "wall_ns": 55301,
+                "cpu_ns": 27170,
+                "process_cpu_ns": 27250
+              },
+              "rpc_activate": {
+                "wall_ns": 220154,
+                "cpu_ns": 14670,
+                "process_cpu_ns": 14720
+              },
+              "rpc_retire": {
+                "wall_ns": 359758,
+                "cpu_ns": 13610,
+                "process_cpu_ns": 13690
+              },
+              "rpc_release": {
+                "wall_ns": 188573,
+                "cpu_ns": 12890,
+                "process_cpu_ns": 12930
+              },
+              "driver_cut": {
+                "wall_ns": 138204364,
+                "cpu_ns": 270970,
+                "process_cpu_ns": 270030
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.137395,
+          "host_peak_rss_kib": [
+            143192,
+            274752
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.138203,
+          "MiB_per_second": 463.091
+        },
+        {
+          "round": 2,
+          "phase_seconds": {
+            "copy_seconds": 0.045396,
+            "first_paste_seconds": 0.0844606,
+            "second_paste_seconds": 0.0841063
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 7531,
+                "cpu_ns": 8310,
+                "process_cpu_ns": 7810
+              },
+              "source_full_barrier": {
+                "wall_ns": 10701,
+                "cpu_ns": 11490,
+                "process_cpu_ns": 10990
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 44104589,
+                "cpu_ns": 43903484,
+                "process_cpu_ns": 43902004
+              },
+              "source_hash": {
+                "wall_ns": 34258015,
+                "cpu_ns": 34099039,
+                "process_cpu_ns": 34098659
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 92253239,
+                "cpu_ns": 34383522,
+                "process_cpu_ns": 34383452
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 82322223,
+                "cpu_ns": 68875529,
+                "process_cpu_ns": 68874939
+              },
+              "target_hash": {
+                "wall_ns": 35637001,
+                "cpu_ns": 35543569,
+                "process_cpu_ns": 35533749
+              },
+              "target_reply_decode": {
+                "wall_ns": 1465023,
+                "cpu_ns": 1716350,
+                "process_cpu_ns": 1484150
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42166924,
+                "cpu_ns": 42032982,
+                "process_cpu_ns": 42033063
+              },
+              "target_restore": {
+                "wall_ns": 9727792,
+                "cpu_ns": 9692935,
+                "process_cpu_ns": 9693955
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 60591,
+                "cpu_ns": 23420,
+                "process_cpu_ns": 22990
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 141993,
+                "cpu_ns": 16640,
+                "process_cpu_ns": 16660
+              },
+              "rpc_freeze": {
+                "wall_ns": 67411,
+                "cpu_ns": 18150,
+                "process_cpu_ns": 18570
+              },
+              "rpc_export": {
+                "wall_ns": 44267563,
+                "cpu_ns": 22930,
+                "process_cpu_ns": 23030
+              },
+              "rpc_pull": {
+                "wall_ns": 92167638,
+                "cpu_ns": 28751,
+                "process_cpu_ns": 29291
+              },
+              "rpc_fence": {
+                "wall_ns": 60211,
+                "cpu_ns": 25960,
+                "process_cpu_ns": 26000
+              },
+              "rpc_activate": {
+                "wall_ns": 185224,
+                "cpu_ns": 14660,
+                "process_cpu_ns": 14720
+              },
+              "rpc_retire": {
+                "wall_ns": 313776,
+                "cpu_ns": 12690,
+                "process_cpu_ns": 12720
+              },
+              "rpc_release": {
+                "wall_ns": 211635,
+                "cpu_ns": 12760,
+                "process_cpu_ns": 12800
+              },
+              "driver_cut": {
+                "wall_ns": 137575793,
+                "cpu_ns": 268181,
+                "process_cpu_ns": 267311
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.136789,
+          "host_peak_rss_kib": [
+            143248,
+            274444
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.137575,
+          "MiB_per_second": 465.207
+        },
+        {
+          "round": 3,
+          "phase_seconds": {
+            "copy_seconds": 0.0442884,
+            "first_paste_seconds": 0.0852137,
+            "second_paste_seconds": 0.0838982
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 7360,
+                "cpu_ns": 8080,
+                "process_cpu_ns": 7650
+              },
+              "source_full_barrier": {
+                "wall_ns": 10480,
+                "cpu_ns": 11240,
+                "process_cpu_ns": 10790
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 44080269,
+                "cpu_ns": 43867825,
+                "process_cpu_ns": 43866695
+              },
+              "source_hash": {
+                "wall_ns": 34275486,
+                "cpu_ns": 34113850,
+                "process_cpu_ns": 34113520
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 93845801,
+                "cpu_ns": 33826389,
+                "process_cpu_ns": 33826519
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 83118939,
+                "cpu_ns": 69576497,
+                "process_cpu_ns": 69576037
+              },
+              "target_hash": {
+                "wall_ns": 35828283,
+                "cpu_ns": 35735195,
+                "process_cpu_ns": 35727365
+              },
+              "target_reply_decode": {
+                "wall_ns": 1442476,
+                "cpu_ns": 1707260,
+                "process_cpu_ns": 1475980
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42300017,
+                "cpu_ns": 42176537,
+                "process_cpu_ns": 42178728
+              },
+              "target_restore": {
+                "wall_ns": 10460267,
+                "cpu_ns": 10416226,
+                "process_cpu_ns": 10417466
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 52531,
+                "cpu_ns": 16950,
+                "process_cpu_ns": 17350
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 137322,
+                "cpu_ns": 18130,
+                "process_cpu_ns": 18260
+              },
+              "rpc_freeze": {
+                "wall_ns": 60532,
+                "cpu_ns": 16540,
+                "process_cpu_ns": 16610
+              },
+              "rpc_export": {
+                "wall_ns": 44273003,
+                "cpu_ns": 27900,
+                "process_cpu_ns": 28510
+              },
+              "rpc_pull": {
+                "wall_ns": 93713989,
+                "cpu_ns": 42090,
+                "process_cpu_ns": 42740
+              },
+              "rpc_fence": {
+                "wall_ns": 69661,
+                "cpu_ns": 32270,
+                "process_cpu_ns": 32320
+              },
+              "rpc_activate": {
+                "wall_ns": 234705,
+                "cpu_ns": 19010,
+                "process_cpu_ns": 19200
+              },
+              "rpc_retire": {
+                "wall_ns": 341697,
+                "cpu_ns": 16280,
+                "process_cpu_ns": 16180
+              },
+              "rpc_release": {
+                "wall_ns": 157203,
+                "cpu_ns": 12250,
+                "process_cpu_ns": 12280
+              },
+              "driver_cut": {
+                "wall_ns": 139138254,
+                "cpu_ns": 302760,
+                "process_cpu_ns": 301910
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.138404,
+          "host_peak_rss_kib": [
+            143404,
+            274856
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.139137,
+          "MiB_per_second": 459.983
+        },
+        {
+          "round": 4,
+          "phase_seconds": {
+            "copy_seconds": 0.044508,
+            "first_paste_seconds": 0.0850234,
+            "second_paste_seconds": 0.0861261
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 8570,
+                "cpu_ns": 9400,
+                "process_cpu_ns": 8880
+              },
+              "source_full_barrier": {
+                "wall_ns": 12050,
+                "cpu_ns": 12910,
+                "process_cpu_ns": 12360
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 43509328,
+                "cpu_ns": 43177774,
+                "process_cpu_ns": 43295424
+              },
+              "source_hash": {
+                "wall_ns": 34369628,
+                "cpu_ns": 34220089,
+                "process_cpu_ns": 34221229
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 92358192,
+                "cpu_ns": 33736246,
+                "process_cpu_ns": 33736456
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 82390215,
+                "cpu_ns": 68854601,
+                "process_cpu_ns": 68854271
+              },
+              "target_hash": {
+                "wall_ns": 35640196,
+                "cpu_ns": 35539144,
+                "process_cpu_ns": 35529363
+              },
+              "target_reply_decode": {
+                "wall_ns": 1433734,
+                "cpu_ns": 1724871,
+                "process_cpu_ns": 1468580
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42161540,
+                "cpu_ns": 42020289,
+                "process_cpu_ns": 42021859
+              },
+              "target_restore": {
+                "wall_ns": 9699891,
+                "cpu_ns": 9665795,
+                "process_cpu_ns": 9666755
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 65531,
+                "cpu_ns": 19490,
+                "process_cpu_ns": 19550
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 162954,
+                "cpu_ns": 17900,
+                "process_cpu_ns": 17940
+              },
+              "rpc_freeze": {
+                "wall_ns": 77981,
+                "cpu_ns": 18740,
+                "process_cpu_ns": 18900
+              },
+              "rpc_export": {
+                "wall_ns": 43719332,
+                "cpu_ns": 30690,
+                "process_cpu_ns": 31380
+              },
+              "rpc_pull": {
+                "wall_ns": 92222969,
+                "cpu_ns": 39010,
+                "process_cpu_ns": 39560
+              },
+              "rpc_fence": {
+                "wall_ns": 85622,
+                "cpu_ns": 29490,
+                "process_cpu_ns": 29530
+              },
+              "rpc_activate": {
+                "wall_ns": 181193,
+                "cpu_ns": 17270,
+                "process_cpu_ns": 17330
+              },
+              "rpc_retire": {
+                "wall_ns": 361467,
+                "cpu_ns": 15950,
+                "process_cpu_ns": 15980
+              },
+              "rpc_release": {
+                "wall_ns": 189384,
+                "cpu_ns": 17020,
+                "process_cpu_ns": 17080
+              },
+              "driver_cut": {
+                "wall_ns": 137175666,
+                "cpu_ns": 318250,
+                "process_cpu_ns": 317530
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.136342,
+          "host_peak_rss_kib": [
+            143028,
+            274560
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.137174,
+          "MiB_per_second": 466.565
+        },
+        {
+          "round": 5,
+          "phase_seconds": {
+            "copy_seconds": 0.0455716,
+            "first_paste_seconds": 0.0840784,
+            "second_paste_seconds": 0.0838505
+          },
+          "diagnostics": {
+            "source": {
+              "source_business_drain": {
+                "wall_ns": 8780,
+                "cpu_ns": 9600,
+                "process_cpu_ns": 9120
+              },
+              "source_full_barrier": {
+                "wall_ns": 12231,
+                "cpu_ns": 13030,
+                "process_cpu_ns": 12550
+              },
+              "source_encode_and_hash": {
+                "wall_ns": 44142601,
+                "cpu_ns": 43949544,
+                "process_cpu_ns": 43949254
+              },
+              "source_hash": {
+                "wall_ns": 34357188,
+                "cpu_ns": 34220219,
+                "process_cpu_ns": 34219899
+              },
+              "source_serve_until_fence": {
+                "wall_ns": 93540876,
+                "cpu_ns": 33531308,
+                "process_cpu_ns": 33531278
+              }
+            },
+            "target": {
+              "target_receive_and_hash": {
+                "wall_ns": 83001257,
+                "cpu_ns": 69480650,
+                "process_cpu_ns": 69480270
+              },
+              "target_hash": {
+                "wall_ns": 35741036,
+                "cpu_ns": 35601941,
+                "process_cpu_ns": 35595450
+              },
+              "target_reply_decode": {
+                "wall_ns": 1459491,
+                "cpu_ns": 1704281,
+                "process_cpu_ns": 1480530
+              },
+              "target_copy_and_hash": {
+                "wall_ns": 42180407,
+                "cpu_ns": 42019264,
+                "process_cpu_ns": 42020945
+              },
+              "target_restore": {
+                "wall_ns": 10332794,
+                "cpu_ns": 10291076,
+                "process_cpu_ns": 10292376
+              }
+            },
+            "driver": {
+              "rpc_reserve_source": {
+                "wall_ns": 68861,
+                "cpu_ns": 21720,
+                "process_cpu_ns": 21740
+              },
+              "rpc_reserve_target": {
+                "wall_ns": 153423,
+                "cpu_ns": 18080,
+                "process_cpu_ns": 18110
+              },
+              "rpc_freeze": {
+                "wall_ns": 79941,
+                "cpu_ns": 17290,
+                "process_cpu_ns": 17490
+              },
+              "rpc_export": {
+                "wall_ns": 44308824,
+                "cpu_ns": 21991,
+                "process_cpu_ns": 22221
+              },
+              "rpc_pull": {
+                "wall_ns": 93455914,
+                "cpu_ns": 34140,
+                "process_cpu_ns": 34680
+              },
+              "rpc_fence": {
+                "wall_ns": 55591,
+                "cpu_ns": 27950,
+                "process_cpu_ns": 28040
+              },
+              "rpc_activate": {
+                "wall_ns": 231935,
+                "cpu_ns": 14390,
+                "process_cpu_ns": 14420
+              },
+              "rpc_retire": {
+                "wall_ns": 291206,
+                "cpu_ns": 12690,
+                "process_cpu_ns": 12750
+              },
+              "rpc_release": {
+                "wall_ns": 151663,
+                "cpu_ns": 12380,
+                "process_cpu_ns": 12420
+              },
+              "driver_cut": {
+                "wall_ns": 138892590,
+                "cpu_ns": 278771,
+                "process_cpu_ns": 277691
+              }
+            },
+            "occupancy_at_freeze": {
+              "readers": 0,
+              "writers": 0,
+              "captures": 0
+            },
+            "pump": {
+              "turns": 18,
+              "empty_turns": 0
+            },
+            "workload": {
+              "inflight": "none",
+              "count": 0,
+              "injected_delay_ms": 0,
+              "pump": "blocking"
+            },
+            "scope": "Host spans use same-process clocks. cpu_ns is measuring-thread CPU; process_cpu_ns includes all threads. Nested/overlapping spans must not be summed. Injected hold is sleep, not busy computation."
+          },
+          "observed_close_to_activation_seconds": 0.138174,
+          "host_peak_rss_kib": [
+            143164,
+            274356
+          ],
+          "passed": true,
+          "native_bytes": 67108864,
+          "package_bytes": 67109532,
+          "end_to_end_seconds": 0.138891,
+          "MiB_per_second": 460.796
+        }
+      ],
+      "environment": {
+        "system": "Linux",
+        "architecture": "x86_64",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor",
+        "compiler": "c++ (GCC) 16.2.1 20260810",
+        "build": {
+          "CMAKE_BUILD_TYPE": "Release",
+          "CMAKE_CXX_FLAGS": "",
+          "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+          "CAPSTAN_NO_EXCEPTIONS": "OFF",
+          "CAPSTAN_NO_EXCEPTION_STRICT": "ON",
+          "CAPSTAN_FAST_RUNNER": "ON",
+          "CAPSTAN_ERASED_INVOCATIONS": "ON",
+          "CAPSTAN_UV_WORKER": "ON",
+          "CAPSTAN_SHA256_BACKEND": "OPENSSL",
+          "CAPSTAN_SHA256_PROVIDER": "OpenSSL",
+          "CAPSTAN_ASAN": "OFF",
+          "CAPSTAN_TSAN": "OFF",
+          "CAPSTAN_LTO": "OFF",
+          "CAPSTAN_NATIVE_ARCH": "OFF"
+        }
+      },
+      "passed": true,
+      "rounds": 5,
+      "discarded_runs_per_size": 1,
+      "summary": [
+        {
+          "native_mib": 64,
+          "samples": 5,
+          "copy_ms": {
+            "median": 44.507999999999996,
+            "min": 44.288399999999996,
+            "max": 45.5716
+          },
+          "first_paste_ms": {
+            "median": 84.4606,
+            "min": 84.00150000000001,
+            "max": 85.2137
+          },
+          "second_paste_ms": {
+            "median": 83.8982,
+            "min": 82.303,
+            "max": 86.1261
+          },
+          "cut_ms": {
+            "median": 138.203,
+            "min": 137.17399999999998,
+            "max": 139.137
+          },
+          "close_to_activation_ms": {
+            "median": 137.39499999999998,
+            "min": 136.34199999999998,
+            "max": 138.404
+          },
+          "cut_package_mib_per_second": {
+            "median": 463.091,
+            "min": 459.983,
+            "max": 466.565
+          },
+          "paste_native_mib_per_second": {
+            "first_paste": {
+              "median": 757.7497673471418,
+              "min": 751.0529410177002,
+              "max": 761.891156705535
+            },
+            "second_paste": {
+              "median": 762.8292382911671,
+              "min": 743.0964597259135,
+              "max": 777.614424747579
+            }
+          },
+          "host_peak_rss_mib": [
+            {
+              "median": 139.8359375,
+              "min": 139.67578125,
+              "max": 140.04296875
+            },
+            {
+              "median": 268.125,
+              "min": 267.92578125,
+              "max": 268.4140625
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "instrumentation": true,
+  "pump_mode": "blocking",
+  "measured_order": [
+    "1-64m-before",
+    "1-64m-after",
+    "2-64m-after",
+    "2-64m-before",
+    "3-64m-before",
+    "3-64m-after",
+    "4-64m-after",
+    "4-64m-before",
+    "5-64m-before",
+    "5-64m-after"
+  ],
+  "paired": [
+    {
+      "native_mib": 64,
+      "cut_before_over_after": {
+        "median": 0.9721568996331484,
+        "min": 0.9683204815286809,
+        "max": 1.0172778484463019
+      }
+    }
+  ],
+  "scope": "Alternating build order each round, rotating sizes, fresh loopback processes; no saturation or p99 claim.",
+  "timing": "Cut includes reservations, Drain, capture, transfer, activation and cleanup. Query/validation RPCs are outside phase timers. Selected demo pump behavior and optional profiling overhead are included.",
+  "memory": "VmHWM covers the whole demo including two retained clones, not incremental migration storage."
+}

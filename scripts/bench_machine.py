@@ -10,6 +10,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import tarfile
 import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,8 +23,37 @@ def capture(command, env=None):
             'stdout': result.stdout.strip(), 'stderr': result.stderr.strip()}
 
 
+
+def migration_run(args, run, output, build, metadata):
+    sizes = [1] if args.quick else [1, 8, 32, 64]
+    run('migration', [sys.executable, ROOT / 'scripts/bench_migration.py',
+                      '--build-dir', build, '--output', output / 'migration',
+                      '--rounds', 2 if args.quick else 5, '--sizes-mib', *sizes])
+    report = json.loads((output / 'migration/report.json').read_text())
+    if not report['passed'] or report['binary_sha256'] != metadata['binary_sha256']:
+        raise RuntimeError('migration validation failed or executable hashes changed')
+    lines = ['# Capstan migration benchmark', '',
+             f'Profile: {metadata["profile"]}. Revision: `{metadata["revision"]}`.', '',
+             f'Platform: {metadata["platform"]}.', '',
+             'Release/O3, exceptions enabled, fast runner, erased invocations, UV worker, OpenSSL SHA-256; LTO/native tuning off.',
+             'Sequential loopback migration between fresh Hosts. Cut includes reservations, Drain, capture, transfer, restoration, activation and cleanup.',
+             'Full: five measured rounds per size after one discarded warm-up. Quick: workflow validation only.', '',
+             '| MiB | Copy ms | Paste #1 ms | Paste #2 ms | Cut ms median | Cut ms min–max | Package MiB/s |',
+             '|---:|---:|---:|---:|---:|---:|---:|']
+    for row in report['summary']:
+        cut = row['cut_ms']
+        lines.append(f'| {row["native_mib"]} | {row["copy_ms"]["median"]:.2f} | '
+                     f'{row["first_paste_ms"]["median"]:.2f} | {row["second_paste_ms"]["median"]:.2f} | '
+                     f'{cut["median"]:.2f} | {cut["min"]:.2f}–{cut["max"]:.2f} | '
+                     f'{row["cut_package_mib_per_second"]["median"]:.2f} |')
+    return lines + ['', 'CPU, OS, compiler and OpenSSL differences all affect cross-machine results.',
+                    'This is not physical-link throughput, p99 or concurrent saturation. macOS peak RSS is unavailable (null).',
+                    'Share SUMMARY.md and capstan-migration-results.tar.gz; the archive excludes session credentials.', '']
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--migration', action='store_true', help='benchmark Copy/Paste and Cut/Paste with the matched 3700X migration configuration')
     parser.add_argument('--erased-invocations', action='store_true', help='use type erasure instead of concrete async operations')
     parser.add_argument('--quick', action='store_true', help='small validation batches; not comparable performance numbers')
     parser.add_argument('--jobs', type=int, default=2, help='parallel build jobs (default: 2)')
@@ -46,6 +76,7 @@ def main():
             if platform.machine() != 'arm64':
                 candidates.reverse()
             brew = next((path for path in candidates if os.access(path, os.X_OK)), None)
+    openssl_prefix = None
     if brew:
         prefix = capture([brew, '--prefix'], env)
         if prefix['exit_code'] or not prefix['stdout']:
@@ -53,9 +84,11 @@ def main():
         # An explicitly invoked Homebrew Python does not put Homebrew tools on PATH.
         env['PATH'] = os.pathsep.join([str(Path(prefix['stdout']) / folder) for folder in ('bin', 'sbin')]
                                      + [env.get('PATH', os.defpath)])
-        prefixes = [capture([brew, '--prefix', formula], env) for formula in ('glib', 'libuv')]
+        prefixes = [capture([brew, '--prefix', formula], env) for formula in (('glib', 'libuv', 'openssl@3') if args.migration else ('glib', 'libuv'))]
         if any(p['exit_code'] for p in prefixes):
-            parser.error('install dependencies first: brew install cmake pkgconf glib libuv python')
+            parser.error('install dependencies first: brew install cmake pkgconf glib libuv openssl@3 python')
+        if args.migration:
+            openssl_prefix = prefixes[-1]['stdout']
         pc_paths = [str(Path(p['stdout']) / folder) for p in prefixes for folder in ('lib/pkgconfig', 'share/pkgconfig')]
         env['PKG_CONFIG_PATH'] = os.pathsep.join(pc_paths + ([env['PKG_CONFIG_PATH']] if env.get('PKG_CONFIG_PATH') else []))
         env['CMAKE_PREFIX_PATH'] = os.pathsep.join([p['stdout'] for p in prefixes] + ([env['CMAKE_PREFIX_PATH']] if env.get('CMAKE_PREFIX_PATH') else []))
@@ -78,9 +111,9 @@ def main():
     if not pkg_config:
         parser.error('missing pkg-config/pkgconf; on macOS run: brew install pkgconf')
     env['PKG_CONFIG'] = pkg_config
-    packages = capture([pkg_config, '--modversion', 'gio-2.0', 'libuv'], env)
+    packages = capture([pkg_config, '--modversion', 'gio-2.0', 'libuv'] + (['libcrypto'] if args.migration else []), env)
     if packages['exit_code']:
-        parser.error('GIO/libuv development files not found by pkg-config; see docs/benchmark-your-machine.md')
+        parser.error('GIO/libuv (and OpenSSL for --migration) development files not found by pkg-config; see docs/benchmark-your-machine.md')
     translated = capture(['sysctl', '-in', 'sysctl.proc_translated']) if sys.platform == 'darwin' else None
     if translated and translated['stdout'] == '1':
         parser.error('Rosetta detected: use a native arm64 terminal, Python and Homebrew for the Apple Silicon run')
@@ -89,10 +122,14 @@ def main():
     if output.exists() and any(output.iterdir()):
         parser.error('output directory must be empty; choose a new --output')
     output.mkdir(parents=True, exist_ok=True)
-    build = (args.build_dir or ROOT / f'build-machine-{platform.system().lower()}-{platform.machine()}-{Path(compiler).name}').resolve()
+    build = (args.build_dir or ROOT / f'build-machine-{"migration-" if args.migration else ""}{platform.system().lower()}-{platform.machine()}-{Path(compiler).name}').resolve()
     source_names = ['CMakeLists.txt', 'deps.lock.json', 'cmake/Transport.cmake',
                     'include/capstan/protocol/random.hpp', 'scripts/bench_machine.py']
-    metadata = {'passed': False, 'profile': 'quick' if args.quick else 'full', 'started_utc': stamp,
+    if args.migration:
+        source_names += ['scripts/bench_migration.py', 'scripts/run_migration_demo.py',
+                         'include/capstan/protocol/wire.hpp', 'include/capstan/migration/wire.hpp',
+                         'src/apps/migration_peer.hpp', 'src/apps/host.cpp']
+    metadata = {'workload': 'migration' if args.migration else 'rpc', 'passed': False, 'profile': 'quick' if args.quick else 'full', 'started_utc': stamp,
                 'system': platform.system(), 'architecture': platform.machine(),
                 'platform': platform.platform(), 'python': sys.version,
                 'compiler': capture([compiler, '--version'], env),
@@ -101,7 +138,8 @@ def main():
                 'tracked_tree_dirty': capture(['git', 'diff', '--quiet', 'HEAD'], env)['exit_code'] != 0,
                 'source_sha256': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in source_names},
                 'build_dir': str(build), 'stages': [],
-                'scope': 'One shared Dataset, loopback TCP, finite history; CPU, OS, compiler and libraries all affect cross-machine comparisons.'}
+                'scope': ('Two Hosts, sequential Copy/Paste and Cut/Paste over loopback; CPU, OS, compiler and libraries all affect cross-machine comparisons.'
+                          if args.migration else 'One shared Dataset, loopback TCP, finite history; CPU, OS, compiler and libraries all affect cross-machine comparisons.')}
     if sys.platform == 'darwin':
         metadata['hardware'] = {key: capture(['sysctl', '-n', key])['stdout'] for key in
                                 ('machdep.cpu.brand_string', 'hw.physicalcpu', 'hw.logicalcpu', 'hw.memsize')}
@@ -125,19 +163,29 @@ def main():
             raise RuntimeError(f'{label} failed; full log: {output / (label + ".log")}')
     save()
     try:
-        deps = ROOT / 'build-deps'
+        # A pull may change the lock. Preserve older isolated checkouts instead
+        # of asking fetch_deps.py to overwrite a different pinned revision.
+        lock_id = hashlib.sha256((ROOT / 'deps.lock.json').read_bytes()).hexdigest()[:12]
+        deps = ROOT / 'build-deps' / ('machine-' + lock_id)
         run('fetch', [sys.executable, ROOT / 'scripts/fetch_deps.py', '--output', deps])
         options = ['-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG',
                    f'-DCMAKE_CXX_COMPILER={compiler}',
                    f'-DPython3_EXECUTABLE={sys.executable}', '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
                    f'-DPKG_CONFIG_EXECUTABLE={pkg_config}',
                    '-DCAPSTAN_REQUIRE_GIO=ON', '-DCAPSTAN_UV_WORKER=ON', '-DCAPSTAN_FAST_RUNNER=ON',
-                   f'-DCAPSTAN_ERASED_INVOCATIONS={"ON" if args.erased_invocations else "OFF"}',
-                   '-DCAPSTAN_NO_EXCEPTIONS=ON', '-DCAPSTAN_NO_EXCEPTION_STRICT=ON',
-                   '-DCAPSTAN_ASAN=OFF', '-DCAPSTAN_TSAN=OFF', '-DCAPSTAN_LTO=ON', '-DCAPSTAN_NATIVE_ARCH=ON',
+                   f'-DCAPSTAN_ERASED_INVOCATIONS={"ON" if args.migration or args.erased_invocations else "OFF"}',
+                   f'-DCAPSTAN_NO_EXCEPTIONS={"OFF" if args.migration else "ON"}', '-DCAPSTAN_NO_EXCEPTION_STRICT=ON',
+                   '-DCAPSTAN_ASAN=OFF', '-DCAPSTAN_TSAN=OFF',
+                   f'-DCAPSTAN_LTO={"OFF" if args.migration else "ON"}',
+                   f'-DCAPSTAN_NATIVE_ARCH={"OFF" if args.migration else "ON"}',
                    f'-DCAPSTAN_LEASE_SOURCE={deps / "lease"}', f'-DCAPSTAN_DYNABRIDGE_SOURCE={deps / "dynabridge"}',
                    f'-DCAPSTAN_FF_SOURCE={deps / "flux_foundry"}']
-        if sys.platform == 'linux' and 'clang' in metadata['compiler']['stdout'].lower() and shutil.which('ld.lld'):
+        if args.migration:
+            options += ['-DCAPSTAN_SHA256_BACKEND=OPENSSL', '-DCMAKE_CXX_FLAGS=',
+                        '-DCMAKE_EXE_LINKER_FLAGS=', '-DCAPSTAN_VECTORIZATION_REPORT=OFF']
+            if openssl_prefix:
+                options.append(f'-DOPENSSL_ROOT_DIR={openssl_prefix}')
+        if not args.migration and sys.platform == 'linux' and 'clang' in metadata['compiler']['stdout'].lower() and shutil.which('ld.lld'):
             options.append('-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld')
         run('configure', ['cmake', '-S', ROOT, '-B', build, *options])
         run('build', ['cmake', '--build', build, '--parallel', args.jobs])
@@ -149,37 +197,51 @@ def main():
         shutil.copyfile(build / 'CMakeCache.txt', output / 'CMakeCache.txt')
         shutil.copyfile(build / 'compile_commands.json', output / 'compile_commands.json')
         run('tests', ['ctest', '--test-dir', build, '--output-on-failure', '--timeout', '90'])
-        for workload in ('version', 'summary'):
-            levels = '1,4' if args.quick else ('1,2,4,8,16,32,48' if workload == 'version' else '1,8,32')
-            run(workload, [sys.executable, ROOT / 'scripts/bench_concurrency.py', '--build-dir', build,
-                           '--output', output / workload, '--workloads', workload, '--concurrency', levels,
-                           '--rounds', 1 if args.quick else 3, '--samples', 64 if args.quick else 50000,
-                           '--summary-samples', 16 if args.quick else 512,
-                           '--warmup', 4 if args.quick else (1000 if workload == 'version' else 8),
-                           '--history-limit', 65536, '--inline-version', 1, '--trace-requests', 0,
-                           '--resource-bytes', 1048576 if args.quick else 67108864])
-        reports = {name: json.loads((output / name / 'report.json').read_text()) for name in ('version', 'summary')}
-        if not all(report['passed'] for report in reports.values()):
-            raise RuntimeError('a workload report did not pass validation')
-        lines = ['# Capstan machine benchmark', '', f'Profile: {metadata["profile"]}. Revision: `{metadata["revision"]}`.',
-                 '', f'Platform: {metadata["platform"]}.', '',
-                 'Throughput is the median batch rate; quantiles pool all rounds. Full results use a 64 MiB Dataset.',
-                 'Quick results use small 1 MiB validation batches and are not comparable performance numbers.', '',
-                 '| Workload | Connections | RPC/s median | RPC/s min–max | p50 µs | p95 µs | p99 µs |',
-                 '|---|---:|---:|---:|---:|---:|---:|']
-        for name, report in reports.items():
-            for key, row in report['summary'].items():
-                latency = row['latency']
-                lines.append(f'| {name} | {key.split("/")[1]} | {row["throughput_median"]:.0f} | '
-                             f'{row["throughput_min"]:.0f}–{row["throughput_max"]:.0f} | '
-                             f'{latency["p50_us"]:.2f} | {latency["p95_us"]:.2f} | {latency["p99_us"]:.2f} |')
-        lines += ['', 'See `machine.json`, `compile_commands.json`, `tests.log`, and each workload’s `report.json` and raw CSV files.',
-                  'Results include the native driver and TCP stack; they are not isolated CPU comparisons or indefinite service capacity.', '']
+        metadata['binary_sha256'] = {name: hashlib.sha256((build / name).read_bytes()).hexdigest()
+                                     for name in ('capstan_host', 'capstan_migration_demo')}
+        if args.migration:
+            lines = migration_run(args, run, output, build, metadata)
+        else:
+            for workload in ('version', 'summary'):
+                levels = '1,4' if args.quick else ('1,2,4,8,16,32,48' if workload == 'version' else '1,8,32')
+                run(workload, [sys.executable, ROOT / 'scripts/bench_concurrency.py', '--build-dir', build,
+                               '--output', output / workload, '--workloads', workload, '--concurrency', levels,
+                               '--rounds', 1 if args.quick else 3, '--samples', 64 if args.quick else 50000,
+                               '--summary-samples', 16 if args.quick else 512,
+                               '--warmup', 4 if args.quick else (1000 if workload == 'version' else 8),
+                               '--history-limit', 65536, '--inline-version', 1, '--trace-requests', 0,
+                               '--resource-bytes', 1048576 if args.quick else 67108864])
+            reports = {name: json.loads((output / name / 'report.json').read_text()) for name in ('version', 'summary')}
+            if not all(report['passed'] for report in reports.values()):
+                raise RuntimeError('a workload report did not pass validation')
+            lines = ['# Capstan machine benchmark', '', f'Profile: {metadata["profile"]}. Revision: `{metadata["revision"]}`.',
+                     '', f'Platform: {metadata["platform"]}.', '',
+                     'Throughput is the median batch rate; quantiles pool all rounds. Full results use a 64 MiB Dataset.',
+                     'Quick results use small 1 MiB validation batches and are not comparable performance numbers.', '',
+                     '| Workload | Connections | RPC/s median | RPC/s min–max | p50 µs | p95 µs | p99 µs |',
+                     '|---|---:|---:|---:|---:|---:|---:|']
+            for name, report in reports.items():
+                for key, row in report['summary'].items():
+                    latency = row['latency']
+                    lines.append(f'| {name} | {key.split("/")[1]} | {row["throughput_median"]:.0f} | '
+                                 f'{row["throughput_min"]:.0f}–{row["throughput_max"]:.0f} | '
+                                 f'{latency["p50_us"]:.2f} | {latency["p95_us"]:.2f} | {latency["p99_us"]:.2f} |')
+            lines += ['', 'See `machine.json`, `compile_commands.json`, `tests.log`, and each workload’s `report.json` and raw CSV files.',
+                      'Results include the native driver and TCP stack; they are not isolated CPU comparisons or indefinite service capacity.', '']
         (output / 'SUMMARY.md').write_text('\n'.join(lines))
         metadata['passed'] = True
         print('\n'.join(lines), flush=True)
         print(f'Complete: {output / "SUMMARY.md"}', flush=True)
+        if args.migration:
+            save()
+            archive = output / 'capstan-migration-results.tar.gz'
+            # Allowlist only: never include generated session.conf credentials.
+            with tarfile.open(archive, 'w:gz') as bundle:
+                for name in ('SUMMARY.md', 'machine.json', 'tests.log', 'migration/report.json'):
+                    bundle.add(output / name, arcname=name)
+            print(f'Share this result bundle: {archive}', flush=True)
     except Exception as error:
+        metadata['passed'] = False
         metadata['error'] = str(error)
         raise
     finally:

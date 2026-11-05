@@ -1,4 +1,5 @@
 #include <capstan/access/capability.hpp>
+#include <capstan/access/clipboard.hpp>
 #include <capstan/async/detachable.hpp>
 #include "tests/check.hpp"
 using namespace capstan;
@@ -38,4 +39,18 @@ int main(){
         outcome state;status code;CHECK(!r.has_value() && decode_rpc_error(r.error(),state,code) && state==outcome::unknown);++called;
     });
     ep.complete({1,2});CHECK(called==3);
+    auto shared_endpoint=std::shared_ptr<io_endpoint>(&ep,[](io_endpoint*) {});
+    auto snapshot_call=capstan::copy(shared_endpoint,*owner);
+    CHECK(!owner->try_add_range(0,1,1));
+    dynabridge::ff::start_invocation(std::move(snapshot_call),[&](flux_foundry::result_t<migration::snapshot_ref,dynabridge::async_error> r) noexcept {
+        CHECK(r.has_value() && r.value().source==g.key);++called;
+        CHECK(bool(owner->try_add_range(0,1,1)));
+    });
+    wire::codec::request routed,copy;
+    CHECK(wire::try_decode(ep.request,routed) && routed.method==migration::route_command);
+    CHECK(wire::try_decode(wire::binary(wire::string(routed.args[3])),copy) && copy.method==migration::copy_command);
+    migration::snapshot_ref ref;ref.source=g.key;ref.holder=g.holder;ref.host=1;ref.instance=2;ref.sequence=wire::number(copy.args[1]);ref.size=128;
+    ep.complete(wire::encode_reply(outcome::completed,status::ok,{wire::value::string(migration::encode_snapshot_ref(ref))}));
+    CHECK(called==4);
+
 }

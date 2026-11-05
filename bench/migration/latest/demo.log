@@ -1,0 +1,6 @@
+COPY + PASTE twice: two independent object keys; both retain Copy-time data after source write
+CUT prepared: no source Close until Paste submission
+PASTE ready: same object key; generation=2 epoch=2; summary matches; dedup preserved; source retired
+MEASURE package_bytes=67109532 seconds=0.191775 MiB_per_second=333.727 close_to_activation_seconds=0.190772
+PHASE copy_seconds=0.0454034 first_paste_seconds=0.129172 second_paste_seconds=0.143313
+PASS host_to_host_migration

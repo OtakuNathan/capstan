@@ -1,4 +1,18 @@
-#if defined(PROBE_BRIDGE)
+#if defined(PROBE_MIGRATION)
+#include <capstan/migration/transfer.hpp>
+struct validator {
+    capstan::status operator()(const capstan::migration::buffer&,const std::array<std::uint8_t,32>&)
+#ifdef PROBE_NOEXCEPT
+        noexcept
+#endif
+    {return capstan::status::ok;}
+};
+int main() {
+    capstan::migration::transfer_receiver receiver;
+    capstan::migration::manifest manifest;
+    return static_cast<int>(receiver.seal(manifest,validator{}));
+}
+#elif defined(PROBE_BRIDGE)
 #include <dynabridge/traits.h>
 #include <dynabridge/optional.h>
 struct backend {

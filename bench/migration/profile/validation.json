@@ -1,0 +1,17 @@
+{
+  "captured_date": "2026-11-05",
+  "runtime_machine": "AMD Ryzen 7 3700X",
+  "release_full": {"passed": true, "tests": 50},
+  "asan_ubsan_strict_selection": {
+    "passed": true,
+    "tests": ["migration_process_demo", "migration_profile_read", "migration_profile_write"]
+  },
+  "profile_sweep": {"passed": true, "measured_runs": 40, "warmup_runs": 8},
+  "formal": {
+    "changed": false,
+    "rerun_this_change": false,
+    "note": "Opt-in timing and diagnostic occupancy do not change protocol transitions."
+  },
+  "perf_sampling": false,
+  "scope": "Local checks on the instrumented implementation, not GitHub Actions results."
+}

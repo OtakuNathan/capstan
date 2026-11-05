@@ -8,6 +8,7 @@
 #include <mutex>
 namespace capstan {
 class transfer_plan;
+class cut_plan;
 class capability_busy : public std::logic_error { public: capability_busy():std::logic_error("capability has active borrow/write or is closed"){} };
 namespace access_detail {
 struct backing {
@@ -155,6 +156,7 @@ public:
 };
 class exclusive_capability {
     friend class transfer_plan;
+    friend class cut_plan;
     std::shared_ptr<access_detail::exclusive_state> owner_;
     explicit exclusive_capability(std::shared_ptr<access_detail::exclusive_state> owner):owner_(std::move(owner)) {}
 public:

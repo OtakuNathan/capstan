@@ -8,10 +8,13 @@
 #include <thread>
 #include <memory>
 #include <utility>
+#include <type_traits>
+#include <new>
 
 namespace app {
-// The protocol still admits exactly one executing operation per object. This
-// adapter only selects the local FF worker; all network I/O stays on GIO.
+// Ordinary business calls retain one serial execution lane per object. This
+// adapter selects its FF worker; all network I/O stays on GIO. Migration may
+// create a separate, explicitly pinned read-only snapshot lane below.
 class business_worker {
 #ifdef CAPSTAN_UV_WORKER
     uv_loop_t loop_{};
@@ -69,4 +72,18 @@ public:
 #endif
     }
 };
+// Lazily start the independent snapshot lane only when a read/Drain overlap
+// needs it. Inline storage preserves the executor's over-alignment in C++14.
+class snapshot_worker {
+    typename std::aligned_storage<sizeof(business_worker),alignof(business_worker)>::type storage_;
+    business_worker* worker_=nullptr;
+public:
+    snapshot_worker() = default;
+    snapshot_worker(const snapshot_worker&)=delete;
+    snapshot_worker& operator=(const snapshot_worker&)=delete;
+    ~snapshot_worker() {close();}
+    business_worker& get() {if(!worker_) worker_=new (&storage_) business_worker;return *worker_;}
+    void close() noexcept {if(worker_) {worker_->~business_worker();worker_=nullptr;}}
+};
+
 }

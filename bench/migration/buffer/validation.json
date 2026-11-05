@@ -1,0 +1,18 @@
+{
+  "captured_date": "2026-11-05",
+  "adopted": "Receive-side borrowed chunk decoding; sender retains the previous owning path.",
+  "runtime_machine": "AMD Ryzen 7 3700X",
+  "release_full": {"passed": true, "tests": 51},
+  "asan_ubsan_strict_selection": {
+    "passed": true,
+    "tests": ["reply_codec_test", "migration_wire_test", "allocation_test", "migration_peer_test", "migration_process_demo", "migration_profile_read", "migration_profile_write"]
+  },
+  "unprofiled_comparison": {"passed": true, "measured_runs": 40, "warmup_runs": 8},
+  "profiled_comparison": {"passed": true, "measured_runs": 10, "warmup_runs": 2},
+  "formal": {
+    "changed": false,
+    "rerun_this_change": false,
+    "note": "Borrowing within synchronous append preserves existing protocol transitions and resource retention."
+  },
+  "scope": "Final local regression checks, not GitHub Actions results."
+}

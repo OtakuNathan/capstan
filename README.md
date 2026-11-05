@@ -94,13 +94,13 @@ process-fatal. See [build and validation](docs/build-and-validation.md).
 
 Ordinary CI covers GCC/Clang optimized exception/strict/relaxed/fast builds,
 compile-negative checks, offline tests, real multiprocess TCP, and selected
-ASan/UBSan/TSan lifecycle tests. TLA+ runs nightly at 02:23 UTC and on manual
-request. Passing a model, a sanitizer, and a TCP test are different kinds of
+ASan/UBSan/TSan lifecycle tests. Bounded TLA+ checks run in ordinary CI;
+the larger checks run nightly at 02:23 UTC and on manual request. Passing a model, a sanitizer, and a TCP test are different kinds of
 evidence; none substitutes for the others.
 
 Current measurements are single-machine loopback TCP on a Ryzen 7 3700X. There is
 no cross-machine validation, saturation-throughput guarantee, automatic failover,
-object migration, distributed GC, or multi-object transaction support.
+crash-recoverable migration, distributed GC, or multi-object transaction support.
 
 MIT licensed. Dependencies retain their own licenses; exact revisions are in
 [`deps.lock.json`](deps.lock.json).
@@ -124,3 +124,13 @@ bounded experiments, not indefinite-service claims.
 To build, verify and measure your own Linux or Apple Silicon machine, run
 `python3 scripts/bench_machine.py`. See [the machine benchmark guide](docs/benchmark-your-machine.md)
 for one-time dependencies, a quick check and the generated comparison report.
+
+Experimental [Copy/Cut/Paste](docs/object-migration.md) now includes owning
+Dataset snapshots, independent clones, direct Host-to-Host migration, multiple
+object slots and FF typed invocations. Run
+`python3 scripts/run_migration_demo.py --build-dir build --output build/clipboard-demo`
+for the three-process demo. Recovery is session-scoped; there is no WAL or failover.
+For the one-command Linux/M1 Max migration benchmark, run
+`python3 scripts/bench_machine.py --migration --jobs 4`. It builds the matched
+configuration, runs tests, measures four object sizes and creates a shareable
+result archive. See [the machine benchmark guide](docs/benchmark-your-machine.md).

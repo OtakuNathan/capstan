@@ -57,19 +57,76 @@ inline bool try_decode_transition(const bytes& b,transition& out) {
 }
 inline transition decode_transition(const bytes& b) {transition out;require(try_decode_transition(b,out));return out;}
 struct reply { outcome state=outcome::unknown; status code=status::invalid; std::vector<value> values; };
+namespace detail {
+inline codec::writer reply_writer(outcome state,status code,std::size_t count,std::size_t value_bytes) {
+    // The wire format remains an RPC response string containing request 900.
+    // Write both envelopes into one allocation using the existing codec's
+    // scalar/value primitives; no intermediate argument or payload copies.
+    if(count>std::numeric_limits<std::uint32_t>::max()-2)
+        CAPSTAN_RAISE(dynabridge::rpc::protocol_error("too many reply values"));
+    const auto inner_size=codec::checked_add(17+18,value_bytes); // Request header and two unsigned values.
+    if(inner_size>std::numeric_limits<std::uint32_t>::max())
+        CAPSTAN_RAISE(dynabridge::rpc::protocol_error("RPC string is too large"));
+    codec::writer out(codec::checked_add(11,inner_size));
+    out.integer<std::uint32_t>(codec::response_magic);
+    out.integer<std::uint8_t>(codec::protocol_version);
+    out.integer<std::uint8_t>(0);
+    out.integer<std::uint8_t>(static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string));
+    out.integer<std::uint32_t>(static_cast<std::uint32_t>(inner_size));
+    out.integer<std::uint32_t>(codec::request_magic);
+    out.integer<std::uint8_t>(codec::protocol_version);
+    out.integer<std::uint64_t>(900);
+    out.integer<std::uint32_t>(static_cast<std::uint32_t>(count+2));
+    codec::encode_value(out,u(static_cast<unsigned>(state)));
+    codec::encode_value(out,u(static_cast<unsigned>(code)));
+    return out;
+}
+struct reply_header {outcome state;status code;std::uint32_t value_count;};
+// Leaves the bounded reader at the first result value; no payload allocation.
+inline bool read_reply_header(codec::reader& input,reply_header& out) noexcept {
+    if(input.remaining()>max_frame) return false;
+    if(input.integer<std::uint32_t>()!=codec::response_magic ||
+       input.integer<std::uint8_t>()!=codec::protocol_version ||
+       input.integer<std::uint8_t>()!=0 ||
+       input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string)) return false;
+    const auto inner_size=input.integer<std::uint32_t>();
+    if(!input.valid() || inner_size!=input.remaining()) return false;
+    // The inner frame occupies exactly the remaining input. Callers choose
+    // owning values or a synchronous borrowed view after this shared header.
+    if(input.integer<std::uint32_t>()!=codec::request_magic ||
+       input.integer<std::uint8_t>()!=codec::protocol_version ||
+       input.integer<std::uint64_t>()!=900) return false;
+    const auto count=input.integer<std::uint32_t>();
+    if(!input.valid() || count<2 || count>512 || count>input.remaining()) return false;
+    const auto unsigned_kind=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::unsigned_integer);
+    if(input.integer<std::uint8_t>()!=unsigned_kind) return false;
+    const auto state=input.integer<std::uint64_t>();
+    if(input.integer<std::uint8_t>()!=unsigned_kind) return false;
+    const auto code=input.integer<std::uint64_t>();
+    if(!input.valid()) return false;
+    if(state>static_cast<unsigned>(outcome::unknown) || code>static_cast<unsigned>(status::superseded)) return false;
+    out={static_cast<outcome>(state),static_cast<status>(code),count-2};return true;
+}
+} // namespace detail
 inline bytes encode_reply(outcome state,status code,const std::vector<value>& values={}) {
-    std::vector<value> a{u(static_cast<unsigned>(state)),u(static_cast<unsigned>(code))}; a.insert(a.end(),values.begin(),values.end());
-    return codec::encode_response(value::string(binary(codec::encode_request(900,a))));
+    std::size_t size=0;
+    for(const auto& v:values) size=codec::checked_add(size,codec::encoded_size(v));
+    auto out=detail::reply_writer(state,code,values.size(),size);
+    for(const auto& v:values) codec::encode_value(out,v);
+    return out.finish();
 }
 inline bool try_decode_reply(const bytes& b,reply& out) {
-    if(b.size()>max_frame) return false;
-    value encoded;std::string error;
-    if(codec::try_decode_response(b,encoded,error)!=codec::response_status::ok || !is_string(encoded)) return false;
-    codec::request r;if(!try_decode(binary(string(encoded)),r) || r.method!=900 || r.args.size()<2) return false;
-    if(!is_number(r.args[0]) || !is_number(r.args[1])) return false;
-    auto state=number(r.args[0]),code=number(r.args[1]);
-    if(state>static_cast<unsigned>(outcome::unknown) || code>static_cast<unsigned>(status::superseded)) return false;
-    out={static_cast<outcome>(state),static_cast<status>(code),{r.args.begin()+2,r.args.end()}};return true;
+    codec::reader input(b);detail::reply_header header;
+    if(!detail::read_reply_header(input,header)) return false;
+    reply staged{header.state,header.code,{}};
+    staged.values.reserve(header.value_count);
+    for(std::uint32_t i=0;i<header.value_count;++i) {
+        auto v=codec::decode_value(input);
+        if(!input.valid()) return false;
+        staged.values.emplace_back(std::move(v));
+    }
+    if(!input.valid() || !input.empty()) return false;
+    out=std::move(staged);return true;
 }
 inline reply decode_reply(const bytes& b) {reply out;require(try_decode_reply(b,out));return out;}
 struct call { request header; std::vector<value> args; };

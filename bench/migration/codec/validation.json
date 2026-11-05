@@ -1,0 +1,17 @@
+{
+  "captured_date": "2026-11-05",
+  "runtime_machine": "AMD Ryzen 7 3700X",
+  "release_full": {"passed": true, "tests": 51},
+  "asan_ubsan_strict_selection": {
+    "passed": true,
+    "tests": ["reply_codec_test", "wire_test", "migration_process_demo", "migration_profile_read", "migration_profile_write"]
+  },
+  "unprofiled_comparison": {"passed": true, "measured_runs": 40, "warmup_runs": 8},
+  "profiled_comparison": {"passed": true, "measured_runs": 10, "warmup_runs": 2},
+  "formal": {
+    "changed": false,
+    "rerun_this_change": false,
+    "note": "Reply codec retains the existing wire format and protocol state transitions."
+  },
+  "scope": "Local regression checks, not a claim that GitHub Actions has run."
+}

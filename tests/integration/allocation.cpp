@@ -1,4 +1,5 @@
 #include <capstan/access/transfer.hpp>
+#include <capstan/migration/wire.hpp>
 #include "tests/check.hpp"
 #include <atomic>
 #include <cstdlib>
@@ -36,6 +37,18 @@ struct pending_endpoint:capstan::io_endpoint {
     }
 };
 int main(){
+    // The borrowed chunk decoder must work with allocation disabled, including
+    // malformed input. Its view is consumed while the owning frame is alive.
+    auto chunk_frame=capstan::wire::encode_reply(capstan::outcome::completed,capstan::status::ok,
+        {capstan::wire::u(0),capstan::wire::value::string(std::string(48*1024,'x'))});
+    capstan::migration::chunk_reply_view chunk;
+    injected=false;fail_after=1;
+    const bool decoded_chunk=capstan::migration::try_decode_chunk_reply(chunk_frame,chunk);
+    fail_after=0;CHECK(decoded_chunk && !injected && chunk.size==48*1024 && chunk.data[0]=='x');
+    chunk_frame.pop_back();
+    fail_after=1;
+    const bool malformed_chunk=capstan::migration::try_decode_chunk_reply(chunk_frame,chunk);
+    fail_after=0;CHECK(!malformed_chunk && !injected);
     never_submit endpoint;
 #if CAPSTAN_HAS_EXCEPTIONS
     unsigned failures=0;

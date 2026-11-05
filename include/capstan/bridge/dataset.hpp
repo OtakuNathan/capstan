@@ -138,8 +138,13 @@ class dataset_binding {
 public:
     explicit dataset_binding(object_key key,std::size_t bytes=64u*1024u*1024u,std::uint64_t seed=1)
         : native_(bytes,seed),proxy_(dynabridge::borrow(native_)) { ctx_.key=key; ctx_.proxy=&proxy_; ctx_.proxy_type=typeid(decltype(proxy_)); }
+    dataset_binding(object_key key,dynabridge::capstan_native::dataset&& restored)
+        : native_(std::move(restored)),proxy_(dynabridge::borrow(native_)) {ctx_.key=key;ctx_.proxy=&proxy_;ctx_.proxy_type=typeid(decltype(proxy_));}
     dataset_binding(const dataset_binding&)=delete;
     dataset_binding& operator=(const dataset_binding&)=delete;
+    // Requires a real Host capture pin for the entire native read.
+    status capture_snapshot(migration::buffer& out) const {return native_.encode_snapshot(out);}
+    status append_snapshot(migration::buffer& out) const {return native_.append_snapshot(out);}
     std::size_t resource_bytes() const noexcept { return native_.resource_bytes(); }
     std::uint64_t bind_count() const noexcept { return ctx_.bind_count.load(); }
     // Caller must hold an admitted Host operation pin and the object lane.
