@@ -3,8 +3,11 @@
 A C++14 experiment combining [lease](https://github.com/OtakuNathan/lease),
 [Dynabridge](https://github.com/OtakuNathan/dynabridge), and
 [Flux Foundry](https://github.com/OtakuNathan/flux_foundry) into a distributed
-capability protocol. Resources stay on their authoritative Host. Clients send
-capabilities, operation arguments and results; they do not migrate business objects.
+capability protocol. Ordinary RPCs execute on an object's current authoritative
+Host: clients send capabilities and operation arguments and receive results.
+Explicit [Copy/Cut/Paste](docs/object-migration.md) operations capture immutable
+Dataset snapshots, create independent clones, or migrate an object together with
+its authority and request history between Hosts.
 
 **Experimental, not production-ready.** One Host per object, one directory control
 session, trusted-lab networking, no HA or automatic recovery. The TCP demo binds
