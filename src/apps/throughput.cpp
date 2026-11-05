@@ -34,12 +34,9 @@ struct load {
     }
     void submit(id slot,id sequence) {
         auto started=clock_type::now();
-        std::function<void(wire::reply)> done=[this,slot,sequence,started](wire::reply r) {
-            bool valid=false;
-            if(scan) {summary_t result;valid=typed_call<summary_t>::try_decode(r,result) && result==expected;}
-            else {id result=99;valid=typed_call<id>::try_decode(r,result) && result==0;}
+        auto done=[this,slot,sequence,started](outcome state,status code,bool valid) {
             auto ns=std::chrono::duration_cast<std::chrono::nanoseconds>(clock_type::now()-started).count();
-            if(measuring) rows.push_back({sequence,slot,static_cast<id>(ns),r.state,r.code,valid});
+            if(measuring) rows.push_back({sequence,slot,static_cast<id>(ns),state,code,valid});
             else if(!valid) ++warm_errors;
             if(++completed==target) {
                 elapsed=std::chrono::duration_cast<std::chrono::nanoseconds>(clock_type::now()-began).count();
@@ -53,8 +50,23 @@ struct load {
                 app::post(context,[this,slot,next]{submit(slot,next);});
             }
         };
-        if(scan) {auto call=capability->summary();call.request_id+=request_base;start_call(*endpoints[slot],std::move(call),std::move(done));}
-        else {auto call=capability->version();call.request_id+=request_base;start_call(*endpoints[slot],std::move(call),std::move(done));}
+        if(scan) {
+            auto pending=capability->summary();pending.request_id+=request_base;
+            auto call=bind_async_operation(*endpoints[slot],std::move(pending)).summary();
+            dynabridge::ff::start_invocation(std::move(call),[done,expected=expected](flux_foundry::result_t<summary_t,dynabridge::async_error> result) noexcept {
+                outcome state=outcome::completed;status code=status::ok;
+                if(!result.has_value() && !decode_rpc_error(result.error(),state,code)) {state=outcome::not_submitted;code=status::invalid;}
+                done(state,code,result.has_value() && result.value()==expected);
+            });
+        } else {
+            auto pending=capability->version();pending.request_id+=request_base;
+            auto call=bind_async_operation(*endpoints[slot],std::move(pending)).version();
+            dynabridge::ff::start_invocation(std::move(call),[done](flux_foundry::result_t<id,dynabridge::async_error> result) noexcept {
+                outcome state=outcome::completed;status code=status::ok;
+                if(!result.has_value() && !decode_rpc_error(result.error(),state,code)) {state=outcome::not_submitted;code=status::invalid;}
+                done(state,code,result.has_value() && result.value()==0);
+            });
+        }
     }
 };
 int main(int argc,char** argv) {

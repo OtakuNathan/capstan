@@ -24,6 +24,7 @@ def capture(command, env=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--erased-invocations', action='store_true', help='use type erasure instead of concrete async operations')
     parser.add_argument('--quick', action='store_true', help='small validation batches; not comparable performance numbers')
     parser.add_argument('--jobs', type=int, default=2, help='parallel build jobs (default: 2)')
     parser.add_argument('--compiler', default=os.environ.get('CXX', 'clang++' if sys.platform == 'darwin' else 'c++'))
@@ -131,6 +132,7 @@ def main():
                    f'-DPython3_EXECUTABLE={sys.executable}', '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
                    f'-DPKG_CONFIG_EXECUTABLE={pkg_config}',
                    '-DCAPSTAN_REQUIRE_GIO=ON', '-DCAPSTAN_UV_WORKER=ON', '-DCAPSTAN_FAST_RUNNER=ON',
+                   f'-DCAPSTAN_ERASED_INVOCATIONS={"ON" if args.erased_invocations else "OFF"}',
                    '-DCAPSTAN_NO_EXCEPTIONS=ON', '-DCAPSTAN_NO_EXCEPTION_STRICT=ON',
                    '-DCAPSTAN_ASAN=OFF', '-DCAPSTAN_TSAN=OFF', '-DCAPSTAN_LTO=ON', '-DCAPSTAN_NATIVE_ARCH=ON',
                    f'-DCAPSTAN_LEASE_SOURCE={deps / "lease"}', f'-DCAPSTAN_DYNABRIDGE_SOURCE={deps / "dynabridge"}',

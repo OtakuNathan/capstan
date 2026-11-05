@@ -4,6 +4,9 @@
 #include <capstan/bridge/dataset_value.hpp>
 #include "examples/dataset/dataset.hpp"
 #include <atomic>
+#include <capstan/transport/io.hpp>
+#include <capstan/async/rpc_error.hpp>
+#include <tuple>
 #include <memory>
 #include <typeindex>
 #define DYNABRIDGE_IMPORT_DEF "contracts/dataset_import.def"
@@ -19,10 +22,15 @@ struct dataset_backend : dynabridge::backend_base<dataset_backend> {
     struct context {
         using backend_t=dataset_backend;
         object_key key{};
+        io_endpoint* async_endpoint=nullptr;
+        id async_request_id=0;
+        std::shared_ptr<void> async_authority;
         void* proxy=nullptr;
         std::type_index proxy_type{typeid(void)};
         std::atomic<std::uint64_t> lower_count{0},bind_count{0};
     };
+    template<class Symbol,class Contract,class Receiver,class Tuple>
+    static auto prepare_async(std::shared_ptr<Receiver> receiver,Tuple arguments);
     template<class Receiver,class Direction=typename dynabridge::bridge_direction<Receiver>::type>
     class object_t : public dynabridge::object_base_selector<object_t<Receiver,Direction>,dataset_backend,Receiver,Direction>::type {
         grant grant_;
@@ -165,4 +173,56 @@ public:
         return out;
     }
 };
+template<class Symbol> struct dataset_async_method;
+template<> struct dataset_async_method<dynabridge::import_symbols::dataset::version> {static constexpr method value=method::version;};
+template<> struct dataset_async_method<dynabridge::import_symbols::dataset::summary> {static constexpr method value=method::summary;};
+template<> struct dataset_async_method<dynabridge::import_symbols::dataset::add_range> {static constexpr method value=method::add_range;};
+template<class Contract> struct dataset_async_contract;
+template<class R,class... A> struct dataset_async_contract<dynabridge::free_callable<R(A...)>> {
+    template<class Symbol,class Receiver,class Tuple,std::size_t... I>
+    static auto prepare(std::shared_ptr<Receiver> receiver,Tuple arguments,std::index_sequence<I...>) {
+        auto authority=receiver->context().async_authority;
+        return dynabridge::make_invocation<R>(std::move(receiver),
+            [arguments=std::move(arguments)](Receiver& target,auto completion) mutable noexcept(!CAPSTAN_HAS_EXCEPTIONS) {
+                auto& ctx=target.context();
+                auto authority=std::move(ctx.async_authority);
+                if(!ctx.async_endpoint) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
+                // Runtime conversion occurs in the caller-selected submit context.
+                auto descriptor=lower_dataset_call<dynabridge::free_callable<R(A...)>>::make(
+                    dataset_async_method<Symbol>::value,target,std::get<I>(arguments)...);
+                auto frame=descriptor.encode(ctx.async_request_id);
+                bool accepted=ctx.async_endpoint->submit_owned(std::move(frame),[completion](io_result io) noexcept {
+                    CAPSTAN_TRY {
+                    wire::reply reply;
+                    if(io.state!=outcome::completed) {
+                        completion.finish(dynabridge::async_result<R>(make_rpc_error(io.state,status::invalid)));return;
+                    }
+                    if(!wire::try_decode_reply(io.payload,reply)) {
+                        completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));return;
+                    }
+                    if(reply.state!=outcome::completed || reply.code!=status::ok) {
+                        completion.finish(dynabridge::async_result<R>(make_rpc_error(reply.state,reply.code)));return;
+                    }
+                    if(reply.values.size()!=1) {
+                        completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));return;
+                    }
+                    dataset_backend::context conversion;
+                    auto value=dynabridge::from_optional<R>(conversion,reply.values[0]);
+                    if(!value) completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));
+                    else completion.finish(dynabridge::async_result<R>(std::move(*value)));
+                    } CAPSTAN_CATCH_ALL {
+                        completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));
+                    }
+                },std::move(authority));
+                if(!accepted) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
+                return dynabridge::async_submission::accept();
+            },std::move(authority));
+    }
+};
+template<class Symbol,class Contract,class Receiver,class Tuple>
+auto dataset_backend::prepare_async(std::shared_ptr<Receiver> receiver,Tuple arguments) {
+    return dataset_async_contract<Contract>::template prepare<Symbol>(std::move(receiver),std::move(arguments),
+        std::make_index_sequence<std::tuple_size<Tuple>::value>{});
+}
+
 }

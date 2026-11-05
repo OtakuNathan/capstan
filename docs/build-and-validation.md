@@ -84,7 +84,7 @@ not claimed.
 ## CI baseline
 
 `.github/workflows/ci.yml` builds optimized GCC/Clang × exception/strict/relaxed/
-fast-strict configurations with UV, LTO and native CPU tuning. It runs the complete
+fast-strict/erased configurations with UV, LTO and native CPU tuning. It runs the complete
 CTest suite. A separate Debug/no-exception job disables pkg-config discovery and
 verifies offline support. Separate ASan+UBSan and TSan jobs run the lifecycle/TCP
 selection. Failures retain test artifacts. There are no flaky latency thresholds
@@ -118,3 +118,34 @@ and publishes their outcomes and state counts in the Actions summary.
 It checks actual business updates and a return transfer with Table stopped; see
 [the walkthrough](direct-transfer-demo.md). The recorded benchmark matrix predates
 this additional demo entry and retains its actual 33/32 test counts.
+
+## Typed asynchronous calls
+
+Capstan's I/O adapter now uses Dynabridge's concrete `make_invocation` path.
+`async_read_capability` and `async_exclusive_capability` acquire access through the
+existing Lease facade and then use generated asynchronous Dataset delegates.
+The shared facade does not expose writes. The native throughput driver uses this
+typed path; legacy `start_call` still returns the actual decoded wire reply.
+
+`async_typed_test` checks error outcome/status round trips, reentrant writes after
+normal completion, malformed-response Unknown, timeout retention and late replies.
+A detachable endpoint owns the underlying transport lifetime independently of
+its local completion; the local FF operation never releases a Host pin.
+
+An invocation is move-only and starts once. Reuse the Blueprint with a fresh
+invocation each run. For example, an exclusive facade can submit a generated call:
+
+```cpp
+capstan::async_exclusive_capability dataset(owner, endpoint);
+auto call = dataset.add_range(0, 1024, 1);
+dynabridge::ff::start_invocation(std::move(call),
+    [](flux_foundry::result_t<capstan::id, dynabridge::async_error> result) noexcept {
+        // Consume result or decode its exact Capstan outcome/status.
+    });
+```
+
+The endpoint must outlive its pending calls. Access is acquired during preparation,
+then released before normal completion reentry. A timeout can deliver Unknown while
+the detachable endpoint still retains access until transport retirement. Allocation
+fault tests cover pre-submit release and post-submit decode failure as Unknown.
+The optional erased build retains these same lifecycle rules.

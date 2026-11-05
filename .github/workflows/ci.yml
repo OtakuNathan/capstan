@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [g++, clang++]
-        mode: [exceptions, strict, relaxed, fast-strict]
+        mode: [exceptions, strict, relaxed, fast-strict, erased]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -71,6 +71,9 @@ jobs:
           fi
           if [[ '${{ matrix.mode }}' == 'fast-strict' ]]; then
             options+=(-DCAPSTAN_FAST_RUNNER=ON)
+          fi
+          if [[ '${{ matrix.mode }}' == 'erased' ]]; then
+            options+=(-DCAPSTAN_ERASED_INVOCATIONS=ON -DCAPSTAN_FAST_RUNNER=ON)
           fi
           cmake -S . -B build "${options[@]}"
       - run: cmake --build build --parallel 2
@@ -123,7 +126,7 @@ jobs:
           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
           TSAN_OPTIONS: halt_on_error=1
-        run: ctest --test-dir build -R '^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
+        run: ctest --test-dir build -R '^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|async_typed_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
       - uses: actions/upload-artifact@v4
         if: always()
         with:

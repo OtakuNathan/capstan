@@ -109,3 +109,14 @@ Record the existing power mode with your results. A comparison between the
 and library differences as well as the CPU. These remain finite, single-object,
 closed-loop experiments, with one outstanding RPC per connection; they do not
 establish indefinite-service capacity or open-loop latency.
+
+The default async path retains concrete context and callable types. Add
+`--erased-invocations` to compare the type-erased path with the same workload:
+
+```sh
+python3 scripts/bench_machine.py --jobs 2 --erased-invocations
+```
+
+For direct CMake builds the switch is `CAPSTAN_ERASED_INVOCATIONS=ON` (default
+`OFF`). Each result directory includes its CMake cache; compare fresh outputs
+on the same machine after background compilation has stopped.

@@ -218,4 +218,39 @@ template<class R> void start_call(io_endpoint& endpoint,invocation<R>&& call,std
         done(std::move(reply));
     },std::move(call.authority));
 }
+// Access is acquired by the existing capability facade; generated calls do not infer effects.
+template<class R> auto bind_async_operation(io_endpoint& endpoint,invocation<R>&& pending) {
+    auto context=std::make_shared<dataset_backend::context>();
+    context->async_endpoint=&endpoint;context->async_request_id=pending.request_id;
+    context->async_authority=std::move(pending.authority);
+#ifdef CAPSTAN_ERASED_INVOCATIONS
+    return dynabridge::bind_async<dynabridge::dataset>(context,
+        dataset_delegate::object_t(pending.call.header.capability));
+#else
+    return dynabridge::bind_static_async<dynabridge::dataset>(context,
+        dataset_delegate::object_t(pending.call.header.capability));
+#endif
+}
+class async_read_capability {
+    std::shared_ptr<read_capability> access_;
+    io_endpoint* endpoint_;
+public:
+    async_read_capability(std::shared_ptr<read_capability> access,io_endpoint& endpoint)
+        :access_(std::move(access)),endpoint_(&endpoint) {dynabridge::async_detail::require(bool(access_));}
+    auto version() const {return bind_async_operation(*endpoint_,access_->version()).version();}
+    auto summary() const {return bind_async_operation(*endpoint_,access_->summary()).summary();}
+};
+class async_exclusive_capability {
+    std::shared_ptr<exclusive_capability> access_;
+    io_endpoint* endpoint_;
+public:
+    async_exclusive_capability(std::shared_ptr<exclusive_capability> access,io_endpoint& endpoint)
+        :access_(std::move(access)),endpoint_(&endpoint) {dynabridge::async_detail::require(bool(access_));}
+    auto version() const {return bind_async_operation(*endpoint_,access_->version()).version();}
+    auto summary() const {return bind_async_operation(*endpoint_,access_->summary()).summary();}
+    auto add_range(std::uint64_t b,std::uint64_t e,std::uint64_t d) {
+        return bind_async_operation(*endpoint_,access_->add_range(b,e,d)).add_range(b,e,d);
+    }
+};
+
 }
