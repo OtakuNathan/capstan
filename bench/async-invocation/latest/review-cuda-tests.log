@@ -1,0 +1,26 @@
+Test project /tmp/capstan-review-20261105/build-ff
+    Start 33: cuda_typed_default
+1/8 Test #33: cuda_typed_default ..................   Passed    0.35 sec
+    Start 34: cuda_typed_record_failure_default
+2/8 Test #34: cuda_typed_record_failure_default ...   Passed    0.27 sec
+    Start 35: cuda_typed_erased
+3/8 Test #35: cuda_typed_erased ...................   Passed    0.24 sec
+    Start 36: cuda_typed_record_failure_erased
+4/8 Test #36: cuda_typed_record_failure_erased ....   Passed    0.24 sec
+    Start 37: cuda_typed_noexc_0
+5/8 Test #37: cuda_typed_noexc_0 ..................   Passed    0.24 sec
+    Start 38: cuda_typed_record_failure_noexc_0
+6/8 Test #38: cuda_typed_record_failure_noexc_0 ...   Passed    0.23 sec
+    Start 39: cuda_typed_noexc_1
+7/8 Test #39: cuda_typed_noexc_1 ..................   Passed    0.23 sec
+    Start 40: cuda_typed_record_failure_noexc_1
+8/8 Test #40: cuda_typed_record_failure_noexc_1 ...   Passed    0.23 sec
+
+100% tests passed out of 8
+
+Label Time Summary:
+cuda         =   2.05 sec*proc (8 tests)
+demo         =   2.05 sec*proc (8 tests)
+extension    =   2.05 sec*proc (8 tests)
+
+Total Test time (real) =   2.05 sec

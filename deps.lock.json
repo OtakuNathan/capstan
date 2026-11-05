@@ -6,12 +6,12 @@
     {
       "name": "dynabridge",
       "repository": "https://github.com/OtakuNathan/dynabridge.git",
-      "commit": "66d6df31749f2c744eab6b23ecf308bfc5966c44"
+      "commit": "84725ad350baf56c3cddb69aa934bf9eaabf3123"
     },
     {
       "name": "flux_foundry",
       "repository": "https://github.com/OtakuNathan/flux_foundry.git",
-      "commit": "704659ba524e13aec4521e949a4a2533c0f53ab7"
+      "commit": "a18b05a464532d8c9acaa048e873884606a356f4"
     },
     {
       "name": "lease",

@@ -101,11 +101,14 @@ Small differences in these dominated cases should not be attributed to erasure.
   and portable CUDA completion-condition tests all passed.
 - Existing TLA+ authority models: 9/9 expected outcomes, including seven deliberate
   counterexamples. These models do not prove C++ ownership or GPU completion.
-- CUDA typed demo: **not compiled or run**. The desktop has an RTX 2080 Ti but
-  no CUDA compiler/toolkit. CPU tests cover unrecorded-event failure handling;
-  they do not substitute for real CUDA validation.
+- CUDA typed demo was **not compiled or run during the measurements above**.
+  The subsequent review installed CUDA and ran all eight typed GPU tests on the
+  RTX 2080 Ti without skips. See [review validation](review.json) and the
+  [FF-owned demo walkthrough](https://github.com/OtakuNathan/flux_foundry/blob/a18b05a464532d8c9acaa048e873884606a356f4/docs/typed_async_demo.md).
+  The recorded CPU timings and their original component pins have not been relabeled.
 - GCC/Clang erased configurations and the new lifecycle tests are added to CI.
-  No GitHub Actions run is claimed for these local, unpublished commits.
+  The original measurement run did not include a GitHub Actions result; CI
+  outcomes are separate from these local benchmark records.
 
 See [sanitizer and targeted checks](sanitizers-and-targeted-tests.json),
 [formal outcomes](formal.json), and the saved CTest logs. JSON reports retain

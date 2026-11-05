@@ -152,3 +152,9 @@ The optional erased build retains these same lifecycle rules.
 
 The [owned invocation comparison](../bench/async-invocation/latest/README.md) records
 the final component pins, desktop sanitizer checks and matched concrete/erased measurements.
+
+The optional tool-based composition demo lives in
+[FF](https://github.com/OtakuNathan/flux_foundry/blob/a18b05a464532d8c9acaa048e873884606a356f4/docs/typed_async_demo.md):
+FF owns the Blueprint and scheduling, while Dynabridge generates typed calls.
+The review also validated actual CUDA execution; see
+[the review record](../bench/async-invocation/latest/review.json).

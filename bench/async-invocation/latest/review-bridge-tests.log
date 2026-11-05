@@ -1,0 +1,49 @@
+Test project /tmp/capstan-review-20261105/build-bridge
+      Start  1: ff_python_executor
+ 1/22 Test  #1: ff_python_executor ................   Passed    0.02 sec
+      Start  2: ff_python_executor_lifetime
+ 2/22 Test  #2: ff_python_executor_lifetime .......   Passed    0.01 sec
+      Start  3: ff_uv_executor
+ 3/22 Test  #3: ff_uv_executor ....................   Passed    0.03 sec
+      Start  4: fake_backend_callable_group
+ 4/22 Test  #4: fake_backend_callable_group .......   Passed    0.00 sec
+      Start  5: custom_def_config
+ 5/22 Test  #5: custom_def_config .................   Passed    0.00 sec
+      Start  6: optional
+ 6/22 Test  #6: optional ..........................   Passed    0.00 sec
+      Start  7: rpc_backend
+ 7/22 Test  #7: rpc_backend .......................   Passed    0.00 sec
+      Start  8: rpc_checked
+ 8/22 Test  #8: rpc_checked .......................   Passed    0.00 sec
+      Start  9: rpc_noexceptions_0
+ 9/22 Test  #9: rpc_noexceptions_0 ................   Passed    0.00 sec
+      Start 10: rpc_noexceptions_1
+10/22 Test #10: rpc_noexceptions_1 ................   Passed    0.00 sec
+      Start 11: python_backend
+11/22 Test #11: python_backend ....................   Passed    0.01 sec
+      Start 12: python_runtime
+12/22 Test #12: python_runtime ....................   Passed    0.02 sec
+      Start 13: napi_backend
+13/22 Test #13: napi_backend ......................   Passed    0.00 sec
+      Start 14: async_contract
+14/22 Test #14: async_contract ....................   Passed    0.00 sec
+      Start 15: async_contract_noexceptions_0
+15/22 Test #15: async_contract_noexceptions_0 .....   Passed    0.00 sec
+      Start 16: async_contract_noexceptions_1
+16/22 Test #16: async_contract_noexceptions_1 .....   Passed    0.00 sec
+      Start 17: async_projection
+17/22 Test #17: async_projection ..................   Passed    0.00 sec
+      Start 18: async_projection_noexceptions_0
+18/22 Test #18: async_projection_noexceptions_0 ...   Passed    0.00 sec
+      Start 19: async_projection_noexceptions_1
+19/22 Test #19: async_projection_noexceptions_1 ...   Passed    0.00 sec
+      Start 20: ff_async
+20/22 Test #20: ff_async ..........................   Passed    0.00 sec
+      Start 21: ff_async_noexceptions_0
+21/22 Test #21: ff_async_noexceptions_0 ...........   Passed    0.00 sec
+      Start 22: ff_async_noexceptions_1
+22/22 Test #22: ff_async_noexceptions_1 ...........   Passed    0.00 sec
+
+100% tests passed out of 22
+
+Total Test time (real) =   0.12 sec

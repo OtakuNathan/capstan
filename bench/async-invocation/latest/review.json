@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-05",
+  "passed": true,
+  "dependencies": [
+    {
+      "name": "dynabridge",
+      "repository": "https://github.com/OtakuNathan/dynabridge.git",
+      "commit": "84725ad350baf56c3cddb69aa934bf9eaabf3123"
+    },
+    {
+      "name": "flux_foundry",
+      "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+      "commit": "a18b05a464532d8c9acaa048e873884606a356f4"
+    },
+    {
+      "name": "lease",
+      "repository": "https://github.com/OtakuNathan/lease.git",
+      "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+    }
+  ],
+  "findings_resolved": [
+    "Async delegate preparation is const-correct without inferring authority or backend effects.",
+    "async_result<async_error> distinguishes owned error-valued results from tagged failures.",
+    "FF then/on_error/end preserve invocation of mutable stateful callables; a standalone regression also covers reference capture.",
+    "The FF CUDA adapter is compiled as host C++; only native device operations go through NVCC. FF raw storage was not changed.",
+    "CUDA demo targets respect the configured architecture rather than hardcoding sm_52."
+  ],
+  "demonstration_repository": "OtakuNathan/flux_foundry",
+  "cpu_demo": "test/typed_async_demo.cpp",
+  "cuda_host_demo": "test/cuda_typed_demo.cpp",
+  "cuda_device_boundary": "test/cuda_typed_device.cu",
+  "validation": {
+    "ff_gcc": {
+      "passed": 40,
+      "total": 40,
+      "log": "review-ff-gcc-tests.log"
+    },
+    "ff_clang": {
+      "passed": 30,
+      "total": 30,
+      "log": "review-ff-clang-tests.log"
+    },
+    "cuda_actual_device": {
+      "passed": 8,
+      "total": 8,
+      "log": "review-cuda-tests.log"
+    },
+    "dynabridge_desktop": {
+      "passed": 22,
+      "total": 22,
+      "log": "review-bridge-tests.log"
+    },
+    "capstan_static": {
+      "passed": 38,
+      "total": 38,
+      "log": "review-capstan-static-tests.log"
+    },
+    "capstan_erased": {
+      "passed": 38,
+      "total": 38,
+      "log": "review-capstan-erased-tests.log"
+    }
+  },
+  "sanitizers": {
+    "host": "AMD Ryzen 7 3700X / Linux x86_64",
+    "compiler": "Clang 23.1.4",
+    "flags": "-std=c++14 -O1 -g -pthread -fsanitize=address,undefined -fno-omit-frame-pointer",
+    "passed": [
+      "FF typed_async_demo",
+      "FF mutable_callable_contract",
+      "Dynabridge async_contract"
+    ]
+  },
+  "packaging": {
+    "ff_installed_consumer": "built and 1/1 test passed",
+    "dynabridge_installed_consumer": "built"
+  },
+  "cuda": {
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "driver": "615.78.08",
+    "release": "13.4.3",
+    "nvcc": "13.4.92",
+    "host_compiler": "GCC 16.2.1",
+    "architecture": "75",
+    "installation": "User-local official NVIDIA redistributable components, SHA-256 checked against release manifest",
+    "tested_variants": [
+      "concrete",
+      "erased",
+      "noexceptions-relaxed",
+      "noexceptions-strict"
+    ],
+    "cases_per_variant": [
+      "normal scalar/image completion and continuation close/release",
+      "event-record failure after launch, plus continuation close/release"
+    ],
+    "skipped": 0
+  },
+  "ci": "FF CPU demo coverage and pinned CUDA compile container configured; hosted GPU tests explicitly skip without a device.",
+  "performance": "No new throughput claim. Prior measurement sources and numbers are preserved."
+}

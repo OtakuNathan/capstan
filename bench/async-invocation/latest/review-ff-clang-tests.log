@@ -1,0 +1,74 @@
+Test project /tmp/capstan-review-20261105/build-ff-clang
+      Start  1: flow_smoke
+ 1/30 Test  #1: flow_smoke ..............................   Passed    0.00 sec
+      Start  2: flow_fullchain_smoke
+ 2/30 Test  #2: flow_fullchain_smoke ....................   Passed    0.00 sec
+      Start  3: flow_fullchain_smoke_noexc
+ 3/30 Test  #3: flow_fullchain_smoke_noexc ..............   Passed    0.00 sec
+      Start  4: flow_fork_join_semantics
+ 4/30 Test  #4: flow_fork_join_semantics ................   Passed    0.06 sec
+      Start  5: external_async_awaitable_probe
+ 5/30 Test  #5: external_async_awaitable_probe ..........   Passed    0.00 sec
+      Start  6: external_async_awaitable_probe_noexc
+ 6/30 Test  #6: external_async_awaitable_probe_noexc ....   Passed    0.00 sec
+      Start  7: core_edge_cases
+ 7/30 Test  #7: core_edge_cases .........................   Passed    0.00 sec
+      Start  8: runner_reuse_contract
+ 8/30 Test  #8: runner_reuse_contract ...................   Passed    0.00 sec
+      Start  9: hazard_ptr_contract
+ 9/30 Test  #9: hazard_ptr_contract .....................   Passed    0.00 sec
+      Start 10: hazard_ptr_contract_noexc
+10/30 Test #10: hazard_ptr_contract_noexc ...............   Passed    0.00 sec
+      Start 11: awaitable_lifecycle_contract
+11/30 Test #11: awaitable_lifecycle_contract ............   Passed    0.00 sec
+      Start 12: allocation_failure_contract
+12/30 Test #12: allocation_failure_contract .............   Passed    0.00 sec
+      Start 13: simple_executor_contract
+13/30 Test #13: simple_executor_contract ................   Passed    0.00 sec
+      Start 14: mutable_callable_contract
+14/30 Test #14: mutable_callable_contract ...............   Passed    0.00 sec
+      Start 15: allocation_failure_contract_noexc
+15/30 Test #15: allocation_failure_contract_noexc .......   Passed    0.00 sec
+      Start 16: simple_executor_contract_noexc
+16/30 Test #16: simple_executor_contract_noexc ..........   Passed    0.00 sec
+      Start 17: mutable_callable_contract_noexc
+17/30 Test #17: mutable_callable_contract_noexc .........   Passed    0.00 sec
+      Start 18: flow_state_stress
+18/30 Test #18: flow_state_stress .......................   Passed    3.39 sec
+      Start 19: pooling_allocator_stress
+19/30 Test #19: pooling_allocator_stress ................   Passed    0.02 sec
+      Start 20: hazard_ptr_stack_stress
+20/30 Test #20: hazard_ptr_stack_stress .................   Passed    0.01 sec
+      Start 21: flow_controller_memorder_stress
+21/30 Test #21: flow_controller_memorder_stress .........   Passed    0.04 sec
+      Start 22: flow_multiflow_cancel_stress
+22/30 Test #22: flow_multiflow_cancel_stress ............   Passed    0.02 sec
+      Start 23: flow_multiflow_cancel_executor_stress
+23/30 Test #23: flow_multiflow_cancel_executor_stress ...   Passed    0.02 sec
+      Start 24: inline_executor_probe
+24/30 Test #24: inline_executor_probe ...................   Passed    0.38 sec
+      Start 25: queue_stress_quick
+25/30 Test #25: queue_stress_quick ......................   Passed    4.01 sec
+      Start 26: static_stack_stress_quick
+26/30 Test #26: static_stack_stress_quick ...............   Passed    1.01 sec
+      Start 28: typed_async_demo
+27/30 Test #28: typed_async_demo ........................   Passed    0.00 sec
+      Start 29: typed_async_demo_noexc_0
+28/30 Test #29: typed_async_demo_noexc_0 ................   Passed    0.00 sec
+      Start 30: typed_async_demo_noexc_1
+29/30 Test #30: typed_async_demo_noexc_1 ................   Passed    0.00 sec
+      Start 31: cuda_completion_condition
+30/30 Test #31: cuda_completion_condition ...............   Passed    0.00 sec
+
+100% tests passed out of 30
+
+Label Time Summary:
+contract     =   0.01 sec*proc (7 tests)
+demo         =   0.00 sec*proc (3 tests)
+extension    =   0.00 sec*proc (3 tests)
+noexc        =   0.01 sec*proc (8 tests)
+smoke        =   0.09 sec*proc (21 tests)
+stress       =   8.89 sec*proc (9 tests)
+typed        =   0.00 sec*proc (3 tests)
+
+Total Test time (real) =   8.99 sec

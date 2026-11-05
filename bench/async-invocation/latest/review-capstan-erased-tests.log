@@ -1,0 +1,81 @@
+Test project /tmp/capstan-review-20261105/capstan/build-erased
+      Start  1: probe_lease
+ 1/38 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start  2: probe_object
+ 2/38 Test  #2: probe_object .......................   Passed    0.18 sec
+      Start  3: probe_readonly
+ 3/38 Test  #3: probe_readonly .....................   Passed    0.00 sec
+      Start  4: probe_async
+ 4/38 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start  5: negative_exclusive_copy
+ 5/38 Test  #5: negative_exclusive_copy ............   Passed    0.53 sec
+      Start  6: negative_readonly_write
+ 6/38 Test  #6: negative_readonly_write ............   Passed    0.63 sec
+      Start  7: negative_wrong_receiver
+ 7/38 Test  #7: negative_wrong_receiver ............   Passed    0.27 sec
+      Start  8: negative_const_generated
+ 8/38 Test  #8: negative_const_generated ...........   Passed    0.29 sec
+      Start  9: negative_async_return
+ 9/38 Test  #9: negative_async_return ..............   Passed    0.34 sec
+      Start 10: authority_model
+10/38 Test #10: authority_model ....................   Passed    0.08 sec
+      Start 11: authority_test
+11/38 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 12: random_test
+12/38 Test #12: random_test ........................   Passed    0.00 sec
+      Start 13: async_typed_test
+13/38 Test #13: async_typed_test ...................   Passed    0.00 sec
+      Start 14: direct_transfer_test
+14/38 Test #14: direct_transfer_test ...............   Passed    0.00 sec
+      Start 15: direct_transfer_integration_test
+15/38 Test #15: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start 16: sealed_registry_test
+16/38 Test #16: sealed_registry_test ...............   Passed    0.04 sec
+      Start 17: authority_replies_test
+17/38 Test #17: authority_replies_test .............   Passed    0.00 sec
+      Start 18: checked_errors_test
+18/38 Test #18: checked_errors_test ................   Passed    0.08 sec
+      Start 19: noexception_policy_matrix
+19/38 Test #19: noexception_policy_matrix ..........   Passed    0.87 sec
+      Start 20: authority_faults_test
+20/38 Test #20: authority_faults_test ..............   Passed    0.00 sec
+      Start 21: benchmark_policy_test
+21/38 Test #21: benchmark_policy_test ..............   Passed    0.00 sec
+      Start 22: negative_production_benchmark
+22/38 Test #22: negative_production_benchmark ......   Passed    0.21 sec
+      Start 23: wire_test
+23/38 Test #23: wire_test ..........................   Passed    4.55 sec
+      Start 24: loopback_test
+24/38 Test #24: loopback_test ......................   Passed    0.35 sec
+      Start 25: callback_test
+25/38 Test #25: callback_test ......................   Passed    0.65 sec
+      Start 26: p2_compile_negative
+26/38 Test #26: p2_compile_negative ................   Passed    2.01 sec
+      Start 27: allocation_test
+27/38 Test #27: allocation_test ....................   Passed    0.08 sec
+      Start 28: transport_test
+28/38 Test #28: transport_test .....................   Passed    6.06 sec
+      Start 29: table_observation_test
+29/38 Test #29: table_observation_test .............   Passed    0.00 sec
+      Start 30: tcp_ack_faults
+30/38 Test #30: tcp_ack_faults .....................   Passed    1.08 sec
+      Start 31: worker_test
+31/38 Test #31: worker_test ........................   Passed    0.00 sec
+      Start 32: host_execution_test
+32/38 Test #32: host_execution_test ................   Passed    0.00 sec
+      Start 33: tcp_throughput_smoke
+33/38 Test #33: tcp_throughput_smoke ...............   Passed    0.14 sec
+      Start 34: tcp_direct_transfer
+34/38 Test #34: tcp_direct_transfer ................   Passed    2.24 sec
+      Start 35: direct_transfer_demo
+35/38 Test #35: direct_transfer_demo ...............   Passed    2.12 sec
+      Start 36: four_process_demo
+36/38 Test #36: four_process_demo ..................   Passed    1.31 sec
+      Start 37: tcp_fault_suite
+37/38 Test #37: tcp_fault_suite ....................   Passed    8.21 sec
+      Start 38: tcp_execution_modes
+38/38 Test #38: tcp_execution_modes ................   Passed    0.08 sec
+
+100% tests passed out of 38
+
+Total Test time (real) =  32.43 sec

@@ -1,0 +1,95 @@
+Test project /tmp/capstan-review-20261105/build-ff
+      Start  1: flow_smoke
+ 1/40 Test  #1: flow_smoke ..............................   Passed    0.00 sec
+      Start  2: flow_fullchain_smoke
+ 2/40 Test  #2: flow_fullchain_smoke ....................   Passed    0.00 sec
+      Start  3: flow_fullchain_smoke_noexc
+ 3/40 Test  #3: flow_fullchain_smoke_noexc ..............   Passed    0.00 sec
+      Start  4: flow_fork_join_semantics
+ 4/40 Test  #4: flow_fork_join_semantics ................   Passed    0.06 sec
+      Start  5: external_async_awaitable_probe
+ 5/40 Test  #5: external_async_awaitable_probe ..........   Passed    0.00 sec
+      Start  6: external_async_awaitable_probe_noexc
+ 6/40 Test  #6: external_async_awaitable_probe_noexc ....   Passed    0.00 sec
+      Start  7: core_edge_cases
+ 7/40 Test  #7: core_edge_cases .........................   Passed    0.00 sec
+      Start  8: runner_reuse_contract
+ 8/40 Test  #8: runner_reuse_contract ...................   Passed    0.00 sec
+      Start  9: hazard_ptr_contract
+ 9/40 Test  #9: hazard_ptr_contract .....................   Passed    0.00 sec
+      Start 10: hazard_ptr_contract_noexc
+10/40 Test #10: hazard_ptr_contract_noexc ...............   Passed    0.00 sec
+      Start 11: awaitable_lifecycle_contract
+11/40 Test #11: awaitable_lifecycle_contract ............   Passed    0.00 sec
+      Start 12: allocation_failure_contract
+12/40 Test #12: allocation_failure_contract .............   Passed    0.00 sec
+      Start 13: simple_executor_contract
+13/40 Test #13: simple_executor_contract ................   Passed    0.00 sec
+      Start 14: mutable_callable_contract
+14/40 Test #14: mutable_callable_contract ...............   Passed    0.00 sec
+      Start 15: allocation_failure_contract_noexc
+15/40 Test #15: allocation_failure_contract_noexc .......   Passed    0.00 sec
+      Start 16: simple_executor_contract_noexc
+16/40 Test #16: simple_executor_contract_noexc ..........   Passed    0.00 sec
+      Start 17: mutable_callable_contract_noexc
+17/40 Test #17: mutable_callable_contract_noexc .........   Passed    0.00 sec
+      Start 18: flow_state_stress
+18/40 Test #18: flow_state_stress .......................   Passed    3.40 sec
+      Start 19: pooling_allocator_stress
+19/40 Test #19: pooling_allocator_stress ................   Passed    0.02 sec
+      Start 20: hazard_ptr_stack_stress
+20/40 Test #20: hazard_ptr_stack_stress .................   Passed    0.01 sec
+      Start 21: flow_controller_memorder_stress
+21/40 Test #21: flow_controller_memorder_stress .........   Passed    0.04 sec
+      Start 22: flow_multiflow_cancel_stress
+22/40 Test #22: flow_multiflow_cancel_stress ............   Passed    0.02 sec
+      Start 23: flow_multiflow_cancel_executor_stress
+23/40 Test #23: flow_multiflow_cancel_executor_stress ...   Passed    0.02 sec
+      Start 24: inline_executor_probe
+24/40 Test #24: inline_executor_probe ...................   Passed    0.35 sec
+      Start 25: queue_stress_quick
+25/40 Test #25: queue_stress_quick ......................   Passed    4.01 sec
+      Start 26: static_stack_stress_quick
+26/40 Test #26: static_stack_stress_quick ...............   Passed    1.01 sec
+      Start 28: cuda_runtime_demo
+27/40 Test #28: cuda_runtime_demo .......................   Passed    0.35 sec
+      Start 29: cuda_image_demo
+28/40 Test #29: cuda_image_demo .........................   Passed    0.25 sec
+      Start 30: typed_async_demo
+29/40 Test #30: typed_async_demo ........................   Passed    0.00 sec
+      Start 31: typed_async_demo_noexc_0
+30/40 Test #31: typed_async_demo_noexc_0 ................   Passed    0.00 sec
+      Start 32: typed_async_demo_noexc_1
+31/40 Test #32: typed_async_demo_noexc_1 ................   Passed    0.00 sec
+      Start 33: cuda_typed_default
+32/40 Test #33: cuda_typed_default ......................   Passed    0.29 sec
+      Start 34: cuda_typed_record_failure_default
+33/40 Test #34: cuda_typed_record_failure_default .......   Passed    0.24 sec
+      Start 35: cuda_typed_erased
+34/40 Test #35: cuda_typed_erased .......................   Passed    0.24 sec
+      Start 36: cuda_typed_record_failure_erased
+35/40 Test #36: cuda_typed_record_failure_erased ........   Passed    0.23 sec
+      Start 37: cuda_typed_noexc_0
+36/40 Test #37: cuda_typed_noexc_0 ......................   Passed    0.23 sec
+      Start 38: cuda_typed_record_failure_noexc_0
+37/40 Test #38: cuda_typed_record_failure_noexc_0 .......   Passed    0.23 sec
+      Start 39: cuda_typed_noexc_1
+38/40 Test #39: cuda_typed_noexc_1 ......................   Passed    0.24 sec
+      Start 40: cuda_typed_record_failure_noexc_1
+39/40 Test #40: cuda_typed_record_failure_noexc_1 .......   Passed    0.24 sec
+      Start 41: cuda_completion_condition
+40/40 Test #41: cuda_completion_condition ...............   Passed    0.00 sec
+
+100% tests passed out of 40
+
+Label Time Summary:
+contract     =   0.01 sec*proc (7 tests)
+cuda         =   2.53 sec*proc (10 tests)
+demo         =   2.53 sec*proc (13 tests)
+extension    =   2.53 sec*proc (13 tests)
+noexc        =   0.01 sec*proc (8 tests)
+smoke        =   0.09 sec*proc (21 tests)
+stress       =   8.86 sec*proc (9 tests)
+typed        =   0.00 sec*proc (3 tests)
+
+Total Test time (real) =  11.49 sec
