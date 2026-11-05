@@ -3,11 +3,7 @@
 #include <capstan/protocol/types.hpp>
 #include <cerrno>
 #include <stdexcept>
-#if defined(__APPLE__)
-#include <unistd.h>
-#else
 #include <sys/random.h>
-#endif
 namespace capstan {
 inline bool try_os_random(void* destination,std::size_t size) {
     auto p=static_cast<unsigned char*>(destination);
