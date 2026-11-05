@@ -71,7 +71,7 @@ struct channel : std::enable_shared_from_this<channel> {
     }
     ~channel() { close(); g_object_unref(socket); g_main_context_unref(context); }
     void attach() {
-        // This Linux transport owns nonblocking sockets with no GSocket timeout
+        // This Unix transport owns nonblocking sockets with no GSocket timeout
         // or cancellable. Watch their descriptors directly: GSocketSource's
         // timeout/readiness bookkeeping otherwise runs for every connection on
         // every context iteration, even when the socket has no event.

@@ -3,15 +3,29 @@
 #include <capstan/protocol/types.hpp>
 #include <cerrno>
 #include <stdexcept>
+#if defined(__APPLE__)
+#include <unistd.h>
+#else
 #include <sys/random.h>
+#endif
 namespace capstan {
 inline bool try_os_random(void* destination,std::size_t size) {
     auto p=static_cast<unsigned char*>(destination);
     while(size) {
+#if defined(__APPLE__)
+        // Darwin getentropy accepts at most 256 bytes and returns zero on success.
+        const auto chunk=size>256 ? std::size_t{256}:size;
+        if(::getentropy(p,chunk)!=0) {
+            if(errno==EINTR) continue;
+            return false;
+        }
+        p+=chunk;size-=chunk;
+#else
         auto n=::getrandom(p,size,0);
         if(n<0 && errno==EINTR) continue;
         if(n<=0) return false;
         p+=n; size-=static_cast<std::size_t>(n);
+#endif
     }
     return true;
 }

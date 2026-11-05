@@ -8,7 +8,7 @@ The [latest measured comparison](../bench/concurrency/latest/README.md) separate
 socket timeout policy, descriptor watches, scalar placement and the empty ACK
 queue fast return. It includes every round and raw sample, not only peak rates.
 
-The Linux transport uses GLib descriptor sources for its owned, nonblocking
+The Linux/macOS transport uses GLib descriptor sources for its owned, nonblocking
 sockets. Connection establishment retains a five-second timeout. The inherited
 data-socket timeout is explicitly cleared after connecting. There is no automatic
 established-session timeout: callers can install a timer that triggers the SDK's
@@ -63,6 +63,9 @@ or an indefinitely reusable session. Silently evicting records would weaken
 duplicate-execution protection and is not an optimization implemented here.
 
 ## Reproduce a native concurrency sweep
+
+For a single build/test/measure command on Linux or Apple Silicon, use
+`python3 scripts/bench_machine.py`; see [the machine benchmark guide](benchmark-your-machine.md).
 
 Build with the locked dependencies and the same options for every comparison:
 

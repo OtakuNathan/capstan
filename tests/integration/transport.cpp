@@ -10,6 +10,19 @@
 #include <iostream>
 using namespace capstan;
 using clock_type=std::chrono::steady_clock;
+#ifdef MSG_NOSIGNAL
+constexpr int send_flags=MSG_NOSIGNAL;
+#else
+constexpr int send_flags=0;
+#endif
+void suppress_sigpipe(int fd) {
+#ifdef SO_NOSIGPIPE
+    const int enabled=1;
+    CHECK(setsockopt(fd,SOL_SOCKET,SO_NOSIGPIPE,&enabled,sizeof(enabled))==0);
+#else
+    (void)fd;
+#endif
+}
 void pump(GMainContext* context) { while(g_main_context_iteration(context,FALSE)) {} }
 template<class F> void until(GMainContext* context,F done) {
     auto limit=clock_type::now()+std::chrono::seconds(4);
@@ -21,6 +34,7 @@ template<class F> void until(GMainContext* context,F done) {
 }
 int raw_connect(unsigned short port) {
     int fd=socket(AF_INET,SOCK_STREAM,0); CHECK(fd>=0);
+    suppress_sigpipe(fd);
     sockaddr_in address{}; address.sin_family=AF_INET; address.sin_port=htons(port); address.sin_addr.s_addr=htonl(INADDR_LOOPBACK);
     CHECK(connect(fd,reinterpret_cast<sockaddr*>(&address),sizeof(address))==0);
     CHECK(fcntl(fd,F_SETFL,O_NONBLOCK)==0);
@@ -33,7 +47,7 @@ bytes frame(bytes body,std::uint64_t sequence=1) {
     std::copy(body.begin(),body.end(),b.begin()+12); return b;
 }
 void write_all(int fd,const bytes& data) {
-    CHECK(send(fd,data.data(),data.size(),MSG_NOSIGNAL)==static_cast<ssize_t>(data.size()));
+    CHECK(send(fd,data.data(),data.size(),send_flags)==static_cast<ssize_t>(data.size()));
 }
 bytes receive_n(GMainContext* context,int fd,std::size_t n) {
     bytes result;
@@ -80,7 +94,7 @@ int main() {
         auto fragmented=frame({3,7,8,9});
         auto initial=ids.size();
         for(std::size_t i=0;i<fragmented.size();++i) {
-            CHECK(send(fd,&fragmented[i],1,MSG_NOSIGNAL)==1); pump(context);
+            CHECK(send(fd,&fragmented[i],1,send_flags)==1); pump(context);
             if(i+1<fragmented.size()) CHECK(ids.size()==initial);
         }
         CHECK(receive_n(context,fd,fragmented.size())==fragmented);
@@ -116,7 +130,7 @@ int main() {
         auto before_pressure=server.stats().protocol_errors;
         for(unsigned i=0;i<100 && server.stats().protocol_errors==before_pressure;++i) {
             auto query=frame({252},i+1);
-            auto sent=send(no_reader,query.data(),query.size(),MSG_NOSIGNAL);
+            auto sent=send(no_reader,query.data(),query.size(),send_flags);
             if(sent<0) break;
             CHECK(sent==static_cast<ssize_t>(query.size()));
             // Kernel delivery is asynchronous; allow the source to see each call.
@@ -172,6 +186,7 @@ int main() {
         CHECK(getsockname(listener,reinterpret_cast<sockaddr*>(&address),&length)==0);
         gio_client client(context,"127.0.0.1",ntohs(address.sin_port));
         int peer=accept(listener,nullptr,nullptr); CHECK(peer>=0);
+        suppress_sigpipe(peer);
         CHECK(fcntl(peer,F_SETFL,O_NONBLOCK)==0);
         unsigned replies=0;
         CHECK(client.submit({1},[&](io_result r) {

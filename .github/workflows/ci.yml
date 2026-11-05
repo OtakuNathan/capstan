@@ -10,6 +10,31 @@ concurrency:
   group: cpp-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  macos:
+    name: Apple Silicon / fast-strict
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check native architecture and install dependencies
+        run: |
+          test "$(uname -m)" = arm64
+          brew install cmake pkgconf glib libuv
+      - name: Build, run full tests and validate machine benchmark entry point
+        run: python3 scripts/bench_machine.py --quick --jobs 3 --build-dir build-macos --output work/macos-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macos-arm64-validation
+          path: |
+            work/macos-smoke/
+            build-macos/Testing/Temporary/
+          retention-days: 14
   release:
     name: ${{ matrix.compiler }} / ${{ matrix.mode }}
     runs-on: ubuntu-24.04

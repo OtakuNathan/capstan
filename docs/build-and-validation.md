@@ -1,6 +1,6 @@
 # Builds, contracts and CI
 
-Use CMake 3.20+, Python 3.12+, Git and a C++14 compiler. Linux TCP requires
+Use CMake 3.20+, Python 3.12+, Git and a C++14 compiler. Linux/macOS TCP requires
 pkg-config and GIO; the optional UV worker also requires libuv development files.
 `python3 scripts/fetch_deps.py` explicitly fetches the SHA-pinned upstream commits.
 CMake snapshots commits, not dirty working trees. A changed lock requires a fresh
@@ -32,7 +32,7 @@ The UV checked constructor reports parameter/libuv setup errors but does not
 promise recoverable standard-allocator OOM.
 
 The exception-only exhaustive throwing-allocation rollback test is omitted in
-no-exception builds. This is why the full Release suites contain 37 and 36 tests,
+no-exception builds. This is why the full Release suites contain 38 and 37 tests,
 respectively; it is not counted as a passed no-exception OOM test. Backend-wide
 Python/Node no-exception compatibility is not claimed.
 
@@ -90,13 +90,18 @@ verifies offline support. Separate ASan+UBSan and TSan jobs run the lifecycle/TC
 selection. Failures retain test artifacts. There are no flaky latency thresholds
 or performance claims derived from shared GitHub runners.
 
+An Apple Silicon `macos-15` job runs the complete fast/strict suite and the
+machine benchmark's quick profile. It checks compatibility and result validation;
+its small batches are not published as M1 Max performance measurements.
+
 `.github/workflows/formal-nightly.yml` runs TLA+ at 02:23 UTC and on manual
 request, using a hash-pinned jar. Both safe models must complete and each of seven
 mutants must fail for its expected invariant. See [formal verification](formal-verification.md).
 
 Latest actual local results, upstream revisions and tool versions are recorded
 in `bench/latest/verification.json` and [the measurement report](benchmarks.md).
-Windows/macOS Capstan TCP and cross-machine RPC are not validated.
+Windows Capstan TCP and cross-machine RPC are not validated. See the
+[machine benchmark guide](benchmark-your-machine.md) for native macOS usage.
 
 ## Direct-transfer validation
 

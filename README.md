@@ -22,7 +22,7 @@ I/O; local FF executors schedule local work.
 
 ## Build and run
 
-Requirements: Linux for TCP, CMake 3.20+, a C++14 compiler, Python 3.12+, Git,
+Requirements: Linux or macOS for TCP, CMake 3.20+, a C++14 compiler, Python 3.12+, Git,
 pkg-config, GLib/GIO development files, and libuv development files for the UV
 worker. No dependency installer or system service is run by the build.
 
@@ -120,3 +120,7 @@ native load driver, scalar execution policy, request tracing and finite history
 capacity. The [latest native concurrency report](bench/concurrency/latest/README.md)
 includes matched controls, raw samples and perf evidence. Concurrency sweeps are
 bounded experiments, not indefinite-service claims.
+
+To build, verify and measure your own Linux or Apple Silicon machine, run
+`python3 scripts/bench_machine.py`. See [the machine benchmark guide](docs/benchmark-your-machine.md)
+for one-time dependencies, a quick check and the generated comparison report.
