@@ -17,7 +17,7 @@ struct manual : io_endpoint {
         return true;
     }
     void finish() {
-        auto cb=std::move(pending);
+        auto cb=std::exchange(pending,nullptr);
         cb({outcome::completed,wire::encode_reply(outcome::completed,status::ok)});
         cb({outcome::completed,wire::encode_reply(outcome::completed,status::ok)});
     }
@@ -41,6 +41,26 @@ int main() {
     CHECK(!weak.expired() && finished==0);
     std::thread worker([&]{endpoint.finish();});worker.join();
     CHECK(finished==1 && weak.expired());
+    {
+        manual network;
+        auto captured=std::make_shared<int>(0);
+        std::weak_ptr<int> lifetime=captured;
+        start_io(network,{1},[captured](io_result r){CHECK(r.state==outcome::completed);++*captured;});
+        captured.reset();
+        auto late=std::exchange(network.pending,nullptr);
+        late({outcome::completed,{}});
+        CHECK(lifetime.expired()); // Retained transport callback cannot retain the consumed user callback.
+        late({outcome::completed,{}});
+    }
+    {
+        manual network;
+        detachable_endpoint deadline(network);
+        auto captured=std::make_shared<int>(0);
+        std::weak_ptr<int> lifetime=captured;
+        CHECK(deadline.submit({1},[captured](io_result r){CHECK(r.state==outcome::completed);++*captured;}));
+        captured.reset();network.finish();
+        CHECK(lifetime.expired()); // The settled registration can remain alive, but its callback is consumed.
+    }
     grant g;g.key={1,2,3};g.epoch=1;g.grant_id=1;g.holder=1;g.secret[0]=1;
     read_capability reader(g); auto copy=reader; read_capability moved_copy(std::move(copy));
     reader.close(endpoint,wire::command(2002),[&](io_result r){CHECK(wire::decode_reply(r.payload).code==status::ok);++finished;});
@@ -126,7 +146,7 @@ int main() {
         detachable_endpoint deadline(network);
         std::atomic<unsigned> count{0};
         start_io(deadline,{1},[&](io_result r){CHECK(r.state==outcome::completed || r.state==outcome::unknown);++count;});
-        auto reply=std::move(network.pending);
+        auto reply=std::exchange(network.pending,nullptr);
         std::thread timer([&]{deadline.timeout_pending();});
         std::thread remote([&]{reply({outcome::completed,{}});});
         timer.join();remote.join();

@@ -44,9 +44,9 @@ struct loopback final:io_endpoint {
     void drain() {
         wire::value value;CHECK(dataset.try_dispatch(business.operation,business.capability,arguments,value));
         CHECK(host.complete(pin)==status::ok);replies.flush();
-        auto done=std::move(business_done);done({outcome::completed,wire::encode_reply(outcome::completed,status::ok,{value})});
+        auto done=std::exchange(business_done,nullptr);done({outcome::completed,wire::encode_reply(outcome::completed,status::ok,{value})});
     }
-    void deliver() {delay=false;auto b=std::move(delayed);auto done=std::move(delayed_done);CHECK(submit(std::move(b),std::move(done)));}
+    void deliver() {delay=false;auto b=std::move(delayed);auto done=std::exchange(delayed_done,nullptr);CHECK(submit(std::move(b),std::move(done)));}
 };
 int main() {
     loopback transport;

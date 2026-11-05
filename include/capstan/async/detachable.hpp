@@ -25,7 +25,7 @@ class detachable_endpoint final : public io_endpoint {
                     return true;
                 }
                 settled=true;
-                done=std::move(callback);
+                done=std::exchange(callback,nullptr);
             }
             if(done) { CAPSTAN_TRY { done(std::move(result)); } CAPSTAN_CATCH_ALL { std::terminate(); } }
             return true;
@@ -50,7 +50,7 @@ class detachable_endpoint final : public io_endpoint {
                 submitting=false;
                 if(!accepted) { settled=true;callback=nullptr;queued_result={};release=std::move(lifetime); }
                 else if(queued) {
-                    settled=true;done=std::move(callback);result=std::move(queued_result);
+                    settled=true;done=std::exchange(callback,nullptr);result=std::move(queued_result);
                 }
             }
             if(done) { CAPSTAN_TRY { done(std::move(result)); } CAPSTAN_CATCH_ALL { std::terminate(); } }

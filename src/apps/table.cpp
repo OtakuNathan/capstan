@@ -45,7 +45,7 @@ struct table_runtime {
         history.at(op->command).response=response;
         changing=uncertain;
         if(uncertain) {op->ever_uncertain=true;uncertain_operation=op;}else uncertain_operation.reset();
-        auto done=std::move(op->done);
+        auto done=std::exchange(op->done,nullptr);
         if(done) done({outcome::completed,std::move(response)});
     }
     void advance(std::shared_ptr<transition_operation> op) {

@@ -77,7 +77,9 @@ struct sink {
         // owner until underlying response/disconnect, even after local timeout.
         // OutcomeUnknown never releases the independent Host operation pin.
         operation->authority.reset();
-        auto completion=std::move(operation->completion);
+        // A moved-from std::function may still own its small callable (libc++).
+        // Explicitly empty the slot even if transport retains a late callback.
+        auto completion=std::exchange(operation->completion,nullptr);
         if(completion) {
             CAPSTAN_TRY { completion(std::move(output)); } CAPSTAN_CATCH_ALL { std::terminate(); }
         }
@@ -102,7 +104,7 @@ inline void start_io(io_endpoint& endpoint,bytes request,io_completion completio
     if(!owned || !controller) {
 #endif
         s->authority.reset();
-        auto done=std::move(s->completion);
+        auto done=std::exchange(s->completion,nullptr);
         done({outcome::not_submitted,{}});
         return;
     }
