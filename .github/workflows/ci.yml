@@ -26,7 +26,10 @@ jobs:
           test "$(uname -m)" = arm64
           brew install cmake pkgconf glib libuv
       - name: Build, run full tests and validate machine benchmark entry point
-        run: python3 scripts/bench_machine.py --quick --jobs 3 --build-dir build-macos --output work/macos-smoke
+        run: |
+          python_executable="$(command -v python3)"
+          # Reproduce a native Python invocation from a shell missing Homebrew's PATH.
+          PATH=/usr/bin:/bin:/usr/sbin:/sbin "$python_executable" scripts/bench_machine.py --quick --jobs 3 --build-dir build-macos --output work/macos-smoke
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -36,21 +36,48 @@ def main():
         parser.error('the native TCP benchmark currently supports Linux and macOS')
     if not 1 <= args.jobs <= 64:
         parser.error('jobs must be 1..64')
-    compiler = shutil.which(args.compiler)
-    if not compiler:
-        parser.error(f'compiler not found: {args.compiler}')
-    for name in ('git', 'cmake', 'ctest', 'pkg-config'):
-        if not shutil.which(name):
-            parser.error(f'missing {name}; see docs/benchmark-your-machine.md')
     env = os.environ.copy()
-    if sys.platform == 'darwin' and shutil.which('brew'):
-        prefixes = [capture(['brew', '--prefix', formula]) for formula in ('glib', 'libuv')]
+    brew = None
+    if sys.platform == 'darwin':
+        brew = shutil.which('brew')
+        if not brew:
+            candidates = ['/opt/homebrew/bin/brew', '/usr/local/bin/brew']
+            if platform.machine() != 'arm64':
+                candidates.reverse()
+            brew = next((path for path in candidates if os.access(path, os.X_OK)), None)
+    if brew:
+        prefix = capture([brew, '--prefix'], env)
+        if prefix['exit_code'] or not prefix['stdout']:
+            parser.error('Homebrew prefix lookup failed: ' + prefix['stderr'])
+        # An explicitly invoked Homebrew Python does not put Homebrew tools on PATH.
+        env['PATH'] = os.pathsep.join([str(Path(prefix['stdout']) / folder) for folder in ('bin', 'sbin')]
+                                     + [env.get('PATH', os.defpath)])
+        prefixes = [capture([brew, '--prefix', formula], env) for formula in ('glib', 'libuv')]
         if any(p['exit_code'] for p in prefixes):
             parser.error('install dependencies first: brew install cmake pkgconf glib libuv python')
         pc_paths = [str(Path(p['stdout']) / folder) for p in prefixes for folder in ('lib/pkgconfig', 'share/pkgconfig')]
         env['PKG_CONFIG_PATH'] = os.pathsep.join(pc_paths + ([env['PKG_CONFIG_PATH']] if env.get('PKG_CONFIG_PATH') else []))
         env['CMAKE_PREFIX_PATH'] = os.pathsep.join([p['stdout'] for p in prefixes] + ([env['CMAKE_PREFIX_PATH']] if env.get('CMAKE_PREFIX_PATH') else []))
-    packages = capture(['pkg-config', '--modversion', 'gio-2.0', 'libuv'], env)
+    compiler = shutil.which(args.compiler, path=env.get('PATH'))
+    if not compiler:
+        parser.error(f'compiler not found: {args.compiler}')
+    for name in ('git', 'cmake', 'ctest'):
+        if not shutil.which(name, path=env.get('PATH')):
+            parser.error(f'missing {name}; see docs/benchmark-your-machine.md')
+    pkg_config = (shutil.which('pkg-config', path=env.get('PATH')) or
+                  shutil.which('pkgconf', path=env.get('PATH')))
+    if not pkg_config and brew:
+        # A formula can be installed without being linked into Homebrew's bin.
+        prefix = capture([brew, '--prefix', 'pkgconf'], env)
+        if prefix['exit_code'] == 0 and prefix['stdout']:
+            for name in ('pkg-config', 'pkgconf'):
+                pkg_config = shutil.which(str(Path(prefix['stdout']) / 'bin' / name))
+                if pkg_config:
+                    break
+    if not pkg_config:
+        parser.error('missing pkg-config/pkgconf; on macOS run: brew install pkgconf')
+    env['PKG_CONFIG'] = pkg_config
+    packages = capture([pkg_config, '--modversion', 'gio-2.0', 'libuv'], env)
     if packages['exit_code']:
         parser.error('GIO/libuv development files not found by pkg-config; see docs/benchmark-your-machine.md')
     translated = capture(['sysctl', '-in', 'sysctl.proc_translated']) if sys.platform == 'darwin' else None
@@ -67,10 +94,10 @@ def main():
     metadata = {'passed': False, 'profile': 'quick' if args.quick else 'full', 'started_utc': stamp,
                 'system': platform.system(), 'architecture': platform.machine(),
                 'platform': platform.platform(), 'python': sys.version,
-                'compiler': capture([compiler, '--version']),
-                'cmake': capture(['cmake', '--version']), 'packages': packages,
-                'revision': capture(['git', 'rev-parse', 'HEAD'])['stdout'],
-                'tracked_tree_dirty': capture(['git', 'diff', '--quiet', 'HEAD'])['exit_code'] != 0,
+                'compiler': capture([compiler, '--version'], env),
+                'cmake': capture(['cmake', '--version'], env), 'packages': packages,
+                'revision': capture(['git', 'rev-parse', 'HEAD'], env)['stdout'],
+                'tracked_tree_dirty': capture(['git', 'diff', '--quiet', 'HEAD'], env)['exit_code'] != 0,
                 'source_sha256': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in source_names},
                 'build_dir': str(build), 'stages': [],
                 'scope': 'One shared Dataset, loopback TCP, finite history; CPU, OS, compiler and libraries all affect cross-machine comparisons.'}
@@ -102,6 +129,7 @@ def main():
         options = ['-DCMAKE_BUILD_TYPE=Release', '-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG',
                    f'-DCMAKE_CXX_COMPILER={compiler}',
                    f'-DPython3_EXECUTABLE={sys.executable}', '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON',
+                   f'-DPKG_CONFIG_EXECUTABLE={pkg_config}',
                    '-DCAPSTAN_REQUIRE_GIO=ON', '-DCAPSTAN_UV_WORKER=ON', '-DCAPSTAN_FAST_RUNNER=ON',
                    '-DCAPSTAN_NO_EXCEPTIONS=ON', '-DCAPSTAN_NO_EXCEPTION_STRICT=ON',
                    '-DCAPSTAN_ASAN=OFF', '-DCAPSTAN_TSAN=OFF', '-DCAPSTAN_LTO=ON', '-DCAPSTAN_NATIVE_ARCH=ON',

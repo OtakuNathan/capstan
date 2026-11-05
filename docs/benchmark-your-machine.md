@@ -37,6 +37,12 @@ and libuv prefixes are discovered with `brew --prefix`, following
 ARM64 native tuning uses `-mcpu=native`; CMake checks compiler support and LTO
 availability. The script rejects a Python process running under Rosetta.
 
+The script adds Homebrew's executable directories to its own subprocess PATH
+before checking tools, and accepts either `pkg-config` or `pkgconf`. It also checks
+the installed `pkgconf` formula when it is not linked into Homebrew's `bin`.
+The chosen executable is passed explicitly to CMake. If neither command is
+installed, run `brew install pkgconf`; no global shell configuration is changed.
+
 macOS entropy uses `getentropy`, one of Apple's documented
 [system random sources](https://support.apple.com/guide/security/seca0c73a75b/web),
 in chunks of at most 256 bytes. Linux retains `getrandom`. Both platforms use
