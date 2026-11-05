@@ -1,4 +1,9 @@
-# Latest loopback measurements
+# Loopback measurements
+
+The latest [native concurrency and perf report](../bench/concurrency/latest/README.md)
+measures the optimized scalar path with matched transport and execution controls.
+The older exception-policy experiment below uses a different driver and pacing;
+its latency values must not be treated as a paired throughput baseline.
 
 Measured on 2026-11-04, AMD Ryzen 7 3700X (8 cores / 16 threads), Linux x86_64,
 GCC 16.2.1, GIO 2.90.1 and libuv 1.53.0. The CPU power policy was not changed.
@@ -88,8 +93,8 @@ Latest published artifacts:
 Reports preserve flags, sample counts, binary SHA256 fingerprints and exact
 dependency commits. Verification commands normalize the working directory to the
 repository root; TLA log paths are similarly normalized. Session credentials and
-private machine configuration are not included. Optimization history and older
-benchmark runs are not part of this repository.
+private machine configuration are not included. Each report identifies its own
+configuration and scope; results from different drivers are not interchangeable.
 
 ## Holder-transfer follow-up
 

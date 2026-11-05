@@ -1,0 +1,5473 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "src/apps/host.cpp": "80228f11dce7960e85d53b4c834c93ef2462388ab30fbb02c68e4f9797cefe1d",
+    "src/apps/throughput.cpp": "e7da7fb54dbcf03392dadcd56645ab2d42b85d9d3889c39cd38b36c510a8d6ca",
+    "src/apps/common.hpp": "14229ad3efc4b87f115e6d09e48f5b8c4c31be2f09fce54f288f0d87fb49472f",
+    "src/apps/authority_replies.hpp": "1e46451e500741a567c40d2a0315bd6805394b21f866254d584108f698fdef54",
+    "src/transport/gio.cpp": "8f2718d5aef50b77c897a2a8f7b80d38dc98f16e27aeb4b32e44381334ace42b",
+    "include/capstan/transport/context_dispatch.hpp": "b2329cb7aa23d41e61d2a8240b6c70192d30508a592bcb1276a03b801127ad3e",
+    "deps.lock.json": "b53161c0d9e8a4cd943bc42f06f049a563008aa29a322030b42835f5dbd49be5",
+    "build_reference.py": "2a27182f0f7dd937e96653ac02eefeac0ab6f4896d9d6798236c4581e9d8d846",
+    "final_compare.py": "ef12ab3a9a4ab99064ce2dc3ada9b73f3e541e3cbdca78eac8f9818de647e208"
+  },
+  "configurations": {
+    "gsocket-inherited": {
+      "host": "capstan_host_inherited",
+      "load": "capstan_throughput_inherited",
+      "inline_version": 0,
+      "trace_requests": 0,
+      "history_limit": 65536,
+      "host_sha256": "d08048a5e53210b5cfa8e696d4a0eab04161f032be100af4a94d104979560eaf",
+      "load_sha256": "a0874b66933f51eb968952883ff102f32f41e81f791a2197d0717d65ee2e949c"
+    },
+    "gsocket-worker": {
+      "host": "capstan_host_reference",
+      "load": "capstan_throughput_reference",
+      "inline_version": 0,
+      "trace_requests": 0,
+      "history_limit": 65536,
+      "host_sha256": "bd992b7cca6edfb1a539ba0f78c48daa0040e4c6de6678821f305ffba36989c5",
+      "load_sha256": "97d35c6cf95156fc29ca740e7eb485beb3eb3a346b50279de4915af7f4944eca"
+    },
+    "fd-worker": {
+      "host": "capstan_host_unguarded",
+      "load": "capstan_throughput",
+      "inline_version": 0,
+      "trace_requests": 0,
+      "history_limit": 65536,
+      "host_sha256": "e3f79750d84a81b90202ff1646c42f4118aacaad8bb4a0063d2be09694f06d75",
+      "load_sha256": "c3b5209137c42998b583960cf6309fc927226f845c73941721cf2c4ab1bd4255"
+    },
+    "fd-inline-unguarded": {
+      "host": "capstan_host_unguarded",
+      "load": "capstan_throughput",
+      "inline_version": 1,
+      "trace_requests": 0,
+      "history_limit": 65536,
+      "host_sha256": "e3f79750d84a81b90202ff1646c42f4118aacaad8bb4a0063d2be09694f06d75",
+      "load_sha256": "c3b5209137c42998b583960cf6309fc927226f845c73941721cf2c4ab1bd4255"
+    },
+    "fd-inline": {
+      "host": "capstan_host",
+      "load": "capstan_throughput",
+      "inline_version": 1,
+      "trace_requests": 0,
+      "history_limit": 65536,
+      "host_sha256": "a5e2ae72b94d9a581e5d7aa2286faa3fe02e8073d7f635f9070fcebe6bff08a5",
+      "load_sha256": "c3b5209137c42998b583960cf6309fc927226f845c73941721cf2c4ab1bd4255"
+    }
+  },
+  "runs": [
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "version-r0-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1467777984
+      },
+      "rps": 34065.09740917329,
+      "latency": {
+        "p50_us": 26.421,
+        "p95_us": 28.381,
+        "p99_us": 31.34
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "0.88 0.96 0.89 1/1121 220969",
+      "raw_samples": "raw/version-r0-c1-fd-inline.csv.gz",
+      "raw_sha256": "9622844614003fe2cb05968bb59122d6889f7d4a519392f4117056fc4c071ae9"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "version-r0-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1806866260
+      },
+      "rps": 27672.21963622255,
+      "latency": {
+        "p50_us": 32.081,
+        "p95_us": 39.121,
+        "p99_us": 40.571
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "0.88 0.96 0.89 1/1121 220980",
+      "raw_samples": "raw/version-r0-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "ca6a1ea4460ae62be6161fa170711cdd2486ea1f36c4ccec20d62169de5aafec"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "version-r0-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1713055717
+      },
+      "rps": 29187.608729716525,
+      "latency": {
+        "p50_us": 30.961,
+        "p95_us": 36.47,
+        "p99_us": 41.211
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "0.88 0.96 0.89 1/1125 221005",
+      "raw_samples": "raw/version-r0-c1-fd-worker.csv.gz",
+      "raw_sha256": "b27718c7a6d8b8145cdf2cfacfd6b0f91a3b6717f27dbac98f1fb74a0fa1d314"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "version-r0-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1996379261
+      },
+      "rps": 25045.341322046523,
+      "latency": {
+        "p50_us": 36.751,
+        "p95_us": 42.041,
+        "p99_us": 44.791
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "0.89 0.97 0.89 1/1121 221016",
+      "raw_samples": "raw/version-r0-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "f1a89b6e522a23beef994b3146b7f27d65bc89381aee05590db09f07d082dc0b"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "version-r0-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1550992527
+      },
+      "rps": 32237.421605578118,
+      "latency": {
+        "p50_us": 28.171,
+        "p95_us": 31.43,
+        "p99_us": 33.931
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "0.89 0.97 0.89 1/1120 221027",
+      "raw_samples": "raw/version-r0-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "44229ebc5e31a685a2c81cc0398cdc1094560c042354564579429a18e7e5060d"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "name": "version-r0-c2-gsocket-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1312594225
+      },
+      "rps": 38092.50341627855,
+      "latency": {
+        "p50_us": 51.032,
+        "p95_us": 58.181,
+        "p99_us": 62.772
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.06 1.00 0.90 1/1120 221038",
+      "raw_samples": "raw/version-r0-c2-gsocket-worker.csv.gz",
+      "raw_sha256": "a825638278c4a1b6bc0566edcb3a1b2036e3dbf42dcd2fbdbc27f0323ce8449b"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "name": "version-r0-c2-fd-inline",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1084458635
+      },
+      "rps": 46105.954055130926,
+      "latency": {
+        "p50_us": 35.591,
+        "p95_us": 47.841,
+        "p99_us": 52.801
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.06 1.00 0.90 1/1121 221050",
+      "raw_samples": "raw/version-r0-c2-fd-inline.csv.gz",
+      "raw_sha256": "95bd9a58878a9f67c5e5e43d89f4b1e3485cb16be9c1803a1cd9f031ac3b3b1e"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "name": "version-r0-c2-gsocket-inherited",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1439058900
+      },
+      "rps": 34744.92948134367,
+      "latency": {
+        "p50_us": 52.491,
+        "p95_us": 62.481,
+        "p99_us": 67.322
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.06 1.00 0.90 1/1120 221061",
+      "raw_samples": "raw/version-r0-c2-gsocket-inherited.csv.gz",
+      "raw_sha256": "105948f77e6d812a07b093b494fed7f451c777da5e07b9ce86f883f9b8c76071"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "name": "version-r0-c2-fd-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1190189469
+      },
+      "rps": 42010.11797055314,
+      "latency": {
+        "p50_us": 43.301,
+        "p95_us": 48.221,
+        "p99_us": 51.562
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.06 1.00 0.90 1/1120 221072",
+      "raw_samples": "raw/version-r0-c2-fd-worker.csv.gz",
+      "raw_sha256": "9744d519da90aba2caeaf7ae2c1fe90085b32b0e15df5ccfe1b4fed1cf658d6c"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "name": "version-r0-c2-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1185678302
+      },
+      "rps": 42169.95446037942,
+      "latency": {
+        "p50_us": 39.301,
+        "p95_us": 45.921,
+        "p99_us": 49.271
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.05 1.00 0.90 1/1120 221083",
+      "raw_samples": "raw/version-r0-c2-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "c08671e34652490a9fc494e128bde41d7d4e310235542868f602d23d8f66ea1c"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "name": "version-r0-c4-fd-inline",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 696673240
+      },
+      "rps": 71769.65775232016,
+      "latency": {
+        "p50_us": 45.661,
+        "p95_us": 61.491,
+        "p99_us": 68.771
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.05 1.00 0.90 1/1120 221094",
+      "raw_samples": "raw/version-r0-c4-fd-inline.csv.gz",
+      "raw_sha256": "96123aa8033d2f518113bbb369cd0f955bd8d81296b2f0ac5880b6473b193860"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "name": "version-r0-c4-gsocket-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1149233805
+      },
+      "rps": 43507.24785719299,
+      "latency": {
+        "p50_us": 92.732,
+        "p95_us": 102.702,
+        "p99_us": 111.313
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.05 1.00 0.90 1/1120 221105",
+      "raw_samples": "raw/version-r0-c4-gsocket-worker.csv.gz",
+      "raw_sha256": "3468723fdd5e57d74cde73e55b30f85ee5ce5460c26c8f60b5f97348c4a6c64f"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "name": "version-r0-c4-fd-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 923953721
+      },
+      "rps": 54115.264502517224,
+      "latency": {
+        "p50_us": 68.041,
+        "p95_us": 81.952,
+        "p99_us": 87.383
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.05 1.00 0.90 1/1120 221116",
+      "raw_samples": "raw/version-r0-c4-fd-worker.csv.gz",
+      "raw_sha256": "8cab8cb06012b3f9a7529a584b0903429abeaaa89cb6c7beb3d778b971f06fb6"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "name": "version-r0-c4-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 812998556
+      },
+      "rps": 61500.72423990873,
+      "latency": {
+        "p50_us": 66.032,
+        "p95_us": 69.972,
+        "p99_us": 74.052
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.13 1.02 0.91 1/1120 221127",
+      "raw_samples": "raw/version-r0-c4-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "f8e20ab6199a87374fa799004b4644a97ab939408df5bb1957a13642b2c63818"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "name": "version-r0-c4-gsocket-inherited",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 866965396
+      },
+      "rps": 57672.42871594382,
+      "latency": {
+        "p50_us": 63.891,
+        "p95_us": 74.622,
+        "p99_us": 85.852
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.13 1.02 0.91 1/1123 221142",
+      "raw_samples": "raw/version-r0-c4-gsocket-inherited.csv.gz",
+      "raw_sha256": "893c837692547b38828b16bee61f2d05f01a56a5361cc891be20f3d4d4910e01"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "version-r0-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 721451554
+      },
+      "rps": 69304.7228504549,
+      "latency": {
+        "p50_us": 109.903,
+        "p95_us": 121.953,
+        "p99_us": 126.283
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.13 1.02 0.91 1/1119 221153",
+      "raw_samples": "raw/version-r0-c8-fd-inline.csv.gz",
+      "raw_sha256": "76dcdd7392ed4df3e5a813984eabda33af9767b29fb10958277f15c682276e6b"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "version-r0-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1073972908
+      },
+      "rps": 46556.109216118144,
+      "latency": {
+        "p50_us": 162.814,
+        "p95_us": 212.366,
+        "p99_us": 220.845
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.13 1.02 0.91 1/1119 221164",
+      "raw_samples": "raw/version-r0-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "f49946f84681105d4e18d19fb80752b7dd025aad7678bfbdc596423ff06eb6b7"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "version-r0-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1095113759
+      },
+      "rps": 45657.35713672099,
+      "latency": {
+        "p50_us": 173.754,
+        "p95_us": 188.524,
+        "p99_us": 194.725
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.13 1.02 0.91 1/1119 221176",
+      "raw_samples": "raw/version-r0-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "016557be446ab323170f7fda180b5fe675d5a347d1b0d612edef603eab46c12e"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "version-r0-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 836501407
+      },
+      "rps": 59772.7625818566,
+      "latency": {
+        "p50_us": 125.073,
+        "p95_us": 169.364,
+        "p99_us": 178.455
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.28 1.05 0.92 1/1119 221187",
+      "raw_samples": "raw/version-r0-c8-fd-worker.csv.gz",
+      "raw_sha256": "f2944d78fbe3711ae8b7ecbb721d4766d1c62c4b6b0fc9155704113c3992a216"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "version-r0-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 815050037
+      },
+      "rps": 61345.9269127056,
+      "latency": {
+        "p50_us": 120.323,
+        "p95_us": 150.994,
+        "p99_us": 154.894
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.28 1.05 0.92 1/1119 221198",
+      "raw_samples": "raw/version-r0-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "87b6c20b2f0254205c59e9f85f5f83199463b0e19d0c4c3c403bad0cf02decd2"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "name": "version-r0-c16-gsocket-inherited",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1288075927
+      },
+      "rps": 38817.587497697255,
+      "latency": {
+        "p50_us": 366.919,
+        "p95_us": 503.412,
+        "p99_us": 516.493
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.28 1.05 0.92 1/1119 221209",
+      "raw_samples": "raw/version-r0-c16-gsocket-inherited.csv.gz",
+      "raw_sha256": "77c32743cb58c73063abf0c13d9b61e21f21449873df42b67bc1ecb78d903998"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "name": "version-r0-c16-fd-inline",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 886226408
+      },
+      "rps": 56418.991296860564,
+      "latency": {
+        "p50_us": 281.407,
+        "p95_us": 290.177,
+        "p99_us": 299.658
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.28 1.05 0.92 1/1119 221220",
+      "raw_samples": "raw/version-r0-c16-fd-inline.csv.gz",
+      "raw_sha256": "0e9acb1cb9a062ecc8d2978ba379079da6b8f9e6907214125e0618841f7e49b0"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "name": "version-r0-c16-gsocket-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1114851301
+      },
+      "rps": 44849.030498642256,
+      "latency": {
+        "p50_us": 341.088,
+        "p95_us": 410.43,
+        "p99_us": 458.091
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.34 1.07 0.92 1/1119 221231",
+      "raw_samples": "raw/version-r0-c16-gsocket-worker.csv.gz",
+      "raw_sha256": "3326165e9c914ac6d35dd3c2255517b83781943ab1aece6cd17f8908eb931efe"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "name": "version-r0-c16-fd-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1044842488
+      },
+      "rps": 47854.10296216821,
+      "latency": {
+        "p50_us": 323.428,
+        "p95_us": 390.619,
+        "p99_us": 412.32
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.34 1.07 0.92 1/1120 221243",
+      "raw_samples": "raw/version-r0-c16-fd-worker.csv.gz",
+      "raw_sha256": "b1f29ffd8a489f75d13cea77e532636e02bc50abe2e91d96e3edaa879d6c2324"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "name": "version-r0-c16-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 879941596
+      },
+      "rps": 56821.95298788898,
+      "latency": {
+        "p50_us": 264.037,
+        "p95_us": 334.018,
+        "p99_us": 337.579
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.34 1.07 0.92 1/1120 221254",
+      "raw_samples": "raw/version-r0-c16-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "422338f5af906efe219330caf910ebcc26312cdeec5fe6409f17ac5d0188197d"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "version-r0-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1305537749
+      },
+      "rps": 38298.39469467535,
+      "latency": {
+        "p50_us": 789.889,
+        "p95_us": 947.534,
+        "p99_us": 966.193
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.34 1.07 0.92 1/1121 221266",
+      "raw_samples": "raw/version-r0-c32-fd-worker.csv.gz",
+      "raw_sha256": "533ed949fd64595c8c9a01d2148c236a68de8f81e227806d7e62eb170a455bab"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "version-r0-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1101163027
+      },
+      "rps": 45406.53724655069,
+      "latency": {
+        "p50_us": 705.027,
+        "p95_us": 718.608,
+        "p99_us": 733.738
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.39 1.08 0.93 1/1121 221277",
+      "raw_samples": "raw/version-r0-c32-fd-inline.csv.gz",
+      "raw_sha256": "7fb08e344dc4f19aef46bda1ae9f1058dd924614b2a5a8e969ef3fdc81b41831"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "version-r0-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1706619893
+      },
+      "rps": 29297.67794520839,
+      "latency": {
+        "p50_us": 1024.765,
+        "p95_us": 1392.144,
+        "p99_us": 1453.336
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.39 1.08 0.93 1/1121 221292",
+      "raw_samples": "raw/version-r0-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "d915e1ac680f9518b5535a001c03e406439665c57b2795a15067b3e754c282d7"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "version-r0-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1423885697
+      },
+      "rps": 35115.178209420556,
+      "latency": {
+        "p50_us": 917.013,
+        "p95_us": 1153.848,
+        "p99_us": 1170.939
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.39 1.08 0.93 1/1121 221303",
+      "raw_samples": "raw/version-r0-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "1b002f7f1f70d45fdfe0aec6fbd92fe9d3c57c15b2826a283da7adcc1dff012a"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "version-r0-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1036011243
+      },
+      "rps": 48262.024507778435,
+      "latency": {
+        "p50_us": 656.166,
+        "p95_us": 672.327,
+        "p99_us": 678.777
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.39 1.08 0.93 1/1122 221315",
+      "raw_samples": "raw/version-r0-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "eafb30273b53715bdc0f40162fa06bfe90da07cf62f571d0890dcc3ae8c99bed"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "name": "version-r0-c48-fd-inline",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1174425584
+      },
+      "rps": 42574.0044164433,
+      "latency": {
+        "p50_us": 1116.058,
+        "p95_us": 1151.509,
+        "p99_us": 1175.329
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.08 0.93 1/1122 221326",
+      "raw_samples": "raw/version-r0-c48-fd-inline.csv.gz",
+      "raw_sha256": "296a2ac0a07358eea98f992fb896661002dfd17edd53d8f06698d5a4a9f8abf3"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "name": "version-r0-c48-fd-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1268131518
+      },
+      "rps": 39428.087142614495,
+      "latency": {
+        "p50_us": 1168.889,
+        "p95_us": 1438.066,
+        "p99_us": 1459.156
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.08 0.93 1/1122 221337",
+      "raw_samples": "raw/version-r0-c48-fd-worker.csv.gz",
+      "raw_sha256": "27d9b256a27428edeac8552b072593fb1ddd5f99524a22c8ace2aa290a4e6b23"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "name": "version-r0-c48-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1369826942
+      },
+      "rps": 36500.96115571948,
+      "latency": {
+        "p50_us": 1286.821,
+        "p95_us": 1554.929,
+        "p99_us": 1594.069
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.08 0.93 1/1122 221351",
+      "raw_samples": "raw/version-r0-c48-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "d4a44afcbd0a87be1d0f58043260097456c2854fac058879a011eb0c485718eb"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "name": "version-r0-c48-gsocket-inherited",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 2108467017
+      },
+      "rps": 23713.911385316205,
+      "latency": {
+        "p50_us": 1944.828,
+        "p95_us": 2224.136,
+        "p99_us": 2237.905
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.10 0.94 1/1122 221364",
+      "raw_samples": "raw/version-r0-c48-gsocket-inherited.csv.gz",
+      "raw_sha256": "0ba552fa4b49df0556c8e2cbdb1037731ce0dcbb117b137e7b29a463c884050d"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "name": "version-r0-c48-gsocket-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1907786177
+      },
+      "rps": 26208.387817666844,
+      "latency": {
+        "p50_us": 1776.984,
+        "p95_us": 1971.589,
+        "p99_us": 2126.932
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.10 0.94 1/1121 221386",
+      "raw_samples": "raw/version-r0-c48-gsocket-worker.csv.gz",
+      "raw_sha256": "f29955084ae4858d29173755adb3f558e1f04e94af9dc43369e37ae0bdf7f6d2"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 1,
+      "name": "version-r1-c48-fd-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1446957911
+      },
+      "rps": 34555.25528413245,
+      "latency": {
+        "p50_us": 1451.786,
+        "p95_us": 1569.779,
+        "p99_us": 1624.221
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.38 1.09 0.94 1/1120 221397",
+      "raw_samples": "raw/version-r1-c48-fd-worker.csv.gz",
+      "raw_sha256": "230277bca5931af21c45c34e6e7fd9b25284829f3e308f0710dca25c2a0d7aba"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 1,
+      "name": "version-r1-c48-fd-inline",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1314726859
+      },
+      "rps": 38030.7131155978,
+      "latency": {
+        "p50_us": 1254.302,
+        "p95_us": 1284.781,
+        "p99_us": 1304.292
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.38 1.09 0.94 1/1124 221412",
+      "raw_samples": "raw/version-r1-c48-fd-inline.csv.gz",
+      "raw_sha256": "1cad6dec50ee4e38caa94f6b1d23f0c3f28fe6bcb933eff3efc5f286e247ff38"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 1,
+      "name": "version-r1-c48-gsocket-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 2073023627
+      },
+      "rps": 24119.35848138792,
+      "latency": {
+        "p50_us": 2017.51,
+        "p95_us": 2236.526,
+        "p99_us": 2265.246
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.38 1.09 0.94 1/1120 221423",
+      "raw_samples": "raw/version-r1-c48-gsocket-worker.csv.gz",
+      "raw_sha256": "519c46051ac7c7e97f1eb2f38c2a6d7d8b821f5cc4e6393a85bed906b19b3b3c"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 1,
+      "name": "version-r1-c48-gsocket-inherited",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 2020729919
+      },
+      "rps": 24743.534269410695,
+      "latency": {
+        "p50_us": 1705.623,
+        "p95_us": 2339.548,
+        "p99_us": 2376.959
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.11 0.94 1/1120 221435",
+      "raw_samples": "raw/version-r1-c48-gsocket-inherited.csv.gz",
+      "raw_sha256": "78452a10f9ae1278d01e343ef21f5badbce423e6d8c799f5bb974e8e490918d2"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 1,
+      "name": "version-r1-c48-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1211700578
+      },
+      "rps": 41264.31967419595,
+      "latency": {
+        "p50_us": 1154.498,
+        "p95_us": 1178.52,
+        "p99_us": 1192.58
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.11 0.94 1/1120 221446",
+      "raw_samples": "raw/version-r1-c48-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "d72a39006a81cf45779169f0313ed36786650e8b49b785d9e1fd7bd39f90725f"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "version-r1-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1231398901
+      },
+      "rps": 40604.226590908744,
+      "latency": {
+        "p50_us": 781.87,
+        "p95_us": 804.081,
+        "p99_us": 813.381
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.11 0.94 1/1120 221457",
+      "raw_samples": "raw/version-r1-c32-fd-worker.csv.gz",
+      "raw_sha256": "dbe4ace336fac3ce332f37a5e9972b90190c02682fd54dcbdb8cebe9b0551170"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "version-r1-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1639470986
+      },
+      "rps": 30497.64248770914,
+      "latency": {
+        "p50_us": 950.283,
+        "p95_us": 1272.482,
+        "p99_us": 1285.422
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.12 0.95 1/1120 221468",
+      "raw_samples": "raw/version-r1-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "a00b0a462e316b1e9008105000099ed3f934e09f355c0bfba9a93fec5a31ecd6"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "version-r1-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1071308130
+      },
+      "rps": 46671.91314976766,
+      "latency": {
+        "p50_us": 653.607,
+        "p95_us": 835.181,
+        "p99_us": 846.151
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.12 0.95 1/1120 221479",
+      "raw_samples": "raw/version-r1-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "b4cde6f0cfc66bd2100ba5a2fe52f3a49b2b1101563b4699b3587bb2d4c1e25d"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "version-r1-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1202300827
+      },
+      "rps": 41586.92972436923,
+      "latency": {
+        "p50_us": 805.95,
+        "p95_us": 867.982,
+        "p99_us": 878.442
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.12 0.95 1/1120 221490",
+      "raw_samples": "raw/version-r1-c32-fd-inline.csv.gz",
+      "raw_sha256": "4b40d72cf8f4bfa47c7d83604176f61376db52d496a42f77fce5fbbd6b59ade5"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "version-r1-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1863830641
+      },
+      "rps": 26826.47172984211,
+      "latency": {
+        "p50_us": 1247.971,
+        "p95_us": 1288.572,
+        "p99_us": 1300.583
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.52 1.14 0.95 1/1122 221512",
+      "raw_samples": "raw/version-r1-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "4e69bc14d466c412ac3b7104d0b5b4642587b6452226750d8b4efb937528f2ba"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "name": "version-r1-c16-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 858455527
+      },
+      "rps": 58244.13545886577,
+      "latency": {
+        "p50_us": 262.186,
+        "p95_us": 352.269,
+        "p99_us": 359.529
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.52 1.14 0.95 1/1122 221523",
+      "raw_samples": "raw/version-r1-c16-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "eb4b01e510bb115b0c0056d63c3fd30f0063c53606af61b0ebf3f532c4de9611"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "name": "version-r1-c16-fd-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1153033298
+      },
+      "rps": 43363.88210707164,
+      "latency": {
+        "p50_us": 369.1,
+        "p95_us": 395.16,
+        "p99_us": 403.41
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.52 1.14 0.95 1/1121 221538",
+      "raw_samples": "raw/version-r1-c16-fd-worker.csv.gz",
+      "raw_sha256": "f7a4abe745f1af5b4332d5cf15674ac06cd8e34f06140a418a861fcb4a2c4968"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "name": "version-r1-c16-gsocket-inherited",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1095516974
+      },
+      "rps": 45640.55253059,
+      "latency": {
+        "p50_us": 336.128,
+        "p95_us": 406.26,
+        "p99_us": 446.492
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.52 1.14 0.95 1/1121 221549",
+      "raw_samples": "raw/version-r1-c16-gsocket-inherited.csv.gz",
+      "raw_sha256": "025461435b4421b7056a96a182b131dfcb855e79b2ab3623fa30d4cfeae9859e"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "name": "version-r1-c16-gsocket-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1155684394
+      },
+      "rps": 43264.40701249099,
+      "latency": {
+        "p50_us": 338.769,
+        "p95_us": 476.192,
+        "p99_us": 500.373
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.56 1.15 0.96 1/1121 221560",
+      "raw_samples": "raw/version-r1-c16-gsocket-worker.csv.gz",
+      "raw_sha256": "59eb99d38b5a964e9b5ef838dde4bdff7c1d506b4e902e8e4f8a9697eb52b04e"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 1,
+      "name": "version-r1-c16-fd-inline",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 887706056
+      },
+      "rps": 56324.950879911536,
+      "latency": {
+        "p50_us": 283.428,
+        "p95_us": 292.088,
+        "p99_us": 298.587
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.56 1.15 0.96 1/1121 221571",
+      "raw_samples": "raw/version-r1-c16-fd-inline.csv.gz",
+      "raw_sha256": "0a41a4d73bc23cbe08a6e534d2d4097eb26fe3025ac3578b7dada594feadef3d"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "version-r1-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 949743948
+      },
+      "rps": 52645.76847822146,
+      "latency": {
+        "p50_us": 144.334,
+        "p95_us": 168.305,
+        "p99_us": 177.874
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.56 1.15 0.96 1/1121 221582",
+      "raw_samples": "raw/version-r1-c8-fd-worker.csv.gz",
+      "raw_sha256": "f6efa21d060a3ebe66ccab1a620a201bd625d79a6a6736fe9a1f06a2e32adaee"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "version-r1-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 859179902
+      },
+      "rps": 58195.029799474985,
+      "latency": {
+        "p50_us": 129.663,
+        "p95_us": 158.654,
+        "p99_us": 164.664
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.56 1.15 0.96 1/1121 221593",
+      "raw_samples": "raw/version-r1-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "1fefd4370d077c2117acca4079e101f733dee8b18757ca7cd7376aba6fcd7a8c"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "version-r1-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1034563258
+      },
+      "rps": 48329.57251609645,
+      "latency": {
+        "p50_us": 157.644,
+        "p95_us": 182.325,
+        "p99_us": 193.105
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.56 1.15 0.96 1/1121 221604",
+      "raw_samples": "raw/version-r1-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "360e2acdd8846b977b7b37ab68519e2cb4413f92e4041543e1f002460c24c010"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "version-r1-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1068018045
+      },
+      "rps": 46815.688399721745,
+      "latency": {
+        "p50_us": 157.954,
+        "p95_us": 231.576,
+        "p99_us": 240.456
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.15 0.96 1/1121 221615",
+      "raw_samples": "raw/version-r1-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "d5561f5d9020c861689eccd9f54054e6cedb36914e4a1b4b5e0f9a815cc9a902"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "version-r1-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 707897796
+      },
+      "rps": 70631.66502640164,
+      "latency": {
+        "p50_us": 103.323,
+        "p95_us": 112.813,
+        "p99_us": 118.403
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.15 0.96 1/1121 221626",
+      "raw_samples": "raw/version-r1-c8-fd-inline.csv.gz",
+      "raw_sha256": "24849af415537d445a64154761a1f42b6e77770cd9e230da2783510ce1ce52d7"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "name": "version-r1-c4-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 753103792
+      },
+      "rps": 66391.91108999222,
+      "latency": {
+        "p50_us": 53.512,
+        "p95_us": 68.992,
+        "p99_us": 73.252
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.15 0.96 1/1121 221637",
+      "raw_samples": "raw/version-r1-c4-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "a768f190a713ab0c82f851108090f1d060daae3a8c96b3a64ae7171237d3da64"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "name": "version-r1-c4-fd-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 964656285
+      },
+      "rps": 51831.933070337065,
+      "latency": {
+        "p50_us": 73.852,
+        "p95_us": 84.862,
+        "p99_us": 92.373
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.15 0.96 1/1121 221648",
+      "raw_samples": "raw/version-r1-c4-fd-worker.csv.gz",
+      "raw_sha256": "3dc6197827624b3c4d8f16bbde5de7afb4c10ede30b8e9191aabe99251d2986f"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "name": "version-r1-c4-gsocket-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1167906627
+      },
+      "rps": 42811.641653609695,
+      "latency": {
+        "p50_us": 90.522,
+        "p95_us": 110.313,
+        "p99_us": 115.063
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.16 0.97 1/1121 221659",
+      "raw_samples": "raw/version-r1-c4-gsocket-worker.csv.gz",
+      "raw_sha256": "56c3a5dae57b2fd519f5058d1f937a0e241447dcf6e76523cb608ed9eb66be63"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "name": "version-r1-c4-fd-inline",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 807373881
+      },
+      "rps": 61929.17702275781,
+      "latency": {
+        "p50_us": 64.371,
+        "p95_us": 68.902,
+        "p99_us": 72.062
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.16 0.97 1/1121 221670",
+      "raw_samples": "raw/version-r1-c4-fd-inline.csv.gz",
+      "raw_sha256": "560bcb572c83abb6ce88063d85fa175c332367e9cd4742350ae5ba439fdb8643"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 1,
+      "name": "version-r1-c4-gsocket-inherited",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 923894143
+      },
+      "rps": 54118.754165540806,
+      "latency": {
+        "p50_us": 67.901,
+        "p95_us": 84.562,
+        "p99_us": 95.313
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.16 0.97 1/1119 221681",
+      "raw_samples": "raw/version-r1-c4-gsocket-inherited.csv.gz",
+      "raw_sha256": "6b7e843d94074a8362f7c5832b61fa413fd8e794b158374ad3524a04f89e4fc0"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 1,
+      "name": "version-r1-c2-gsocket-inherited",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1221161828
+      },
+      "rps": 40944.614262869014,
+      "latency": {
+        "p50_us": 45.101,
+        "p95_us": 57.342,
+        "p99_us": 61.721
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.16 0.97 1/1119 221696",
+      "raw_samples": "raw/version-r1-c2-gsocket-inherited.csv.gz",
+      "raw_sha256": "5ac041af5ad5d357746c79ffd19607a110fce893e880c75458a83cb12177d6f0"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 1,
+      "name": "version-r1-c2-fd-inline",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1105620584
+      },
+      "rps": 45223.47062235954,
+      "latency": {
+        "p50_us": 37.591,
+        "p95_us": 43.051,
+        "p99_us": 46.331
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.16 0.97 1/1119 221708",
+      "raw_samples": "raw/version-r1-c2-fd-inline.csv.gz",
+      "raw_sha256": "1b451b18efd00e18715dadac4d46f09a43343d838aa53e5844a64609e270d245"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 1,
+      "name": "version-r1-c2-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1182739970
+      },
+      "rps": 42274.71909992185,
+      "latency": {
+        "p50_us": 38.981,
+        "p95_us": 44.482,
+        "p99_us": 48.131
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.16 0.97 1/1119 221719",
+      "raw_samples": "raw/version-r1-c2-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "b022aa128ebd127997f5ff6ade55cdbdf39f7ce880a653d4e8905a680309b6b3"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 1,
+      "name": "version-r1-c2-gsocket-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1394158352
+      },
+      "rps": 35863.93176088795,
+      "latency": {
+        "p50_us": 51.912,
+        "p95_us": 59.121,
+        "p99_us": 63.372
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.16 0.97 1/1123 221734",
+      "raw_samples": "raw/version-r1-c2-gsocket-worker.csv.gz",
+      "raw_sha256": "f83d6ce9bea206a5b2e8a0a3e38f4f9244b0888b124217aebcdf7ff343b08d0b"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 1,
+      "name": "version-r1-c2-fd-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1313522032
+      },
+      "rps": 38065.59675582206,
+      "latency": {
+        "p50_us": 46.661,
+        "p95_us": 55.871,
+        "p99_us": 59.332
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.16 0.97 1/1122 221745",
+      "raw_samples": "raw/version-r1-c2-fd-worker.csv.gz",
+      "raw_sha256": "9ee68268bdb63f5942f55ff8c772517cb4ec69353d0e7d0c4b9530569f5e652d"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "version-r1-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1963694569
+      },
+      "rps": 25462.20822185306,
+      "latency": {
+        "p50_us": 35.921,
+        "p95_us": 40.661,
+        "p99_us": 42.951
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.18 0.97 1/1122 221756",
+      "raw_samples": "raw/version-r1-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "b3bd8f6e6a4b59c14e868eea22e64485440c90c870820444be588bcbf8cc8b0a"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "version-r1-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1517864597
+      },
+      "rps": 32941.01469842767,
+      "latency": {
+        "p50_us": 27.181,
+        "p95_us": 30.751,
+        "p99_us": 32.451
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.18 0.97 1/1122 221767",
+      "raw_samples": "raw/version-r1-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "03b7f2d4c8d962349daafd8dd37e7dab3c647d6e3ecd5ecdbf860c465ae7d49c"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "version-r1-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1888482557
+      },
+      "rps": 26476.2837309066,
+      "latency": {
+        "p50_us": 34.301,
+        "p95_us": 40.291,
+        "p99_us": 42.961
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.50 1.17 0.97 1/1122 221778",
+      "raw_samples": "raw/version-r1-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "6a403304d338ca6b583a76e1d7e4c3490c7cad6f1a5b6605b3fdf5df32a9f9bd"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "version-r1-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1917128085
+      },
+      "rps": 26080.67785935127,
+      "latency": {
+        "p50_us": 36.281,
+        "p95_us": 39.701,
+        "p99_us": 42.571
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.50 1.17 0.97 1/1119 221790",
+      "raw_samples": "raw/version-r1-c1-fd-worker.csv.gz",
+      "raw_sha256": "e39c91a767153d8c77833c63e020a48e0a1ca616bb8ef40b6459b99876f0b9fa"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "version-r1-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1519868839
+      },
+      "rps": 32897.575578230535,
+      "latency": {
+        "p50_us": 26.701,
+        "p95_us": 31.11,
+        "p99_us": 36.171
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.50 1.17 0.97 1/1119 221805",
+      "raw_samples": "raw/version-r1-c1-fd-inline.csv.gz",
+      "raw_sha256": "194a674a1bfa7f85978260f55dff575d7b8f2482b0ecd04e2460eeb6e34ca7ce"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 2,
+      "name": "version-r2-c48-fd-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1415219042
+      },
+      "rps": 35330.21992789156,
+      "latency": {
+        "p50_us": 1353.384,
+        "p95_us": 1379.445,
+        "p99_us": 1416.346
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.54 1.19 0.98 1/1119 221816",
+      "raw_samples": "raw/version-r2-c48-fd-worker.csv.gz",
+      "raw_sha256": "2920cd015e49844e7d69882e9485866f76d8732d6d56ffbca48b1088989cf15a"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 2,
+      "name": "version-r2-c48-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1339600927
+      },
+      "rps": 37324.54867135218,
+      "latency": {
+        "p50_us": 1281.162,
+        "p95_us": 1302.944,
+        "p99_us": 1315.714
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.54 1.19 0.98 1/1119 221827",
+      "raw_samples": "raw/version-r2-c48-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "d18337a5ffe08d03b90747fab3f3491d46663fc311fe4f045f279023d35b121d"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 2,
+      "name": "version-r2-c48-gsocket-inherited",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1964474882
+      },
+      "rps": 25452.09432715974,
+      "latency": {
+        "p50_us": 1885.658,
+        "p95_us": 1963.37,
+        "p99_us": 2017.132
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.54 1.19 0.98 1/1119 221840",
+      "raw_samples": "raw/version-r2-c48-gsocket-inherited.csv.gz",
+      "raw_sha256": "6c186ee780a578c2e7aebf7fd14922a3bafccb8c67476e9adc80c5bcca7d3363"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 2,
+      "name": "version-r2-c48-fd-inline",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1354030033
+      },
+      "rps": 36926.80278975762,
+      "latency": {
+        "p50_us": 1256.752,
+        "p95_us": 1502.378,
+        "p99_us": 1546.569
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.58 1.20 0.98 1/1119 221853",
+      "raw_samples": "raw/version-r2-c48-fd-inline.csv.gz",
+      "raw_sha256": "2bc150d0d8c1e8cc8c8e611d1fe593ecee6f055775b2deadc6c76218efea2545"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 2,
+      "name": "version-r2-c48-gsocket-worker",
+      "stats": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1946021999
+      },
+      "rps": 25693.440272357373,
+      "latency": {
+        "p50_us": 1879.588,
+        "p95_us": 1902.698,
+        "p99_us": 1912.909
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.58 1.20 0.98 1/1119 221864",
+      "raw_samples": "raw/version-r2-c48-gsocket-worker.csv.gz",
+      "raw_sha256": "5cfaccbb0367a02c2499f10ace556d927276e9e8ba74ee83bf068b6f9cb541b8"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "version-r2-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1416699149
+      },
+      "rps": 35293.30841717051,
+      "latency": {
+        "p50_us": 913.043,
+        "p95_us": 996.105,
+        "p99_us": 1018.746
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.58 1.20 0.98 1/1119 221875",
+      "raw_samples": "raw/version-r2-c32-fd-worker.csv.gz",
+      "raw_sha256": "9704be776ae2157a6f328debe404650390bb03fd6efccf8569b86b134721daba"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "version-r2-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1500770506
+      },
+      "rps": 33316.21976851403,
+      "latency": {
+        "p50_us": 923.323,
+        "p95_us": 1170.79,
+        "p99_us": 1178.16
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.61 1.21 0.99 1/1119 221886",
+      "raw_samples": "raw/version-r2-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "d927775d0ecc629b8efe9b2a929b2eba8a67f4e4f318b2fd138b91fba1c12ecb"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "version-r2-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1004657886
+      },
+      "rps": 49768.18546567403,
+      "latency": {
+        "p50_us": 636.626,
+        "p95_us": 653.716,
+        "p99_us": 663.147
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.61 1.21 0.99 1/1119 221897",
+      "raw_samples": "raw/version-r2-c32-fd-inline.csv.gz",
+      "raw_sha256": "e45ce716d75daac34aede32eec8a850bd062c1f6c24b74c20d8382b8ada8adf8"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "version-r2-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1059281184
+      },
+      "rps": 47201.82021094033,
+      "latency": {
+        "p50_us": 659.136,
+        "p95_us": 831.311,
+        "p99_us": 838.961
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.61 1.21 0.99 1/1123 221912",
+      "raw_samples": "raw/version-r2-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "3907986d7245c0754451d6bdb4266976002d09abd26b2c09d86d57e7f6591c13"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "version-r2-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1443052774
+      },
+      "rps": 34648.767460808056,
+      "latency": {
+        "p50_us": 917.783,
+        "p95_us": 1113.519,
+        "p99_us": 1132.819
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.64 1.23 1.00 1/1118 221923",
+      "raw_samples": "raw/version-r2-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "3b5754b4885d5e8db59ac6340935f86ef7c7db683a531995785dd05caf3da5bb"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "version-r2-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1544128642
+      },
+      "rps": 32380.721812943353,
+      "latency": {
+        "p50_us": 27.231,
+        "p95_us": 31.481,
+        "p99_us": 33.291
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.64 1.23 1.00 1/1118 221934",
+      "raw_samples": "raw/version-r2-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "e2873a35af4ddb34007209027ed4931509510998c6e8d4f28a916c2833819792"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "version-r2-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1755109820
+      },
+      "rps": 28488.24582384252,
+      "latency": {
+        "p50_us": 32.791,
+        "p95_us": 35.501,
+        "p99_us": 37.571
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.64 1.23 1.00 1/1118 221945",
+      "raw_samples": "raw/version-r2-c1-fd-worker.csv.gz",
+      "raw_sha256": "83e3ce4f08a4dac064bf433914879a0b8d2c08f7c97dd58efea74800de8a5093"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "version-r2-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1778523478
+      },
+      "rps": 28113.207735793523,
+      "latency": {
+        "p50_us": 31.961,
+        "p95_us": 38.521,
+        "p99_us": 42.121
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.59 1.22 1.00 1/1117 221966",
+      "raw_samples": "raw/version-r2-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "f5ce805fdcb59dc3319bb449bed0395ed33eca9a0c183895a39e1277889a9a39"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "version-r2-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1362551467
+      },
+      "rps": 36695.861558967445,
+      "latency": {
+        "p50_us": 24.05,
+        "p95_us": 28.371,
+        "p99_us": 30.751
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.59 1.22 1.00 1/1117 221977",
+      "raw_samples": "raw/version-r2-c1-fd-inline.csv.gz",
+      "raw_sha256": "b667d0c838a7c97f65b53eecd22b6297f24ab79096cb82127df344ad4b3db6ac"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "version-r2-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1914687654
+      },
+      "rps": 26113.91988429252,
+      "latency": {
+        "p50_us": 35.621,
+        "p95_us": 39.391,
+        "p99_us": 41.791
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.59 1.22 1.00 1/1117 221988",
+      "raw_samples": "raw/version-r2-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "a7ec0f8608a48519db57ea6c6dfa82209941f92d46ed3980e998bd18375e76de"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 2,
+      "name": "version-r2-c2-gsocket-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1179924199
+      },
+      "rps": 42375.60348569476,
+      "latency": {
+        "p50_us": 43.931,
+        "p95_us": 51.172,
+        "p99_us": 59.681
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.87 1.29 1.02 1/1118 222009",
+      "raw_samples": "raw/version-r2-c2-gsocket-worker.csv.gz",
+      "raw_sha256": "bac7e8e1dc95b9196004421a8971eb278ec95f2967596161a0f2a1b2745fdd2e"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 2,
+      "name": "version-r2-c2-fd-worker",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1336606096
+      },
+      "rps": 37408.178931423936,
+      "latency": {
+        "p50_us": 51.152,
+        "p95_us": 56.842,
+        "p99_us": 60.252
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.87 1.29 1.02 1/1118 222020",
+      "raw_samples": "raw/version-r2-c2-fd-worker.csv.gz",
+      "raw_sha256": "3dd3b160e28b56ce8da757e6e73c519e50e7c60f078794a6542bdb60ea44c260"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 2,
+      "name": "version-r2-c2-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1185544031
+      },
+      "rps": 42174.73049720917,
+      "latency": {
+        "p50_us": 36.441,
+        "p95_us": 47.401,
+        "p99_us": 49.641
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.87 1.29 1.02 1/1117 222031",
+      "raw_samples": "raw/version-r2-c2-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "ee2caa9ae37a27e4eec4b068fa0116b0711e566c184478768c06c92fd16341cf"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 2,
+      "name": "version-r2-c2-fd-inline",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1054015882
+      },
+      "rps": 47437.61536602728,
+      "latency": {
+        "p50_us": 34.251,
+        "p95_us": 46.341,
+        "p99_us": 52.252
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.80 1.28 1.02 1/1117 222046",
+      "raw_samples": "raw/version-r2-c2-fd-inline.csv.gz",
+      "raw_sha256": "ea679fb6b9c455819dec837e92c2e0b1da79602dec782b9d784cd467d5d54b85"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 2,
+      "name": "version-r2-c2-gsocket-inherited",
+      "stats": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1265277455
+      },
+      "rps": 39517.024350995016,
+      "latency": {
+        "p50_us": 45.121,
+        "p95_us": 51.662,
+        "p99_us": 55.561
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.80 1.28 1.02 1/1117 222057",
+      "raw_samples": "raw/version-r2-c2-gsocket-inherited.csv.gz",
+      "raw_sha256": "be6729e2731400f0edb44edaf7c42a29d6b474e54c0e618a1cb1ae417cf83f17"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "name": "version-r2-c4-fd-inline",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 680684759
+      },
+      "rps": 73455.4422423905,
+      "latency": {
+        "p50_us": 48.392,
+        "p95_us": 60.011,
+        "p99_us": 63.451
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.80 1.28 1.02 1/1117 222068",
+      "raw_samples": "raw/version-r2-c4-fd-inline.csv.gz",
+      "raw_sha256": "934f92681d7d818142145b3f02763ad9995a194c40bb574276cc42341b2763b3"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "name": "version-r2-c4-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 713294013
+      },
+      "rps": 70097.32184587956,
+      "latency": {
+        "p50_us": 52.442,
+        "p95_us": 59.201,
+        "p99_us": 64.522
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.80 1.28 1.02 1/1117 222079",
+      "raw_samples": "raw/version-r2-c4-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "2820159f7b5a7443265f7ec4ee1d99e52d99c4f3e40f11e6853eb75c0454f54a"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "name": "version-r2-c4-fd-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 912233297
+      },
+      "rps": 54810.54042253404,
+      "latency": {
+        "p50_us": 68.531,
+        "p95_us": 81.512,
+        "p99_us": 92.943
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.80 1.28 1.02 1/1117 222090",
+      "raw_samples": "raw/version-r2-c4-fd-worker.csv.gz",
+      "raw_sha256": "3d28c5755cec4eccf61c2dc9d60b66c545727b360c0c3da3d3862a981344e60d"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "name": "version-r2-c4-gsocket-worker",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1096834468
+      },
+      "rps": 45585.73007937238,
+      "latency": {
+        "p50_us": 80.392,
+        "p95_us": 104.293,
+        "p99_us": 111.823
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.81 1.29 1.02 1/1117 222101",
+      "raw_samples": "raw/version-r2-c4-gsocket-worker.csv.gz",
+      "raw_sha256": "0253682744f1353a994d6733c73544e8834bc32920a4109072cffcb872779953"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 2,
+      "name": "version-r2-c4-gsocket-inherited",
+      "stats": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 945270163
+      },
+      "rps": 52894.930948963,
+      "latency": {
+        "p50_us": 67.261,
+        "p95_us": 91.232,
+        "p99_us": 99.423
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.81 1.29 1.02 1/1117 222112",
+      "raw_samples": "raw/version-r2-c4-gsocket-inherited.csv.gz",
+      "raw_sha256": "d4c89b3352f3772482a3e53afcf01f8db9b657ffacc7137c79d74940896e9458"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "name": "version-r2-c16-fd-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1087794435
+      },
+      "rps": 45964.56682553262,
+      "latency": {
+        "p50_us": 341.148,
+        "p95_us": 383.49,
+        "p99_us": 428.441
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.81 1.29 1.02 1/1117 222123",
+      "raw_samples": "raw/version-r2-c16-fd-worker.csv.gz",
+      "raw_sha256": "255f47ab43f34175fe5b3d0c27528aef3df3d611859b41f21df0d6e95fb1c6fd"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "name": "version-r2-c16-fd-inline",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 809955343
+      },
+      "rps": 61731.798465338354,
+      "latency": {
+        "p50_us": 252.116,
+        "p95_us": 266.387,
+        "p99_us": 276.117
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.81 1.29 1.02 1/1117 222134",
+      "raw_samples": "raw/version-r2-c16-fd-inline.csv.gz",
+      "raw_sha256": "b21f9f9f2b2a7ab8d0b8aa23b0c0cd12df87033f7aa1854f5b6d13f1417faa5a"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "name": "version-r2-c16-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 851354646
+      },
+      "rps": 58729.93145091734,
+      "latency": {
+        "p50_us": 260.497,
+        "p95_us": 331.118,
+        "p99_us": 337.559
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.81 1.29 1.02 1/1117 222145",
+      "raw_samples": "raw/version-r2-c16-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "baf27358a4d89a470a9eefc96a6788ff372bd63295018956d21279f6a140b041"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "name": "version-r2-c16-gsocket-worker",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1350251638
+      },
+      "rps": 37030.13467479312,
+      "latency": {
+        "p50_us": 434.461,
+        "p95_us": 479.793,
+        "p99_us": 496.403
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.91 1.32 1.03 1/1117 222156",
+      "raw_samples": "raw/version-r2-c16-gsocket-worker.csv.gz",
+      "raw_sha256": "5a8c9cf7ece09eb5eecbb805dd9a0f24b197e21126319d387a46e87e2c9cb4ed"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 2,
+      "name": "version-r2-c16-gsocket-inherited",
+      "stats": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1031753576
+      },
+      "rps": 48461.18410739581,
+      "latency": {
+        "p50_us": 314.208,
+        "p95_us": 393.501,
+        "p99_us": 402.161
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.91 1.32 1.03 1/1117 222167",
+      "raw_samples": "raw/version-r2-c16-gsocket-inherited.csv.gz",
+      "raw_sha256": "a06bde7b4e7d519833b30bf1056c75e60bed6b656f14e9f3d96c08b6d9bc97ca"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "version-r2-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 758631474
+      },
+      "rps": 65908.15397674893,
+      "latency": {
+        "p50_us": 116.133,
+        "p95_us": 125.283,
+        "p99_us": 129.643
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.91 1.32 1.03 1/1114 222178",
+      "raw_samples": "raw/version-r2-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "064330d2f948993c5921a602cb281de9d5bb39d4178960811e0fb120b54c30a2"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "version-r2-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1025991792
+      },
+      "rps": 48733.33333645227,
+      "latency": {
+        "p50_us": 158.714,
+        "p95_us": 186.634,
+        "p99_us": 199.185
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.91 1.32 1.03 1/1118 222193",
+      "raw_samples": "raw/version-r2-c8-fd-worker.csv.gz",
+      "raw_sha256": "890908a0a0fd29d2e1cb6673b4af67ccdd41686cf4f7b6bc6396c66cc265ce2a"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "version-r2-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1041923522
+      },
+      "rps": 47988.167024028466,
+      "latency": {
+        "p50_us": 157.755,
+        "p95_us": 197.085,
+        "p99_us": 215.175
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.92 1.33 1.04 1/1114 222205",
+      "raw_samples": "raw/version-r2-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "912742ad09512de912769c4ff851c4a14a3971fedadfebaa0c4e3019cb63ba79"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "version-r2-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1122145593
+      },
+      "rps": 44557.497985914204,
+      "latency": {
+        "p50_us": 171.885,
+        "p95_us": 203.935,
+        "p99_us": 217.096
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.92 1.33 1.04 1/1114 222216",
+      "raw_samples": "raw/version-r2-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "01a3741b1ec084443e34007ea7aa878dec490c76acf315acf2bdfd3a6b27236d"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "version-r2-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 883416814
+      },
+      "rps": 56598.424670690045,
+      "latency": {
+        "p50_us": 141.934,
+        "p95_us": 154.774,
+        "p99_us": 159.674
+      },
+      "host_stats": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.92 1.33 1.04 1/1114 222227",
+      "raw_samples": "raw/version-r2-c8-fd-inline.csv.gz",
+      "raw_sha256": "a72fc874156fa32457d300535a86f803ba2d079017b4c0e5347bb3d6e1b7096f"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "summary-r0-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1213516432
+      },
+      "rps": 421.91435278397614,
+      "latency": {
+        "p50_us": 2364.901,
+        "p95_us": 2391.022,
+        "p99_us": 2409.052
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.92 1.33 1.04 1/1114 222238",
+      "raw_samples": "raw/summary-r0-c1-fd-inline.csv.gz",
+      "raw_sha256": "87bc8c878ab99419e61150232cbe3e65f4ae89b4d46d3ff9a39e9dda825d6cb0"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "summary-r0-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1211603514
+      },
+      "rps": 422.5804845263927,
+      "latency": {
+        "p50_us": 2352.911,
+        "p95_us": 2462.703,
+        "p99_us": 2485.415
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.84 1.33 1.04 1/1114 222249",
+      "raw_samples": "raw/summary-r0-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "ad9c13a32ee444b6e4e1aea1f9f2f0849ad23f90b733ff6d687fa3d9f8f283e8"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "summary-r0-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1194607074
+      },
+      "rps": 428.59280774692616,
+      "latency": {
+        "p50_us": 2326.08,
+        "p95_us": 2359.971,
+        "p99_us": 2374.751
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.84 1.33 1.04 1/1114 222260",
+      "raw_samples": "raw/summary-r0-c1-fd-worker.csv.gz",
+      "raw_sha256": "37ed98b71e75c093d9775c841fddc756ac8b726744d53f948497b4a0e58d8b4b"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "summary-r0-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1259129084
+      },
+      "rps": 406.630270483054,
+      "latency": {
+        "p50_us": 2438.403,
+        "p95_us": 2519.375,
+        "p99_us": 2696.93
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.84 1.33 1.04 1/1114 222271",
+      "raw_samples": "raw/summary-r0-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "f17aa815a34cc7ce9a6b565bde0af4c79219b175d202f688d06c47096799ed5b"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "name": "summary-r0-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1276596067
+      },
+      "rps": 401.06656540404333,
+      "latency": {
+        "p50_us": 2491.044,
+        "p95_us": 2519.345,
+        "p99_us": 2579.757
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.84 1.33 1.04 1/1114 222282",
+      "raw_samples": "raw/summary-r0-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "5e09484ffe287aa4783c49668d6d296c0b9c58fc4c3960de8ed19ea7682f76e9"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "summary-r0-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1225767891
+      },
+      "rps": 417.6973501747567,
+      "latency": {
+        "p50_us": 19183.386,
+        "p95_us": 19247.659,
+        "p99_us": 19499.535
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.77 1.32 1.04 1/1114 222293",
+      "raw_samples": "raw/summary-r0-c8-fd-inline.csv.gz",
+      "raw_sha256": "65c956b0311bb6b576ca7f09731b2cfb783192624417a532999c03cbf0210401"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "summary-r0-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1245410621
+      },
+      "rps": 411.10938943887487,
+      "latency": {
+        "p50_us": 19356.211,
+        "p95_us": 19703.86,
+        "p99_us": 19849.324
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.77 1.32 1.04 1/1105 222304",
+      "raw_samples": "raw/summary-r0-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "b42d2ae068d7a9439de03ded5a84b33aeb9fba4aaf49a442f5d2d6c2ad2cc334"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "summary-r0-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1220681361
+      },
+      "rps": 419.43787818678754,
+      "latency": {
+        "p50_us": 19058.114,
+        "p95_us": 19131.715,
+        "p99_us": 19204.547
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.77 1.32 1.04 1/1105 222315",
+      "raw_samples": "raw/summary-r0-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "5deeb1a149023119d22f30cdd0073c38aec7c779b63333a19209d3d2680bd264"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "summary-r0-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1230805052
+      },
+      "rps": 415.9878927763777,
+      "latency": {
+        "p50_us": 19197.357,
+        "p95_us": 19330.341,
+        "p99_us": 20449.57
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.71 1.32 1.04 1/1108 222330",
+      "raw_samples": "raw/summary-r0-c8-fd-worker.csv.gz",
+      "raw_sha256": "e87d7bccfbaf79e7bd8ac15b77fb9a99baca0f3b291bb1f10df127f83d61d748"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "name": "summary-r0-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1223776190
+      },
+      "rps": 418.3771544043523,
+      "latency": {
+        "p50_us": 19184.998,
+        "p95_us": 19542.367,
+        "p99_us": 19955.847
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.71 1.32 1.04 1/1105 222341",
+      "raw_samples": "raw/summary-r0-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "172d27630894ebfd722c13f01f2a0fa15e177c9e8ee7d8d422b9b9565d8d54e7"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "summary-r0-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1230392592
+      },
+      "rps": 416.12734287333876,
+      "latency": {
+        "p50_us": 76566.915,
+        "p95_us": 78244.698,
+        "p99_us": 78398.193
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.71 1.32 1.04 1/1105 222352",
+      "raw_samples": "raw/summary-r0-c32-fd-worker.csv.gz",
+      "raw_sha256": "312fe26cd60d55cc094246626c2cba83ba0b8deaca7f33e974dd494f61e8a7eb"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "summary-r0-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1208927994
+      },
+      "rps": 423.51571188779997,
+      "latency": {
+        "p50_us": 76231.567,
+        "p95_us": 76980.226,
+        "p99_us": 77404.017
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.71 1.32 1.04 1/1105 222363",
+      "raw_samples": "raw/summary-r0-c32-fd-inline.csv.gz",
+      "raw_sha256": "dc1be2dfae7725df8a7b1291eecd462487660e08a11e186d110f7dd130622bc3"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "summary-r0-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1245580614
+      },
+      "rps": 411.05328249753893,
+      "latency": {
+        "p50_us": 77836.709,
+        "p95_us": 77970.493,
+        "p99_us": 78080.286
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.65 1.31 1.04 1/1106 222378",
+      "raw_samples": "raw/summary-r0-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "a1bb00b360753f5304e6e32bd42bc46693069f48b5d30d7d7854fe48a3792ffa"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "summary-r0-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1225720880
+      },
+      "rps": 417.7133704371586,
+      "latency": {
+        "p50_us": 76542.547,
+        "p95_us": 77006.299,
+        "p99_us": 77204.623
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.65 1.31 1.04 1/1106 222390",
+      "raw_samples": "raw/summary-r0-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "c3fc4358c3d10a18acf7f644d977a165cf8714c9d250c2c83a87e81c47687bbf"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "name": "summary-r0-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1244005033
+      },
+      "rps": 411.5738975470849,
+      "latency": {
+        "p50_us": 77093.341,
+        "p95_us": 78828.666,
+        "p99_us": 78882.308
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.65 1.31 1.04 1/1106 222401",
+      "raw_samples": "raw/summary-r0-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "643278df62b6ef3a26090f2b43532df27a3d7112114ed2dcd370e45065763a0b"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "summary-r1-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1237470762
+      },
+      "rps": 413.74714920335225,
+      "latency": {
+        "p50_us": 77679.457,
+        "p95_us": 77760.849,
+        "p99_us": 77786.791
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.65 1.31 1.04 1/1106 222412",
+      "raw_samples": "raw/summary-r1-c32-fd-worker.csv.gz",
+      "raw_sha256": "1720b4bf325b6c88cbb22509e8362435e093ec04e8b701dcb20af0c2654bf359"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "summary-r1-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1224542987
+      },
+      "rps": 418.1151706681572,
+      "latency": {
+        "p50_us": 76301.202,
+        "p95_us": 77078.082,
+        "p99_us": 77228.966
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.60 1.31 1.04 1/1106 222423",
+      "raw_samples": "raw/summary-r1-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "147741b46071d16d97de0302bb7bc24a741f306d42578eaf9c26eef109c620de"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "summary-r1-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1228494128
+      },
+      "rps": 416.77040885294326,
+      "latency": {
+        "p50_us": 76825.507,
+        "p95_us": 77033.541,
+        "p99_us": 77050.932
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.60 1.31 1.04 1/1106 222434",
+      "raw_samples": "raw/summary-r1-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "c959ecae4b06ad6bdf23772ddd64f0534f12840f4157db1943af4ae41bfb9b33"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "summary-r1-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1240757056
+      },
+      "rps": 412.65129021357745,
+      "latency": {
+        "p50_us": 77127.555,
+        "p95_us": 78734.366,
+        "p99_us": 78905.98
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.60 1.31 1.04 1/1106 222445",
+      "raw_samples": "raw/summary-r1-c32-fd-inline.csv.gz",
+      "raw_sha256": "e77e824b2301c23f5998d04d227e88779347225cb06f4b5133b78fe2ac2c8054"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 1,
+      "name": "summary-r1-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1225124939
+      },
+      "rps": 417.91655993707593,
+      "latency": {
+        "p50_us": 76421.076,
+        "p95_us": 76899.669,
+        "p99_us": 77107.114
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.60 1.31 1.04 1/1106 222456",
+      "raw_samples": "raw/summary-r1-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "9a7f2d8d78898f84948ccbe12feee05169008c9ecf7ca1c10f2d21f2cb066980"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "summary-r1-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1196291147
+      },
+      "rps": 427.9894583220551,
+      "latency": {
+        "p50_us": 18582.603,
+        "p95_us": 19329.213,
+        "p99_us": 19618.28
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.30 1.04 2/1105 222471",
+      "raw_samples": "raw/summary-r1-c8-fd-worker.csv.gz",
+      "raw_sha256": "a6ba6529b84d85cb8cca1405d135652aecdd3d3cd3d903a45a5a402f4efb7ccb"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "summary-r1-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1235105455
+      },
+      "rps": 414.53950181120365,
+      "latency": {
+        "p50_us": 19202.609,
+        "p95_us": 19670.362,
+        "p99_us": 19804.235
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.30 1.04 1/1104 222482",
+      "raw_samples": "raw/summary-r1-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "3f25cede9a4f99ad86c3f4dcdb219837978bbbf9a5c9ec66008110bb3ccb2d26"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "summary-r1-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1222348322
+      },
+      "rps": 418.8658754505166,
+      "latency": {
+        "p50_us": 19072.896,
+        "p95_us": 19199.74,
+        "p99_us": 19235.561
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.30 1.04 1/1104 222493",
+      "raw_samples": "raw/summary-r1-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "c420d8654f5ea8b9aa52132bf1818d4554a6fd262bc79a8cd8e4a38d5e756446"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "summary-r1-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1232230438
+      },
+      "rps": 415.50669761981646,
+      "latency": {
+        "p50_us": 19145.998,
+        "p95_us": 19591.08,
+        "p99_us": 20305.048
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.55 1.30 1.04 1/1104 222504",
+      "raw_samples": "raw/summary-r1-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "bdb115a5991114988921a42a9020d3c80f0d3ca4c5ece2bff5bfab81c2bc32ad"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 1,
+      "name": "summary-r1-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1229059813
+      },
+      "rps": 416.5785868063363,
+      "latency": {
+        "p50_us": 19091.157,
+        "p95_us": 19610.44,
+        "p99_us": 19643.301
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.30 1.04 1/1104 222515",
+      "raw_samples": "raw/summary-r1-c8-fd-inline.csv.gz",
+      "raw_sha256": "3e3182c59170c269ea2de17905639efd7a674fc40a892bf48b6fb6761765f7d5"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "summary-r1-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1256308952
+      },
+      "rps": 407.5430642955412,
+      "latency": {
+        "p50_us": 2447.724,
+        "p95_us": 2475.394,
+        "p99_us": 2521.525
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.30 1.04 1/1104 222526",
+      "raw_samples": "raw/summary-r1-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "c2083b928d2fd3ea240229fc99df0fcac915ffece2275de0dcc134e4ed46c4b9"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "summary-r1-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1250960941
+      },
+      "rps": 409.28536073293753,
+      "latency": {
+        "p50_us": 2428.203,
+        "p95_us": 2527.886,
+        "p99_us": 2682.76
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.51 1.30 1.04 1/1104 222547",
+      "raw_samples": "raw/summary-r1-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "da2bb357f00cc265cbcb708f20939b4289e2d63f819bf2ba9fa42e54e8a4fefe"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "summary-r1-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1248700590
+      },
+      "rps": 410.0262337507184,
+      "latency": {
+        "p50_us": 2441.204,
+        "p95_us": 2459.464,
+        "p99_us": 2519.795
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.29 1.04 1/1104 222558",
+      "raw_samples": "raw/summary-r1-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "6609d4383ed527314201ce76a08de2f25bdc3b972b39bef1fa90cbdbfd5e113e"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "summary-r1-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1253004571
+      },
+      "rps": 408.61782299116607,
+      "latency": {
+        "p50_us": 2429.064,
+        "p95_us": 2561.446,
+        "p99_us": 2643.038
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.29 1.04 1/1106 222580",
+      "raw_samples": "raw/summary-r1-c1-fd-worker.csv.gz",
+      "raw_sha256": "f3af8f3466ba7f2623f0c818ad83a95ed03bf0b7283e44da22db9bec78cea6ae"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 1,
+      "name": "summary-r1-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1253456761
+      },
+      "rps": 408.4704123272107,
+      "latency": {
+        "p50_us": 2436.134,
+        "p95_us": 2510.336,
+        "p99_us": 2530.226
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.29 1.04 1/1104 222591",
+      "raw_samples": "raw/summary-r1-c1-fd-inline.csv.gz",
+      "raw_sha256": "45258ac3b3a98fab81597f2887c5dec5dbbaf456de7aef9220ce28e7fbfc5d9f"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "summary-r2-c1-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1244805784
+      },
+      "rps": 411.3091428244842,
+      "latency": {
+        "p50_us": 2428.423,
+        "p95_us": 2457.764,
+        "p99_us": 2502.145
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.47 1.29 1.04 1/1104 222602",
+      "raw_samples": "raw/summary-r2-c1-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "aaade3592f0723e96957f1423e59f2f82120cb30308e9426cd591b7a5b010d4d"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "summary-r2-c1-fd-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1237984515
+      },
+      "rps": 413.5754476702804,
+      "latency": {
+        "p50_us": 2415.773,
+        "p95_us": 2502.835,
+        "p99_us": 2555.276
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.29 1.04 1/1104 222615",
+      "raw_samples": "raw/summary-r2-c1-fd-worker.csv.gz",
+      "raw_sha256": "f7c52a62f2026a96ab8717a683bbf90750c7e7f9561dd36dc8f7fefbad89ddef"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "summary-r2-c1-gsocket-inherited",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1261168967
+      },
+      "rps": 405.972564657944,
+      "latency": {
+        "p50_us": 2444.134,
+        "p95_us": 2527.396,
+        "p99_us": 2670.93
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.29 1.04 1/1103 222630",
+      "raw_samples": "raw/summary-r2-c1-gsocket-inherited.csv.gz",
+      "raw_sha256": "317e4cf453dc15e634618cc7a7f8c7ec293a4e9d712981b13cc7516c969eb145"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "summary-r2-c1-fd-inline",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1253830594
+      },
+      "rps": 408.348625763394,
+      "latency": {
+        "p50_us": 2433.224,
+        "p95_us": 2494.815,
+        "p99_us": 2510.435
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.29 1.04 1/1103 222641",
+      "raw_samples": "raw/summary-r2-c1-fd-inline.csv.gz",
+      "raw_sha256": "38e928339d6c53e70335ade9fcd8dd1b2ed789196f361062f243539972b0f4a1"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 2,
+      "name": "summary-r2-c1-gsocket-worker",
+      "stats": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1240122214
+      },
+      "rps": 412.86253420826154,
+      "latency": {
+        "p50_us": 2426.883,
+        "p95_us": 2473.185,
+        "p99_us": 2565.747
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.43 1.29 1.04 1/1103 222652",
+      "raw_samples": "raw/summary-r2-c1-gsocket-worker.csv.gz",
+      "raw_sha256": "ea35c6a152734ea947fd9c677b3a779699466f42e755bd6799901ad4b7195753"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "summary-r2-c32-fd-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1245535163
+      },
+      "rps": 411.06828230107544,
+      "latency": {
+        "p50_us": 78039.007,
+        "p95_us": 78917.11,
+        "p99_us": 79022.273
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.40 1.28 1.04 1/1103 222663",
+      "raw_samples": "raw/summary-r2-c32-fd-worker.csv.gz",
+      "raw_sha256": "fad96cbde6a2f2026e70c3457cad7f13c9ce1ba400bbf6b11e9cc7162ed3963d"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "summary-r2-c32-gsocket-worker",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1231131394
+      },
+      "rps": 415.87762483782456,
+      "latency": {
+        "p50_us": 76791.846,
+        "p95_us": 77736.52,
+        "p99_us": 78383.026
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.40 1.28 1.04 1/1103 222674",
+      "raw_samples": "raw/summary-r2-c32-gsocket-worker.csv.gz",
+      "raw_sha256": "293246eaad890678192812ad98de05a811c835c86ca02339c1f2b0e792cba583"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "summary-r2-c32-fd-inline",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1263610980
+      },
+      "rps": 405.1879954382796,
+      "latency": {
+        "p50_us": 78960.612,
+        "p95_us": 79663.62,
+        "p99_us": 79712.752
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.40 1.28 1.04 1/1103 222685",
+      "raw_samples": "raw/summary-r2-c32-fd-inline.csv.gz",
+      "raw_sha256": "c74a6b844ee25cb77b9972e252bac228f9382a32496fd8fef5dfcb5325f6e3f1"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "summary-r2-c32-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1217869993
+      },
+      "rps": 420.4061212960684,
+      "latency": {
+        "p50_us": 75699.618,
+        "p95_us": 77349.3,
+        "p99_us": 77414.442
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.40 1.28 1.04 1/1103 222696",
+      "raw_samples": "raw/summary-r2-c32-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "2791ddbdd815d4ebf8b38417961ed1f5c9f26f53b01ee4b45d594089b2d85005"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 2,
+      "name": "summary-r2-c32-gsocket-inherited",
+      "stats": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1227516822
+      },
+      "rps": 417.10222688907476,
+      "latency": {
+        "p50_us": 76514.79,
+        "p95_us": 77456.833,
+        "p99_us": 77519.215
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.03 1/1102 222707",
+      "raw_samples": "raw/summary-r2-c32-gsocket-inherited.csv.gz",
+      "raw_sha256": "5e921b35966754754f42999aeb880bb23c31e335420106e0ba650bca1bef7b28"
+    },
+    {
+      "label": "fd-inline-unguarded",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "summary-r2-c8-fd-inline-unguarded",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1224405047
+      },
+      "rps": 418.16227502041653,
+      "latency": {
+        "p50_us": 19107.609,
+        "p95_us": 19228.952,
+        "p99_us": 19572.292
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.03 1/1102 222718",
+      "raw_samples": "raw/summary-r2-c8-fd-inline-unguarded.csv.gz",
+      "raw_sha256": "50fb811026e23ce84af75c0958be4e82a5ed3bb23a93e18f4bd6b43819e66e19"
+    },
+    {
+      "label": "fd-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "summary-r2-c8-fd-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1227279710
+      },
+      "rps": 417.1828115694995,
+      "latency": {
+        "p50_us": 19183.041,
+        "p95_us": 19253.203,
+        "p99_us": 19604.702
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.03 1/1102 222729",
+      "raw_samples": "raw/summary-r2-c8-fd-worker.csv.gz",
+      "raw_sha256": "e1be683ea1df8ad00686ae9e5438c662d7a175b109e6fb1a70270d434af5a6e4"
+    },
+    {
+      "label": "gsocket-worker",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "summary-r2-c8-gsocket-worker",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1193167135
+      },
+      "rps": 429.1100424920772,
+      "latency": {
+        "p50_us": 18494.343,
+        "p95_us": 19044.897,
+        "p99_us": 19071.779
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.03 1/1102 222740",
+      "raw_samples": "raw/summary-r2-c8-gsocket-worker.csv.gz",
+      "raw_sha256": "7d3c889b35fdc4a9d20f0c4bf1bd62bd3b340a3ef0e1cd64e56c9e334bd2de0b"
+    },
+    {
+      "label": "gsocket-inherited",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "summary-r2-c8-gsocket-inherited",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1237763357
+      },
+      "rps": 413.64934347462673,
+      "latency": {
+        "p50_us": 19386.177,
+        "p95_us": 19503.631,
+        "p99_us": 19676.454
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.33 1.27 1.03 1/1102 222752",
+      "raw_samples": "raw/summary-r2-c8-gsocket-inherited.csv.gz",
+      "raw_sha256": "aad26e13ba949bba9f3678ef7a99c4f8b003fe13a9d0b3856c60ae7b11d0e135"
+    },
+    {
+      "label": "fd-inline",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 2,
+      "name": "summary-r2-c8-fd-inline",
+      "stats": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1220328989
+      },
+      "rps": 419.558991563053,
+      "latency": {
+        "p50_us": 19169.021,
+        "p95_us": 19449.219,
+        "p99_us": 20287.79
+      },
+      "host_stats": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.33 1.27 1.03 1/1106 222771",
+      "raw_samples": "raw/summary-r2-c8-fd-inline.csv.gz",
+      "raw_sha256": "aa54a1872a1cc197e13e42443ef2ca4c13677dc5f313440265b16facfeabbee4"
+    }
+  ],
+  "reference": "Current Host/driver with identical callback publication. gsocket-inherited retains the old five-second data socket timeout; gsocket-worker clears it like the candidate. Both use worker dispatch. All controls retain unconditional construction of the ACK reply array; only fd-inline includes the empty-waiter fast return. No grant, pin, dedup or Drain checks omitted.",
+  "scope": "One shared 64 MiB Dataset, native closed-loop finite batches. History limit 65536 in all configurations; no retirement or indefinite-capacity claim.",
+  "summary": {
+    "version/gsocket-inherited/1": {
+      "n": 150000,
+      "rps": 25462.20822185306,
+      "rps_min": 25045.341322046523,
+      "rps_max": 28113.207735793523,
+      "p50_us": 35.671,
+      "p95_us": 40.831,
+      "p99_us": 43.771
+    },
+    "version/gsocket-inherited/2": {
+      "n": 150000,
+      "rps": 39517.024350995016,
+      "rps_min": 34744.92948134367,
+      "rps_max": 40944.614262869014,
+      "p50_us": 46.311,
+      "p95_us": 58.962,
+      "p99_us": 64.422
+    },
+    "version/gsocket-inherited/4": {
+      "n": 150000,
+      "rps": 54118.754165540806,
+      "rps_min": 52894.930948963,
+      "rps_max": 57672.42871594382,
+      "p50_us": 65.952,
+      "p95_us": 87.072,
+      "p99_us": 96.523
+    },
+    "version/gsocket-inherited/8": {
+      "n": 150000,
+      "rps": 46556.109216118144,
+      "rps_min": 44557.497985914204,
+      "rps_max": 46815.688399721745,
+      "p50_us": 163.514,
+      "p95_us": 213.195,
+      "p99_us": 235.956
+    },
+    "version/gsocket-inherited/16": {
+      "n": 150000,
+      "rps": 45640.55253059,
+      "rps_min": 38817.587497697255,
+      "rps_max": 48461.18410739581,
+      "p50_us": 342.049,
+      "p95_us": 489.602,
+      "p99_us": 508.183
+    },
+    "version/gsocket-inherited/32": {
+      "n": 150000,
+      "rps": 29297.67794520839,
+      "rps_min": 26826.47172984211,
+      "rps_max": 34648.767460808056,
+      "p50_us": 1026.535,
+      "p95_us": 1295.233,
+      "p99_us": 1417.385
+    },
+    "version/gsocket-inherited/48": {
+      "n": 150000,
+      "rps": 24743.534269410695,
+      "rps_min": 23713.911385316205,
+      "rps_max": 25452.09432715974,
+      "p50_us": 1892.596,
+      "p95_us": 2302.987,
+      "p99_us": 2353.618
+    },
+    "version/gsocket-worker/1": {
+      "n": 150000,
+      "rps": 26476.2837309066,
+      "rps_min": 26113.91988429252,
+      "rps_max": 27672.21963622255,
+      "p50_us": 34.231,
+      "p95_us": 39.711,
+      "p99_us": 42.041
+    },
+    "version/gsocket-worker/2": {
+      "n": 150000,
+      "rps": 38092.50341627855,
+      "rps_min": 35863.93176088795,
+      "rps_max": 42375.60348569476,
+      "p50_us": 48.151,
+      "p95_us": 57.992,
+      "p99_us": 62.702
+    },
+    "version/gsocket-worker/4": {
+      "n": 150000,
+      "rps": 43507.24785719299,
+      "rps_min": 42811.641653609695,
+      "rps_max": 45585.73007937238,
+      "p50_us": 86.912,
+      "p95_us": 107.412,
+      "p99_us": 112.983
+    },
+    "version/gsocket-worker/8": {
+      "n": 150000,
+      "rps": 47988.167024028466,
+      "rps_min": 45657.35713672099,
+      "rps_max": 48329.57251609645,
+      "p50_us": 161.544,
+      "p95_us": 188.294,
+      "p99_us": 205.296
+    },
+    "version/gsocket-worker/16": {
+      "n": 150000,
+      "rps": 43264.40701249099,
+      "rps_min": 37030.13467479312,
+      "rps_max": 44849.030498642256,
+      "p50_us": 356.989,
+      "p95_us": 466.752,
+      "p99_us": 495.632
+    },
+    "version/gsocket-worker/32": {
+      "n": 150000,
+      "rps": 33316.21976851403,
+      "rps_min": 30497.64248770914,
+      "rps_max": 35115.178209420556,
+      "p50_us": 924.283,
+      "p95_us": 1254.921,
+      "p99_us": 1277.162
+    },
+    "version/gsocket-worker/48": {
+      "n": 150000,
+      "rps": 25693.440272357373,
+      "rps_min": 24119.35848138792,
+      "rps_max": 26208.387817666844,
+      "p50_us": 1884.138,
+      "p95_us": 2074.942,
+      "p99_us": 2249.166
+    },
+    "version/fd-worker/1": {
+      "n": 150000,
+      "rps": 28488.24582384252,
+      "rps_min": 26080.67785935127,
+      "rps_max": 29187.608729716525,
+      "p50_us": 33.021,
+      "p95_us": 38.011,
+      "p99_us": 41.311
+    },
+    "version/fd-worker/2": {
+      "n": 150000,
+      "rps": 38065.59675582206,
+      "rps_min": 37408.178931423936,
+      "rps_max": 42010.11797055314,
+      "p50_us": 46.462,
+      "p95_us": 55.752,
+      "p99_us": 59.091
+    },
+    "version/fd-worker/4": {
+      "n": 150000,
+      "rps": 54115.264502517224,
+      "rps_min": 51831.933070337065,
+      "rps_max": 54810.54042253404,
+      "p50_us": 69.852,
+      "p95_us": 82.872,
+      "p99_us": 91.293
+    },
+    "version/fd-worker/8": {
+      "n": 150000,
+      "rps": 52645.76847822146,
+      "rps_min": 48733.33333645227,
+      "rps_max": 59772.7625818566,
+      "p50_us": 144.004,
+      "p95_us": 177.554,
+      "p99_us": 191.585
+    },
+    "version/fd-worker/16": {
+      "n": 150000,
+      "rps": 45964.56682553262,
+      "rps_min": 43363.88210707164,
+      "rps_max": 47854.10296216821,
+      "p50_us": 344.099,
+      "p95_us": 392.73,
+      "p99_us": 410.111
+    },
+    "version/fd-worker/32": {
+      "n": 150000,
+      "rps": 38298.39469467535,
+      "rps_min": 35293.30841717051,
+      "rps_max": 40604.226590908744,
+      "p50_us": 796.12,
+      "p95_us": 970.734,
+      "p99_us": 1004.485
+    },
+    "version/fd-worker/48": {
+      "n": 150000,
+      "rps": 35330.21992789156,
+      "rps_min": 34555.25528413245,
+      "rps_max": 39428.087142614495,
+      "p50_us": 1331.374,
+      "p95_us": 1500.147,
+      "p99_us": 1601.54
+    },
+    "version/fd-inline-unguarded/1": {
+      "n": 150000,
+      "rps": 32380.721812943353,
+      "rps_min": 32237.421605578118,
+      "rps_max": 32941.01469842767,
+      "p50_us": 27.641,
+      "p95_us": 31.341,
+      "p99_us": 33.201
+    },
+    "version/fd-inline-unguarded/2": {
+      "n": 150000,
+      "rps": 42174.73049720917,
+      "rps_min": 42169.95446037942,
+      "rps_max": 42274.71909992185,
+      "p50_us": 38.901,
+      "p95_us": 45.911,
+      "p99_us": 49.101
+    },
+    "version/fd-inline-unguarded/4": {
+      "n": 150000,
+      "rps": 66391.91108999222,
+      "rps_min": 61500.72423990873,
+      "rps_max": 70097.32184587956,
+      "p50_us": 53.801,
+      "p95_us": 68.522,
+      "p99_us": 72.922
+    },
+    "version/fd-inline-unguarded/8": {
+      "n": 150000,
+      "rps": 61345.9269127056,
+      "rps_min": 58195.029799474985,
+      "rps_max": 65908.15397674893,
+      "p50_us": 121.323,
+      "p95_us": 153.124,
+      "p99_us": 160.534
+    },
+    "version/fd-inline-unguarded/16": {
+      "n": 150000,
+      "rps": 58244.13545886577,
+      "rps_min": 56821.95298788898,
+      "rps_max": 58729.93145091734,
+      "p50_us": 262.087,
+      "p95_us": 333.509,
+      "p99_us": 355.468
+    },
+    "version/fd-inline-unguarded/32": {
+      "n": 150000,
+      "rps": 47201.82021094033,
+      "rps_min": 46671.91314976766,
+      "rps_max": 48262.024507778435,
+      "p50_us": 656.317,
+      "p95_us": 828.581,
+      "p99_us": 840.961
+    },
+    "version/fd-inline-unguarded/48": {
+      "n": 150000,
+      "rps": 37324.54867135218,
+      "rps_min": 36500.96115571948,
+      "rps_max": 41264.31967419595,
+      "p50_us": 1267.062,
+      "p95_us": 1469.026,
+      "p99_us": 1574.419
+    },
+    "version/fd-inline/1": {
+      "n": 150000,
+      "rps": 34065.09740917329,
+      "rps_min": 32897.575578230535,
+      "rps_max": 36695.861558967445,
+      "p50_us": 26.291,
+      "p95_us": 30.36,
+      "p99_us": 35.08
+    },
+    "version/fd-inline/2": {
+      "n": 150000,
+      "rps": 46105.954055130926,
+      "rps_min": 45223.47062235954,
+      "rps_max": 47437.61536602728,
+      "p50_us": 35.821,
+      "p95_us": 45.851,
+      "p99_us": 51.892
+    },
+    "version/fd-inline/4": {
+      "n": 150000,
+      "rps": 71769.65775232016,
+      "rps_min": 61929.17702275781,
+      "rps_max": 73455.4422423905,
+      "p50_us": 51.462,
+      "p95_us": 66.761,
+      "p99_us": 70.592
+    },
+    "version/fd-inline/8": {
+      "n": 150000,
+      "rps": 69304.7228504549,
+      "rps_min": 56598.424670690045,
+      "rps_max": 70631.66502640164,
+      "p50_us": 110.023,
+      "p95_us": 151.354,
+      "p99_us": 156.445
+    },
+    "version/fd-inline/16": {
+      "n": 150000,
+      "rps": 56418.991296860564,
+      "rps_min": 56324.950879911536,
+      "rps_max": 61731.798465338354,
+      "p50_us": 277.747,
+      "p95_us": 290.157,
+      "p99_us": 298.358
+    },
+    "version/fd-inline/32": {
+      "n": 150000,
+      "rps": 45406.53724655069,
+      "rps_min": 41586.92972436923,
+      "rps_max": 49768.18546567403,
+      "p50_us": 699.617,
+      "p95_us": 837.79,
+      "p99_us": 872.091
+    },
+    "version/fd-inline/48": {
+      "n": 150000,
+      "rps": 38030.7131155978,
+      "rps_min": 36926.80278975762,
+      "rps_max": 42574.0044164433,
+      "p50_us": 1244.842,
+      "p95_us": 1426.557,
+      "p99_us": 1522.889
+    },
+    "summary/gsocket-inherited/1": {
+      "n": 1536,
+      "rps": 406.630270483054,
+      "rps_min": 405.972564657944,
+      "rps_max": 407.5430642955412,
+      "p50_us": 2444.724,
+      "p95_us": 2519.146,
+      "p99_us": 2643.709
+    },
+    "summary/gsocket-inherited/8": {
+      "n": 1536,
+      "rps": 413.64934347462673,
+      "rps_min": 411.10938943887487,
+      "rps_max": 415.50669761981646,
+      "p50_us": 19310.323,
+      "p95_us": 19680.43,
+      "p99_us": 19847.814
+    },
+    "summary/gsocket-inherited/32": {
+      "n": 1536,
+      "rps": 417.10222688907476,
+      "rps_min": 411.05328249753893,
+      "rps_max": 417.91655993707593,
+      "p50_us": 76600.101,
+      "p95_us": 77884.151,
+      "p99_us": 78012.764
+    },
+    "summary/gsocket-worker/1": {
+      "n": 1536,
+      "rps": 412.86253420826154,
+      "rps_min": 410.0262337507184,
+      "rps_max": 422.5804845263927,
+      "p50_us": 2424.103,
+      "p95_us": 2464.154,
+      "p99_us": 2525.166
+    },
+    "summary/gsocket-worker/8": {
+      "n": 1536,
+      "rps": 419.43787818678754,
+      "rps_min": 418.8658754505166,
+      "rps_max": 429.1100424920772,
+      "p50_us": 19049.853,
+      "p95_us": 19178.679,
+      "p99_us": 19209.19
+    },
+    "summary/gsocket-worker/32": {
+      "n": 1536,
+      "rps": 417.7133704371586,
+      "rps_min": 415.87762483782456,
+      "rps_max": 418.1151706681572,
+      "p50_us": 76580.957,
+      "p95_us": 77127.872,
+      "p99_us": 78035.107
+    },
+    "summary/fd-worker/1": {
+      "n": 1536,
+      "rps": 413.5754476702804,
+      "rps_min": 408.61782299116607,
+      "rps_max": 428.59280774692616,
+      "p50_us": 2381.112,
+      "p95_us": 2522.276,
+      "p99_us": 2598.118
+    },
+    "summary/fd-worker/8": {
+      "n": 1536,
+      "rps": 417.1828115694995,
+      "rps_min": 415.9878927763777,
+      "rps_max": 427.9894583220551,
+      "p50_us": 19179.617,
+      "p95_us": 19318.001,
+      "p99_us": 19661.704
+    },
+    "summary/fd-worker/32": {
+      "n": 1536,
+      "rps": 413.74714920335225,
+      "rps_min": 411.06828230107544,
+      "rps_max": 416.12734287333876,
+      "p50_us": 77353.909,
+      "p95_us": 78861.078,
+      "p99_us": 78934.16
+    },
+    "summary/fd-inline-unguarded/1": {
+      "n": 1536,
+      "rps": 409.28536073293753,
+      "rps_min": 401.06656540404333,
+      "rps_max": 411.3091428244842,
+      "p50_us": 2436.544,
+      "p95_us": 2512.635,
+      "p99_us": 2604.598
+    },
+    "summary/fd-inline-unguarded/8": {
+      "n": 1536,
+      "rps": 418.16227502041653,
+      "rps_min": 414.53950181120365,
+      "rps_max": 418.3771544043523,
+      "p50_us": 19181.182,
+      "p95_us": 19607.31,
+      "p99_us": 19855.567
+    },
+    "summary/fd-inline-unguarded/32": {
+      "n": 1536,
+      "rps": 416.77040885294326,
+      "rps_min": 411.5738975470849,
+      "rps_max": 420.4061212960684,
+      "p50_us": 76913.889,
+      "p95_us": 78737.405,
+      "p99_us": 78852.077
+    },
+    "summary/fd-inline/1": {
+      "n": 1536,
+      "rps": 408.4704123272107,
+      "rps_min": 408.348625763394,
+      "rps_max": 421.91435278397614,
+      "p50_us": 2423.093,
+      "p95_us": 2495.895,
+      "p99_us": 2520.976
+    },
+    "summary/fd-inline/8": {
+      "n": 1536,
+      "rps": 417.6973501747567,
+      "rps_min": 416.5785868063363,
+      "rps_max": 419.558991563053,
+      "p50_us": 19167.576,
+      "p95_us": 19552.869,
+      "p99_us": 19668.324
+    },
+    "summary/fd-inline/32": {
+      "n": 1536,
+      "rps": 412.65129021357745,
+      "rps_min": 405.1879954382796,
+      "rps_max": 423.51571188779997,
+      "p50_us": 77116.774,
+      "p95_us": 79062.184,
+      "p99_us": 79683.481
+    }
+  },
+  "verification": {
+    "measured_successes": 5273040,
+    "batches": 150,
+    "raw_csv_verified": true,
+    "source_manifest_verified": true
+  }
+}

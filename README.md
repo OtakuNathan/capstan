@@ -114,3 +114,9 @@ See [protocol and SDK](docs/direct-transfer.md),
 A matched [GCC / Clang comparison](bench/compiler-comparison/latest/README.md)
 records three ABBA cycles on the same 3700X configuration; it found no consistent
 latency advantage for Clang in this experiment.
+
+See [concurrency measurement and execution policy](docs/performance.md) for the
+native load driver, scalar execution policy, request tracing and finite history
+capacity. The [latest native concurrency report](bench/concurrency/latest/README.md)
+includes matched controls, raw samples and perf evidence. Concurrency sweeps are
+bounded experiments, not indefinite-service claims.

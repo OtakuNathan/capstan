@@ -133,6 +133,33 @@ int main() {
         std::cout << "TCP partial header/body, coalesced frames, persistent identity, duplicate reply, worker completion, disconnect, bounded queues/sessions passed\n";
         server.close();
     }
+    // The connector's five-second timeout must not expire an idle established
+    // session. Keep dispatching sources throughout the idle interval.
+    {
+        gio_server server(context,0,[](std::uint64_t,bytes input,io_completion reply) {
+            reply({outcome::completed,std::move(input)});
+        });
+        gio_client client(context,"127.0.0.1",server.port());
+        unsigned replies=0;
+        auto call=[&] {
+            CHECK(client.submit({42},[&](io_result result) {
+                CHECK(result.state==outcome::completed && result.payload==bytes({42}));
+                ++replies;
+            }));
+        };
+        call(); until(context,[&]{return replies==1;});
+        auto* loop=g_main_loop_new(context,FALSE);
+        auto* timer=g_timeout_source_new(6000);
+        g_source_set_callback(timer,[](gpointer data)->gboolean {
+            g_main_loop_quit(static_cast<GMainLoop*>(data)); return G_SOURCE_REMOVE;
+        },loop,nullptr);
+        g_source_attach(timer,context);
+        g_main_loop_run(loop);
+        g_source_unref(timer); g_main_loop_unref(loop);
+        call(); until(context,[&]{return replies==2;});
+        CHECK(client.stats().protocol_errors==0);
+        std::cout << "TCP established session survives connector timeout interval\n";
+    }
     // Duplicate wire replies must not be routed to a newly submitted exchange.
     // Use a deliberately faulty TCP peer; first completion submits request two
     // reentrantly while both copies of response one are already in the socket.

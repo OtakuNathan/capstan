@@ -1,0 +1,79 @@
+Test project ${CAPSTAN_ROOT}/build-eh
+      Start  1: probe_lease
+ 1/37 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start  2: probe_object
+ 2/37 Test  #2: probe_object .......................   Passed    0.00 sec
+      Start  3: probe_readonly
+ 3/37 Test  #3: probe_readonly .....................   Passed    0.00 sec
+      Start  4: probe_async
+ 4/37 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start  5: negative_exclusive_copy
+ 5/37 Test  #5: negative_exclusive_copy ............   Passed    0.48 sec
+      Start  6: negative_readonly_write
+ 6/37 Test  #6: negative_readonly_write ............   Passed    0.57 sec
+      Start  7: negative_wrong_receiver
+ 7/37 Test  #7: negative_wrong_receiver ............   Passed    0.27 sec
+      Start  8: negative_const_generated
+ 8/37 Test  #8: negative_const_generated ...........   Passed    0.27 sec
+      Start  9: negative_async_return
+ 9/37 Test  #9: negative_async_return ..............   Passed    0.33 sec
+      Start 10: authority_model
+10/37 Test #10: authority_model ....................   Passed    0.08 sec
+      Start 11: authority_test
+11/37 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 12: direct_transfer_test
+12/37 Test #12: direct_transfer_test ...............   Passed    0.00 sec
+      Start 13: direct_transfer_integration_test
+13/37 Test #13: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start 14: sealed_registry_test
+14/37 Test #14: sealed_registry_test ...............   Passed    0.04 sec
+      Start 15: authority_replies_test
+15/37 Test #15: authority_replies_test .............   Passed    0.00 sec
+      Start 16: checked_errors_test
+16/37 Test #16: checked_errors_test ................   Passed    0.00 sec
+      Start 17: noexception_policy_matrix
+17/37 Test #17: noexception_policy_matrix ..........   Passed    0.84 sec
+      Start 18: authority_faults_test
+18/37 Test #18: authority_faults_test ..............   Passed    0.00 sec
+      Start 19: benchmark_policy_test
+19/37 Test #19: benchmark_policy_test ..............   Passed    0.00 sec
+      Start 20: negative_production_benchmark
+20/37 Test #20: negative_production_benchmark ......   Passed    0.19 sec
+      Start 21: wire_test
+21/37 Test #21: wire_test ..........................   Passed    0.00 sec
+      Start 22: authority_allocation_test
+22/37 Test #22: authority_allocation_test ..........   Passed    0.00 sec
+      Start 23: loopback_test
+23/37 Test #23: loopback_test ......................   Passed    0.00 sec
+      Start 24: callback_test
+24/37 Test #24: callback_test ......................   Passed    0.00 sec
+      Start 25: p2_compile_negative
+25/37 Test #25: p2_compile_negative ................   Passed    1.87 sec
+      Start 26: allocation_test
+26/37 Test #26: allocation_test ....................   Passed    0.00 sec
+      Start 27: transport_test
+27/37 Test #27: transport_test .....................   Passed    6.08 sec
+      Start 28: table_observation_test
+28/37 Test #28: table_observation_test .............   Passed    0.00 sec
+      Start 29: tcp_ack_faults
+29/37 Test #29: tcp_ack_faults .....................   Passed    1.08 sec
+      Start 30: worker_test
+30/37 Test #30: worker_test ........................   Passed    0.00 sec
+      Start 31: host_execution_test
+31/37 Test #31: host_execution_test ................   Passed    0.00 sec
+      Start 32: tcp_throughput_smoke
+32/37 Test #32: tcp_throughput_smoke ...............   Passed    0.14 sec
+      Start 33: tcp_direct_transfer
+33/37 Test #33: tcp_direct_transfer ................   Passed    2.24 sec
+      Start 34: direct_transfer_demo
+34/37 Test #34: direct_transfer_demo ...............   Passed    2.11 sec
+      Start 35: four_process_demo
+35/37 Test #35: four_process_demo ..................   Passed    1.31 sec
+      Start 36: tcp_fault_suite
+36/37 Test #36: tcp_fault_suite ....................   Passed    8.27 sec
+      Start 37: tcp_execution_modes
+37/37 Test #37: tcp_execution_modes ................   Passed    0.08 sec
+
+100% tests passed out of 37
+
+Total Test time (real) =  26.29 sec

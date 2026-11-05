@@ -1,0 +1,88 @@
+[
+  {
+    "stage": "extract-final-source",
+    "command": [
+      "tar",
+      "-xzf",
+      "final-source.tar.gz"
+    ],
+    "exit_code": 0,
+    "seconds": 0.008780874999501975
+  },
+  {
+    "stage": "final-release-build",
+    "command": [
+      "cmake",
+      "--build",
+      "build",
+      "-j8"
+    ],
+    "exit_code": 0,
+    "seconds": 3.648806039000192
+  },
+  {
+    "stage": "final-release-test",
+    "command": [
+      "ctest",
+      "--test-dir",
+      "build",
+      "--output-on-failure"
+    ],
+    "exit_code": 0,
+    "seconds": 32.13001772199641
+  },
+  {
+    "stage": "final-matrix",
+    "command": [
+      "python3",
+      "validate_matrix.py"
+    ],
+    "exit_code": 0,
+    "seconds": 111.92761536399848
+  },
+  {
+    "stage": "final-reference-build",
+    "command": [
+      "python3",
+      "build_reference.py"
+    ],
+    "exit_code": 0,
+    "seconds": 16.87651795900092
+  },
+  {
+    "stage": "final-profile-build",
+    "command": [
+      "python3",
+      "perf-after/build.py"
+    ],
+    "exit_code": 0,
+    "seconds": 2.88635103499837
+  },
+  {
+    "stage": "final-comparison-progress",
+    "command": [
+      "python3",
+      "final_compare.py"
+    ],
+    "exit_code": 0,
+    "seconds": 215.13302636499793
+  },
+  {
+    "stage": "final-perf-progress",
+    "command": [
+      "python3",
+      "perf-after/profile.py"
+    ],
+    "exit_code": 0,
+    "seconds": 10.0327692259998
+  },
+  {
+    "stage": "final-perf-analysis",
+    "command": [
+      "python3",
+      "perf-after/analyze.py"
+    ],
+    "exit_code": 0,
+    "seconds": 1.3846495170000708
+  }
+]

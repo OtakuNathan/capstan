@@ -18,8 +18,10 @@ struct host_runtime {
     struct pending { wire::call call; io_completion done; };
     std::map<id,std::shared_ptr<pending>> operations;
     unsigned delay_ms;
+    bool trace_requests=true;
+    bool inline_version=true;
     id admitted=0,completed=0,rejected=0,control_calls=0,destroyed=0;
-    host_runtime(app::config c,GMainContext* ctx,std::size_t size,unsigned delay
+    host_runtime(app::config c,GMainContext* ctx,std::size_t size,unsigned delay,std::size_t history_limit
 #ifdef CAPSTAN_BENCHMARK_BUILD
         ,host_authority::benchmark_validation validation
 #endif
@@ -28,7 +30,7 @@ struct host_runtime {
 #ifdef CAPSTAN_BENCHMARK_BUILD
         ,validation
 #endif
-        ),dataset(new dataset_binding(c.key,size,7)),delay_ms(delay) {}
+        ,64,history_limit),dataset(new dataset_binding(c.key,size,7)),delay_ms(delay) {}
     ~host_runtime() { worker.close(); }
     void collect_resource() {
         if(authority.inspect().gate==host_authority::phase::dead && dataset) {
@@ -56,11 +58,18 @@ struct host_runtime {
                 auto it=operations.find(pin); auto done=std::move(it->second->done); operations.erase(it);
                 if(authority.complete(pin)!=status::ok) std::terminate();
                 ++completed;
-                std::cout<<"COMPLETE pin="<<pin<<" active="<<authority.inspect().active<<'\n'<<std::flush;
+                if(trace_requests) std::cout<<"COMPLETE pin="<<pin<<" active="<<authority.inspect().active<<'\n'<<std::flush;
                 collect_resource(); kick(); done({outcome::completed,std::move(response)});
             });
         });
         if(!authority.start_next(op)) return;
+        // The fixed version getter is bounded and cannot block. Keep the same
+        // admission pin, FIFO lane and posted completion, but avoid waking a
+        // worker for this scalar read. Scans, writes and injected-delay tests
+        // continue on the worker. An already executing operation still wins.
+        if(inline_version && !delay_ms && op.call.operation==method::version) {
+            task();return;
+        }
         if(!worker.try_dispatch(std::move(task))) {
             // start_next already marked this pin executing. A false submission
             // guarantees the task never ran and cannot later run; end the pin
@@ -162,12 +171,12 @@ struct host_runtime {
             CAPSTAN_TRY {admission=authority.admit(frame_owner->call.header,auth.holder);}
             CAPSTAN_CATCH_ALL {app::reply(std::move(frame_owner->done),status::rejected);return;}
             if(admission.code!=status::ok) {
-                ++rejected; std::cout<<"REJECT status="<<status_name(admission.code)<<'\n'<<std::flush;
+                ++rejected; if(trace_requests) std::cout<<"REJECT status="<<status_name(admission.code)<<'\n'<<std::flush;
                 app::reply(std::move(frame_owner->done),admission.code); return;
             }
             CAPSTAN_TRY { operations.emplace(admission.pin,frame_owner); }
             CAPSTAN_CATCH_ALL {authority.dispatch_failed(admission.pin); collect_resource(); app::reply(std::move(frame_owner->done),status::rejected); return;}
-            ++admitted; std::cout<<"ADMIT pin="<<admission.pin<<" epoch="<<authority.inspect().epoch<<" active="<<authority.inspect().active<<'\n'<<std::flush;
+            ++admitted; if(trace_requests) std::cout<<"ADMIT pin="<<admission.pin<<" epoch="<<authority.inspect().epoch<<" active="<<authority.inspect().active<<'\n'<<std::flush;
             kick();
         } CAPSTAN_CATCH_ALL { if(done) app::reply(std::move(done),status::invalid); }
     }
@@ -177,18 +186,27 @@ int main(int argc,char** argv) {
         auto args=app::options(argc,argv); auto config=app::load_config(app::required(args,"--config"));
         auto size=app::option_number(args,"--bytes",64*1024*1024); if(!size || size>256*1024*1024) app::startup_failure("dataset size out of bounds");
         auto delay=app::option_number(args,"--work-delay-ms",0); if(delay>1000) app::startup_failure("delay out of bounds");
+        const auto history=app::option_number(args,"--history-limit",4096);
+        if(!history || history>1048576) app::startup_failure("history-limit must be 1..1048576");
 #ifdef CAPSTAN_BENCHMARK_BUILD
         if(app::required(args,"--validation")!="checked" && app::required(args,"--validation")!="omit") app::startup_failure("validation must be checked or omit");
 #endif
-        auto* context=g_main_context_default(); host_runtime runtime(config,context,size,static_cast<unsigned>(delay)
+        auto* context=g_main_context_default(); host_runtime runtime(config,context,size,static_cast<unsigned>(delay),static_cast<std::size_t>(history)
 #ifdef CAPSTAN_BENCHMARK_BUILD
         ,app::required(args,"--validation")=="checked" ? host_authority::benchmark_validation::checked : host_authority::benchmark_validation::omit_grant_checks
 #endif
         );
+        const auto trace=app::option_number(args,"--trace-requests",1);
+        if(trace>1) app::startup_failure("trace-requests must be 0 or 1");
+        runtime.trace_requests=trace!=0;
+        const auto inline_read=app::option_number(args,"--inline-version",1);
+        if(inline_read>1) app::startup_failure("inline-version must be 0 or 1");
+        runtime.inline_version=inline_read!=0;
         if(!runtime.worker.valid()) {std::cerr<<"business worker startup failed\n";return 1;}
         gio_server server(context,app::port_option(args,"--port",0),[&](id c,bytes b,io_completion done){runtime.handle(c,std::move(b),std::move(done));});
         if(!server.valid()) {std::cerr<<server.setup_error()<<'\n';return 1;}
         std::cout<<"READY host port="<<server.port()<<" resource_bytes="<<size<<" trusted_lab=1\n"<<std::flush;
         auto* loop=g_main_loop_new(context,FALSE);g_main_loop_run(loop);g_main_loop_unref(loop);
     } CAPSTAN_CATCH_STD(e) {std::cerr<<e.what()<<'\n';return 1;}
+    return 0;
 }

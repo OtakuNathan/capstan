@@ -32,7 +32,7 @@ The UV checked constructor reports parameter/libuv setup errors but does not
 promise recoverable standard-allocator OOM.
 
 The exception-only exhaustive throwing-allocation rollback test is omitted in
-no-exception builds. This is why the full Release suites contain 34 and 33 tests,
+no-exception builds. This is why the full Release suites contain 37 and 36 tests,
 respectively; it is not counted as a passed no-exception OOM test. Backend-wide
 Python/Node no-exception compatibility is not claimed.
 
@@ -73,7 +73,13 @@ For sanitizer builds, use Debug with either `CAPSTAN_ASAN=ON` (ASan+UBSan) or
 `CAPSTAN_TSAN=ON`, never both. The CI lifecycle selection includes
 `authority_replies_test`, `checked_errors_test`, `callback_test`, `allocation_test`,
 `worker_test`, `tcp_ack_faults`, `direct_transfer_test`,
-`direct_transfer_integration_test`, `sealed_registry_test`, `table_observation_test`, `tcp_direct_transfer`, and `direct_transfer_demo`. Full sanitizer coverage is not claimed.
+`direct_transfer_integration_test`, `sealed_registry_test`, `table_observation_test`,
+`tcp_direct_transfer`, `direct_transfer_demo`, `transport_test`,
+`host_execution_test`, `tcp_execution_modes`, and `tcp_throughput_smoke`.
+The added checks cover idle established connections, write/read FIFO ordering
+and the Drain barrier in both scalar placement modes, finite history across
+handoffs, and validated native throughput batches. Full sanitizer coverage is
+not claimed.
 
 ## CI baseline
 

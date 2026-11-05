@@ -1,5 +1,7 @@
 #include <capstan/error_policy.hpp>
 #include <capstan/transport/gio.hpp>
+#include <capstan/transport/context_dispatch.hpp>
+#include <glib-unix.h>
 #include <algorithm>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -38,14 +40,7 @@ void destroy_source(GSource*& source) noexcept {
 // Unlike invoke_full, an attached idle source never invokes on the submitting
 // worker simply because the GMainContext is temporarily unowned.
 void post(GMainContext* context,std::function<void()> action) {
-    auto* storage=new std::function<void()>(std::move(action));
-    GSource* source=g_idle_source_new();
-    g_source_set_callback(source,[](gpointer p)->gboolean {
-        CAPSTAN_TRY { (*static_cast<std::function<void()>*>(p))(); } CAPSTAN_CATCH_ALL { std::terminate(); }
-        return G_SOURCE_REMOVE;
-    },storage,[](gpointer p){delete static_cast<std::function<void()>*>(p);});
-    g_source_attach(source,context);
-    g_source_unref(source);
+    post_context(context,std::move(action));
 }
 struct channel : std::enable_shared_from_this<channel> {
     GMainContext* context;
@@ -65,6 +60,9 @@ struct channel : std::enable_shared_from_this<channel> {
     channel(GMainContext* c,GSocket* s,gio_limits l,std::shared_ptr<counters> n)
         : context(g_main_context_ref(c)),socket(s),limits(l),counts(std::move(n)) {
         g_socket_set_blocking(socket,FALSE);
+        // GSocketClient's connect timeout is inherited by the data socket.
+        // Established exchanges rely on caller-installed explicit deadlines.
+        g_socket_set_timeout(socket,0);
         g_socket_set_option(socket,IPPROTO_TCP,TCP_NODELAY,1,nullptr);
         // Bound kernel buffering as well as application queues. Linux may double
         // these values internally; neither grows with the number of requests.
@@ -73,9 +71,13 @@ struct channel : std::enable_shared_from_this<channel> {
     }
     ~channel() { close(); g_object_unref(socket); g_main_context_unref(context); }
     void attach() {
-        read_source=g_socket_create_source(socket,static_cast<GIOCondition>(G_IO_IN|G_IO_HUP|G_IO_ERR|G_IO_NVAL),nullptr);
+        // This Linux transport owns nonblocking sockets with no GSocket timeout
+        // or cancellable. Watch their descriptors directly: GSocketSource's
+        // timeout/readiness bookkeeping otherwise runs for every connection on
+        // every context iteration, even when the socket has no event.
+        read_source=g_unix_fd_source_new(g_socket_get_fd(socket),static_cast<GIOCondition>(G_IO_IN|G_IO_HUP|G_IO_ERR|G_IO_NVAL));
         auto* hold=new std::shared_ptr<channel>(shared_from_this());
-        g_source_set_callback(read_source,G_SOURCE_FUNC(+[](GSocket*,GIOCondition condition,gpointer p)->gboolean {
+        g_source_set_callback(read_source,G_SOURCE_FUNC(+[](gint,GIOCondition condition,gpointer p)->gboolean {
             auto self=*static_cast<std::shared_ptr<channel>*>(p);
             CAPSTAN_TRY {
                 if(condition&(G_IO_ERR|G_IO_NVAL)) { self->close(); return G_SOURCE_REMOVE; }
@@ -137,9 +139,9 @@ struct channel : std::enable_shared_from_this<channel> {
         writes.push_back({std::move(framed),0});
         flush();
         if(!closed && !writes.empty() && !write_source) {
-            write_source=g_socket_create_source(socket,static_cast<GIOCondition>(G_IO_OUT|G_IO_ERR|G_IO_HUP|G_IO_NVAL),nullptr);
+            write_source=g_unix_fd_source_new(g_socket_get_fd(socket),static_cast<GIOCondition>(G_IO_OUT|G_IO_ERR|G_IO_HUP|G_IO_NVAL));
             auto* hold=new std::shared_ptr<channel>(shared_from_this());
-            g_source_set_callback(write_source,G_SOURCE_FUNC(+[](GSocket*,GIOCondition condition,gpointer p)->gboolean {
+            g_source_set_callback(write_source,G_SOURCE_FUNC(+[](gint,GIOCondition condition,gpointer p)->gboolean {
                 auto self=*static_cast<std::shared_ptr<channel>*>(p);
                 CAPSTAN_TRY {
                     if(condition&(G_IO_ERR|G_IO_NVAL|G_IO_HUP)) self->close();
@@ -360,9 +362,9 @@ gio_server::gio_server(GMainContext* context,unsigned short port,handler serve,g
     if(!address) {fail(socket_error("local address",error));return;}
     state_->bound_port=g_inet_socket_address_get_port(G_INET_SOCKET_ADDRESS(address));
     g_object_unref(address);
-    state_->accept_source=g_socket_create_source(state_->listener,static_cast<GIOCondition>(G_IO_IN|G_IO_ERR|G_IO_HUP|G_IO_NVAL),nullptr);
+    state_->accept_source=g_unix_fd_source_new(g_socket_get_fd(state_->listener),static_cast<GIOCondition>(G_IO_IN|G_IO_ERR|G_IO_HUP|G_IO_NVAL));
     auto* hold=new std::shared_ptr<state>(state_);
-    g_source_set_callback(state_->accept_source,G_SOURCE_FUNC(+[](GSocket*,GIOCondition condition,gpointer p)->gboolean {
+    g_source_set_callback(state_->accept_source,G_SOURCE_FUNC(+[](gint,GIOCondition condition,gpointer p)->gboolean {
         auto self=*static_cast<std::shared_ptr<state>*>(p);
         CAPSTAN_TRY { if(condition&(G_IO_ERR|G_IO_HUP|G_IO_NVAL)) self->close(); else self->accept(); }
         CAPSTAN_CATCH_ALL { self->close(); }

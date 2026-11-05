@@ -1,0 +1,5 @@
+Events disabled
+Events enabled
+Events disabled
+[ perf record: Woken up 21 times to write data ]
+[ perf record: Captured and wrote 5.178 MB ${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c8-record-00/perf.data ]

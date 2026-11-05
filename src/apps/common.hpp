@@ -2,6 +2,7 @@
 #include <capstan/error_policy.hpp>
 #include <capstan/protocol/wire.hpp>
 #include <capstan/transport/gio.hpp>
+#include <capstan/transport/context_dispatch.hpp>
 #include <capstan/async/io.hpp>
 #include <fstream>
 #include <sstream>
@@ -65,14 +66,7 @@ inline void reply(io_completion done,status code,std::vector<wire::value> values
     done({outcome::completed,wire::encode_reply(code==status::ok ? outcome::completed : outcome::rejected,code,values)});
 }
 inline void post(GMainContext* context,std::function<void()> work) {
-    auto* p=new std::function<void()>(std::move(work));
-    GSource* source=g_idle_source_new();
-    g_source_set_callback(source,[](gpointer data)->gboolean {
-        CAPSTAN_TRY { (*static_cast<std::function<void()>*>(data))(); }
-        CAPSTAN_CATCH_STD(e) { std::cerr<<"owner callback error: "<<e.what()<<'\n'; std::terminate(); }
-        return G_SOURCE_REMOVE;
-    },p,[](gpointer data){delete static_cast<std::function<void()>*>(data);});
-    g_source_attach(source,context); g_source_unref(source);
+    post_context(context,std::move(work));
 }
 inline std::map<std::string,std::string> options(int argc,char** argv) {
     std::map<std::string,std::string> m;

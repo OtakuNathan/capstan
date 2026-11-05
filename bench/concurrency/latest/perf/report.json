@@ -1,0 +1,2404 @@
+{
+  "binary_sha256": {
+    "host": "a5e2ae72b94d9a581e5d7aa2286faa3fe02e8073d7f635f9070fcebe6bff08a5",
+    "host_unguarded": "e3f79750d84a81b90202ff1646c42f4118aacaad8bb4a0063d2be09694f06d75",
+    "table": "934209e8e9bcff59116461a2878df60c35dcaea87a96b671febb1ec95c4a9deb",
+    "client": "7165dc09acb54e0ac3c019cc3faacf4b76b230fc531dcb59d299c2e7bb40947b",
+    "profile_load": "9723efe780888b08f3b1079d06ac4257abae8a86be27f7821d9167d31f9c66db"
+  },
+  "records": [
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c8-plain-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "plain",
+      "index": 0,
+      "pids": {
+        "host": 222773,
+        "load": 222782
+      },
+      "proc_before": {
+        "222773": {
+          "222773": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 21,
+            "involuntary": 3
+          },
+          "222775": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222782": {
+          "222782": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 79,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "222773": {
+          "222773": {
+            "user_ticks": 10,
+            "system_ticks": 17,
+            "voluntary": 25,
+            "involuntary": 8
+          },
+          "222775": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222782": {
+          "222782": {
+            "user_ticks": 8,
+            "system_ticks": 16,
+            "voluntary": 676,
+            "involuntary": 15
+          }
+        }
+      },
+      "proc_delta": {
+        "222773": {
+          "role": "host-main",
+          "user_ticks": 9,
+          "system_ticks": 17,
+          "voluntary": 4,
+          "involuntary": 5
+        },
+        "222775": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222782": {
+          "role": "load",
+          "user_ticks": 8,
+          "system_ticks": 16,
+          "voluntary": 597,
+          "involuntary": 14
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 299361140
+      },
+      "driver_window_ns": 299431931,
+      "perf_command": null,
+      "perf_exit": null,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.31 1.27 1.03 1/1106 222783"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c8-stat-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "stat",
+      "index": 0,
+      "pids": {
+        "host": 222784,
+        "load": 222793
+      },
+      "proc_before": {
+        "222784": {
+          "222784": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 21,
+            "involuntary": 3
+          },
+          "222786": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222793": {
+          "222793": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 94,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222784": {
+          "222784": {
+            "user_ticks": 10,
+            "system_ticks": 18,
+            "voluntary": 28,
+            "involuntary": 14
+          },
+          "222786": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222793": {
+          "222793": {
+            "user_ticks": 8,
+            "system_ticks": 17,
+            "voluntary": 1651,
+            "involuntary": 10
+          }
+        }
+      },
+      "proc_delta": {
+        "222784": {
+          "role": "host-main",
+          "user_ticks": 9,
+          "system_ticks": 18,
+          "voluntary": 7,
+          "involuntary": 11
+        },
+        "222786": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222793": {
+          "role": "load",
+          "user_ticks": 8,
+          "system_ticks": 17,
+          "voluntary": 1557,
+          "involuntary": 10
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 310992144
+      },
+      "driver_window_ns": 311089757,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "stat",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222784,222793",
+        "-e",
+        "cycles:u,instructions:u,branches:u,branch-misses:u,task-clock:u",
+        "-x",
+        ";",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c8-stat-00/stat.csv"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222795"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c8-record-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 0,
+      "pids": {
+        "host": 222796,
+        "load": 222805
+      },
+      "proc_before": {
+        "222796": {
+          "222796": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 23,
+            "involuntary": 1
+          },
+          "222798": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222805": {
+          "222805": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 68,
+            "involuntary": 2
+          }
+        }
+      },
+      "proc_after": {
+        "222796": {
+          "222796": {
+            "user_ticks": 13,
+            "system_ticks": 20,
+            "voluntary": 27,
+            "involuntary": 8
+          },
+          "222798": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222805": {
+          "222805": {
+            "user_ticks": 10,
+            "system_ticks": 18,
+            "voluntary": 8995,
+            "involuntary": 39
+          }
+        }
+      },
+      "proc_delta": {
+        "222796": {
+          "role": "host-main",
+          "user_ticks": 12,
+          "system_ticks": 20,
+          "voluntary": 4,
+          "involuntary": 7
+        },
+        "222798": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222805": {
+          "role": "load",
+          "user_ticks": 10,
+          "system_ticks": 18,
+          "voluntary": 8927,
+          "involuntary": 37
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 379368787
+      },
+      "driver_window_ns": 379476689,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222796,222805",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c8-record-00/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222807"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c8-plain-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "plain",
+      "index": 0,
+      "pids": {
+        "host": 222810,
+        "load": 222819
+      },
+      "proc_before": {
+        "222810": {
+          "222810": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 24,
+            "involuntary": 1
+          },
+          "222812": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 2
+          }
+        },
+        "222819": {
+          "222819": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 33,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222810": {
+          "222810": {
+            "user_ticks": 11,
+            "system_ticks": 16,
+            "voluntary": 28,
+            "involuntary": 9
+          },
+          "222812": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 2
+          }
+        },
+        "222819": {
+          "222819": {
+            "user_ticks": 8,
+            "system_ticks": 15,
+            "voluntary": 279,
+            "involuntary": 9
+          }
+        }
+      },
+      "proc_delta": {
+        "222810": {
+          "role": "host-main",
+          "user_ticks": 10,
+          "system_ticks": 16,
+          "voluntary": 4,
+          "involuntary": 8
+        },
+        "222812": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222819": {
+          "role": "load",
+          "user_ticks": 8,
+          "system_ticks": 15,
+          "voluntary": 246,
+          "involuntary": 9
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 291003242
+      },
+      "driver_window_ns": 291064764,
+      "perf_command": null,
+      "perf_exit": null,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222820"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c8-stat-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "stat",
+      "index": 0,
+      "pids": {
+        "host": 222821,
+        "load": 222830
+      },
+      "proc_before": {
+        "222821": {
+          "222821": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 23,
+            "involuntary": 5
+          },
+          "222823": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222830": {
+          "222830": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 46,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "222821": {
+          "222821": {
+            "user_ticks": 12,
+            "system_ticks": 19,
+            "voluntary": 25,
+            "involuntary": 12
+          },
+          "222823": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222830": {
+          "222830": {
+            "user_ticks": 7,
+            "system_ticks": 18,
+            "voluntary": 6156,
+            "involuntary": 7
+          }
+        }
+      },
+      "proc_delta": {
+        "222821": {
+          "role": "host-main",
+          "user_ticks": 11,
+          "system_ticks": 19,
+          "voluntary": 2,
+          "involuntary": 7
+        },
+        "222823": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222830": {
+          "role": "load",
+          "user_ticks": 7,
+          "system_ticks": 18,
+          "voluntary": 6110,
+          "involuntary": 6
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 352381920
+      },
+      "driver_window_ns": 352491623,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "stat",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222821,222830",
+        "-e",
+        "cycles:u,instructions:u,branches:u,branch-misses:u,task-clock:u",
+        "-x",
+        ";",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c8-stat-00/stat.csv"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222832"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c8-record-00",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 0,
+      "pids": {
+        "host": 222833,
+        "load": 222842
+      },
+      "proc_before": {
+        "222833": {
+          "222833": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 23,
+            "involuntary": 2
+          },
+          "222835": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222842": {
+          "222842": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 46,
+            "involuntary": 2
+          }
+        }
+      },
+      "proc_after": {
+        "222833": {
+          "222833": {
+            "user_ticks": 11,
+            "system_ticks": 21,
+            "voluntary": 27,
+            "involuntary": 7
+          },
+          "222835": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222842": {
+          "222842": {
+            "user_ticks": 6,
+            "system_ticks": 19,
+            "voluntary": 6236,
+            "involuntary": 20
+          }
+        }
+      },
+      "proc_delta": {
+        "222833": {
+          "role": "host-main",
+          "user_ticks": 10,
+          "system_ticks": 21,
+          "voluntary": 4,
+          "involuntary": 5
+        },
+        "222835": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222842": {
+          "role": "load",
+          "user_ticks": 6,
+          "system_ticks": 19,
+          "voluntary": 6190,
+          "involuntary": 18
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 356873589
+      },
+      "driver_window_ns": 356989582,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222833,222842",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c8-record-00/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222844"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c32-plain-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "plain",
+      "index": 0,
+      "pids": {
+        "host": 222847,
+        "load": 222856
+      },
+      "proc_before": {
+        "222847": {
+          "222847": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 47,
+            "involuntary": 5
+          },
+          "222849": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222856": {
+          "222856": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 36,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "222847": {
+          "222847": {
+            "user_ticks": 17,
+            "system_ticks": 31,
+            "voluntary": 48,
+            "involuntary": 13
+          },
+          "222849": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222856": {
+          "222856": {
+            "user_ticks": 11,
+            "system_ticks": 29,
+            "voluntary": 17833,
+            "involuntary": 12
+          }
+        }
+      },
+      "proc_delta": {
+        "222847": {
+          "role": "host-main",
+          "user_ticks": 16,
+          "system_ticks": 31,
+          "voluntary": 1,
+          "involuntary": 8
+        },
+        "222849": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222856": {
+          "role": "load",
+          "user_ticks": 11,
+          "system_ticks": 29,
+          "voluntary": 17797,
+          "involuntary": 11
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 530909859
+      },
+      "driver_window_ns": 530985452,
+      "perf_command": null,
+      "perf_exit": null,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1106 222857"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c32-stat-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "stat",
+      "index": 0,
+      "pids": {
+        "host": 222858,
+        "load": 222867
+      },
+      "proc_before": {
+        "222858": {
+          "222858": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 39,
+            "involuntary": 3
+          },
+          "222860": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 2
+          }
+        },
+        "222867": {
+          "222867": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 33,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222858": {
+          "222858": {
+            "user_ticks": 14,
+            "system_ticks": 25,
+            "voluntary": 40,
+            "involuntary": 10
+          },
+          "222860": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 2
+          }
+        },
+        "222867": {
+          "222867": {
+            "user_ticks": 10,
+            "system_ticks": 25,
+            "voluntary": 1288,
+            "involuntary": 15
+          }
+        }
+      },
+      "proc_delta": {
+        "222858": {
+          "role": "host-main",
+          "user_ticks": 13,
+          "system_ticks": 25,
+          "voluntary": 1,
+          "involuntary": 7
+        },
+        "222860": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222867": {
+          "role": "load",
+          "user_ticks": 10,
+          "system_ticks": 25,
+          "voluntary": 1255,
+          "involuntary": 15
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 417969201
+      },
+      "driver_window_ns": 418038273,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "stat",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222858,222867",
+        "-e",
+        "cycles:u,instructions:u,branches:u,branch-misses:u,task-clock:u",
+        "-x",
+        ";",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c32-stat-00/stat.csv"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1102 222869"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c32-record-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 0,
+      "pids": {
+        "host": 222870,
+        "load": 222879
+      },
+      "proc_before": {
+        "222870": {
+          "222870": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 44,
+            "involuntary": 4
+          },
+          "222872": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222879": {
+          "222879": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 49,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "222870": {
+          "222870": {
+            "user_ticks": 13,
+            "system_ticks": 25,
+            "voluntary": 46,
+            "involuntary": 11
+          },
+          "222872": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222879": {
+          "222879": {
+            "user_ticks": 12,
+            "system_ticks": 23,
+            "voluntary": 2216,
+            "involuntary": 29
+          }
+        }
+      },
+      "proc_delta": {
+        "222870": {
+          "role": "host-main",
+          "user_ticks": 12,
+          "system_ticks": 25,
+          "voluntary": 2,
+          "involuntary": 7
+        },
+        "222872": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222879": {
+          "role": "load",
+          "user_ticks": 12,
+          "system_ticks": 23,
+          "voluntary": 2167,
+          "involuntary": 28
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 416647587
+      },
+      "driver_window_ns": 416752820,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222870,222879",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c32-record-00/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1102 222881"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c32-plain-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "plain",
+      "index": 0,
+      "pids": {
+        "host": 222884,
+        "load": 222893
+      },
+      "proc_before": {
+        "222884": {
+          "222884": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 42,
+            "involuntary": 0
+          },
+          "222886": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222893": {
+          "222893": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 92,
+            "involuntary": 2
+          }
+        }
+      },
+      "proc_after": {
+        "222884": {
+          "222884": {
+            "user_ticks": 14,
+            "system_ticks": 23,
+            "voluntary": 43,
+            "involuntary": 7
+          },
+          "222886": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222893": {
+          "222893": {
+            "user_ticks": 10,
+            "system_ticks": 24,
+            "voluntary": 1808,
+            "involuntary": 10
+          }
+        }
+      },
+      "proc_delta": {
+        "222884": {
+          "role": "host-main",
+          "user_ticks": 13,
+          "system_ticks": 23,
+          "voluntary": 1,
+          "involuntary": 7
+        },
+        "222886": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222893": {
+          "role": "load",
+          "user_ticks": 10,
+          "system_ticks": 24,
+          "voluntary": 1716,
+          "involuntary": 8
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 400429843
+      },
+      "driver_window_ns": 400486444,
+      "perf_command": null,
+      "perf_exit": null,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1102 222894"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c32-stat-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "stat",
+      "index": 0,
+      "pids": {
+        "host": 222895,
+        "load": 222904
+      },
+      "proc_before": {
+        "222895": {
+          "222895": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 45,
+            "involuntary": 1
+          },
+          "222897": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222904": {
+          "222904": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 28,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222895": {
+          "222895": {
+            "user_ticks": 14,
+            "system_ticks": 23,
+            "voluntary": 46,
+            "involuntary": 8
+          },
+          "222897": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222904": {
+          "222904": {
+            "user_ticks": 9,
+            "system_ticks": 25,
+            "voluntary": 2177,
+            "involuntary": 3
+          }
+        }
+      },
+      "proc_delta": {
+        "222895": {
+          "role": "host-main",
+          "user_ticks": 13,
+          "system_ticks": 23,
+          "voluntary": 1,
+          "involuntary": 7
+        },
+        "222897": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222904": {
+          "role": "load",
+          "user_ticks": 9,
+          "system_ticks": 25,
+          "voluntary": 2149,
+          "involuntary": 3
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 400372933
+      },
+      "driver_window_ns": 400472735,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "stat",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222895,222904",
+        "-e",
+        "cycles:u,instructions:u,branches:u,branch-misses:u,task-clock:u",
+        "-x",
+        ";",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c32-stat-00/stat.csv"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.36 1.28 1.04 1/1102 222906"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c32-record-00",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 0,
+      "pids": {
+        "host": 222907,
+        "load": 222916
+      },
+      "proc_before": {
+        "222907": {
+          "222907": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 47,
+            "involuntary": 2
+          },
+          "222909": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222916": {
+          "222916": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 32,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222907": {
+          "222907": {
+            "user_ticks": 13,
+            "system_ticks": 24,
+            "voluntary": 48,
+            "involuntary": 7
+          },
+          "222909": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222916": {
+          "222916": {
+            "user_ticks": 10,
+            "system_ticks": 24,
+            "voluntary": 1885,
+            "involuntary": 22
+          }
+        }
+      },
+      "proc_delta": {
+        "222907": {
+          "role": "host-main",
+          "user_ticks": 12,
+          "system_ticks": 24,
+          "voluntary": 1,
+          "involuntary": 5
+        },
+        "222909": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222916": {
+          "role": "load",
+          "user_ticks": 10,
+          "system_ticks": 24,
+          "voluntary": 1853,
+          "involuntary": 22
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 404817179
+      },
+      "driver_window_ns": 404911392,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222907,222916",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c32-record-00/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1102 222918"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c8-record-01",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 1,
+      "pids": {
+        "host": 222921,
+        "load": 222930
+      },
+      "proc_before": {
+        "222921": {
+          "222921": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 24,
+            "involuntary": 2
+          },
+          "222923": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222930": {
+          "222930": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 23,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222921": {
+          "222921": {
+            "user_ticks": 9,
+            "system_ticks": 17,
+            "voluntary": 30,
+            "involuntary": 6
+          },
+          "222923": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222930": {
+          "222930": {
+            "user_ticks": 8,
+            "system_ticks": 15,
+            "voluntary": 1392,
+            "involuntary": 10
+          }
+        }
+      },
+      "proc_delta": {
+        "222921": {
+          "role": "host-main",
+          "user_ticks": 8,
+          "system_ticks": 17,
+          "voluntary": 6,
+          "involuntary": 4
+        },
+        "222923": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222930": {
+          "role": "load",
+          "user_ticks": 8,
+          "system_ticks": 15,
+          "voluntary": 1369,
+          "involuntary": 10
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 300571238
+      },
+      "driver_window_ns": 300680381,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222921,222930",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c8-record-01/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1102 222932"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c8-record-01",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 1,
+      "pids": {
+        "host": 222935,
+        "load": 222944
+      },
+      "proc_before": {
+        "222935": {
+          "222935": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 22,
+            "involuntary": 1
+          },
+          "222937": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222944": {
+          "222944": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 60,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222935": {
+          "222935": {
+            "user_ticks": 12,
+            "system_ticks": 17,
+            "voluntary": 30,
+            "involuntary": 16
+          },
+          "222937": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222944": {
+          "222944": {
+            "user_ticks": 9,
+            "system_ticks": 16,
+            "voluntary": 1145,
+            "involuntary": 19
+          }
+        }
+      },
+      "proc_delta": {
+        "222935": {
+          "role": "host-main",
+          "user_ticks": 11,
+          "system_ticks": 17,
+          "voluntary": 8,
+          "involuntary": 15
+        },
+        "222937": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222944": {
+          "role": "load",
+          "user_ticks": 9,
+          "system_ticks": 16,
+          "voluntary": 1085,
+          "involuntary": 19
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 324136086
+      },
+      "driver_window_ns": 324231989,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222935,222944",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c8-record-01/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1102 222946"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c32-record-01",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 1,
+      "pids": {
+        "host": 222949,
+        "load": 222958
+      },
+      "proc_before": {
+        "222949": {
+          "222949": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 45,
+            "involuntary": 4
+          },
+          "222951": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222958": {
+          "222958": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 29,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222949": {
+          "222949": {
+            "user_ticks": 14,
+            "system_ticks": 23,
+            "voluntary": 46,
+            "involuntary": 12
+          },
+          "222951": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222958": {
+          "222958": {
+            "user_ticks": 10,
+            "system_ticks": 23,
+            "voluntary": 38,
+            "involuntary": 6
+          }
+        }
+      },
+      "proc_delta": {
+        "222949": {
+          "role": "host-main",
+          "user_ticks": 13,
+          "system_ticks": 23,
+          "voluntary": 1,
+          "involuntary": 8
+        },
+        "222951": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222958": {
+          "role": "load",
+          "user_ticks": 10,
+          "system_ticks": 23,
+          "voluntary": 9,
+          "involuntary": 6
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 396823412
+      },
+      "driver_window_ns": 396933156,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222949,222958",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c32-record-01/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1102 222960"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c32-record-01",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 1,
+      "pids": {
+        "host": 222963,
+        "load": 222972
+      },
+      "proc_before": {
+        "222963": {
+          "222963": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 42,
+            "involuntary": 1
+          },
+          "222965": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222972": {
+          "222972": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 30,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222963": {
+          "222963": {
+            "user_ticks": 18,
+            "system_ticks": 29,
+            "voluntary": 44,
+            "involuntary": 102
+          },
+          "222965": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "222972": {
+          "222972": {
+            "user_ticks": 9,
+            "system_ticks": 32,
+            "voluntary": 7241,
+            "involuntary": 117
+          }
+        }
+      },
+      "proc_delta": {
+        "222963": {
+          "role": "host-main",
+          "user_ticks": 17,
+          "system_ticks": 29,
+          "voluntary": 2,
+          "involuntary": 101
+        },
+        "222965": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222972": {
+          "role": "load",
+          "user_ticks": 9,
+          "system_ticks": 32,
+          "voluntary": 7211,
+          "involuntary": 117
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 529657715
+      },
+      "driver_window_ns": 529798659,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222963,222972",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c32-record-01/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1107 222982"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c8-record-02",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 2,
+      "pids": {
+        "host": 222985,
+        "load": 222994
+      },
+      "proc_before": {
+        "222985": {
+          "222985": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 23,
+            "involuntary": 1
+          },
+          "222987": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222994": {
+          "222994": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 52,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "222985": {
+          "222985": {
+            "user_ticks": 10,
+            "system_ticks": 17,
+            "voluntary": 32,
+            "involuntary": 9
+          },
+          "222987": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "222994": {
+          "222994": {
+            "user_ticks": 6,
+            "system_ticks": 18,
+            "voluntary": 79,
+            "involuntary": 10
+          }
+        }
+      },
+      "proc_delta": {
+        "222985": {
+          "role": "host-main",
+          "user_ticks": 9,
+          "system_ticks": 17,
+          "voluntary": 9,
+          "involuntary": 8
+        },
+        "222987": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "222994": {
+          "role": "load",
+          "user_ticks": 6,
+          "system_ticks": 18,
+          "voluntary": 27,
+          "involuntary": 10
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 299742609
+      },
+      "driver_window_ns": 299847892,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222985,222994",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c8-record-02/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1104 222996"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c8-record-02",
+      "workload": "version",
+      "concurrency": 8,
+      "mode": "record",
+      "index": 2,
+      "pids": {
+        "host": 222999,
+        "load": 223008
+      },
+      "proc_before": {
+        "222999": {
+          "222999": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 24,
+            "involuntary": 1
+          },
+          "223001": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "223008": {
+          "223008": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 56,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "222999": {
+          "222999": {
+            "user_ticks": 11,
+            "system_ticks": 20,
+            "voluntary": 26,
+            "involuntary": 10
+          },
+          "223001": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "223008": {
+          "223008": {
+            "user_ticks": 6,
+            "system_ticks": 19,
+            "voluntary": 6623,
+            "involuntary": 20
+          }
+        }
+      },
+      "proc_delta": {
+        "222999": {
+          "role": "host-main",
+          "user_ticks": 10,
+          "system_ticks": 20,
+          "voluntary": 2,
+          "involuntary": 9
+        },
+        "223001": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "223008": {
+          "role": "load",
+          "user_ticks": 6,
+          "system_ticks": 19,
+          "voluntary": 6567,
+          "involuntary": 19
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 8,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 359663610
+      },
+      "driver_window_ns": 359760783,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "222999,223008",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c8-record-02/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1104 223010"
+    },
+    {
+      "host_binary": "capstan_host_unguarded",
+      "inline_version": 1,
+      "name": "capstan_host_unguarded-inline1-version-c32-record-02",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 2,
+      "pids": {
+        "host": 223013,
+        "load": 223022
+      },
+      "proc_before": {
+        "223013": {
+          "223013": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 42,
+            "involuntary": 2
+          },
+          "223015": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "223022": {
+          "223022": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 35,
+            "involuntary": 1
+          }
+        }
+      },
+      "proc_after": {
+        "223013": {
+          "223013": {
+            "user_ticks": 17,
+            "system_ticks": 32,
+            "voluntary": 43,
+            "involuntary": 9
+          },
+          "223015": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 1
+          }
+        },
+        "223022": {
+          "223022": {
+            "user_ticks": 12,
+            "system_ticks": 28,
+            "voluntary": 8678,
+            "involuntary": 11
+          }
+        }
+      },
+      "proc_delta": {
+        "223013": {
+          "role": "host-main",
+          "user_ticks": 16,
+          "system_ticks": 32,
+          "voluntary": 1,
+          "involuntary": 7
+        },
+        "223015": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "223022": {
+          "role": "load",
+          "user_ticks": 12,
+          "system_ticks": 28,
+          "voluntary": 8643,
+          "involuntary": 10
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 537912716
+      },
+      "driver_window_ns": 538025809,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "223013,223022",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host_unguarded-inline1-version-c32-record-02/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1104 223024"
+    },
+    {
+      "host_binary": "capstan_host",
+      "inline_version": 1,
+      "name": "capstan_host-inline1-version-c32-record-02",
+      "workload": "version",
+      "concurrency": 32,
+      "mode": "record",
+      "index": 2,
+      "pids": {
+        "host": 223027,
+        "load": 223036
+      },
+      "proc_before": {
+        "223027": {
+          "223027": {
+            "user_ticks": 1,
+            "system_ticks": 0,
+            "voluntary": 47,
+            "involuntary": 6
+          },
+          "223029": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "223036": {
+          "223036": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 21,
+            "involuntary": 0
+          }
+        }
+      },
+      "proc_after": {
+        "223027": {
+          "223027": {
+            "user_ticks": 13,
+            "system_ticks": 24,
+            "voluntary": 48,
+            "involuntary": 16
+          },
+          "223029": {
+            "user_ticks": 0,
+            "system_ticks": 0,
+            "voluntary": 2,
+            "involuntary": 0
+          }
+        },
+        "223036": {
+          "223036": {
+            "user_ticks": 9,
+            "system_ticks": 24,
+            "voluntary": 32,
+            "involuntary": 9
+          }
+        }
+      },
+      "proc_delta": {
+        "223027": {
+          "role": "host-main",
+          "user_ticks": 12,
+          "system_ticks": 24,
+          "voluntary": 1,
+          "involuntary": 10
+        },
+        "223029": {
+          "role": "host-worker",
+          "user_ticks": 0,
+          "system_ticks": 0,
+          "voluntary": 0,
+          "involuntary": 0
+        },
+        "223036": {
+          "role": "load",
+          "user_ticks": 9,
+          "system_ticks": 24,
+          "voluntary": 11,
+          "involuntary": 9
+        }
+      },
+      "clock_ticks": 100,
+      "stats": {
+        "concurrency": 32,
+        "attempts": 20000,
+        "ok": 20000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 395744988
+      },
+      "driver_window_ns": 395864752,
+      "perf_command": [
+        "${PERF_ROOT}/bin/perf",
+        "record",
+        "--control",
+        "fd:16,21",
+        "--delay=-1",
+        "-p",
+        "223027,223036",
+        "-e",
+        "cycles:u",
+        "-F",
+        "999",
+        "--call-graph",
+        "dwarf,8192",
+        "--user-callchains",
+        "--no-buildid-cache",
+        "-o",
+        "${CAPSTAN_ROOT}/perf-after/results/capstan_host-inline1-version-c32-record-02/perf.data"
+      ],
+      "perf_exit": -2,
+      "host_after": [
+        20130,
+        20130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "loadavg": "1.41 1.29 1.04 1/1104 223040"
+    }
+  ],
+  "passed": true
+}

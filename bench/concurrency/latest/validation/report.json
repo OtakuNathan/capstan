@@ -1,0 +1,203 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "mode": "asan",
+      "stage": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "${CAPSTAN_ROOT}",
+        "-B",
+        "${CAPSTAN_ROOT}/build-asan",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LEASE_SOURCE=${DEPENDENCY_ROOT}/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=${DEPENDENCY_ROOT}/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=${DEPENDENCY_ROOT}/flux_foundry",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_FAST_RUNNER=ON",
+        "-DCAPSTAN_ASAN=ON"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23463215199808474
+    },
+    {
+      "mode": "asan",
+      "stage": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "${CAPSTAN_ROOT}/build-asan",
+        "-j",
+        "8"
+      ],
+      "exit_code": 0,
+      "seconds": 4.654834427001333
+    },
+    {
+      "mode": "asan",
+      "stage": "test",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "${CAPSTAN_ROOT}/build-asan",
+        "--output-on-failure",
+        "--timeout",
+        "90",
+        "-R",
+        "^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$"
+      ],
+      "exit_code": 0,
+      "seconds": 17.116652876000444
+    },
+    {
+      "mode": "tsan",
+      "stage": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "${CAPSTAN_ROOT}",
+        "-B",
+        "${CAPSTAN_ROOT}/build-tsan",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LEASE_SOURCE=${DEPENDENCY_ROOT}/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=${DEPENDENCY_ROOT}/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=${DEPENDENCY_ROOT}/flux_foundry",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_FAST_RUNNER=ON",
+        "-DCAPSTAN_TSAN=ON"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23290655399978277
+    },
+    {
+      "mode": "tsan",
+      "stage": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "${CAPSTAN_ROOT}/build-tsan",
+        "-j",
+        "8"
+      ],
+      "exit_code": 0,
+      "seconds": 2.9044237890011573
+    },
+    {
+      "mode": "tsan",
+      "stage": "test",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "${CAPSTAN_ROOT}/build-tsan",
+        "--output-on-failure",
+        "--timeout",
+        "90",
+        "-R",
+        "^(direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$"
+      ],
+      "exit_code": 0,
+      "seconds": 21.257110728001862
+    },
+    {
+      "mode": "clang",
+      "stage": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "${CAPSTAN_ROOT}",
+        "-B",
+        "${CAPSTAN_ROOT}/build-clang",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LEASE_SOURCE=${DEPENDENCY_ROOT}/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=${DEPENDENCY_ROOT}/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=${DEPENDENCY_ROOT}/flux_foundry",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CXX_COMPILER=clang++",
+        "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld",
+        "-DCAPSTAN_NO_EXCEPTIONS=ON",
+        "-DCAPSTAN_FAST_RUNNER=ON",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON"
+      ],
+      "exit_code": 0,
+      "seconds": 0.44181705899973167
+    },
+    {
+      "mode": "clang",
+      "stage": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "${CAPSTAN_ROOT}/build-clang",
+        "-j",
+        "8"
+      ],
+      "exit_code": 0,
+      "seconds": 2.6148814900006982
+    },
+    {
+      "mode": "clang",
+      "stage": "test",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "${CAPSTAN_ROOT}/build-clang",
+        "--output-on-failure",
+        "--timeout",
+        "90"
+      ],
+      "exit_code": 0,
+      "seconds": 31.508739967997826
+    },
+    {
+      "mode": "eh",
+      "stage": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "${CAPSTAN_ROOT}",
+        "-B",
+        "${CAPSTAN_ROOT}/build-eh",
+        "-DCAPSTAN_UV_WORKER=ON",
+        "-DCAPSTAN_LEASE_SOURCE=${DEPENDENCY_ROOT}/lease",
+        "-DCAPSTAN_DYNABRIDGE_SOURCE=${DEPENDENCY_ROOT}/dynabridge",
+        "-DCAPSTAN_FF_SOURCE=${DEPENDENCY_ROOT}/flux_foundry",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCAPSTAN_LTO=ON",
+        "-DCAPSTAN_NATIVE_ARCH=ON"
+      ],
+      "exit_code": 0,
+      "seconds": 0.42432629199902294
+    },
+    {
+      "mode": "eh",
+      "stage": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "${CAPSTAN_ROOT}/build-eh",
+        "-j",
+        "8"
+      ],
+      "exit_code": 0,
+      "seconds": 4.216858141997363
+    },
+    {
+      "mode": "eh",
+      "stage": "test",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "${CAPSTAN_ROOT}/build-eh",
+        "--output-on-failure",
+        "--timeout",
+        "90"
+      ],
+      "exit_code": 0,
+      "seconds": 26.29285406100098
+    }
+  ]
+}

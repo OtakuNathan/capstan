@@ -1,0 +1,77 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 12 and seed 6312266527673477912 with 1 worker on 4 cores with 341MB heap and 64MB offheap memory [pid: 180789] (Linux 6.18.39+rpt-rpi-v8 aarch64, Debian 21.0.10 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file ${CAPSTAN_ROOT}/models/tla/Authority.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/Integers.tla
+Parsing file /tmp/Sequences.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/TLC.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Authority
+Starting... (2026-11-04 17:09:47)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-11-04 17:09:48.
+Error: Invariant AckIsInstalled is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ epoch = 0
+/\ directoryPending = [epoch |-> 0, config |-> 0]
+/\ requests = {}
+/\ executing = FALSE
+/\ hostPending = [epoch |-> 0, config |-> 0]
+/\ directoryEpoch = 0
+/\ directoryWaiting = FALSE
+/\ directoryConfig = 0
+/\ config = 0
+/\ queue = <<>>
+/\ gate = TRUE
+/\ installed = (0 :> 0)
+/\ acknowledgments = {}
+/\ tokens = {}
+/\ dead = FALSE
+/\ connected = TRUE
+
+State 2: <Request line 36, col 5 to line 43, col 41 of module Authority>
+/\ epoch = 0
+/\ directoryPending = [epoch |-> 1, config |-> 0]
+/\ requests = {[epoch |-> 1, config |-> 0]}
+/\ executing = FALSE
+/\ hostPending = [epoch |-> 0, config |-> 0]
+/\ directoryEpoch = 0
+/\ directoryWaiting = TRUE
+/\ directoryConfig = 0
+/\ config = 0
+/\ queue = <<>>
+/\ gate = TRUE
+/\ installed = (0 :> 0)
+/\ acknowledgments = {}
+/\ tokens = {}
+/\ dead = FALSE
+/\ connected = TRUE
+
+State 3: <Next line 122, col 10 to line 122, col 55 of module Authority>
+/\ epoch = 0
+/\ directoryPending = [epoch |-> 1, config |-> 0]
+/\ requests = {[epoch |-> 1, config |-> 0]}
+/\ executing = FALSE
+/\ hostPending = [epoch |-> 1, config |-> 0]
+/\ directoryEpoch = 0
+/\ directoryWaiting = TRUE
+/\ directoryConfig = 0
+/\ config = 0
+/\ queue = <<>>
+/\ gate = FALSE
+/\ installed = (0 :> 0)
+/\ acknowledgments = {[epoch |-> 1, config |-> 0]}
+/\ tokens = {}
+/\ dead = FALSE
+/\ connected = TRUE
+
+10 states generated, 10 distinct states found, 7 states left on queue.
+The depth of the complete state graph search is 3.
+The average outdegree of the complete state graph is 8 (minimum is 8, the maximum 8 and the 95th percentile is 8).
+Finished in 02s at (2026-11-04 17:09:48)

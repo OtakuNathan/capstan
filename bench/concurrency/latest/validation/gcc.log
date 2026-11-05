@@ -1,0 +1,77 @@
+Test project ${CAPSTAN_ROOT}/build
+      Start  1: probe_lease
+ 1/36 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start  2: probe_object
+ 2/36 Test  #2: probe_object .......................   Passed    0.15 sec
+      Start  3: probe_readonly
+ 3/36 Test  #3: probe_readonly .....................   Passed    0.00 sec
+      Start  4: probe_async
+ 4/36 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start  5: negative_exclusive_copy
+ 5/36 Test  #5: negative_exclusive_copy ............   Passed    0.52 sec
+      Start  6: negative_readonly_write
+ 6/36 Test  #6: negative_readonly_write ............   Passed    0.62 sec
+      Start  7: negative_wrong_receiver
+ 7/36 Test  #7: negative_wrong_receiver ............   Passed    0.26 sec
+      Start  8: negative_const_generated
+ 8/36 Test  #8: negative_const_generated ...........   Passed    0.26 sec
+      Start  9: negative_async_return
+ 9/36 Test  #9: negative_async_return ..............   Passed    0.33 sec
+      Start 10: authority_model
+10/36 Test #10: authority_model ....................   Passed    0.08 sec
+      Start 11: authority_test
+11/36 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 12: direct_transfer_test
+12/36 Test #12: direct_transfer_test ...............   Passed    0.00 sec
+      Start 13: direct_transfer_integration_test
+13/36 Test #13: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start 14: sealed_registry_test
+14/36 Test #14: sealed_registry_test ...............   Passed    0.04 sec
+      Start 15: authority_replies_test
+15/36 Test #15: authority_replies_test .............   Passed    0.00 sec
+      Start 16: checked_errors_test
+16/36 Test #16: checked_errors_test ................   Passed    0.08 sec
+      Start 17: noexception_policy_matrix
+17/36 Test #17: noexception_policy_matrix ..........   Passed    0.87 sec
+      Start 18: authority_faults_test
+18/36 Test #18: authority_faults_test ..............   Passed    0.00 sec
+      Start 19: benchmark_policy_test
+19/36 Test #19: benchmark_policy_test ..............   Passed    0.00 sec
+      Start 20: negative_production_benchmark
+20/36 Test #20: negative_production_benchmark ......   Passed    0.21 sec
+      Start 21: wire_test
+21/36 Test #21: wire_test ..........................   Passed    4.46 sec
+      Start 22: loopback_test
+22/36 Test #22: loopback_test ......................   Passed    0.34 sec
+      Start 23: callback_test
+23/36 Test #23: callback_test ......................   Passed    0.64 sec
+      Start 24: p2_compile_negative
+24/36 Test #24: p2_compile_negative ................   Passed    1.91 sec
+      Start 25: allocation_test
+25/36 Test #25: allocation_test ....................   Passed    0.00 sec
+      Start 26: transport_test
+26/36 Test #26: transport_test .....................   Passed    6.08 sec
+      Start 27: table_observation_test
+27/36 Test #27: table_observation_test .............   Passed    0.00 sec
+      Start 28: tcp_ack_faults
+28/36 Test #28: tcp_ack_faults .....................   Passed    1.08 sec
+      Start 29: worker_test
+29/36 Test #29: worker_test ........................   Passed    0.00 sec
+      Start 30: host_execution_test
+30/36 Test #30: host_execution_test ................   Passed    0.00 sec
+      Start 31: tcp_throughput_smoke
+31/36 Test #31: tcp_throughput_smoke ...............   Passed    0.14 sec
+      Start 32: tcp_direct_transfer
+32/36 Test #32: tcp_direct_transfer ................   Passed    2.24 sec
+      Start 33: direct_transfer_demo
+33/36 Test #33: direct_transfer_demo ...............   Passed    2.12 sec
+      Start 34: four_process_demo
+34/36 Test #34: four_process_demo ..................   Passed    1.31 sec
+      Start 35: tcp_fault_suite
+35/36 Test #35: tcp_fault_suite ....................   Passed    8.26 sec
+      Start 36: tcp_execution_modes
+36/36 Test #36: tcp_execution_modes ................   Passed    0.08 sec
+
+100% tests passed out of 36
+
+Total Test time (real) =  32.12 sec

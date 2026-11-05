@@ -72,6 +72,7 @@ public:
         }
     }
     void flush() {
+        if(!size_) return;
         using namespace capstan;
         std::array<waiter,64> ready{};
         std::size_t count=0,remaining=0;
