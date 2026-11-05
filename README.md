@@ -98,8 +98,9 @@ ASan/UBSan/TSan lifecycle tests. Bounded TLA+ checks run in ordinary CI;
 the larger checks run nightly at 02:23 UTC and on manual request. Passing a model, a sanitizer, and a TCP test are different kinds of
 evidence; none substitutes for the others.
 
-Current measurements are single-machine loopback TCP on a Ryzen 7 3700X. There is
-no cross-machine validation, saturation-throughput guarantee, automatic failover,
+Current measurements use single-machine loopback TCP on a Ryzen 7 3700X and an
+Apple M1 Max. There is no physical cross-host network validation,
+saturation-throughput guarantee, automatic failover,
 crash-recoverable migration, distributed GC, or multi-object transaction support.
 
 MIT licensed. Dependencies retain their own licenses; exact revisions are in
@@ -134,3 +135,28 @@ For the one-command Linux/M1 Max migration benchmark, run
 `python3 scripts/bench_machine.py --migration --jobs 4`. It builds the matched
 configuration, runs tests, measures four object sizes and creates a shareable
 result archive. See [the machine benchmark guide](docs/benchmark-your-machine.md).
+
+## M1 Max migration measurements
+
+User-reported full benchmark on an Apple M1 Max running macOS 15.3.2 arm64,
+revision `ad935d959a1b84014259441db9717c3a4d91e0e5`. The build uses Release/O3,
+exceptions enabled, FF fast runner, erased invocations, UV worker and OpenSSL
+SHA-256; LTO and native tuning are off. Each size has five measured rounds after
+one discarded warm-up, using fresh Host processes over loopback TCP.
+
+| Native MiB | Copy ms | Paste #1 ms | Paste #2 ms | Cut median ms | Cut min–max ms | Package MiB/s |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 1.74 | 2.90 | 1.67 | 3.63 | 2.99–3.71 | 275.61 |
+| 8 | 5.72 | 12.29 | 9.14 | 15.21 | 14.40–15.53 | 526.10 |
+| 32 | 18.93 | 40.84 | 34.87 | 55.26 | 54.11–56.91 | 579.09 |
+| 64 | 35.99 | 78.36 | 70.69 | **111.73** | 105.36–116.52 | **572.80** |
+
+Values except ranges are medians. Cut includes reservations, Drain, capture,
+transfer, validation/restoration, activation and cleanup. At 64 MiB, the same
+script and build-option profile on the 3700X produced 124.73 ms and 513.12 MiB/s:
+the M1 Max run has about **10.4% lower median latency and 11.6% higher throughput**.
+The comparison includes OS, compiler and library differences as well as the CPU.
+
+These figures retain the supplied summary; raw M1 Max samples are not included.
+Five rounds do not establish p99, concurrent saturation or physical-link
+throughput. Reproduce with `python3 scripts/bench_machine.py --migration --jobs 4`.
