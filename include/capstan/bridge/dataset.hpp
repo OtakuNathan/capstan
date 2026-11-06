@@ -18,6 +18,7 @@
 namespace capstan {
 struct dataset_backend : dynabridge::backend_base<dataset_backend> {
     using dynamic_value_t = dynabridge::rpc::value;
+    using export_probe_policy = dynabridge::rpc_export_probe_policy;
     template<class T> struct converter : dynabridge::rpc_backend::converter<T> {};
     struct context {
         using backend_t=dataset_backend;
@@ -58,6 +59,9 @@ struct dataset_backend : dynabridge::backend_base<dataset_backend> {
     }
 };
 template<> struct dataset_backend::converter<std::uint64_t> {
+    template<class C> static bool probe(C&,const dynamic_value_t& v) noexcept {
+        return v.kind()==dynabridge::rpc::value_kind::unsigned_integer;
+    }
     template<class C> static dynamic_value_t to(C&,std::uint64_t n) DYNABRIDGE_NOEXCEPT_IF_DISABLED { return dynamic_value_t::unsigned_integer(n); }
     template<class C> static dynabridge::optional<std::uint64_t> from(C&,const dynamic_value_t& v) DYNABRIDGE_NOEXCEPT_IF_DISABLED {
         if(v.kind()!=dynabridge::rpc::value_kind::unsigned_integer) return {};
@@ -69,14 +73,35 @@ template<> struct dataset_backend::converter<summary_t> {
         auto bytes=dynabridge::rpc::detail::encode_request(901,{dynamic_value_t::unsigned_integer(s.count),dynamic_value_t::unsigned_integer(s.sum),dynamic_value_t::unsigned_integer(s.checksum),dynamic_value_t::unsigned_integer(s.version)});
         return dynamic_value_t::string(std::string(bytes.begin(),bytes.end()));
     }
-    template<class C> static dynabridge::optional<summary_t> from(C&,const dynamic_value_t& v) DYNABRIDGE_NOEXCEPT_IF_DISABLED {
-        if(v.kind()!=dynabridge::rpc::value_kind::string) return {};
-        wire::codec::request msg;
-        auto text=v.copy_string();
-        if(!wire::codec::try_decode_request(bytes(text.begin(),text.end()),msg)) return {};
-        if(msg.method!=901 || msg.args.size()!=4) return {};
-        for(auto& arg:msg.args) if(!wire::is_number(arg)) return {};
-        return dynabridge::optional<summary_t>(summary_t{msg.args[0].as_unsigned(),msg.args[1].as_unsigned(),msg.args[2].as_unsigned(),msg.args[3].as_unsigned()});
+    template<class C> static bool probe(C&,const dynamic_value_t& v) noexcept {
+        return decode(v,nullptr);
+    }
+    template<class C> static dynabridge::optional<summary_t> from(C&,const dynamic_value_t& v) noexcept {
+        summary_t result;
+        if(!decode(v,&result)) return {};
+        return dynabridge::optional<summary_t>(result);
+    }
+private:
+    static std::uint64_t integer(const unsigned char* p,std::size_t size) noexcept {
+        std::uint64_t result=0;
+        for(std::size_t i=0;i<size;++i) result|=std::uint64_t(p[i])<<(8*i);
+        return result;
+    }
+    // A summary is exactly a version-1 RPC request with four uint64 values.
+    // Validate the borrowed byte view without allocating or consuming it. The
+    // conversion shares this validation and reads payload integers only once.
+    static bool decode(const dynamic_value_t& v,summary_t* out) noexcept {
+        constexpr std::size_t header_size=17, value_size=9;
+        if(v.kind()!=dynabridge::rpc::value_kind::string ||
+           v.string_size()!=header_size+4*value_size) return false;
+        const auto* p=reinterpret_cast<const unsigned char*>(v.string_data());
+        if(integer(p,4)!=wire::codec::request_magic ||
+           p[4]!=wire::codec::protocol_version || integer(p+5,8)!=901 ||
+           integer(p+13,4)!=4) return false;
+        for(std::size_t i=0;i<4;++i)
+            if(p[header_size+i*value_size]!=static_cast<unsigned char>(dynabridge::rpc::value_kind::unsigned_integer)) return false;
+        if(out) *out=summary_t{integer(p+18,8),integer(p+27,8),integer(p+36,8),integer(p+45,8)};
+        return true;
     }
 };
 using dataset_delegate=dynabridge::dataset<dataset_backend::context>;

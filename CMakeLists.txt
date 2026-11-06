@@ -111,6 +111,7 @@ capstan_test(direct_transfer_integration_test tests/integration/direct_transfer.
 capstan_test(sealed_registry_test tests/integration/sealed_registry.cpp)
 capstan_test(authority_replies_test tests/integration/authority_replies.cpp)
 capstan_test(checked_errors_test tests/integration/checked_errors.cpp)
+capstan_test(dataset_probe_test tests/unit/dataset_probe.cpp)
 add_test(NAME noexception_policy_matrix COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/scripts/check_noexception_policy.py"
     --compiler "${CMAKE_CXX_COMPILER}" --root "${PROJECT_SOURCE_DIR}" --build "${PROJECT_BINARY_DIR}")
 include(cmake/ProtocolFaults.cmake)
