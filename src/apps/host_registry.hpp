@@ -3,6 +3,7 @@
 template<class Runtime>
 struct basic_host_registry {
     using host_runtime=Runtime;
+    using hooks=typename Runtime::hooks;
     using object_type=typename Runtime::object_type;
     using key_type=std::array<id,3>;
     static key_type key(object_key k) noexcept {return {{k.cluster,k.incarnation,k.object}};}
@@ -167,6 +168,8 @@ struct basic_host_registry {
         CAPSTAN_TRY {
             app::authenticated auth;wire::codec::request request;
             if(!app::try_authenticate(root.config,packet,auth) || !wire::try_decode(auth.payload,request)) {app::reply(std::move(done),status::invalid);return;}
+            if(!hooks::healthy(*root.backend)) {done({outcome::unknown,{}});return;}
+            if(!hooks::allows(request.method)) {app::reply(std::move(done),status::forbidden);return;}
             if(request.method>=migration::clone_command && request.method<=migration::clone_abort_command) {
                 slot=std::make_shared<io_completion>();*slot=std::move(done);
                 handle_clone(auth.holder,request,[slot](io_result result) {auto done=std::exchange(*slot,nullptr);if(done) done(std::move(result));});return;

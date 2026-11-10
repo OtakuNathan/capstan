@@ -47,7 +47,11 @@ jobs:
                       'WindowedDataTransferNightly', 'WindowUnbounded', 'WindowWrongBinding',
                       'WindowOverwriteDuplicate', 'WindowEarlyReady', 'WindowAbortResurrect',
                       'WindowHashOutOfOrder', 'WindowReorderWitness', 'CaptureOverlapNightly',
-                      'CaptureAllowsWriter', 'CaptureDropsPin', 'CaptureEarlyHistory', 'CaptureOverlapWitness'}
+                      'CaptureAllowsWriter', 'CaptureDropsPin', 'CaptureEarlyHistory', 'CaptureOverlapWitness',
+                      'DurableRPCNightly', 'DurableEarlyReply', 'DurableMissingReceipt',
+                      'DurableVolatileDedup', 'DurablePayloadAlias', 'DurableLostIntent',
+                      'DurableMissingDrain', 'DurableReopenRecovery', 'DurableEarlyInstallAck',
+                      'DurableLostAckWitness', 'DurableGrantRecoveryWitness'}
           checks = report['checks']
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
               summary.write('## Nightly authority, migration and clipboard verification\n\n')
@@ -59,7 +63,7 @@ jobs:
               raise SystemExit('Nightly model coverage is incomplete')
           kinds = {kind: sum(c['kind'] == kind for c in checks)
                    for kind in ('safety', 'mutant', 'reachability')}
-          if kinds != {'safety': 10, 'mutant': 38, 'reachability': 5}:
+          if kinds != {'safety': 11, 'mutant': 46, 'reachability': 7}:
               raise SystemExit('Nightly safety, mutation or reachability coverage is incomplete')
           if not report['passed'] or not all(c['passed'] for c in checks):
               raise SystemExit('An authority safety or mutation check failed')

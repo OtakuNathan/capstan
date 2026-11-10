@@ -80,8 +80,10 @@ sanity check run by ordinary CTest; it does not model ACKs.
 
 The TLA+ model does not establish cryptographic identity, protection against a
 malicious controller, conflicting same-ID payload handling, dedup capacity,
-TCP framing, allocator behavior, C++ memory ordering, callback lifetime, crash
-recovery, split-brain safety, or unbounded liveness. Deterministic C++ tests,
+TCP framing, allocator behavior, C++ memory ordering, callback lifetime,
+split-brain safety, or unbounded liveness. Crash recovery is separately bounded
+by the new durable composition described below; the original authority and
+migration models still assume volatile processes. Deterministic C++ tests,
 compile-negative tests, sanitizers and real TCP fault tests provide separate
 implementation evidence. No cross-machine validation is claimed.
 
@@ -103,3 +105,26 @@ harness. Logs and exact commands are in `bench/direct-transfer/latest/tla`.
 This model does not prove credential secrecy, callback safety, bounded allocation
 behavior or the C++ implementation. The directory publication variable records
 snapshot observations, not a promise that a grant remains current after delivery.
+
+
+## Local durable composition
+
+[`DurableStore.tla`](../models/tla/DurableStore.tla) models prepared volatile
+buffers, atomic durable commits, individual process failures and whole-machine
+power failure. [`DurableRPC.tla`](../models/tla/DurableRPC.tla) composes it with
+business receipts, Close/Drain/Install, Table intent/confirmation, lost replies
+and restart recovery. It checks one request/one crash normally, and two
+requests/two crashes nightly. Conflicting payloads share each modeled request ID.
+
+The new suite adds one safe model, eight required mutant counterexamples and two
+reachability witnesses. Together with the existing suites, the runner checks 64
+cases: 11 safety models, 46 mutants and 7 reachability witnesses. The nightly
+workflow checks the exact coverage set. Run just this composition with
+`--suite durable`, optionally adding `--nightly`.
+
+See [local durable owner](durable-owner.md#model-and-implementation-correspondence)
+for the action-to-code mapping, storage assumptions, state counts and actual
+C++ commit-boundary tests. The model assumes SQLite's durable transaction
+contract; neither these models nor process-crash tests prove physical device
+flushes. Persistent Copy/Cut/Paste and migration are not yet modeled or enabled
+by the durable frontend. The original memory models and demos remain separate.

@@ -1,4 +1,24 @@
-#if defined(PROBE_OWNER)
+#if defined(PROBE_OWNER_RUNTIME)
+#include <capstan/owner/runtime_hooks.hpp>
+#ifdef PROBE_NOEXCEPT
+#define RUNTIME_NOEXCEPT noexcept
+#else
+#define RUNTIME_NOEXCEPT
+#endif
+struct backend {struct object_type {};};
+namespace capstan {
+template<> struct owner_runtime_hooks<backend> {
+    static constexpr bool durable=true;
+    static bool healthy(const backend&) noexcept;
+    static bool allows(id) noexcept;
+    static bool initialize(backend&,host_authority&,id,std::size_t) RUNTIME_NOEXCEPT;
+    static bool checkpoint(backend&,host_authority&) RUNTIME_NOEXCEPT;
+    static bool replay(backend&,const wire::call&,id,bytes&) RUNTIME_NOEXCEPT;
+    static bytes execute(backend&,backend::object_type&,const wire::call&) RUNTIME_NOEXCEPT;
+};
+}
+int main() {return sizeof(capstan::owner_runtime_contract<backend>)==0;}
+#elif defined(PROBE_OWNER)
 #include <capstan/owner/backend.hpp>
 #ifdef PROBE_NOEXCEPT
 #define OWNER_EXTENSION_NOEXCEPT noexcept

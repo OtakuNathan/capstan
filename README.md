@@ -14,9 +14,14 @@ The single-process Dataset Host is the default demo implementation. A backend
 can wrap private replicas or an external database group while exposing one
 logical object and one authority domain; a mirrored-memory example exercises
 the same Copy/Paste and migration paths with a different snapshot format.
+An optional [local SQLite backend](docs/durable-owner.md) persists Dataset
+operations, exact retry receipts and Table-mediated authority decisions, with
+explicit restart recovery and crash-boundary tests. Its first version supports
+one object; persistent Copy/Paste and migration remain future work.
 
 **Experimental, not production-ready.** One authoritative frontend per object, one directory control
-session, trusted-lab networking, no HA or automatic recovery. The TCP demo binds
+session and trusted-lab networking, with no replicated authority or failover.
+The default demos keep state in memory. The TCP demo binds
 to loopback. There is no TLS or public-network security claim.
 
 | Component | Responsibility |

@@ -95,8 +95,10 @@ basic_host_registry<decltype(runtime)> objects(runtime);
 ```
 
 This changes storage/execution policy while preserving one authority domain.
-It does not replicate Capstan's own control state, add restart recovery, or make
-a single control frontend automatically highly available. An existing redundant
+The basic storage contract alone does not persist Capstan control state or make
+a frontend highly available. The optional [local SQLite demo](durable-owner.md)
+adds explicit runtime persistence hooks for authority checkpoints, request
+receipts and Table intents, separately from object capture/restore. An existing redundant
 database can satisfy storage guarantees internally without exposing its replicas
 as separate Capstan owners.
 
@@ -130,3 +132,21 @@ of inline execution wins over the demo's global inline-version setting.
 No new authority or transfer phase is introduced. Existing Drain, activation,
 capture-pin and Abort models still apply under the backend's completion contract;
 this refactoring does not prove a database's internal replication algorithm.
+
+
+## Persistent runtime hooks
+
+`owner_runtime_hooks<Backend>` is a compile-time policy used by the Host runtime.
+Its default implementation performs the original memory dispatch and no storage
+I/O. A specialization supplies `initialize`, `checkpoint`, `healthy`, `allows`,
+`replay` and `execute`; execution receives the complete typed `wire::call`,
+including request identity and arguments. `owner_runtime_contract` checks return
+types and strict/no-exception annotations. Health and method allowlisting must
+always be nonthrowing. Relaxed mode permits unannotated hooks without adding
+exception recovery to a no-exception build.
+
+A durable policy must commit business effects and receipts atomically, checkpoint
+authority before ACK/publication, reject unsupported control paths before they
+mutate state, and stop service on uncertain storage results. It cannot infer
+these guarantees from `capture_snapshot` alone. See the SQLite example and the
+model/code correspondence for the complete local contract.

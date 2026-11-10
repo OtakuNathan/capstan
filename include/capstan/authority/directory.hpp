@@ -75,6 +75,22 @@ public:
         ready_=false;
         return status::ok;
     }
+    struct durable_image {id epoch=0,next_tx=1;bool pending=false,dead=false,ready=false;transition current;};
+    durable_image checkpoint() const {
+        std::lock_guard<std::mutex> lock(mutex_);return {epoch_,next_tx_,pending_,dead_,ready_,current_};
+    }
+    bool recover(const durable_image& image) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(epoch_ || pending_ || ready_ || !image.next_tx || (image.pending && image.ready)) return false;
+        if(image.current.tx) {
+            const auto& t=image.current;
+            if(t.key!=key_ || t.control_session!=control_ || t.origin!=authority_origin::directory || (t.issuer && t.issuer!=control_) || t.tx>=image.next_tx ||
+               t.expected_epoch==std::numeric_limits<id>::max() || t.next_epoch!=t.expected_epoch+1 ||
+               validate_target(key_,t.next_epoch,t.destroy,t.grants)!=status::ok) return false;
+            if(image.pending ? image.epoch<t.expected_epoch : image.epoch!=t.next_epoch && image.ready) return false;
+        } else if(image.pending || image.ready || image.next_tx!=1) return false;
+        epoch_=image.epoch;next_tx_=image.next_tx;pending_=image.pending;dead_=image.dead;ready_=image.ready;current_=image.current;return true;
+    }
     id epoch() const { std::lock_guard<std::mutex> lock(mutex_); return epoch_; }
 };
 }

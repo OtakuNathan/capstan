@@ -21,6 +21,7 @@ def main():
     parser.add_argument('--jar', type=Path, default=os.environ.get('TLA2TOOLS_JAR'))
     parser.add_argument('--download-tools', action='store_true')
     parser.add_argument('--nightly', action='store_true', help='Increase epoch, chunk, pin, Lease reader and value bounds')
+    parser.add_argument('--suite', choices=['all','durable'], default='all', help='Select the complete suite or only the crash-recovery composition')
     parser.add_argument('--workers', type=int, default=2)
     parser.add_argument('--heap', default='512m')
     parser.add_argument('--timeout', type=int, default=600, help='Per model, seconds')
@@ -84,7 +85,15 @@ def main():
              ('WindowReorderWitness', 'NoReordering'),
              ('CaptureOverlapNightly' if args.nightly else 'CaptureOverlap', None),
              ('CaptureAllowsWriter', 'CaptureExcludesWriters'), ('CaptureDropsPin', 'CaptureProtected'),
-             ('CaptureEarlyHistory', 'CommittedImage'), ('CaptureOverlapWitness', 'NoOverlap')]
+             ('CaptureEarlyHistory', 'CommittedImage'), ('CaptureOverlapWitness', 'NoOverlap'),
+             ('DurableRPCNightly' if args.nightly else 'DurableRPC', None),
+             ('DurableEarlyReply','AckSurvivesCrash'), ('DurableMissingReceipt','AtomicBusinessCommit'),
+             ('DurableVolatileDedup','AtomicBusinessCommit'), ('DurablePayloadAlias','AckSurvivesCrash'),
+             ('DurableLostIntent','IntentBeforeSideEffect'), ('DurableMissingDrain','DrainBeforeInstall'),
+             ('DurableReopenRecovery','ClosedRecovery'), ('DurableEarlyInstallAck','InstallAckIsDurable'),
+             ('DurableLostAckWitness','NoLostAckRecovery'), ('DurableGrantRecoveryWitness','NoGrantRecovery')]
+    if args.suite=='durable':
+        cases=[case for case in cases if case[0].startswith('Durable')]
     modules = {name: 'DataTransfer' for name in ('DataTransfer', 'DataTransferNightly', 'EarlySeal')}
     modules.update({name: 'ObjectMigration' for name in ('ObjectMigration', 'ObjectMigrationNightly',
         'MigrationMissingDrain', 'EarlyActivation', 'MigrationTimeoutReopens', 'MigrationRollback', 'MigrationDropsDedup', 'MigrationCaptureReleasedEarly')})
@@ -95,7 +104,8 @@ def main():
     modules.update({name: 'LeaseCopyCut' for name in lease_cases})
     modules.update({name: 'WindowedDataTransfer' for name, _ in cases if name.startswith('Window')})
     modules.update({name: 'CaptureOverlap' for name, _ in cases if name.startswith('Capture')})
-    witnesses = {'LeaseSharedCopyWitness', 'LeaseLostAckWitness', 'LeaseAbortWitness', 'WindowReorderWitness', 'CaptureOverlapWitness'}
+    modules.update({name: 'DurableRPC' for name, _ in cases if name.startswith('Durable')})
+    witnesses = {'LeaseSharedCopyWitness', 'LeaseLostAckWitness', 'LeaseAbortWitness', 'WindowReorderWitness', 'CaptureOverlapWitness','DurableLostAckWitness','DurableGrantRecoveryWitness'}
     records = []
     for name, invariant in cases:
         meta = out / (name + '-states')
@@ -125,8 +135,8 @@ def main():
                             distinct_states=int(states[-1][1]) if states else None))
         print(f'{name}: kind={records[-1]["kind"]}, exit={code}, expected={invariant or "safe"}, passed={passed}', flush=True)
     report = dict(passed=all(row['passed'] for row in records), tools_version=TOOLS_VERSION,
-                  tools_sha256=TOOLS_SHA256, nightly=args.nightly, checks=records,
-                  scope='Bounded authority, data receiver, clipboard, Lease permissions, placement and migration-decision safety with bounded reachability witnesses; no authentication, crash recovery, general liveness or C++ memory-model proof.')
+                  tools_sha256=TOOLS_SHA256, nightly=args.nightly, suite=args.suite, checks=records,
+                  scope='Bounded authority, data receiver, clipboard, Lease permissions, placement and migration-decision safety with bounded reachability witnesses; DurableRPC additionally checks bounded process/power-loss recovery under atomic flushed-store assumptions. No authentication, device flush correctness, general liveness or C++ memory-model proof.')
     (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     return 0 if report['passed'] else 1
 

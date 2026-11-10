@@ -132,6 +132,61 @@ public:
         : host_authority(key,control,queue_limit,history_limit) { validation_=validation; }
 #endif
     host_authority(const host_authority&)=delete;
+    // Recovery image for the directory authority path, distinct from migration
+    // history. Admission records and volatile pins are deliberately absent.
+    struct durable_image {
+        object_key key;id control=0,epoch=0;
+        phase gate=phase::open;
+        std::vector<grant> grants;
+        authority_tx_key pending;
+        std::map<authority_tx_key,transition> transactions;
+    };
+    bool checkpoint(durable_image& out) const {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(incoming_ || outgoing_ || !migrations_.empty()) return false;
+        durable_image staged;staged.key=key_;staged.control=control_;staged.epoch=epoch_;
+        staged.gate=phase_;staged.grants=grants_;staged.pending=pending_;
+        for(const auto& t:transactions_) {
+            if(t.first.origin!=authority_origin::directory) return false;
+            staged.transactions.emplace(t.first,t.second.target);
+        }
+        out=std::move(staged);return true;
+    }
+    // Startup only. Never restore volatile admission/dedup records as commits.
+    bool recover(const durable_image& image) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if(epoch_ || !active_.empty() || !transactions_.empty() || image.key!=key_ || image.control!=control_ ||
+           image.transactions.size()>history_limit_ || validate_target(key_,image.epoch,image.gate==phase::dead,image.grants)!=status::ok) return false;
+        if(image.gate!=phase::open && image.gate!=phase::closing && image.gate!=phase::dead) return false;
+        const bool closing=image.gate==phase::closing;
+        if(closing!=bool(image.pending.sequence) ||
+           (closing ? image.pending.origin!=authority_origin::directory || image.pending.issuer!=control_ : image.pending!=authority_tx_key{})) return false;
+        std::set<id> installed_epochs;const transition* latest=nullptr;
+        std::map<authority_tx_key,transaction_record> staged;
+        std::vector<grant> pending_grants;
+        for(const auto& item:image.transactions) {
+            const auto& t=item.second;
+            if(validate(t)!=status::ok || item.first!=t.identity()) return false;
+            if(item.first==image.pending) {
+                if(t.expected_epoch!=image.epoch) return false;
+                pending_grants=t.grants;
+            } else {
+                if(t.next_epoch>image.epoch || !installed_epochs.insert(t.next_epoch).second) return false;
+                if(t.next_epoch==image.epoch) latest=&t;
+            }
+            staged.emplace(item.first,transaction_record{t,{},{}});
+        }
+        if(closing && !staged.count(image.pending)) return false;
+        if(installed_epochs.size()!=image.epoch ||
+           (image.epoch ? !latest || latest->grants!=image.grants || latest->destroy!=(image.gate==phase::dead) : !image.grants.empty() || image.gate==phase::dead)) return false;
+        auto grants=image.grants;
+        transactions_.swap(staged);grants_.swap(grants);pending_grants_.swap(pending_grants);
+        pending_=image.pending;epoch_=image.epoch;phase_=image.gate;return true;
+    }
+    // Process death ended all native work. Finish a recovered Close only after
+    // the caller has loaded committed object data, then checkpoint before ACK.
+    void finish_recovery() noexcept {std::lock_guard<std::mutex> lock(mutex_);install_if_drained();}
+
     status set_authority(const transition& t) {
         std::lock_guard<std::mutex> lock(mutex_);
         auto valid=validate(t);

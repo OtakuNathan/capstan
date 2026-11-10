@@ -71,6 +71,12 @@ public:
             return status::invalid;
         }
     }
+    void fail_unknown() noexcept {
+        std::array<waiter,64> detached{};const auto count=size_;
+        for(std::size_t i=0;i<count;++i) {detached[i]=std::move(waiting_[i]);waiting_[i]=waiter{};}
+        size_=0;
+        for(std::size_t i=0;i<count;++i) if(detached[i].done) finish(std::exchange(detached[i].done,nullptr),{capstan::outcome::unknown,{}});
+    }
     void flush() {
         if(!size_) return;
         using namespace capstan;

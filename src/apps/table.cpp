@@ -2,6 +2,10 @@
 #include "common.hpp"
 #include <capstan/authority/directory.hpp>
 #include <capstan/protocol/random.hpp>
+#ifdef CAPSTAN_SQLITE_TABLE
+#include <capstan/durable/sqlite_store.hpp>
+#include <capstan/durable/images.hpp>
+#endif
 using namespace capstan;
 struct table_runtime {
     app::config config;
@@ -13,8 +17,16 @@ struct table_runtime {
     struct command_record {bytes payload;bytes response;};
     std::map<std::pair<id,id>,command_record> history;
     bool changing=false;
-    table_runtime(app::config c,GMainContext* ctx,unsigned short port)
-        :config(c),context(ctx),directory(c.key,c.control),host_socket(ctx,"127.0.0.1",port),host(host_socket,c.credentials[2]){}
+    table_runtime(app::config c,GMainContext* ctx,unsigned short port
+#ifdef CAPSTAN_SQLITE_TABLE
+        ,const std::string& state_file
+#endif
+        ) :config(c),context(ctx),directory(c.key,c.control),host_socket(ctx,"127.0.0.1",port),host(host_socket,c.credentials[2]) {
+#ifdef CAPSTAN_SQLITE_TABLE
+        store=std::make_shared<durable::sqlite_store>(state_file);
+        if(!store->claim_actor("table") || !recover()) CAPSTAN_RAISE(std::runtime_error("Table recovery failed or already running"));
+#endif
+    }
     struct transition_operation {
         transition target;
         io_completion done;
@@ -22,6 +34,50 @@ struct table_runtime {
         bool started=false,ever_uncertain=false;
     };
     std::shared_ptr<transition_operation> uncertain_operation;
+#ifdef CAPSTAN_SQLITE_TABLE
+    std::shared_ptr<durable::sqlite_store> store;
+    bool storage_failed=false;
+    durable::fault_hook fault=nullptr;
+    bool recover() {
+        bytes b;bool found;if(!store->get("table/journal",b,found)) return false;
+        if(!found) return persist();
+        durable::image_reader r(b,0x31425443);object_key key;id control,n;
+        directory_entry::durable_image image;
+        if(!r.number(key.cluster)||!r.number(key.incarnation)||!r.number(key.object)||key!=config.key||!r.number(control)||control!=config.control||
+           !durable::decode_directory(r,image)||!r.number(n)||n>4096) return false;
+        for(id i=0;i<n;++i) {
+            std::pair<id,id> command;command_record record;
+            if(!r.number(command.first)||!r.number(command.second)||!command.second||!r.blob(record.payload,wire::max_frame)||!r.blob(record.response,wire::max_frame)||
+               !history.emplace(command,std::move(record)).second) return false;
+        }
+        id pending;if(!r.number(pending)||pending>1) return false;
+        if(pending) {
+            auto op=std::make_shared<transition_operation>();bytes t;
+            if(!r.number(op->command.first)||!r.number(op->command.second)||!r.blob(t,wire::max_frame)||!wire::try_decode_transition(t,op->target)||
+               !history.count(op->command)||!(op->target==image.current)) return false;
+            op->started=true;op->ever_uncertain=true;uncertain_operation=op;changing=true;
+        }
+        if(!r.end() || (image.pending && !pending) || !directory.recover(image)) return false;
+        return true;
+    }
+    bool persist(std::shared_ptr<transition_operation> active={}) noexcept {
+        if(storage_failed) return false;
+        CAPSTAN_TRY {
+            auto op=active ? active : uncertain_operation;
+            durable::image_writer w(0x31425443);w.number(config.key.cluster);w.number(config.key.incarnation);w.number(config.key.object);w.number(config.control);
+            durable::encode_directory(w,directory.checkpoint());w.number(history.size());
+            for(const auto& item:history) {w.number(item.first.first);w.number(item.first.second);w.blob(item.second.payload);w.blob(item.second.response);}
+            const bool pending=changing && op && op->started;
+            w.number(pending);if(pending) {w.number(op->command.first);w.number(op->command.second);w.blob(wire::encode_transition(op->target));}
+            if(store->commit({{"table/journal",std::move(w.value)}},fault).outcome==durable::commit_outcome::committed) return true;
+        } CAPSTAN_CATCH_ALL {}
+        storage_failed=true;return false;
+    }
+    bool healthy() const noexcept {return !storage_failed && store->healthy();}
+#else
+    bool persist(std::shared_ptr<transition_operation> ={}) noexcept {return true;}
+    bool healthy() const noexcept {return true;}
+#endif
     using snapshot_done=std::function<void(outcome,status,authority_view)>;
     void snapshot(snapshot_done done) {
         ++control_calls;
@@ -45,10 +101,13 @@ struct table_runtime {
         history.at(op->command).response=response;
         changing=uncertain;
         if(uncertain) {op->ever_uncertain=true;uncertain_operation=op;}else uncertain_operation.reset();
+        const auto stored=persist(uncertain ? op : nullptr);
         auto done=std::exchange(op->done,nullptr);
-        if(done) done({outcome::completed,std::move(response)});
+        if(done) done(stored ? io_result{outcome::completed,std::move(response)} : io_result{outcome::unknown,{}});
     }
     void advance(std::shared_ptr<transition_operation> op) {
+        // Durable immutable intent precedes every outgoing side-effecting RPC.
+        if(!persist(op)) {auto done=std::exchange(op->done,nullptr);if(done) done({outcome::unknown,{}});return;}
         ++control_calls;
         auto b=wire::command(wire::set_authority,{wire::value::string(wire::binary(wire::encode_transition(op->target)))});
         start_io(host,std::move(b),[this,op](io_result io) {on_ack(op,std::move(io));});
@@ -92,6 +151,7 @@ struct table_runtime {
     }
     void handle(id,bytes packet,io_completion done) {
         CAPSTAN_TRY {
+            if(!healthy()) {done({outcome::unknown,{}});return;}
             app::authenticated auth;wire::codec::request r;
             auto invalid=[&]{app::reply(std::move(done),status::invalid);};
             if(!app::try_authenticate(config,packet,auth) || !wire::try_decode(auth.payload,r)) {invalid();return;}
@@ -176,7 +236,11 @@ struct table_runtime {
 int main(int argc,char** argv) {
     CAPSTAN_TRY {
         auto args=app::options(argc,argv);auto config=app::load_config(app::required(args,"--config"));auto* context=g_main_context_default();
-        table_runtime runtime(config,context,app::port_option(args,"--host-port",0));
+        table_runtime runtime(config,context,app::port_option(args,"--host-port",0)
+#ifdef CAPSTAN_SQLITE_TABLE
+            ,app::required(args,"--state-file")
+#endif
+        );
         if(!runtime.host_socket.valid()) {std::cerr<<runtime.host_socket.setup_error()<<'\n';return 1;}
         gio_server server(context,app::port_option(args,"--port",0),[&](id c,bytes b,io_completion done){runtime.handle(c,std::move(b),std::move(done));});
         if(!server.valid()) {std::cerr<<server.setup_error()<<'\n';return 1;}

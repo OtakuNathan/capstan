@@ -31,6 +31,40 @@ jobs:
           path: |
             build-tla/*.log
             build-tla/report.json
+  durable:
+    name: SQLite crash recovery / ${{ matrix.compiler }} / ${{ matrix.mode }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+        mode: [exceptions, strict, relaxed]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglib2.0-dev libuv1-dev libsqlite3-dev pkg-config clang
+      - run: python3 scripts/fetch_deps.py
+      - name: Configure persistent demos and real crash tests
+        shell: bash
+        run: |
+          options=(-DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} -DCAPSTAN_SQLITE=ON -DCAPSTAN_REQUIRE_GIO=ON -DCAPSTAN_FAST_RUNNER=ON -DCAPSTAN_UV_WORKER=ON)
+          if [[ '${{ matrix.mode }}' != 'exceptions' ]]; then
+            options+=(-DCAPSTAN_NO_EXCEPTIONS=ON)
+          fi
+          if [[ '${{ matrix.mode }}' == 'relaxed' ]]; then
+            options+=(-DCAPSTAN_NO_EXCEPTION_STRICT=OFF)
+          fi
+          cmake -S . -B build-durable "${options[@]}"
+      - run: cmake --build build-durable --target capstan_durable_host capstan_durable_table durable_store_test durable_host_test durable_table_test -j 2
+      - run: ctest --test-dir build-durable -R '^(durable_.*|noexception_policy_matrix)$' --output-on-failure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: durable-${{ matrix.compiler }}-${{ matrix.mode }}
+          path: build-durable/Testing/Temporary/
   macos:
     name: Apple Silicon / fast-strict
     runs-on: macos-15

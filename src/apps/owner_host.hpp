@@ -12,12 +12,13 @@
 #include <capstan/migration/gio_digest.hpp>
 #include <capstan/authority/host.hpp>
 #include <capstan/protocol/random.hpp>
-#include <capstan/owner/backend.hpp>
+#include <capstan/owner/runtime_hooks.hpp>
 #include <chrono>
 #include <thread>
 using namespace capstan;
 template<class Backend>
 struct basic_host_runtime {
+    using hooks=owner_runtime_contract<Backend>;
     using backend_contract=owner_backend_contract<Backend>;
     using object_type=typename backend_contract::object_type;
     // Factory/context outlives active and unpublished restored objects.
@@ -89,9 +90,24 @@ struct basic_host_runtime {
 #endif
         ,64,history_limit),host_instance(c.key.incarnation),history_limit(history_limit),owner(size ? backend->create(c.key,size,7) : nullptr),delay_ms(delay) {
         if(size && !owner) CAPSTAN_RAISE(std::runtime_error("owner backend creation failed"));
+        if(!hooks::initialize(*backend,authority,c.control,history_limit)) CAPSTAN_RAISE(std::runtime_error("owner recovery failed"));
     }
     ~basic_host_runtime() {capture_worker.close();worker.close();}
-    void collect_resource() {
+    bool collect_resource() {
+        if(!hooks::checkpoint(*backend,authority)) {
+            control_replies.fail_unknown();
+            // Queued work has never accessed the backend. Executing work keeps
+            // its real pin until its worker completion, even after storage fault.
+            const auto executing=authority.inspect().executing;
+            auto it=operations.begin();
+            while(it!=operations.end()) {
+                if(it->first==executing) {++it;continue;}
+                auto pin=it->first;auto frame=it->second;it=operations.erase(it);
+                authority.dispatch_failed(pin);auto done=std::exchange(frame->done,nullptr);
+                if(done) done({outcome::unknown,{}});
+            }
+            return false;
+        }
         if(trace_migration_metrics && freeze_metric.wall && !barrier_reported) {
             const auto occupancy=authority.inspect_occupancy();
             if(!occupancy.readers && !occupancy.writers) {
@@ -103,11 +119,11 @@ struct basic_host_runtime {
             owner.reset(); ++destroyed; std::cout<<"DESTROY active=0\n"<<std::flush;
         }
         control_replies.flush();
-        migration_replies.flush();
+        migration_replies.flush();return true;
     }
     void kick() {
         host_authority::operation op;
-        if(operations.empty() || authority.inspect().executing) return;
+        if(!hooks::healthy(*backend) || operations.empty() || authority.inspect().executing) return;
         auto pin=operations.begin()->first;
         auto frame=operations.begin()->second;
         // Construct the dispatch task before starting the operation. If task
@@ -126,11 +142,9 @@ struct basic_host_runtime {
                     response=wire::encode_reply(copy_code==status::ok ? outcome::completed : outcome::rejected,copy_code,
                         copy_code==status::ok ? std::vector<wire::value>{wire::value::string(migration::encode_snapshot_ref(record.reference))} : std::vector<wire::value>{});
                 } else {
-                wire::value result;
-                bool ok=owner->try_dispatch(frame->call.header.operation,frame->call.header.capability,frame->call.args,result);
-                response=wire::encode_reply(outcome::completed,ok ? status::ok : status::invalid,ok ? std::vector<wire::value>{result} : std::vector<wire::value>{});
+                response=hooks::execute(*backend,*owner,frame->call);
                 }
-            } CAPSTAN_CATCH_ALL { response=wire::encode_reply(outcome::completed,status::invalid); }
+            } CAPSTAN_CATCH_ALL { response=wire::encode_reply(hooks::durable ? outcome::unknown : outcome::completed,status::invalid); }
             app::post(context,[this,pin,copy_code,response=std::move(response)]() mutable {
                 auto it=operations.find(pin);
                 if(it->second->copy) {
@@ -534,6 +548,8 @@ struct basic_host_runtime {
     // envelope round trip on the unchanged scalar RPC hot path.
     void handle_authenticated(app::authenticated auth,wire::codec::request decoded,io_completion done) {
         CAPSTAN_TRY {
+            if(!hooks::healthy(*backend)) {done({outcome::unknown,{}});return;}
+            if(!hooks::allows(decoded.method)) {app::reply(std::move(done),status::forbidden);return;}
             if(decoded.method==migration::route_command) {
                 const auto& a=decoded.args;
                 if(a.size()!=4 || !wire::is_number(a[0]) || !wire::is_number(a[1]) || !wire::is_number(a[2]) || !wire::is_string(a[3]) ||
@@ -702,7 +718,7 @@ struct basic_host_runtime {
                     std::cout<<"TRANSITION tx="<<t.tx<<" epoch="<<authority.inspect().epoch<<" status="<<status_name(code)<<" active="<<authority.inspect().active<<'\n'<<std::flush;
                     collect_resource(); return;
                 } else {if(!wire::is_number(decoded.args[0])) {app::reply(std::move(done),status::invalid);return;} tx=wire::number(decoded.args[0]);code=status::ok;}
-                collect_resource();
+                if(!collect_resource()) {done({outcome::unknown,{}});return;}
                 acknowledgement ack;
                 if(code==status::ok) code=authority.ack(tx,ack);
                 app::reply(std::move(done),code,code==status::ok ? std::vector<wire::value>{wire::value::string(wire::binary(wire::encode_transition(ack.installed)))} : std::vector<wire::value>{}); return;
@@ -712,6 +728,8 @@ struct basic_host_runtime {
                 app::reply(std::move(done),status::ok,{wire::u(admitted),wire::u(completed),wire::u(rejected),wire::u(control_calls),wire::u(s.active),wire::u(s.epoch),wire::u(destroyed)}); return;
             }
             wire::call call;if(!wire::try_decode_call(auth.payload,call)) {app::reply(std::move(done),status::invalid);return;}
+            bytes prior;if(hooks::replay(*backend,call,auth.holder,prior)) {done({outcome::completed,std::move(prior)});return;}
+            if(!hooks::healthy(*backend)) {done({outcome::unknown,{}});return;}
             // Store payload before admission so allocation failure cannot leave
             // an accepted operation without its corresponding execution frame.
             auto frame_owner=std::make_shared<pending>();
