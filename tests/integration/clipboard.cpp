@@ -3,16 +3,20 @@
 #undef main
 #include "tests/check.hpp"
 #include <capstan/migration/coordinator.hpp>
+#include "examples/owner/mirrored_memory.hpp"
 struct registry_session : io_endpoint {
     gio_client socket;app::authenticated_endpoint auth;
     registry_session(GMainContext* ctx,unsigned short port,token credential):socket(ctx,"127.0.0.1",port),auth(socket,credential) {}
     bool submit(bytes packet,io_completion done) noexcept override {return auth.submit(std::move(packet),std::move(done));}
 };
-int main() {
+template<class Backend,class Verify>
+void exercise(std::shared_ptr<Backend> source_backend,std::shared_ptr<Backend> target_backend,Verify verify) {
+    using host_runtime=basic_host_runtime<Backend>;
+    using host_registry=basic_host_registry<host_runtime>;
     auto* context=g_main_context_new();
     {
         app::config c{{1,2,3},7,{}};for(unsigned i=0;i<3;++i) c.credentials[i][0]=static_cast<unsigned char>(i+10);
-        host_runtime source(c,context,128*1024,0,32),target(c,context,0,0,32);
+        host_runtime source(c,context,128*1024,0,32,source_backend),target(c,context,0,0,32,target_backend);
         source.host_id=1;source.host_instance=11;target.host_id=2;target.host_instance=12;
         source.trace_requests=false;target.trace_requests=false;
         host_registry sources(source),targets(target);
@@ -60,6 +64,10 @@ int main() {
         auto paste=[&](id sequence,object_key key) {return wire::command(migration::clone_command,{wire::u(sequence),wire::value::string(migration::encode_snapshot_ref(snapshot)),
             wire::u(key.cluster),wire::u(key.incarnation),wire::u(key.object),wire::value::string("127.0.0.1"),wire::u(a.port())});};
         object_key first{1,2,4},second{1,2,5};
+        const auto budget=target.export_budget;
+        target.export_budget=snapshot.size+target.backend->restore_reservation(snapshot.size)-1;
+        CHECK(call(to,paste(99,{1,2,99})).code==status::exhausted && targets.objects.empty());
+        target.export_budget=budget;
         auto pasted=call(to,paste(1,first));CHECK(pasted.code==status::ok && pasted.values.size()==2);
         grant clone;CHECK(wire::try_decode_grant(wire::string(pasted.values[1]),clone) && clone.key==first && clone.epoch==1);
         auto retry=call(to,paste(1,first));CHECK(retry.code==status::ok && wire::string(retry.values[1])==wire::string(pasted.values[1]));
@@ -82,12 +90,12 @@ int main() {
         auto move_target=std::make_shared<registry_session>(context,a.port(),c.credentials[2]);
         auto move=std::make_shared<migration::move_operation>(move_ticket,successor,move_source,move_target,"127.0.0.1",b.port(),targets.objects.at(host_registry::key(first)).runtime->export_limit());
         bool moved=false;CHECK(move->resume([&](io_result io) {CHECK(wire::decode_reply(io.payload).code==status::ok);moved=true;}));pump([&]{return moved;});
-        CHECK(move->ready() && sources.objects.at(host_registry::key(first)).runtime->dataset);
-        CHECK(!targets.objects.at(host_registry::key(first)).runtime->dataset);
+        CHECK(move->ready() && sources.objects.at(host_registry::key(first)).runtime->owner);
+        CHECK(!targets.objects.at(host_registry::key(first)).runtime->owner);
         CHECK(call(from,migration::route(first,wire::encode_call({successor,1,method::summary}))).code==status::duplicate);
         CHECK(call(to,migration::route(second,wire::encode_call({clone2,3,method::version}))).code==status::ok);
         CHECK(call(to,paste(1,first)).code==status::ok); // Historical creation receipt cannot republish it.
-        CHECK(!targets.objects.at(host_registry::key(first)).runtime->dataset);
+        CHECK(!targets.objects.at(host_registry::key(first)).runtime->owner);
 
         CHECK(call(to,wire::command(migration::clone_abort_command,{wire::u(3)})).code==status::ok);
         CHECK(call(to,paste(3,{1,2,6})).code==status::closed);
@@ -97,19 +105,40 @@ int main() {
         delay_chunk=true;bool late_completed=false;
         CHECK(to.submit(paste(4,{1,2,7}),[&](io_result io) {CHECK(wire::decode_reply(io.payload).code==status::closed);late_completed=true;}));
         pump([&]{return bool(held_chunk);});
+        CHECK(targets.clone_reserved==snapshot.size+target.backend->restore_reservation(snapshot.size));
         gio_client abort_socket(context,"127.0.0.1",b.port());app::authenticated_endpoint abort_client(abort_socket,c.credentials[0]);
         CHECK(call(abort_client,wire::command(migration::clone_abort_command,{wire::u(4)})).code==status::ok);
         CHECK(!targets.clone_reserved && !targets.objects.at(host_registry::key({1,2,7})).published);
         auto late=std::exchange(held_chunk,nullptr);late(std::move(held_response));pump([&]{return late_completed;});
-        CHECK(!targets.objects.at(host_registry::key({1,2,7})).runtime->dataset);
+        CHECK(!targets.objects.at(host_registry::key({1,2,7})).runtime->owner);
         auto release=wire::command(migration::copy_release_command,{wire::value::string(migration::encode_snapshot_ref(snapshot))});
         CHECK(call(from,release).code==status::ok && !source.copy_reserved);
         CHECK(call(from,release).code==status::ok && call(from,copy_packet).code==status::closed);
         CHECK(call(from,chunk).code==status::closed);
+        verify(source,target,sources,targets);
         // Aggregate quota covers all objects, snapshots and receive reservations.
         target.export_budget=targets.other_bytes(&target);
         CHECK(call(to,paste(5,{1,2,8})).code==status::exhausted);
     }
     while(g_main_context_iteration(context,FALSE)) {}g_main_context_unref(context);
     std::cout<<"Copy-time snapshots, reusable Paste, isolated clone identities, caller binding and explicit release passed\n";
+}
+
+int main() {
+    using namespace capstan::examples;
+    exercise(std::make_shared<single_process_owner_backend>(),std::make_shared<single_process_owner_backend>(),
+             [](const auto&,const auto&,const auto&,const auto&){});
+    auto audit=std::make_shared<mirrored_owner_audit>();
+    exercise(std::make_shared<mirrored_memory_owner_backend>(audit),std::make_shared<mirrored_memory_owner_backend>(audit),
+        [](const auto& source,const auto& target,const auto& sources,const auto& targets) {
+            CHECK(source.owner->replicas_equal());
+            if(target.owner) CHECK(target.owner->replicas_equal());
+            for(const auto* registry:{&sources,&targets}) for(const auto& slot:registry->objects)
+                if(slot.second.runtime->owner) {
+                    CHECK(slot.second.runtime->owner->replicas_equal());
+                    CHECK(slot.second.runtime->backend==registry->root.backend);
+                }
+        });
+    CHECK(audit->created==1 && audit->restored>=3 && audit->writes>=2 && audit->live==0);
+    std::cout<<"One logical owner, two private copies, opaque snapshots and inherited backend contexts passed\n";
 }

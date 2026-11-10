@@ -1,7 +1,19 @@
 #pragma once
 #include <capstan/migration/authority_wire.hpp>
 #include <capstan/migration/transfer.hpp>
+#include <capstan/owner/backend.hpp>
 namespace capstan { namespace migration {
+struct package_parts {owner_snapshot_view snapshot,history;};
+// CPMG carries opaque backend snapshot bytes and the unchanged authority image.
+// These views borrow bytes; consume them before releasing the package owner.
+inline status decode_package_parts(const buffer& bytes,package_parts& out) noexcept {
+    reader in(bytes);std::uint64_t magic,schema,length;
+    if(!in.get(4,magic) || magic!=0x474d5043u || !in.get(4,schema) || schema!=1 ||
+       !in.get(8,length) || length>in.remaining()) return status::invalid;
+    owner_snapshot_view snapshot{in.current(),static_cast<std::size_t>(length)};
+    if(!in.skip(snapshot.size) || !in.get(8,length) || length!=in.remaining()) return status::invalid;
+    out={snapshot,{in.current(),static_cast<std::size_t>(length)}};return status::ok;
+}
 // Views are used only while the caller retains the immutable package buffer.
 // Decode directly into owning native words/history; no extra Dataset byte copy.
 inline status decode_package(const buffer& bytes,dataset_snapshot& data,authority_image& history) {

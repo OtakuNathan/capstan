@@ -1,4 +1,27 @@
-#if defined(PROBE_MIGRATION)
+#if defined(PROBE_OWNER)
+#include <capstan/owner/backend.hpp>
+#ifdef PROBE_NOEXCEPT
+#define OWNER_EXTENSION_NOEXCEPT noexcept
+#else
+#define OWNER_EXTENSION_NOEXCEPT
+#endif
+struct owner_object {
+    std::size_t resource_bytes() const noexcept;
+    std::size_t snapshot_bytes() const noexcept;
+    capstan::status capture_snapshot(capstan::migration::buffer&) const OWNER_EXTENSION_NOEXCEPT;
+    capstan::status append_snapshot(capstan::migration::buffer&) const OWNER_EXTENSION_NOEXCEPT;
+    bool try_dispatch(capstan::method,const capstan::grant&,const std::vector<capstan::wire::value>&,capstan::wire::value&) OWNER_EXTENSION_NOEXCEPT;
+};
+struct owner_backend {
+    using object_type=owner_object;
+    static constexpr bool concurrent_read_capture=false;
+    bool can_inline(capstan::method) const noexcept;
+    std::size_t restore_reservation(std::size_t) const noexcept;
+    std::unique_ptr<object_type> create(capstan::object_key,std::size_t,capstan::id) OWNER_EXTENSION_NOEXCEPT;
+    capstan::status restore(capstan::object_key,capstan::owner_snapshot_view,std::unique_ptr<object_type>&) OWNER_EXTENSION_NOEXCEPT;
+};
+int main() {return sizeof(capstan::owner_backend_contract<owner_backend>)==0;}
+#elif defined(PROBE_MIGRATION)
 #include <capstan/migration/transfer.hpp>
 struct validator {
     capstan::status operator()(const capstan::migration::buffer&,const std::array<std::uint8_t,32>&)

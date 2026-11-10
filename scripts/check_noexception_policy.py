@@ -6,7 +6,7 @@ for name in ['compiler','root','build']:p.add_argument('--'+name,required=True)
 a=p.parse_args();root=Path(a.root);build=Path(a.build)
 out=build/'noexception-policy';out.mkdir(exist_ok=True)
 rows=[]
-for library in ['ff','bridge','migration']:
+for library in ['ff','bridge','migration','owner']:
     for strict in [False,True]:
         for annotated in [False,True]:
             name=f'{library}-strict{int(strict)}-noexcept{int(annotated)}'
@@ -17,6 +17,7 @@ for library in ['ff','bridge','migration']:
                 '-I'+str(root/'include'),'-I'+str(build/'_deps/flux_foundry'),'-I'+str(build/'_deps/dynabridge')]
             if library=='bridge':command+=['-DPROBE_BRIDGE=1']
             if library=='migration':command+=['-DPROBE_MIGRATION=1']
+            if library=='owner':command+=['-DPROBE_OWNER=1']
             if annotated:command+=['-DPROBE_NOEXCEPT=1']
             command+=[str(root/'tests/compile/noexception_policy.cpp')]
             result=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
@@ -27,4 +28,4 @@ for library in ['ff','bridge','migration']:
             if not passed:print(result.stdout)
 (out/'report.json').write_text(json.dumps(rows,indent=2)+'\n')
 assert all(r['passed'] for r in rows),rows
-print('PASS: strict rejects unannotated extensions; relaxed accepts; annotated accepted in both, FF, Dynabridge and migration validation')
+print('PASS: strict rejects unannotated extensions; relaxed accepts; annotated accepted in both, FF, Dynabridge, migration validation and owner backends')

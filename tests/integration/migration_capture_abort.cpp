@@ -95,7 +95,7 @@ int main() {
         auto entered_future=entered.get_future(),finished_future=finished.get_future();
         CHECK(host.worker.try_dispatch(flux_foundry::task_wrapper_sbo([&]() noexcept {
             entered.set_value();
-            while(!stop.load()) {wire::value value;CHECK(host.dataset->try_dispatch(method::summary,g,{},value));}
+            while(!stop.load()) {wire::value value;CHECK(host.owner->try_dispatch(method::summary,g,{},value));}
             finished.set_value();
         })));
         CHECK(entered_future.wait_for(std::chrono::seconds(5))==std::future_status::ready);

@@ -167,6 +167,13 @@ OS-random per process unless `--host-instance` is explicitly supplied.
 
 ## Storage, ownership and limits
 
+Object creation, capture and restoration are supplied by the selected
+[owner backend](owner-backends.md). The default executable uses in-process
+Dataset storage; private replica count is a backend detail. Migration's snapshot
+payload is opaque to Host, while the CPMG envelope and authority image remain
+unchanged. Destination reservations include the backend's conservative restored
+resource bound, and restored objects are checked against it before publication.
+
 The default `--migration-buffer-bytes` is 512 MiB per Host (1 KiB–1 GiB accepted).
 The registry aggregates native Dataset bytes, retained Copy snapshots, migration
 exports, receive buffers and staging reservations across its objects. Both sides

@@ -168,12 +168,13 @@ public:
     dataset_binding(const dataset_binding&)=delete;
     dataset_binding& operator=(const dataset_binding&)=delete;
     // Requires a real Host capture pin for the entire native read.
-    status capture_snapshot(migration::buffer& out) const {return native_.encode_snapshot(out);}
-    status append_snapshot(migration::buffer& out) const {return native_.append_snapshot(out);}
+    status capture_snapshot(migration::buffer& out) const DYNABRIDGE_NOEXCEPT_IF_DISABLED {return native_.encode_snapshot(out);}
+    status append_snapshot(migration::buffer& out) const DYNABRIDGE_NOEXCEPT_IF_DISABLED {return native_.append_snapshot(out);}
     std::size_t resource_bytes() const noexcept { return native_.resource_bytes(); }
+    std::size_t snapshot_bytes() const noexcept {return resource_bytes()+60;}
     std::uint64_t bind_count() const noexcept { return ctx_.bind_count.load(); }
     // Caller must hold an admitted Host operation pin and the object lane.
-    bool try_dispatch(method which,const grant& g,const std::vector<wire::value>& args,wire::value& out) {
+    bool try_dispatch(method which,const grant& g,const std::vector<wire::value>& args,wire::value& out) DYNABRIDGE_NOEXCEPT_IF_DISABLED {
         if(g.key!=ctx_.key) return false;
         auto receiver=wire::value::string(wire::encode_grant(g));
         switch(which) {

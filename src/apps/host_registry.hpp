@@ -1,6 +1,9 @@
 #pragma once
-// Included after host_runtime. Registry and its slots live on the Host loop.
-struct host_registry {
+// Storage policy follows each runtime, including dynamically restored objects.
+template<class Runtime>
+struct basic_host_registry {
+    using host_runtime=Runtime;
+    using object_type=typename Runtime::object_type;
     using key_type=std::array<id,3>;
     static key_type key(object_key k) noexcept {return {{k.cluster,k.incarnation,k.object}};}
     host_runtime& root;
@@ -13,8 +16,8 @@ struct host_registry {
         void operator()(host_runtime* value) const noexcept {if(value) value->~host_runtime();delete[] allocation;}
     };
     using runtime_owner=std::unique_ptr<host_runtime,runtime_deleter>;
-    struct slot {runtime_owner runtime;bool published=false;};
-    std::map<key_type,slot> objects;
+    struct object_slot {runtime_owner runtime;bool published=false;};
+    std::map<key_type,object_slot> objects;
     enum class clone_phase {receiving,installed,aborted};
     struct clone_record {
         id holder=0,sequence=0;
@@ -30,10 +33,10 @@ struct host_registry {
     };
     std::map<std::pair<id,id>,std::shared_ptr<clone_record>> clones;
     std::size_t clone_reserved=0;
-    explicit host_registry(host_runtime& runtime):root(runtime) {root.other_usage=[this]{return other_bytes(&root);};}
-    ~host_registry() {root.other_usage=nullptr;}
+    explicit basic_host_registry(host_runtime& runtime):root(runtime) {root.other_usage=[this]{return other_bytes(&root);};}
+    ~basic_host_registry() {root.other_usage=nullptr;}
     static std::size_t usage(const host_runtime& r) noexcept {
-        return (r.dataset ? r.dataset->resource_bytes() : 0)+r.export_reserved+r.import_reserved+r.copy_reserved;
+        return (r.owner ? r.owner->resource_bytes() : 0)+r.export_reserved+r.import_reserved+r.copy_reserved;
     }
     std::size_t other_bytes(const host_runtime* self) const noexcept {
         std::size_t total=clone_reserved+(self!=&root ? usage(root) : 0);
@@ -50,7 +53,7 @@ struct host_registry {
 #ifdef CAPSTAN_BENCHMARK_BUILD
             ,host_authority::benchmark_validation::checked
 #endif
-        );
+            ,root.backend);
         runtime_owner runtime(created,runtime_deleter{allocation.release()});
         if(!runtime->worker.valid()) return runtime_owner(nullptr,runtime_deleter{});
         runtime->host_id=root.host_id;runtime->host_instance=root.host_instance;runtime->export_budget=root.export_budget;
@@ -79,16 +82,16 @@ struct host_registry {
                         CAPSTAN_TRY {
                             (void)hash; // Receiver verified the ordered incremental SHA-256 before Seal.
                                 if(!record->receiver->digest_valid()) return status::invalid;
-                            std::unique_ptr<dynabridge::capstan_native::dataset> native;
-                            auto result=migration::snapshot_traits<dynabridge::capstan_native::dataset>::restore(bytes,native);
-                            if(result!=status::ok) return result;
-                            auto binding=std::unique_ptr<dataset_binding>(new dataset_binding(record->target,std::move(*native)));
                             auto& target=*objects.at(key(record->target)).runtime;
+                            std::unique_ptr<object_type> binding;
+                            auto result=target.backend->restore(record->target,{bytes.data(),bytes.size()},binding);
+                            if(result!=status::ok) return result;
+                            if(!binding || binding->resource_bytes()>target.backend->restore_reservation(bytes.size())) return status::exhausted;
                             // Fresh logical object: fresh authority and an empty request
                             // history. Copying source authority would make a clone a replay.
                             transition install{record->target,root.config.control,record->sequence,0,1,false,{record->installed}};
                             result=target.authority.set_authority(install);
-                            if(result==status::ok) target.dataset=std::move(binding);
+                            if(result==status::ok) target.owner=std::move(binding);
                             return result;
                         } CAPSTAN_CATCH_ALL {return status::exhausted;}
                     });
@@ -143,16 +146,18 @@ struct host_registry {
         }
         if(target==root.config.key || objects.count(key(target))) {app::reply(std::move(done),status::conflict);return;}
         auto total=usage(root)+other_bytes(&root);
-        if(clones.size()>=64 || objects.size()>=64 || ref.size>root.export_budget/2 || total>root.export_budget || 2*ref.size>root.export_budget-total) {app::reply(std::move(done),status::exhausted);return;}
+        if(clones.size()>=64 || objects.size()>=64 || ref.size>root.export_budget || total>root.export_budget) {app::reply(std::move(done),status::exhausted);return;}
+        const auto restored=root.backend->restore_reservation(static_cast<std::size_t>(ref.size));
+        if(restored>root.export_budget-total || ref.size>root.export_budget-total-restored) {app::reply(std::move(done),status::exhausted);return;}
         auto record=std::make_shared<clone_record>();record->holder=holder;record->sequence=sequence;record->source=ref;record->target=target;
-        record->address=std::move(address);record->port=port;record->reserved=2*static_cast<std::size_t>(ref.size);
+        record->address=std::move(address);record->port=port;record->reserved=static_cast<std::size_t>(ref.size)+restored;
         record->installed.key=target;record->installed.epoch=1;record->installed.holder=holder;record->installed.mode=access_mode::exclusive;
         if(!try_random_id(record->installed.grant_id) || !try_random_token(record->installed.secret)) {app::reply(std::move(done),status::exhausted);return;}
         record->manifest={{root.config.control,sequence},ref.source,ref.host,root.host_id,ref.instance,root.host_instance,1,ref.size,ref.digest};
         record->receiver=std::make_shared<migration::transfer_receiver>(ref.size,migration::make_sha256_stream());
         auto code=record->receiver->begin(record->manifest);if(code!=status::ok) {app::reply(std::move(done),code);return;}
         auto native=empty_runtime(target);if(!native) {app::reply(std::move(done),status::exhausted);return;}
-        objects.emplace(key(target),slot{std::move(native),false});
+        objects.emplace(key(target),object_slot{std::move(native),false});
         CAPSTAN_TRY {clones.emplace(identity,record);}
         CAPSTAN_CATCH_ALL {objects.erase(key(target));CAPSTAN_RETHROW;}
         clone_reserved+=record->reserved;pull(record,std::move(done));
@@ -181,7 +186,7 @@ struct host_registry {
                        t.target_host!=root.host_id || t.target_instance!=root.host_instance || t.control!=root.config.control) {app::reply(std::move(done),status::wrong_object);return;}
                     if(objects.size()>=64) {app::reply(std::move(done),status::exhausted);return;}
                     auto created=empty_runtime(target);if(!created) {app::reply(std::move(done),status::exhausted);return;}
-                    found=objects.emplace(key(target),host_registry::slot{std::move(created),true}).first;
+                    found=objects.emplace(key(target),object_slot{std::move(created),true}).first;
                 }
                 if(!found->second.published) {app::reply(std::move(done),status::closed);return;}
                 runtime=found->second.runtime.get();

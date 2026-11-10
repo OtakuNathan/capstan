@@ -1,4 +1,5 @@
 #include <capstan/migration/decision.hpp>
+#include <capstan/migration/package.hpp>
 #include "tests/check.hpp"
 #include "examples/dataset/dataset.hpp"
 using namespace capstan;
@@ -15,6 +16,26 @@ int main() {
     copy1->add_range(0,16,2);
     CHECK(copy2->summary().sum==summary.sum && copy2->version()==summary.version);
     CHECK(source.summary().sum==summary.sum+16);
+    // Outer migration framing is backend-independent. Borrowed views must be
+    // bounded, and all truncation/length failures must preserve the output.
+    m::buffer package;
+    m::put(package,0x474d5043u,4);m::put(package,1,4);
+    m::put(package,3,8);package.insert(package.end(),{0xaa,0,0xbb});
+    m::put(package,2,8);package.insert(package.end(),{7,8});
+    m::package_parts parts;
+    CHECK(m::decode_package_parts(package,parts)==status::ok);
+    CHECK(parts.snapshot.data==package.data()+16 && parts.snapshot.size==3);
+    CHECK(parts.history.size==2 && parts.history.data[1]==8);
+    for(std::size_t i=0;i<package.size();++i) {
+        m::buffer partial(package.begin(),package.begin()+i);auto unchanged=parts;
+        CHECK(m::decode_package_parts(partial,unchanged)==status::invalid);
+        CHECK(unchanged.snapshot.data==parts.snapshot.data && unchanged.history.data==parts.history.data);
+    }
+    for(std::size_t offset:{std::size_t(8),std::size_t(19)}) {
+        auto malformed=package;
+        for(unsigned i=0;i<8;++i) malformed[offset+i]=255;
+        CHECK(m::decode_package_parts(malformed,parts)==status::invalid);
+    }
     m::dataset_snapshot original;original.version=27;original.words={0,1,0x0123456789abcdefULL,~std::uint64_t(0)};
     m::buffer encoded;CHECK(m::encode(original,encoded)==status::ok);
     CHECK(encoded.size()==92 && encoded[0]=='C' && encoded[3]=='N');

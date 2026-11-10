@@ -9,7 +9,13 @@ Explicit [Copy/Cut/Paste](docs/object-migration.md) operations capture immutable
 Dataset snapshots, create independent clones, or migrate an object together with
 its authority and request history between Hosts.
 
-**Experimental, not production-ready.** One Host per object, one directory control
+Logical owner storage is a [backend extension point](docs/owner-backends.md).
+The single-process Dataset Host is the default demo implementation. A backend
+can wrap private replicas or an external database group while exposing one
+logical object and one authority domain; a mirrored-memory example exercises
+the same Copy/Paste and migration paths with a different snapshot format.
+
+**Experimental, not production-ready.** One authoritative frontend per object, one directory control
 session, trusted-lab networking, no HA or automatic recovery. The TCP demo binds
 to loopback. There is no TLS or public-network security claim.
 

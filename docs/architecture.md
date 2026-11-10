@@ -1,7 +1,10 @@
 # Architecture and ownership
 
 Capstan composes three libraries rather than replacing their responsibilities.
-A Dataset and its storage remain on one authoritative Host. A Table is a directory
+One logical object is served through one authoritative owner domain; its storage
+implementation is selected by an [owner backend](owner-backends.md). The default
+Host executable uses the single-process Dataset backend as a demo. A backend
+may retain multiple private copies or wrap an external storage group. A Table is a directory
 and control-plane coordinator, not a data-plane hop. Warm business calls reuse a
 grant and contact Host directly.
 
@@ -61,6 +64,7 @@ generic distributed closure or arbitrary workflow migration framework.
 |---|---|
 | `include/capstan/authority` | Deterministic Host/directory state machines |
 | `include/capstan/access` | Lease-backed capabilities and local ownership |
+| `include/capstan/owner`, `examples/owner` | Structural owner backend contract and single-process/mirrored storage examples |
 | `include/capstan/bridge` | Dynabridge typed object/codec integration |
 | `include/capstan/async` | FF request/completion and detachable waiters |
 | `include/capstan/transport`, `src/transport` | Bounded nonblocking GIO framing |

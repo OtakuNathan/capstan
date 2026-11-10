@@ -49,18 +49,18 @@ int main() {
         CHECK(call(to,pull).code==status::ok);
         CHECK(call(to,pull).code==status::ok); // ACK retry does not restore again.
         CHECK(target.imports.at(1)->phase==host_runtime::import_phase::prepared);
-        CHECK(!target.dataset && target.authority.admit({next,1,method::version},1).code==status::closed);
+        CHECK(!target.owner && target.authority.admit({next,1,method::version},1).code==status::closed);
         CHECK(call(from,command(migration::fence_command)).code==status::ok);
         CHECK(call(to,command(migration::activate_command)).code==status::ok);
         CHECK(call(to,command(migration::activate_command)).code==status::ok);
-        CHECK(target.dataset && target.dataset->resource_bytes()==128*1024 && !target.import_reserved);
+        CHECK(target.owner && target.owner->resource_bytes()==128*1024 && !target.import_reserved);
         CHECK(target.authority.placement_generation()==2 && source.authority.inspect().gate==host_authority::phase::closing);
         gio_client client(context,"127.0.0.1",b.port());app::authenticated_endpoint business(client,c.credentials[0]);
         auto result=call(business,wire::encode_call({next,20,method::summary}));CHECK(result.code==status::ok && result.values.size()==1);
         dataset_backend::context conversion;auto value=dynabridge::from_optional<summary_t>(conversion,result.values[0]);CHECK(value);
         auto expected=dynabridge::capstan_native::dataset(128*1024,7).summary();
         CHECK(value->sum==expected.sum && value->checksum==expected.checksum && value->version==expected.version && value->count==expected.count);
-        CHECK(call(from,command(migration::retire_command)).code==status::ok && !source.dataset);
+        CHECK(call(from,command(migration::retire_command)).code==status::ok && !source.owner);
         CHECK(call(from,command(migration::export_release_command)).code==status::ok && !source.export_reserved);
         // A return migration reserves the original fenced placement, then aborts.
         t={7,2,2,12,1,11,2,next};auto rollback=next;rollback.epoch=3;rollback.grant_id=3;rollback.secret[0]=3;
@@ -68,7 +68,7 @@ int main() {
         CHECK(call(from,reserve).code==status::ok);
         CHECK(call(from,command(migration::import_abort_command)).code==status::ok);
         CHECK(call(from,reserve).code==status::closed);
-        CHECK(!source.import_reserved && !source.dataset && source.authority.inspect().gate==host_authority::phase::closing);
+        CHECK(!source.import_reserved && !source.owner && source.authority.inspect().gate==host_authority::phase::closing);
         // An Abort preceding Begin is still terminal.
         ++t.sequence;CHECK(call(from,command(migration::import_abort_command)).code==status::ok);
         reserve=wire::command(migration::reserve_command,{wire::value::string(migration::encode_ticket(t)),wire::value::string(wire::encode_grant(rollback)),wire::u(256*1024)});
@@ -85,16 +85,16 @@ int main() {
         auto observe=[&](io_result io) {CHECK(wire::try_decode_reply(io.payload,receipt));observed=true;};
         CHECK(move->resume(observe));pump([&]{return observed;});
         CHECK(receipt.state==outcome::unknown && move->committed() && !move->ready());
-        CHECK(source.dataset && source.authority.placement_generation()==3);
+        CHECK(source.owner && source.authority.placement_generation()==3);
         CHECK(!move->abort(observe)); // Commit is immutable, despite Unknown.
         observed=false;CHECK(move->resume(observe));pump([&]{return observed;});
         CHECK(receipt.code==status::ok && move->ready() && move->checkpoint()==migration::move_operation::step::ready);
-        CHECK(!target.dataset && !target.export_reserved && !source.import_reserved);
+        CHECK(!target.owner && !target.export_reserved && !source.import_reserved);
         CHECK(source.authority.admit({rollback,20,method::summary},1).code==status::duplicate);
         // Late retirement from the first placement must not delete the return.
         auto old=t;old={7,1,1,11,2,12,1,g};
         CHECK(call(from,wire::command(migration::retire_command,{wire::value::string(migration::encode_ticket(old))})).code==status::conflict);
-        CHECK(source.dataset);
+        CHECK(source.owner);
         CHECK(call(to,wire::command(migration::activate_command,{wire::value::string(migration::encode_ticket(old))})).code==status::superseded);
         // Lost reservation ACK is precommit uncertainty. Abort first leaves a
         // target tombstone, then restores the source with a fresh grant.
