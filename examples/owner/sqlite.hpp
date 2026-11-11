@@ -15,9 +15,9 @@ struct sqlite_owner_backend {
         explicit object_type(std::unique_ptr<dataset_binding> p):native(std::move(p)),size(native->resource_bytes()) {}
         std::size_t resource_bytes() const noexcept {return size;}
         std::size_t snapshot_bytes() const noexcept {return size+60;}
-        bool try_dispatch(method,const grant&,const std::vector<wire::value>&,wire::value&) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return false;} // Durable execution requires request identity.
-        status capture_snapshot(migration::buffer& b) const DYNABRIDGE_NOEXCEPT_IF_DISABLED {return native->capture_snapshot(b);}
-        status append_snapshot(migration::buffer& b) const DYNABRIDGE_NOEXCEPT_IF_DISABLED {return native->append_snapshot(b);}
+        bool try_dispatch(method,const grant&,const std::vector<wire::value>&,wire::value&) PORTAL_NOEXCEPT_IF_DISABLED {return false;} // Durable execution requires request identity.
+        status capture_snapshot(migration::buffer& b) const PORTAL_NOEXCEPT_IF_DISABLED {return native->capture_snapshot(b);}
+        status append_snapshot(migration::buffer& b) const PORTAL_NOEXCEPT_IF_DISABLED {return native->append_snapshot(b);}
     };
     static constexpr bool concurrent_read_capture=false;
     std::shared_ptr<durable::sqlite_store> store;
@@ -38,7 +38,7 @@ struct sqlite_owner_backend {
         if(!healthy() || store->commit(batch,fault).outcome!=durable::commit_outcome::committed) {fail();return false;}return true;
     }
     std::string receipt_key(id holder,id request) const {return prefix+"receipt/"+std::to_string(holder)+"/"+std::to_string(request);}
-    std::unique_ptr<object_type> create(object_key k,std::size_t size,id seed) DYNABRIDGE_NOEXCEPT_IF_DISABLED {
+    std::unique_ptr<object_type> create(object_key k,std::size_t size,id seed) PORTAL_NOEXCEPT_IF_DISABLED {
         if(!prefix.empty()) return nullptr; // One live native object per factory.
         key=k;prefix="host/";bytes snapshot;bool found;
         if(!store->get(prefix+"data",snapshot,found)) return nullptr;
@@ -59,7 +59,7 @@ struct sqlite_owner_backend {
         if(!r.number(saved.cluster)||!r.number(saved.incarnation)||!r.number(saved.object)||!r.end()||saved!=k) {fail();return nullptr;}
         return std::unique_ptr<object_type>(new object_type(std::move(native)));
     }
-    status restore(object_key,owner_snapshot_view,std::unique_ptr<object_type>&) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return status::forbidden;}
+    status restore(object_key,owner_snapshot_view,std::unique_ptr<object_type>&) PORTAL_NOEXCEPT_IF_DISABLED {return status::forbidden;}
     bool initialize(host_authority& authority,id control,std::size_t limit) {
         if(prefix.empty()) {fail();return false;}
         receipt_limit=limit;bytes b;bool found;
@@ -120,14 +120,14 @@ namespace capstan {
 template<> struct owner_runtime_hooks<examples::sqlite_owner_backend> {
     using B=examples::sqlite_owner_backend;
     static constexpr bool durable=true;
-    static bool initialize(B& b,host_authority& a,id control,std::size_t limit) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return b.initialize(a,control,limit);}
-    static bool checkpoint(B& b,host_authority& a) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return b.checkpoint(a);}
+    static bool initialize(B& b,host_authority& a,id control,std::size_t limit) PORTAL_NOEXCEPT_IF_DISABLED {return b.initialize(a,control,limit);}
+    static bool checkpoint(B& b,host_authority& a) PORTAL_NOEXCEPT_IF_DISABLED {return b.checkpoint(a);}
     static bool healthy(const B& b) noexcept {return b.healthy();}
     static bool allows(id m) noexcept {
         return m==wire::info || m==wire::stats || m==wire::set_authority || m==wire::query_ack ||
                m==wire::query_current_authority || m==wire::fetch_my_grant || (m>=1 && m<=3);
     }
-    static bool replay(B& b,const wire::call& c,id holder,bytes& out) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return b.replay(c,holder,out);}
-    static bytes execute(B& b,B::object_type& o,const wire::call& c) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return b.execute(o,c);}
+    static bool replay(B& b,const wire::call& c,id holder,bytes& out) PORTAL_NOEXCEPT_IF_DISABLED {return b.replay(c,holder,out);}
+    static bytes execute(B& b,B::object_type& o,const wire::call& c) PORTAL_NOEXCEPT_IF_DISABLED {return b.execute(o,c);}
 };
 }

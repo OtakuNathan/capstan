@@ -10,7 +10,7 @@ p.add_argument('--build',type=Path,required=True)
 a=p.parse_args()
 for name,expected in [('exclusive_copy','deleted'),('readonly_write','add_range'),('wrong_receiver','conver')]:
     source=a.root/'tests/compile'/('p2_'+name+'.cpp')
-    includes=[a.root,a.root/'include',a.build/'_deps/dynabridge',a.build/'_deps/flux_foundry',a.build/'_deps/lease/lease']
+    includes=[a.root,a.root/'include',a.build/'_deps/portal',a.build/'_deps/flux_foundry',a.build/'_deps/lease/lease']
     command=[a.compiler,'-std=c++14','-fsyntax-only']+flags(a.build)+['-I'+str(i) for i in includes]+[str(source)]
     result=subprocess.run(command,text=True,capture_output=True)
     folder=a.build/'compile-negative';folder.mkdir(exist_ok=True)

@@ -15,7 +15,7 @@ p = argparse.ArgumentParser()
 p.add_argument('--lock', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
 p.add_argument('--lease', required=True)
-p.add_argument('--dynabridge', required=True)
+p.add_argument('--portal', required=True)
 p.add_argument('--flux_foundry', required=True)
 a = p.parse_args()
 for dep in json.loads(a.lock.read_text())['dependencies']:

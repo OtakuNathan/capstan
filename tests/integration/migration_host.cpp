@@ -90,9 +90,9 @@ int main() {
         std::string data,history;
         CHECK(package.get(8,length) && package.text(static_cast<std::size_t>(length),data));
         CHECK(package.get(8,length) && package.text(static_cast<std::size_t>(length),history) && !package.remaining());
-        std::unique_ptr<dynabridge::capstan_native::dataset> restored;
-        CHECK(migration::snapshot_traits<dynabridge::capstan_native::dataset>::restore(wire::binary(data),restored)==status::ok);
-        dynabridge::capstan_native::dataset expected(128*1024,7);expected.add_range(0,1,9);
+        std::unique_ptr<portal::capstan_native::dataset> restored;
+        CHECK(migration::snapshot_traits<portal::capstan_native::dataset>::restore(wire::binary(data),restored)==status::ok);
+        portal::capstan_native::dataset expected(128*1024,7);expected.add_range(0,1,9);
         auto expected_summary=expected.summary(),actual=restored->summary();
         CHECK(expected_summary.version==actual.version && expected_summary.sum==actual.sum && expected_summary.checksum==actual.checksum && expected_summary.count==actual.count);
         migration::authority_image remote_history;

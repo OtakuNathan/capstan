@@ -76,7 +76,7 @@ int main(){
         {
             auto call=typed.add_range(0,1,1);
             fail_after=n;
-            try {std::move(call).start([&](dynabridge::async_result<capstan::id> result) noexcept {
+            try {std::move(call).start([&](portal::async_result<capstan::id> result) noexcept {
                 fail_after=0;
                 CHECK(!result.has_value());
                 CHECK(bool(typed_owner->try_add_range(0,1,1)));
@@ -92,7 +92,7 @@ int main(){
     pending_endpoint responding;
     capstan::async_exclusive_capability responding_view(typed_owner,responding);
     unsigned decode_callbacks=0;
-    std::move(responding_view.add_range(0,1,1)).start([&](dynabridge::async_result<capstan::id> result) noexcept {
+    std::move(responding_view.add_range(0,1,1)).start([&](portal::async_result<capstan::id> result) noexcept {
         fail_after=0;capstan::outcome state;capstan::status status;
         CHECK(!result.has_value() && capstan::decode_rpc_error(result.error,state,status));
         CHECK(state==capstan::outcome::unknown);

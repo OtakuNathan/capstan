@@ -1,7 +1,7 @@
 #pragma once
 #include <capstan/error_policy.hpp>
 #include <capstan/transport/io.hpp>
-#include <dynabridge/extensions/flux_foundry/async.h>
+#include <portal/extensions/flux_foundry/async.h>
 namespace capstan {
 namespace async_detail {
 struct io_context {
@@ -12,21 +12,21 @@ struct io_context {
 };
 struct io_operation {
     template<class Completion>
-    dynabridge::async_submission operator()(io_context& c,Completion done) const noexcept {
+    portal::async_submission operator()(io_context& c,Completion done) const noexcept {
         bool accepted=false;
         CAPSTAN_TRY {
             accepted=c.endpoint->submit_owned(std::move(c.request),[done](io_result value) noexcept {
                 // A detachable endpoint independently retains the underlying transport
                 // lifetime after its local Unknown delivery. The endpoint owns that layer.
-                done.finish(dynabridge::async_result<io_result>(std::move(value)));
+                done.finish(portal::async_result<io_result>(std::move(value)));
             },std::move(c.authority));
         } CAPSTAN_CATCH_ALL {accepted=false;}
-        if(!accepted) return dynabridge::async_submission::reject(std::make_error_code(std::errc::resource_unavailable_try_again));
-        return dynabridge::async_submission::accept();
+        if(!accepted) return portal::async_submission::reject(std::make_error_code(std::errc::resource_unavailable_try_again));
+        return portal::async_submission::accept();
     }
 };
 struct sink {
-    using value_type=flux_foundry::result_t<io_result,dynabridge::async_error>;
+    using value_type=flux_foundry::result_t<io_result,portal::async_error>;
     std::shared_ptr<io_context> context;
     void emplace(value_type&& value) noexcept {
         context->authority.reset(); // Also cover allocation failure before submit_owned took ownership.
@@ -44,15 +44,15 @@ inline void start_io(io_endpoint& endpoint,bytes request,io_completion completio
     CAPSTAN_TRY {
     context=std::make_shared<async_detail::io_context>();
     context->endpoint=&endpoint;context->request=std::move(request);context->authority=authority;context->completion=std::move(completion);
-    auto prepared=dynabridge::make_invocation<io_result>(context,async_detail::io_operation{},std::move(authority));
+    auto prepared=portal::make_invocation<io_result>(context,async_detail::io_operation{},std::move(authority));
 #ifdef CAPSTAN_ERASED_INVOCATIONS
-    auto invocation=dynabridge::erase_invocation(std::move(prepared));
+    auto invocation=portal::erase_invocation(std::move(prepared));
 #else
     auto invocation=std::move(prepared);
 #endif
     using call_type=decltype(invocation);
-    auto bp=ff::make_blueprint<call_type,dynabridge::async_error>()
-        | dynabridge::ff::await_static_invocation<call_type>()
+    auto bp=ff::make_blueprint<call_type,portal::async_error>()
+        | portal::ff::await_static_invocation<call_type>()
         | ff::end([](async_detail::sink::value_type&& r) noexcept -> async_detail::sink::value_type {return std::move(r);});
     auto owned=ff::make_lite_ptr<decltype(bp)>(std::move(bp));
 #ifdef CAPSTAN_FAST_RUNNER

@@ -7,4 +7,4 @@ def flags(build):
         return []
     strict='1' if 'CAPSTAN_NO_EXCEPTION_STRICT:BOOL=ON' in cache else '0'
     return ['-fno-exceptions','-DCAPSTAN_NO_EXCEPTION_STRICT='+strict,
-        '-DFLUX_FOUNDRY_NO_EXCEPTION_STRICT='+strict,'-DDYNABRIDGE_NO_EXCEPTION_STRICT='+strict]
+        '-DFLUX_FOUNDRY_NO_EXCEPTION_STRICT='+strict,'-DPORTAL_NO_EXCEPTION_STRICT='+strict]

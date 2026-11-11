@@ -105,14 +105,14 @@ int main(int argc,char** argv) {
         exclusive_capability local(initial);
         migration::snapshot_ref snapshot;bool copied=false;migration::copy_ref copy_reference;
         const auto copy_start=std::chrono::steady_clock::now();
-        dynabridge::ff::start_invocation(capstan::copy(source_business,local,copy_reference),[&](flux_foundry::result_t<migration::snapshot_ref,dynabridge::async_error> r) noexcept {
+        portal::ff::start_invocation(capstan::copy(source_business,local,copy_reference),[&](flux_foundry::result_t<migration::snapshot_ref,portal::async_error> r) noexcept {
             require(r.has_value(),"Copy failed");snapshot=std::move(r.value());copied=true;
             require(bool(local.try_add_range(0,1,1)),"Copy borrow was not released before continuation");
         });
         pump(context,[&]{return copied;});
         const auto copy_seconds=std::chrono::duration<double>(std::chrono::steady_clock::now()-copy_start).count();
         double paste_seconds[2]{};
-        bool queried=false;dynabridge::ff::start_invocation(capstan::query_copy(source_business,copy_reference),[&](flux_foundry::result_t<migration::snapshot_ref,dynabridge::async_error> r) noexcept {
+        bool queried=false;portal::ff::start_invocation(capstan::query_copy(source_business,copy_reference),[&](flux_foundry::result_t<migration::snapshot_ref,portal::async_error> r) noexcept {
             require(r.has_value() && r.value()==snapshot,"Copy query changed its saved value");queried=true;
         });pump(context,[&]{return queried;});
         require(call(context,before,wire::encode_call({initial,10003,method::add_range},{wire::u(0),wire::u(1),wire::u(23)})).code==status::ok,"post-Copy write failed");
@@ -120,22 +120,22 @@ int main(int argc,char** argv) {
             object_key clone_key{config.key.cluster,config.key.incarnation,config.key.object+sequence};
             grant clone;bool pasted=false;
             const auto paste_start=std::chrono::steady_clock::now();
-            dynabridge::ff::start_invocation(capstan::paste(target_business,snapshot,clone_key,sequence,source_address,source_port),[&](flux_foundry::result_t<grant,dynabridge::async_error> r) noexcept {
+            portal::ff::start_invocation(capstan::paste(target_business,snapshot,clone_key,sequence,source_address,source_port),[&](flux_foundry::result_t<grant,portal::async_error> r) noexcept {
                 require(r.has_value(),"Paste Copy failed");clone=std::move(r.value());pasted=true;
             });
             pump(context,[&]{return pasted;});
             paste_seconds[sequence-1]=std::chrono::duration<double>(std::chrono::steady_clock::now()-paste_start).count();
-            bool checked=false;dynabridge::ff::start_invocation(capstan::query_clone(target_business,sequence),[&](flux_foundry::result_t<clone_receipt,dynabridge::async_error> r) noexcept {
+            bool checked=false;portal::ff::start_invocation(capstan::query_clone(target_business,sequence),[&](flux_foundry::result_t<clone_receipt,portal::async_error> r) noexcept {
                 require(r.has_value() && r.value().state==clone_receipt::phase::installed && r.value().original==clone,"clone query lost its creation receipt");checked=true;
             });pump(context,[&]{return checked;});
             auto actual=call(context,*target_business,migration::route(clone_key,wire::encode_call({clone,10001,method::summary})));
             require(actual.code==status::ok && wire::encode_reply(actual.state,actual.code,actual.values)==wire::encode_reply(expected.state,expected.code,expected.values),"Paste did not preserve Copy-time data");
         }
-        bool aborted=false;dynabridge::ff::start_invocation(capstan::abort_clone(target_business,99),[&](flux_foundry::result_t<bool,dynabridge::async_error> r) noexcept {
+        bool aborted=false;portal::ff::start_invocation(capstan::abort_clone(target_business,99),[&](flux_foundry::result_t<bool,portal::async_error> r) noexcept {
             require(r.has_value() && r.value(),"clone Abort tombstone failed");aborted=true;
         });pump(context,[&]{return aborted;});
         std::cout<<"COPY + PASTE twice: two independent object keys; both retain Copy-time data after source write\n";
-        bool released=false;dynabridge::ff::start_invocation(capstan::release_snapshot(source_business,snapshot),[&](flux_foundry::result_t<bool,dynabridge::async_error> r) noexcept {
+        bool released=false;portal::ff::start_invocation(capstan::release_snapshot(source_business,snapshot),[&](flux_foundry::result_t<bool,portal::async_error> r) noexcept {
             require(r.has_value() && r.value(),"snapshot release failed");released=true;
         });pump(context,[&]{return released;});
         expected=call(context,before,wire::encode_call({initial,10004,method::summary}));require(expected.code==status::ok,"pre-Cut summary failed");
@@ -174,7 +174,7 @@ int main(int argc,char** argv) {
         require(cut && prepared==status::ok && !cut->sealed(),"Cut preparation failed");
         {auto abandoned=cut->paste();} // An invocation destroyed before submit cannot seal.
         require(!cut->sealed() && bool(local.try_summary()),"pre-submit Cut changed authority");
-        dynabridge::ff::start_invocation(cut->paste(),[&](flux_foundry::result_t<io_result,dynabridge::async_error> r) noexcept {
+        portal::ff::start_invocation(cut->paste(),[&](flux_foundry::result_t<io_result,portal::async_error> r) noexcept {
             require(r.has_value(),"Cut Paste FF submission failed");observer(std::move(r.value()));
         });
         pump(context,[&]{return completed;});require(cut->sealed() && !local.try_summary(),"old local handle reopened");
@@ -188,8 +188,8 @@ int main(int argc,char** argv) {
         auto actual=call(context,after,wire::encode_call({successor,3,method::summary}));
         dataset_backend::context conversion;
         require(expected.values.size()==1 && actual.code==status::ok && actual.values.size()==1,"invalid summary after migration");
-        auto expected_summary=dynabridge::from_optional<summary_t>(conversion,expected.values[0]);
-        auto actual_summary=dynabridge::from_optional<summary_t>(conversion,actual.values[0]);
+        auto expected_summary=portal::from_optional<summary_t>(conversion,expected.values[0]);
+        auto actual_summary=portal::from_optional<summary_t>(conversion,actual.values[0]);
         require(bool(expected_summary) && bool(actual_summary),"summary decode failed");
         if(inflight=="write") expected_summary->version+=inflight_count;
         require(*expected_summary==*actual_summary,"snapshot changed during migration");

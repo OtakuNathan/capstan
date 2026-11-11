@@ -56,20 +56,20 @@ int main() {
     return static_cast<int>(receiver.seal(manifest,validator{}));
 }
 #elif defined(PROBE_BRIDGE)
-#include <dynabridge/traits.h>
-#include <dynabridge/optional.h>
+#include <portal/traits.h>
+#include <portal/optional.h>
 struct backend {
     template<class T> struct converter {
-        template<class C> static dynabridge::optional<T> from(C&,int value)
+        template<class C> static portal::optional<T> from(C&,int value)
 #ifdef PROBE_NOEXCEPT
             noexcept
 #endif
-        {return dynabridge::optional<T>(value);}
+        {return portal::optional<T>(value);}
     };
 };
 // Preserve the backend context interface while checking the actual converter.
 struct context { using backend_t=backend; };
-int main() {context ctx;auto result=dynabridge::from_optional<int>(ctx,7);return result && *result==7 ? 0:1;}
+int main() {context ctx;auto result=portal::from_optional<int>(ctx,7);return result && *result==7 ? 0:1;}
 #else
 #include <base/traits.h>
 #include <memory/inplace_t.h>

@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-11-06",
+  "verified_at": "2026-11-11",
   "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
   "dependencies": [
     {
-      "name": "dynabridge",
-      "repository": "https://github.com/OtakuNathan/dynabridge.git",
-      "commit": "de515e89550e80643928543d9559ee1d8787a78c"
+      "name": "portal",
+      "repository": "https://github.com/OtakuNathan/portal.git",
+      "commit": "542bf5bbf6244f2a3948f7f01aa22a6233fba5fe"
     },
     {
       "name": "flux_foundry",
       "repository": "https://github.com/OtakuNathan/flux_foundry.git",
-      "commit": "a18b05a464532d8c9acaa048e873884606a356f4"
+      "commit": "2be3825e7958c08634c71da41392f219efd5c1bf"
     },
     {
       "name": "lease",

@@ -3,10 +3,10 @@
 #include "tests/check.hpp"
 using namespace capstan;
 int main() {
-    dynabridge::rpc::router router;
-    dynabridge::rpc_backend::export_context_t context;
+    portal::rpc::router router;
+    portal::rpc_backend::export_context_t context;
     int calls=0;
-    router.define("increment",dynabridge::create_export_callable_binder<int(int)>(context,
+    router.define("increment",portal::create_export_callable_binder<int(int)>(context,
         [&](int x) noexcept {++calls;return x+1;}));
     auto method_id=wire::codec::symbol_id("increment");
     for(const auto& args:std::vector<std::vector<wire::value>>{{},{wire::value::boolean(true)},{wire::u(1),wire::u(2)}}) {
@@ -45,5 +45,5 @@ int main() {
     CHECK(cap.try_version());
     // Contract failure remains fail-stop under NDEBUG; ordinary errors above
     // remain values, so the process continues and the resource is unchanged.
-    CHECK(rejects<dynabridge::rpc::protocol_error>([]{wire::require(false);}));
+    CHECK(rejects<portal::rpc::protocol_error>([]{wire::require(false);}));
 }

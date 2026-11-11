@@ -178,7 +178,7 @@ def main():
                    '-DCAPSTAN_ASAN=OFF', '-DCAPSTAN_TSAN=OFF',
                    f'-DCAPSTAN_LTO={"OFF" if args.migration else "ON"}',
                    f'-DCAPSTAN_NATIVE_ARCH={"OFF" if args.migration else "ON"}',
-                   f'-DCAPSTAN_LEASE_SOURCE={deps / "lease"}', f'-DCAPSTAN_DYNABRIDGE_SOURCE={deps / "dynabridge"}',
+                   f'-DCAPSTAN_LEASE_SOURCE={deps / "lease"}', f'-DCAPSTAN_PORTAL_SOURCE={deps / "portal"}',
                    f'-DCAPSTAN_FF_SOURCE={deps / "flux_foundry"}']
         if args.migration:
             options += ['-DCAPSTAN_SHA256_BACKEND=OPENSSL', '-DCMAKE_CXX_FLAGS=',

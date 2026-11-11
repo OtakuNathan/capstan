@@ -8,7 +8,7 @@ for flag in ('compiler', 'source', 'root', 'build', 'name'):
     p.add_argument('--' + flag, required=True)
 a = p.parse_args()
 b = Path(a.build)
-includes = [a.root, str(Path(a.root) / 'include'), str(b / '_deps/lease/lease'), str(b / '_deps/dynabridge'), str(b / '_deps/flux_foundry')]
+includes = [a.root, str(Path(a.root) / 'include'), str(b / '_deps/lease/lease'), str(b / '_deps/portal'), str(b / '_deps/flux_foundry')]
 command = [a.compiler, '-std=c++14', '-fsyntax-only'] + flags(b) + ['-I' + x for x in includes] + [a.source]
 r = subprocess.run(command, capture_output=True, text=True)
 log = b / 'compile-negative' / (a.name + '.log')

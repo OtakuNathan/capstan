@@ -5,7 +5,7 @@
 using namespace capstan;
 namespace {
 template<class F> void malformed(F f) {
-    bool rejected=rejects<dynabridge::rpc::protocol_error>(f);
+    bool rejected=rejects<portal::rpc::protocol_error>(f);
     CHECK(rejected);
 }
 grant sample() {
@@ -59,9 +59,9 @@ void check_nested_grants_and_calls() {
     CHECK(host.set_authority({g.key,17,1,0,1,false,{g}})==status::ok);
     CHECK(host.admit(call.header,g.holder).code==status::unknown_method);
     // Framing parses a typed scalar; strict argument conversion is a separate
-    // Dynabridge binder layer (covered by probe_object and loopback tests).
+    // Portal binder layer (covered by probe_object and loopback tests).
     auto typed=wire::decode_call(wire::encode_call({g,2,method::add_range},{wire::value::boolean(true)}));
-    CHECK(typed.args[0].kind()==dynabridge::rpc::value_kind::boolean);
+    CHECK(typed.args[0].kind()==portal::rpc::value_kind::boolean);
 }
 void check_transitions_and_replies() {
     auto g=sample();transition t{g.key,17,1,0,1,false,{g}};

@@ -21,28 +21,28 @@ int main(){
     int called=0;
     auto call=view.add_range(0,1,2);
     CHECK(!owner->try_add_range(0,1,1));
-    dynabridge::ff::start_invocation(std::move(call),[&](flux_foundry::result_t<id,dynabridge::async_error> r) noexcept {
+    portal::ff::start_invocation(std::move(call),[&](flux_foundry::result_t<id,portal::async_error> r) noexcept {
         CHECK(r.has_value() && r.value()==3);++called;
         CHECK(bool(owner->try_add_range(0,1,1))); // Old operation borrow released before continuation.
     });
     ep.complete(wire::encode_reply(outcome::completed,status::ok,{wire::u(3)}));CHECK(called==1);
     detachable_endpoint timeout(ep);
     async_exclusive_capability timed(owner,timeout);
-    dynabridge::ff::start_invocation(timed.add_range(0,1,2),[&](flux_foundry::result_t<id,dynabridge::async_error> r) noexcept {
+    portal::ff::start_invocation(timed.add_range(0,1,2),[&](flux_foundry::result_t<id,portal::async_error> r) noexcept {
         outcome state;status code;CHECK(!r.has_value() && decode_rpc_error(r.error(),state,code) && state==outcome::unknown);++called;
         CHECK(!owner->try_add_range(0,1,1));
     });
     CHECK(timeout.timeout_pending());CHECK(called==2);
     ep.complete(wire::encode_reply(outcome::completed,status::ok,{wire::u(4)}));CHECK(called==2);
     CHECK(bool(owner->try_add_range(0,1,1)));
-    dynabridge::ff::start_invocation(view.version(),[&](flux_foundry::result_t<id,dynabridge::async_error> r) noexcept {
+    portal::ff::start_invocation(view.version(),[&](flux_foundry::result_t<id,portal::async_error> r) noexcept {
         outcome state;status code;CHECK(!r.has_value() && decode_rpc_error(r.error(),state,code) && state==outcome::unknown);++called;
     });
     ep.complete({1,2});CHECK(called==3);
     auto shared_endpoint=std::shared_ptr<io_endpoint>(&ep,[](io_endpoint*) {});
     auto snapshot_call=capstan::copy(shared_endpoint,*owner);
     CHECK(!owner->try_add_range(0,1,1));
-    dynabridge::ff::start_invocation(std::move(snapshot_call),[&](flux_foundry::result_t<migration::snapshot_ref,dynabridge::async_error> r) noexcept {
+    portal::ff::start_invocation(std::move(snapshot_call),[&](flux_foundry::result_t<migration::snapshot_ref,portal::async_error> r) noexcept {
         CHECK(r.has_value() && r.value().source==g.key);++called;
         CHECK(bool(owner->try_add_range(0,1,1)));
     });

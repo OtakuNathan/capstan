@@ -1,7 +1,7 @@
 # Capstan
 
 A C++14 experiment combining [lease](https://github.com/OtakuNathan/lease),
-[Dynabridge](https://github.com/OtakuNathan/dynabridge), and
+[Portal](https://github.com/OtakuNathan/portal), and
 [Flux Foundry](https://github.com/OtakuNathan/flux_foundry) into a distributed
 capability protocol. Ordinary RPCs execute on an object's current authoritative
 Host: clients send capabilities and operation arguments and receive results.
@@ -27,7 +27,7 @@ to loopback. There is no TLS or public-network security claim.
 | Component | Responsibility |
 |---|---|
 | lease | Local exclusive/shared access and compile-time access constraints |
-| Dynabridge | Static call contracts, typed object identity, encoding and dispatch |
+| Portal | Static call contracts, typed object identity, encoding and dispatch |
 | Flux Foundry | Local flows, external asynchronous awaitables and executors |
 | Capstan | Grant protocol, directory, Host admission and operation lifetime |
 
@@ -54,9 +54,9 @@ python3 scripts/run_direct_demo.py --build-dir build
 ```
 
 The build exports locked commits into its own `_deps` directory. Existing sibling
-checkouts (`../lease`, `../bridge`, `../flux_foundry`) are preferred when present;
+checkouts (`../lease`, `../portal`, `../flux_foundry`) are preferred when present;
 working-tree edits are never imported. Override them explicitly with
-`CAPSTAN_LEASE_SOURCE`, `CAPSTAN_DYNABRIDGE_SOURCE`, and `CAPSTAN_FF_SOURCE`.
+`CAPSTAN_LEASE_SOURCE`, `CAPSTAN_PORTAL_SOURCE`, and `CAPSTAN_FF_SOURCE`.
 When a lock changes, use a fresh build directory.
 
 Without GIO, the protocol model, state machine, typed integration and callback

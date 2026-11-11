@@ -3,7 +3,7 @@
 #include <cstring>
 using namespace capstan;
 namespace {
-// Independent compatibility oracle: compose the original Dynabridge codecs.
+// Independent compatibility oracle: compose the original Portal codecs.
 bytes reference_encode(outcome state,status code,const std::vector<wire::value>& values) {
     std::vector<wire::value> args{wire::u(static_cast<unsigned>(state)),wire::u(static_cast<unsigned>(code))};
     args.insert(args.end(),values.begin(),values.end());

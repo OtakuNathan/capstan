@@ -19,13 +19,13 @@ readers, transfer exclusive authority, revoke access or install a tombstone.
 ## Typed access
 
 `contracts/` declares import/export operations and method effects. The Capstan
-Dynabridge adapter implements a real object channel with session/incarnation/object
+Portal adapter implements a real object channel with session/incarnation/object
 identity; the generic scalar RPC backend is not assumed to supply remote object
 lifetime automatically. Native dispatch checks the receiver identity and arguments.
 A full grant also binds epoch, holder, grant identifier, access mode and opaque token.
 
 Lease provides local access constraints. A shared facade exposes readonly methods;
-exclusive handles cannot be copied. The generated Dynabridge imports are not
+exclusive handles cannot be copied. The generated Portal imports are not
 const, so the adapter presents a deliberate readonly interface without const_cast
 or relabeling remote writes as reads.
 
@@ -65,7 +65,7 @@ generic distributed closure or arbitrary workflow migration framework.
 | `include/capstan/authority` | Deterministic Host/directory state machines |
 | `include/capstan/access` | Lease-backed capabilities and local ownership |
 | `include/capstan/owner`, `examples/owner` | Structural owner backend contract and single-process/mirrored storage examples |
-| `include/capstan/bridge` | Dynabridge typed object/codec integration |
+| `include/capstan/bridge` | Portal typed object/codec integration |
 | `include/capstan/async` | FF request/completion and detachable waiters |
 | `include/capstan/transport`, `src/transport` | Bounded nonblocking GIO framing |
 | `src/apps` | Host, Table, clients, business worker and ACK completion adapter |

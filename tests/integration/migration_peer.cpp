@@ -57,8 +57,8 @@ int main() {
         CHECK(target.authority.placement_generation()==2 && source.authority.inspect().gate==host_authority::phase::closing);
         gio_client client(context,"127.0.0.1",b.port());app::authenticated_endpoint business(client,c.credentials[0]);
         auto result=call(business,wire::encode_call({next,20,method::summary}));CHECK(result.code==status::ok && result.values.size()==1);
-        dataset_backend::context conversion;auto value=dynabridge::from_optional<summary_t>(conversion,result.values[0]);CHECK(value);
-        auto expected=dynabridge::capstan_native::dataset(128*1024,7).summary();
+        dataset_backend::context conversion;auto value=portal::from_optional<summary_t>(conversion,result.values[0]);CHECK(value);
+        auto expected=portal::capstan_native::dataset(128*1024,7).summary();
         CHECK(value->sum==expected.sum && value->checksum==expected.checksum && value->version==expected.version && value->count==expected.count);
         CHECK(call(from,command(migration::retire_command)).code==status::ok && !source.owner);
         CHECK(call(from,command(migration::export_release_command)).code==status::ok && !source.export_reserved);

@@ -26,23 +26,23 @@ int main() {
         const auto before=allocations;
         CHECK(summary_converter::probe(ctx,*input));
         CHECK(summary_converter::probe(ctx,*input));
-        auto result=dynabridge::from_optional<summary_t>(ctx,*input);
+        auto result=portal::from_optional<summary_t>(ctx,*input);
         CHECK(result && *result==expected);
         CHECK(allocations==before);
         CHECK(input->copy_string()==text);
     }
     int calls=0;
-    auto binder=dynabridge::create_export_callable_binder<std::uint64_t(summary_t)>(ctx,
+    auto binder=portal::create_export_callable_binder<std::uint64_t(summary_t)>(ctx,
         [&](summary_t input) noexcept {++calls;return input.version;});
     CHECK(binder(encoded).as_unsigned()==expected.version);
     CHECK(binder(borrowed).as_unsigned()==expected.version);
     CHECK(calls==2 && encoded.copy_string()==text && borrowed.copy_string()==text);
-    CHECK(rejects<dynabridge::bad_conversion>([&]{binder(value::string("malformed"));}));
+    CHECK(rejects<portal::bad_conversion>([&]{binder(value::string("malformed"));}));
     CHECK(calls==2);
     auto reject=[&](const value& input) {
         const auto before=allocations;
         CHECK(!summary_converter::probe(ctx,input));
-        CHECK(!dynabridge::from_optional<summary_t>(ctx,input));
+        CHECK(!portal::from_optional<summary_t>(ctx,input));
         CHECK(allocations==before);
     };
     reject(value::unsigned_integer(1));
@@ -51,9 +51,9 @@ int main() {
     for(std::size_t offset:{0u,4u,5u,13u,17u,26u,35u,44u}) {
         auto bad=text;bad[offset]=static_cast<char>(255);reject(value::string(bad));
     }
-    for(auto kind:{dynabridge::rpc::value_kind::signed_integer,dynabridge::rpc::value_kind::real,
-                   dynabridge::rpc::value_kind::boolean,dynabridge::rpc::value_kind::string,
-                   dynabridge::rpc::value_kind::undefined}) {
+    for(auto kind:{portal::rpc::value_kind::signed_integer,portal::rpc::value_kind::real,
+                   portal::rpc::value_kind::boolean,portal::rpc::value_kind::string,
+                   portal::rpc::value_kind::undefined}) {
         auto bad=text;bad[17]=static_cast<char>(kind);reject(value::string(bad));
     }
     // Differential check against the original general codec: preserve both
@@ -66,7 +66,7 @@ int main() {
         accepted=accepted && decoded.method==901 && decoded.args.size()==4;
         if(accepted) for(const auto& arg:decoded.args) accepted=accepted && wire::is_number(arg);
         CHECK(summary_converter::probe(ctx,input)==accepted);
-        auto result=dynabridge::from_optional<summary_t>(ctx,input);
+        auto result=portal::from_optional<summary_t>(ctx,input);
         CHECK(bool(result)==accepted);
         if(accepted) {
             const summary_t old{decoded.args[0].as_unsigned(),decoded.args[1].as_unsigned(),

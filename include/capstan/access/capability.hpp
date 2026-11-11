@@ -130,15 +130,15 @@ public:
     }
     read_capability(const read_capability&)=default;
     read_capability(read_capability&&) noexcept=default;
-    dynabridge::optional<invocation<std::uint64_t>> try_version() const {
+    portal::optional<invocation<std::uint64_t>> try_version() const {
         if(!storage_ || storage_->closed.load()) return {};
         auto frame=std::make_shared<access_detail::read_frame>(storage_,access_);
-        return dynabridge::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{frame->access->version(),frame,storage_->request_id()});
+        return portal::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{frame->access->version(),frame,storage_->request_id()});
     }
-    dynabridge::optional<invocation<summary_t>> try_summary() const {
+    portal::optional<invocation<summary_t>> try_summary() const {
         if(!storage_ || storage_->closed.load()) return {};
         auto frame=std::make_shared<access_detail::read_frame>(storage_,access_);
-        return dynabridge::optional<invocation<summary_t>>(invocation<summary_t>{frame->access->summary(),frame,storage_->request_id()});
+        return portal::optional<invocation<summary_t>>(invocation<summary_t>{frame->access->summary(),frame,storage_->request_id()});
     }
     invocation<std::uint64_t> version() const {
         auto call=try_version();if(!call) CAPSTAN_RAISE(capability_busy());return std::move(*call);
@@ -169,23 +169,23 @@ public:
     exclusive_capability(const exclusive_capability&)=delete;
     exclusive_capability& operator=(const exclusive_capability&)=delete;
     exclusive_capability(exclusive_capability&&) noexcept=default;
-    dynabridge::optional<invocation<std::uint64_t>> try_version() const {
+    portal::optional<invocation<std::uint64_t>> try_version() const {
         if(!owner_) return {};
         auto frame=std::make_shared<access_detail::read_guard>(owner_);
         if(!frame->access) return {};
-        return dynabridge::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{(*frame->access)->version(),frame,owner_->storage->request_id()});
+        return portal::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{(*frame->access)->version(),frame,owner_->storage->request_id()});
     }
-    dynabridge::optional<invocation<summary_t>> try_summary() const {
+    portal::optional<invocation<summary_t>> try_summary() const {
         if(!owner_) return {};
         auto frame=std::make_shared<access_detail::read_guard>(owner_);
         if(!frame->access) return {};
-        return dynabridge::optional<invocation<summary_t>>(invocation<summary_t>{(*frame->access)->summary(),frame,owner_->storage->request_id()});
+        return portal::optional<invocation<summary_t>>(invocation<summary_t>{(*frame->access)->summary(),frame,owner_->storage->request_id()});
     }
-    dynabridge::optional<invocation<std::uint64_t>> try_add_range(std::uint64_t b,std::uint64_t e,std::uint64_t d) {
+    portal::optional<invocation<std::uint64_t>> try_add_range(std::uint64_t b,std::uint64_t e,std::uint64_t d) {
         if(!owner_) return {};
         auto frame=std::make_shared<access_detail::write_guard>(owner_);
         if(!frame->access) return {};
-        return dynabridge::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{(*frame->access)->add_range(b,e,d),frame,owner_->storage->request_id()});
+        return portal::optional<invocation<std::uint64_t>>(invocation<std::uint64_t>{(*frame->access)->add_range(b,e,d),frame,owner_->storage->request_id()});
     }
     invocation<std::uint64_t> version() const {
         auto call=try_version();if(!call) CAPSTAN_RAISE(capability_busy());return std::move(*call);
@@ -226,10 +226,10 @@ template<class R> auto bind_async_operation(io_endpoint& endpoint,invocation<R>&
     context->async_endpoint=&endpoint;context->async_request_id=pending.request_id;
     context->async_authority=std::move(pending.authority);
 #ifdef CAPSTAN_ERASED_INVOCATIONS
-    return dynabridge::bind_async<dynabridge::dataset>(context,
+    return portal::bind_async<portal::dataset>(context,
         dataset_delegate::object_t(pending.call.header.capability));
 #else
-    return dynabridge::bind_static_async<dynabridge::dataset>(context,
+    return portal::bind_static_async<portal::dataset>(context,
         dataset_delegate::object_t(pending.call.header.capability));
 #endif
 }
@@ -238,7 +238,7 @@ class async_read_capability {
     io_endpoint* endpoint_;
 public:
     async_read_capability(std::shared_ptr<read_capability> access,io_endpoint& endpoint)
-        :access_(std::move(access)),endpoint_(&endpoint) {dynabridge::async_detail::require(bool(access_));}
+        :access_(std::move(access)),endpoint_(&endpoint) {portal::async_detail::require(bool(access_));}
     auto version() const {return bind_async_operation(*endpoint_,access_->version()).version();}
     auto summary() const {return bind_async_operation(*endpoint_,access_->summary()).summary();}
 };
@@ -247,7 +247,7 @@ class async_exclusive_capability {
     io_endpoint* endpoint_;
 public:
     async_exclusive_capability(std::shared_ptr<exclusive_capability> access,io_endpoint& endpoint)
-        :access_(std::move(access)),endpoint_(&endpoint) {dynabridge::async_detail::require(bool(access_));}
+        :access_(std::move(access)),endpoint_(&endpoint) {portal::async_detail::require(bool(access_));}
     auto version() const {return bind_async_operation(*endpoint_,access_->version()).version();}
     auto summary() const {return bind_async_operation(*endpoint_,access_->summary()).summary();}
     auto add_range(std::uint64_t b,std::uint64_t e,std::uint64_t d) {

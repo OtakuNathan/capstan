@@ -6,12 +6,12 @@ namespace capstan {
 // their existing dispatch contract. Durable specializations receive request IDs.
 template<class Backend> struct owner_runtime_hooks {
     static constexpr bool durable=false;
-    static bool initialize(Backend&,host_authority&,id,std::size_t) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return true;}
-    static bool checkpoint(Backend&,host_authority&) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return true;}
+    static bool initialize(Backend&,host_authority&,id,std::size_t) PORTAL_NOEXCEPT_IF_DISABLED {return true;}
+    static bool checkpoint(Backend&,host_authority&) PORTAL_NOEXCEPT_IF_DISABLED {return true;}
     static bool healthy(const Backend&) noexcept {return true;}
     static bool allows(id) noexcept {return true;}
-    static bool replay(Backend&,const wire::call&,id,bytes&) DYNABRIDGE_NOEXCEPT_IF_DISABLED {return false;}
-    static bytes execute(Backend&,typename Backend::object_type& owner,const wire::call& call) DYNABRIDGE_NOEXCEPT_IF_DISABLED {
+    static bool replay(Backend&,const wire::call&,id,bytes&) PORTAL_NOEXCEPT_IF_DISABLED {return false;}
+    static bytes execute(Backend&,typename Backend::object_type& owner,const wire::call& call) PORTAL_NOEXCEPT_IF_DISABLED {
         wire::value result;
         bool ok=owner.try_dispatch(call.header.operation,call.header.capability,call.args,result);
         return wire::encode_reply(outcome::completed,ok ? status::ok : status::invalid,ok ? std::vector<wire::value>{result} : std::vector<wire::value>{});

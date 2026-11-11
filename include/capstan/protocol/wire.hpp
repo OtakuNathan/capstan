@@ -4,19 +4,19 @@
 #include <capstan/error_policy.hpp>
 #include <stdexcept>
 namespace capstan { namespace wire {
-using value=dynabridge::rpc::value;
-namespace codec=dynabridge::rpc::detail;
+using value=portal::rpc::value;
+namespace codec=portal::rpc::detail;
 constexpr std::size_t max_frame=65536;
-inline void require(bool v) { if(!v) CAPSTAN_RAISE(dynabridge::rpc::protocol_error("invalid Capstan wire value")); }
-inline id number(const value& v) { require(v.kind()==dynabridge::rpc::value_kind::unsigned_integer); return v.as_unsigned(); }
-inline std::string string(const value& v) { require(v.kind()==dynabridge::rpc::value_kind::string); return v.copy_string(); }
-inline bool boolean(const value& v) { require(v.kind()==dynabridge::rpc::value_kind::boolean); return v.as_boolean(); }
+inline void require(bool v) { if(!v) CAPSTAN_RAISE(portal::rpc::protocol_error("invalid Capstan wire value")); }
+inline id number(const value& v) { require(v.kind()==portal::rpc::value_kind::unsigned_integer); return v.as_unsigned(); }
+inline std::string string(const value& v) { require(v.kind()==portal::rpc::value_kind::string); return v.copy_string(); }
+inline bool boolean(const value& v) { require(v.kind()==portal::rpc::value_kind::boolean); return v.as_boolean(); }
 inline value u(id n) { return value::unsigned_integer(n); }
 inline std::string binary(const bytes& b) { return std::string(b.begin(),b.end()); }
 inline bytes binary(const std::string& s) { return bytes(s.begin(),s.end()); }
-inline bool is_number(const value& v) { return v.kind()==dynabridge::rpc::value_kind::unsigned_integer; }
-inline bool is_string(const value& v) { return v.kind()==dynabridge::rpc::value_kind::string; }
-inline bool is_boolean(const value& v) { return v.kind()==dynabridge::rpc::value_kind::boolean; }
+inline bool is_number(const value& v) { return v.kind()==portal::rpc::value_kind::unsigned_integer; }
+inline bool is_string(const value& v) { return v.kind()==portal::rpc::value_kind::string; }
+inline bool is_boolean(const value& v) { return v.kind()==portal::rpc::value_kind::boolean; }
 inline bool try_decode(const bytes& b,codec::request& out) {
     if(b.size()>max_frame) return false;
     codec::request staged;
@@ -63,15 +63,15 @@ inline codec::writer reply_writer(outcome state,status code,std::size_t count,st
     // Write both envelopes into one allocation using the existing codec's
     // scalar/value primitives; no intermediate argument or payload copies.
     if(count>std::numeric_limits<std::uint32_t>::max()-2)
-        CAPSTAN_RAISE(dynabridge::rpc::protocol_error("too many reply values"));
+        CAPSTAN_RAISE(portal::rpc::protocol_error("too many reply values"));
     const auto inner_size=codec::checked_add(17+18,value_bytes); // Request header and two unsigned values.
     if(inner_size>std::numeric_limits<std::uint32_t>::max())
-        CAPSTAN_RAISE(dynabridge::rpc::protocol_error("RPC string is too large"));
+        CAPSTAN_RAISE(portal::rpc::protocol_error("RPC string is too large"));
     codec::writer out(codec::checked_add(11,inner_size));
     out.integer<std::uint32_t>(codec::response_magic);
     out.integer<std::uint8_t>(codec::protocol_version);
     out.integer<std::uint8_t>(0);
-    out.integer<std::uint8_t>(static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string));
+    out.integer<std::uint8_t>(static_cast<std::uint8_t>(portal::rpc::value_kind::string));
     out.integer<std::uint32_t>(static_cast<std::uint32_t>(inner_size));
     out.integer<std::uint32_t>(codec::request_magic);
     out.integer<std::uint8_t>(codec::protocol_version);
@@ -88,7 +88,7 @@ inline bool read_reply_header(codec::reader& input,reply_header& out) noexcept {
     if(input.integer<std::uint32_t>()!=codec::response_magic ||
        input.integer<std::uint8_t>()!=codec::protocol_version ||
        input.integer<std::uint8_t>()!=0 ||
-       input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string)) return false;
+       input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(portal::rpc::value_kind::string)) return false;
     const auto inner_size=input.integer<std::uint32_t>();
     if(!input.valid() || inner_size!=input.remaining()) return false;
     // The inner frame occupies exactly the remaining input. Callers choose
@@ -98,7 +98,7 @@ inline bool read_reply_header(codec::reader& input,reply_header& out) noexcept {
        input.integer<std::uint64_t>()!=900) return false;
     const auto count=input.integer<std::uint32_t>();
     if(!input.valid() || count<2 || count>512 || count>input.remaining()) return false;
-    const auto unsigned_kind=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::unsigned_integer);
+    const auto unsigned_kind=static_cast<std::uint8_t>(portal::rpc::value_kind::unsigned_integer);
     if(input.integer<std::uint8_t>()!=unsigned_kind) return false;
     const auto state=input.integer<std::uint64_t>();
     if(input.integer<std::uint8_t>()!=unsigned_kind) return false;

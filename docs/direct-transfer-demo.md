@@ -2,7 +2,7 @@
 
 This narrated demo runs Host, Table and two clients as separate processes over
 real loopback TCP. A and B successively update the same Host-local Dataset while
-Table is stopped. The direct path uses the existing Dynabridge codec, FF async
+Table is stopped. The direct path uses the existing Portal codec, FF async
 completion and Lease-backed capabilities.
 
 ```sh

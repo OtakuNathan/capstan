@@ -12,9 +12,9 @@ inline bool try_decode_chunk_reply(const bytes& frame,chunk_reply_view& out) noe
     namespace w=capstan::wire;
     w::codec::reader input(frame);w::detail::reply_header header;
     if(!w::detail::read_reply_header(input,header) || header.code!=status::ok || header.value_count!=2) return false;
-    if(input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::unsigned_integer)) return false;
+    if(input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(portal::rpc::value_kind::unsigned_integer)) return false;
     const auto offset=input.integer<std::uint64_t>();
-    if(input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(dynabridge::rpc::value_kind::string)) return false;
+    if(input.integer<std::uint8_t>()!=static_cast<std::uint8_t>(portal::rpc::value_kind::string)) return false;
     const auto size=input.integer<std::uint32_t>();
     if(!input.valid() || size!=input.remaining()) return false;
     out={offset,frame.data()+frame.size()-size,size};return true;

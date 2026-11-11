@@ -30,7 +30,7 @@ struct client_runtime {
     void finish(wire::reply r) {
         auto ns=std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count();
         std::cout<<"RESULT command="<<label<<" status="<<status_name(r.code)<<" outcome="<<static_cast<unsigned>(r.state)<<" ns="<<ns;
-        for(std::size_t i=0;i<r.values.size();++i) if(r.values[i].kind()==dynabridge::rpc::value_kind::unsigned_integer) std::cout<<" v"<<i<<'='<<wire::number(r.values[i]);
+        for(std::size_t i=0;i<r.values.size();++i) if(r.values[i].kind()==portal::rpc::value_kind::unsigned_integer) std::cout<<" v"<<i<<'='<<wire::number(r.values[i]);
         std::cout<<'\n'<<std::flush;busy=false;
         app::post(g_main_loop_get_context(loop),[this]{pump();});
     }

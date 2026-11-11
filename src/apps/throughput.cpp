@@ -53,7 +53,7 @@ struct load {
         if(scan) {
             auto pending=capability->summary();pending.request_id+=request_base;
             auto call=bind_async_operation(*endpoints[slot],std::move(pending)).summary();
-            dynabridge::ff::start_invocation(std::move(call),[done,expected=expected](flux_foundry::result_t<summary_t,dynabridge::async_error> result) noexcept {
+            portal::ff::start_invocation(std::move(call),[done,expected=expected](flux_foundry::result_t<summary_t,portal::async_error> result) noexcept {
                 outcome state=outcome::completed;status code=status::ok;
                 if(!result.has_value() && !decode_rpc_error(result.error(),state,code)) {state=outcome::not_submitted;code=status::invalid;}
                 done(state,code,result.has_value() && result.value()==expected);
@@ -61,7 +61,7 @@ struct load {
         } else {
             auto pending=capability->version();pending.request_id+=request_base;
             auto call=bind_async_operation(*endpoints[slot],std::move(pending)).version();
-            dynabridge::ff::start_invocation(std::move(call),[done](flux_foundry::result_t<id,dynabridge::async_error> result) noexcept {
+            portal::ff::start_invocation(std::move(call),[done](flux_foundry::result_t<id,portal::async_error> result) noexcept {
                 outcome state=outcome::completed;status code=status::ok;
                 if(!result.has_value() && !decode_rpc_error(result.error(),state,code)) {state=outcome::not_submitted;code=status::invalid;}
                 done(state,code,result.has_value() && result.value()==0);

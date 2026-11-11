@@ -18,7 +18,7 @@ ctest --test-dir build-strict --output-on-failure
 
 Use `CAPSTAN_NO_EXCEPTION_STRICT=OFF` in a separate build for relaxed checks;
 use `CAPSTAN_NO_EXCEPTIONS=OFF` for the exception-enabled comparison. The switch
-maps to FF and Dynabridge's no-exception policies. Strict rejects selected
+maps to FF and Portal's no-exception policies. Strict rejects selected
 unannotated converter/storage construction extensions. Relaxed permits those
 declarations; it does not enable exceptions, bypass authorization, or relax
 Lease topology and FF task/awaitable's mandatory noexcept requirements.
@@ -45,7 +45,7 @@ GCC's `CAPSTAN_VECTORIZATION_REPORT=ON` emits optimization diagnostics.
 
 - Compile probes and negatives cover Lease copying/readonly access, typed receiver
   identity, generated-import const limitations and async return adaptation.
-- The eight-case FF/Dynabridge compile-policy matrix requires appropriate strict
+- The eight-case FF/Portal compile-policy matrix requires appropriate strict
   failures and relaxed successes. Negative subprocesses inherit the build policy.
 - C++ tests cover admission/transition ordering, stale authority, allocation
   rejection, explicit errors, operation retention and callback races.
@@ -121,7 +121,7 @@ this additional demo entry and retains its actual 33/32 test counts.
 
 ## Typed asynchronous calls
 
-Capstan's I/O adapter now uses Dynabridge's concrete `make_invocation` path.
+Capstan's I/O adapter now uses Portal's concrete `make_invocation` path.
 `async_read_capability` and `async_exclusive_capability` acquire access through the
 existing Lease facade and then use generated asynchronous Dataset delegates.
 The shared facade does not expose writes. The native throughput driver uses this
@@ -138,8 +138,8 @@ invocation each run. For example, an exclusive facade can submit a generated cal
 ```cpp
 capstan::async_exclusive_capability dataset(owner, endpoint);
 auto call = dataset.add_range(0, 1024, 1);
-dynabridge::ff::start_invocation(std::move(call),
-    [](flux_foundry::result_t<capstan::id, dynabridge::async_error> result) noexcept {
+portal::ff::start_invocation(std::move(call),
+    [](flux_foundry::result_t<capstan::id, portal::async_error> result) noexcept {
         // Consume result or decode its exact Capstan outcome/status.
     });
 ```
@@ -155,6 +155,6 @@ the final component pins, desktop sanitizer checks and matched concrete/erased m
 
 The optional tool-based composition demo lives in
 [FF](https://github.com/OtakuNathan/flux_foundry/blob/a18b05a464532d8c9acaa048e873884606a356f4/docs/typed_async_demo.md):
-FF owns the Blueprint and scheduling, while Dynabridge generates typed calls.
+FF owns the Blueprint and scheduling, while Portal generates typed calls.
 The review also validated actual CUDA execution; see
 [the review record](../bench/async-invocation/latest/review.json).

@@ -6,7 +6,7 @@ external database or storage group. Physical replica count does not create
 additional public object identities or business write grants.
 
 Capstan's deterministic authority state machine remains independent of storage.
-Lease governs local access; Dynabridge supplies the advertised typed calls;
+Lease governs local access; Portal supplies the advertised typed calls;
 FF schedules accepted work. The owner backend supplies the object implementation
 and snapshot policy. The current wire method/effect declarations remain the
 Dataset example's contract. Adding business methods still requires explicit

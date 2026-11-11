@@ -1,11 +1,11 @@
 #pragma once
 #include <capstan/protocol/types.hpp>
-#include <dynabridge/backends/rpc.h>
+#include <portal/backends/rpc.h>
 #include <functional>
 #include <memory>
 #include <utility>
 namespace capstan {
-using bytes = dynabridge::rpc::bytes;
+using bytes = portal::rpc::bytes;
 struct io_result { outcome state=outcome::unknown; bytes payload; };
 using io_completion = std::function<void(io_result)>;
 // Submission is local/nonblocking. true -> exactly one completion (may inline).

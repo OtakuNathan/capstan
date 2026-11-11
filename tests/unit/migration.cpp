@@ -5,7 +5,7 @@
 using namespace capstan;
 namespace m=capstan::migration;
 int main() {
-    using dataset=dynabridge::capstan_native::dataset;
+    using dataset=portal::capstan_native::dataset;
     dataset source(1024,17);source.add_range(0,16,42);
     m::buffer captured;CHECK(m::snapshot_traits<dataset>::capture(source,captured)==status::ok);
     auto summary=source.summary();source.add_range(0,16,1);

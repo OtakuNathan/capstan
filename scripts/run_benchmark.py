@@ -123,7 +123,7 @@ def main():
                 build_flags=flags,binary_sha256=artifacts,dependencies=json.loads(Path('deps.lock.json').read_text()),
                 samples_per_round=a.samples,rounds=a.rounds,order='AB then BA, repeated if requested',summary=summary,
                 grant_validation_increment_ns=increment,workloads=workloads,overload=overload,
-                scope='Same executable, protocol, GIO TCP, Dynabridge typed object/codec, FF path, Lease, serial lane, authentication envelope and business operation; omit skips only Host grant/effect admission validation.',
+                scope='Same executable, protocol, GIO TCP, Portal typed object/codec, FF path, Lease, serial lane, authentication envelope and business operation; omit skips only Host grant/effect admission validation.',
                 limitations=['Localhost on one machine; no cross-machine result.',
                              'Wall throughput includes Python driver/stdin pacing; client ns excludes driver round trip.',
                              'Host/client stdout logging enabled identically; scheduler and logging may dominate the small validation increment.',

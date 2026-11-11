@@ -13,8 +13,8 @@ for library in ['ff','bridge','migration','owner','owner_runtime']:
             command=[a.compiler,'-std=c++14','-fno-exceptions','-fsyntax-only','-ftemplate-backtrace-limit=1',
                 '-DFLUX_FOUNDRY_NO_EXCEPTION_STRICT='+str(int(strict)),
                 '-DCAPSTAN_NO_EXCEPTION_STRICT='+str(int(strict)),
-                '-DDYNABRIDGE_NO_EXCEPTION_STRICT='+str(int(strict)),
-                '-I'+str(root/'include'),'-I'+str(build/'_deps/flux_foundry'),'-I'+str(build/'_deps/dynabridge')]
+                '-DPORTAL_NO_EXCEPTION_STRICT='+str(int(strict)),
+                '-I'+str(root/'include'),'-I'+str(build/'_deps/flux_foundry'),'-I'+str(build/'_deps/portal')]
             if library=='bridge':command+=['-DPROBE_BRIDGE=1']
             if library=='migration':command+=['-DPROBE_MIGRATION=1']
             if library=='owner':command+=['-DPROBE_OWNER=1']
@@ -29,4 +29,4 @@ for library in ['ff','bridge','migration','owner','owner_runtime']:
             if not passed:print(result.stdout)
 (out/'report.json').write_text(json.dumps(rows,indent=2)+'\n')
 assert all(r['passed'] for r in rows),rows
-print('PASS: strict rejects unannotated extensions; relaxed accepts; annotated accepted in both, FF, Dynabridge, migration validation and owner backends/runtime hooks')
+print('PASS: strict rejects unannotated extensions; relaxed accepts; annotated accepted in both, FF, Portal, migration validation and owner backends/runtime hooks')

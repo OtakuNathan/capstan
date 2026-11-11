@@ -3,7 +3,7 @@
 Capstan's experimental C++ clipboard API and three-process CLI demo transfer
 Dataset values and relocate live object authority over the existing authenticated
 TCP protocol. They do not depend on X11, an operating-system clipboard, or a new
-GPU executor. Dynabridge supplies binary framing and typed invocations; FF runs
+GPU executor. Portal supplies binary framing and typed invocations; FF runs
 the asynchronous calls, and Lease still governs local access.
 
 ```sh

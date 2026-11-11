@@ -7,8 +7,8 @@
 #include <vector>
 #include <memory>
 #include <capstan/migration/snapshot.hpp>
-// Dynabridge's generated native namespace is nested in dynabridge.
-namespace dynabridge { namespace capstan_native {
+// Portal's generated native namespace is nested in portal.
+namespace portal { namespace capstan_native {
 class dataset {
     std::vector<std::uint64_t> words_;
     std::uint64_t version_=0;
@@ -51,8 +51,8 @@ public:
 }}
 
 namespace capstan { namespace migration {
-template<> struct snapshot_traits<dynabridge::capstan_native::dataset> {
-    using object_type= dynabridge::capstan_native::dataset;
+template<> struct snapshot_traits<portal::capstan_native::dataset> {
+    using object_type= portal::capstan_native::dataset;
     static status capture(const object_type& object,buffer& out) {return object.encode_snapshot(out);}
     static status restore(const buffer& data,std::unique_ptr<object_type>& out) {
         dataset_snapshot snapshot;auto code=decode(data,snapshot);

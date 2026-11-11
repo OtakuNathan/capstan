@@ -8,27 +8,27 @@ struct command_context {std::shared_ptr<io_endpoint> endpoint;bytes packet;std::
 template<class R,class Decode>
 auto command(std::shared_ptr<io_endpoint> endpoint,bytes packet,Decode decode,std::shared_ptr<void> borrow={}) {
     auto context=std::make_shared<command_context>();context->endpoint=std::move(endpoint);context->packet=std::move(packet);context->borrow=borrow;
-    auto prepared=dynabridge::make_invocation<R>(context,[decode=std::move(decode)](command_context& ctx,auto completion) noexcept {
+    auto prepared=portal::make_invocation<R>(context,[decode=std::move(decode)](command_context& ctx,auto completion) noexcept {
         CAPSTAN_TRY {
             auto borrow=std::move(ctx.borrow);
-            if(!ctx.endpoint) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
+            if(!ctx.endpoint) return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
             bool accepted=ctx.endpoint->submit_owned(std::move(ctx.packet),[decode,completion](io_result io) noexcept {
                 CAPSTAN_TRY {
                     wire::reply reply;
                     if(io.state!=outcome::completed || !wire::try_decode_reply(io.payload,reply)) {
-                        completion.finish(dynabridge::async_result<R>(make_rpc_error(io.state==outcome::not_submitted ? io.state : outcome::unknown,status::invalid)));return;
+                        completion.finish(portal::async_result<R>(make_rpc_error(io.state==outcome::not_submitted ? io.state : outcome::unknown,status::invalid)));return;
                     }
-                    if(reply.state!=outcome::completed || reply.code!=status::ok) {completion.finish(dynabridge::async_result<R>(make_rpc_error(reply.state,reply.code)));return;}
+                    if(reply.state!=outcome::completed || reply.code!=status::ok) {completion.finish(portal::async_result<R>(make_rpc_error(reply.state,reply.code)));return;}
                     R value;
-                    if(!decode(reply,value)) completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));
-                    else completion.finish(dynabridge::async_result<R>(std::move(value)));
-                } CAPSTAN_CATCH_ALL {completion.finish(dynabridge::async_result<R>(make_rpc_error(outcome::unknown,status::exhausted)));}
+                    if(!decode(reply,value)) completion.finish(portal::async_result<R>(make_rpc_error(outcome::unknown,status::invalid)));
+                    else completion.finish(portal::async_result<R>(std::move(value)));
+                } CAPSTAN_CATCH_ALL {completion.finish(portal::async_result<R>(make_rpc_error(outcome::unknown,status::exhausted)));}
             },std::move(borrow));
-            return accepted ? dynabridge::async_submission::accept() : dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::rejected));
-        } CAPSTAN_CATCH_ALL {return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
+            return accepted ? portal::async_submission::accept() : portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::rejected));
+        } CAPSTAN_CATCH_ALL {return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
     },std::move(borrow));
 #ifdef CAPSTAN_ERASED_INVOCATIONS
-    return dynabridge::erase_invocation(std::move(prepared));
+    return portal::erase_invocation(std::move(prepared));
 #else
     return prepared;
 #endif
@@ -104,33 +104,33 @@ public:
     bool sealed() const noexcept {return state_->sealed.load();}
     // Local sealing occurs when FF submits this invocation, never at prepare.
     auto paste() const {
-        return dynabridge::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
+        return portal::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
             CAPSTAN_TRY {
-            if(s.sealed || !access_detail::seal(s.owner)) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
+            if(s.sealed || !access_detail::seal(s.owner)) return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
             s.sealed=true;
-            bool accepted=s.operation->resume([done](io_result result) noexcept {done.finish(dynabridge::async_result<io_result>(std::move(result)));});
-            return accepted ? dynabridge::async_submission::accept() : dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
-            } CAPSTAN_CATCH_ALL {return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
+            bool accepted=s.operation->resume([done](io_result result) noexcept {done.finish(portal::async_result<io_result>(std::move(result)));});
+            return accepted ? portal::async_submission::accept() : portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
+            } CAPSTAN_CATCH_ALL {return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
         });
     }
     auto reconcile() const {
-        return dynabridge::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
+        return portal::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
             CAPSTAN_TRY {
-            if(!s.sealed) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
-            bool accepted=s.operation->resume([done](io_result result) noexcept {done.finish(dynabridge::async_result<io_result>(std::move(result)));});
-            return accepted ? dynabridge::async_submission::accept() : dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
-            } CAPSTAN_CATCH_ALL {return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
+            if(!s.sealed) return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
+            bool accepted=s.operation->resume([done](io_result result) noexcept {done.finish(portal::async_result<io_result>(std::move(result)));});
+            return accepted ? portal::async_submission::accept() : portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::busy));
+            } CAPSTAN_CATCH_ALL {return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
         });
     }
     // Abort never reopens the sealed facade. Materialize the fresh returned
     // source grant only after the coordinator reports its completed Abort.
     auto abort() const {
-        return dynabridge::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
+        return portal::make_invocation<io_result>(state_,[](state& s,auto done) noexcept {
             CAPSTAN_TRY {
-            if(!s.sealed) return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
-            bool accepted=s.operation->abort([done](io_result result) noexcept {done.finish(dynabridge::async_result<io_result>(std::move(result)));});
-            return accepted ? dynabridge::async_submission::accept() : dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::conflict));
-            } CAPSTAN_CATCH_ALL {return dynabridge::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
+            if(!s.sealed) return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::invalid));
+            bool accepted=s.operation->abort([done](io_result result) noexcept {done.finish(portal::async_result<io_result>(std::move(result)));});
+            return accepted ? portal::async_submission::accept() : portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::conflict));
+            } CAPSTAN_CATCH_ALL {return portal::async_submission::reject(make_rpc_error(outcome::not_submitted,status::exhausted));}
         });
     }
 };

@@ -13,7 +13,7 @@
 #include <stdexcept>
 #include <utility>
 
-// Uses the GSocket/GSource nonblocking pattern demonstrated in Dynabridge's
+// Uses the GSocket/GSource nonblocking pattern demonstrated in Portal's
 // benchmarks/rpc_call_benchmark.cpp (locked 99d363fc). This implementation is
 // new Capstan framing/lifetime code; no upstream backend implementation copied.
 namespace capstan {
