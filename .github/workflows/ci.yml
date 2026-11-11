@@ -187,7 +187,7 @@ jobs:
           ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
           TSAN_OPTIONS: halt_on_error=1
-        run: ctest --test-dir build -R '^(dataset_probe_test|reply_codec_test|snapshot_digest_test|migration_wire_test|migration_authority_test|migration_host_test|migration_capture_abort_test|migration_peer_test|clipboard_test|migration_process_demo|migration_profile_read|migration_profile_write|migration_test|direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|async_typed_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
+        run: ctest --test-dir build -R '^(dataset_probe_test|reply_codec_test|grant_codec_test|snapshot_digest_test|migration_wire_test|migration_authority_test|migration_host_test|migration_capture_abort_test|migration_peer_test|clipboard_test|migration_process_demo|migration_profile_read|migration_profile_write|migration_test|direct_transfer_test|direct_transfer_integration_test|sealed_registry_test|table_observation_test|tcp_direct_transfer|direct_transfer_demo|authority_replies_test|checked_errors_test|async_typed_test|callback_test|allocation_test|worker_test|tcp_ack_faults|transport_test|tcp_execution_modes|tcp_throughput_smoke|host_execution_test)$' --output-on-failure --timeout 90
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,5 +1,6 @@
 #pragma once
 #include <capstan/transport/io.hpp>
+#include <algorithm>
 #include <limits>
 #include <capstan/error_policy.hpp>
 #include <stdexcept>
@@ -28,14 +29,34 @@ inline std::string encode_grant(const grant& g) {
     return binary(codec::encode_request(800,{u(g.key.cluster),u(g.key.incarnation),u(g.key.object),u(g.epoch),u(g.grant_id),u(g.holder),u(static_cast<unsigned>(g.mode)),value::string(std::string(g.secret.begin(),g.secret.end()))}));
 }
 inline bool try_decode_grant(const std::string& s,grant& out) {
-    codec::request r;if(!try_decode(binary(s),r) || r.method!=800 || r.args.size()!=8) return false;
-    auto& a=r.args;
-    for(unsigned i=0;i<7;++i) if(!is_number(a[i])) return false;
-    if(!is_string(a[7]) || a[7].string_size()!=16) return false;
-    auto mode=number(a[6]);if(mode!=1 && mode!=2) return false;
-    grant g;g.key={number(a[0]),number(a[1]),number(a[2])};g.epoch=number(a[3]);
-    g.grant_id=number(a[4]);g.holder=number(a[5]);g.mode=static_cast<access_mode>(mode);
-    auto secret=string(a[7]);std::copy(secret.begin(),secret.end(),g.secret.begin());out=g;return true;
+    // A grant is request 800 with seven uint64 values and a 16-byte token.
+    // Validate its complete fixed layout before reading fields. The result
+    // owns every byte; failed decoding leaves the caller's output unchanged.
+    constexpr std::size_t header_size=17,number_size=9;
+    constexpr std::size_t token_offset=header_size+7*number_size;
+    constexpr std::size_t token_size=16;
+    if(s.size()!=token_offset+5+token_size) return false;
+    const auto* p=reinterpret_cast<const unsigned char*>(s.data());
+    const auto integer=[p](std::size_t offset,std::size_t size) noexcept {
+        std::uint64_t result=0;
+        for(std::size_t i=0;i<size;++i) result|=std::uint64_t(p[offset+i])<<(8*i);
+        return result;
+    };
+    if(integer(0,4)!=codec::request_magic || p[4]!=codec::protocol_version ||
+       integer(5,8)!=800 || integer(13,4)!=8) return false;
+    for(std::size_t i=0;i<7;++i)
+        if(p[header_size+i*number_size]!=static_cast<unsigned char>(portal::rpc::value_kind::unsigned_integer)) return false;
+    if(p[token_offset]!=static_cast<unsigned char>(portal::rpc::value_kind::string) ||
+       integer(token_offset+1,4)!=token_size) return false;
+    const auto number_at=[&](std::size_t index) noexcept {return integer(header_size+index*number_size+1,8);};
+    const auto mode=number_at(6);
+    if(mode!=1 && mode!=2) return false;
+    grant staged;
+    staged.key={number_at(0),number_at(1),number_at(2)};
+    staged.epoch=number_at(3);staged.grant_id=number_at(4);staged.holder=number_at(5);
+    staged.mode=static_cast<access_mode>(mode);
+    std::copy_n(p+token_offset+5,token_size,staged.secret.begin());
+    out=staged;return true;
 }
 inline grant decode_grant(const std::string& s) {grant out;require(try_decode_grant(s,out));return out;}
 inline bytes encode_transition(const transition& t) {
