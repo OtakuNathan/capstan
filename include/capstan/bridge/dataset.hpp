@@ -11,7 +11,7 @@
 #include <typeindex>
 #define PORTAL_IMPORT_DEF "contracts/dataset_import.def"
 #define PORTAL_EXPORT_DEF "contracts/dataset_export.def"
-#include <portal/bridge.h>
+#include <portal/portal.h>
 #undef PORTAL_IMPORT_DEF
 #undef PORTAL_EXPORT_DEF
 

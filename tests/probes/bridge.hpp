@@ -14,7 +14,7 @@ struct counter {
 namespace probe_native = portal::probe_native;
 #define PORTAL_IMPORT_DEF "tests/probes/import.def"
 #define PORTAL_EXPORT_DEF "tests/probes/export.def"
-#include <portal/bridge.h>
+#include <portal/portal.h>
 #undef PORTAL_IMPORT_DEF
 #undef PORTAL_EXPORT_DEF
 #include <portal/backends/rpc.h>
