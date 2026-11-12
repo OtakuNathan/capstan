@@ -6,16 +6,19 @@
 #include <utility>
 #include <vector>
 struct sqlite3;
+struct sqlite3_stmt;
 namespace capstan { namespace durable {
 enum class commit_outcome {committed,not_committed,unknown};
 struct commit_result {commit_outcome outcome;int code;};
 struct record {std::string key;bytes value;};
-enum class fault_point {before_commit,after_commit};
+enum class fault_point {before_commit,after_commit,before_layout_commit,after_layout_commit};
 using fault_hook=void(*)(fault_point); // Tests may terminate a child at this boundary.
 // One local database. Transactions atomically publish the complete record batch.
 // Neither SQLite statements nor caller buffers escape an operation's mutex.
 class sqlite_store {
     sqlite3* db_=nullptr;
+    sqlite3_stmt* get_statement_=nullptr;
+    sqlite3_stmt* put_statement_=nullptr;
     std::string path_;
     mutable std::mutex mutex_;
     bool failed_=false;
@@ -24,7 +27,7 @@ class sqlite_store {
     std::vector<std::string> actors_;
     bool exec(const char* sql) noexcept;
 public:
-    explicit sqlite_store(const std::string& path);
+    explicit sqlite_store(const std::string& path,fault_hook layout_hook=nullptr);
     ~sqlite_store() noexcept;
     sqlite_store(const sqlite_store&)=delete;
     sqlite_store& operator=(const sqlite_store&)=delete;

@@ -2,9 +2,10 @@
 
 The optional SQLite demo adds local restart recovery for one Dataset and its
 Table-mediated authority changes. The ordinary memory Host, Copy/Paste and
-migration demos keep their existing behavior. This is a correctness prototype:
-writes stage a whole Dataset snapshot, and accepted reads also commit a result
-receipt. Existing memory benchmark numbers do not describe this backend.
+migration demos keep their existing behavior. Accepted reads commit a result
+receipt. Dataset writes use a versioned base snapshot plus ordered deterministic add_range redo records; the state head,
+delta and request/result receipt commit atomically. Existing memory benchmark
+numbers do not describe this backend.
 
 Two state machines meet at explicit storage barriers:
 
@@ -79,15 +80,38 @@ The Host stores these independent responsibilities:
 | Record | Durable contents | Publication boundary |
 |---|---|---|
 | Identity | Object key and storage schema | Before initial authority |
-| Data | Complete owning Dataset snapshot | Same transaction as the operation receipt |
+| Data | Base snapshot plus ordered redo and current version head | New delta and head in the same transaction as the operation receipt |
 | Receipt | Authenticated holder/request ID, canonical request, encoded result | Before result delivery; replay never re-executes the operation |
 | Authority | Gate, epoch, current grants, pending transition, accepted transition history | Before any installed ACK or use of a new grant |
 
-A write runs against an independent staged native object. Its result and new
-snapshot are fully allocated before commit. After commit, the worker publishes
-with a nonthrowing pointer swap; the owner loop then retires the actual Host pin.
-A retained receipt can survive longer than either the worker or its observer.
-An admission dedup entry is **not** treated as a committed receipt.
+A write validates its range/version and prepares its result, canonical receipt,
+redo record and new head before COMMIT. After durable commit, the single object
+lane applies the prepared unsigned add without allocation or exceptions. A
+failed/ambiguous commit closes the frontend and does not publish the candidate;
+restart resolves the actual committed head. The admitted Host pin remains held
+until publication and posted native completion finish. This optimization is
+specific to the deterministic Dataset add_range operation, not a generic
+transactional wrapper for arbitrary C++ side effects.
+
+The representation invariant is: applying each contiguous versioned redo to
+`host/base` yields exactly the committed Dataset image named by `host/data`.
+Recovery validates the version head, ordered deltas, ranges and each delta's
+canonical successful receipt. Empty ranges still advance the version; word
+arithmetic remains modulo 2^64. The abstract durable model's state+receipt
+commit remains the specification; this concrete refinement is regression-tested,
+not newly proven by the existing TLA model.
+
+Legacy full-snapshot databases are upgraded atomically on first open. The new
+`host/data` envelope is intentionally incompatible with the old snapshot decoder:
+old binaries refuse startup instead of serving stale data. Keep a database backup
+before upgrading; downgrade requires an explicit export/migration (not provided).
+The base snapshot, redo records and their required request receipts are all
+retained. Recovery requires each redo's receipt; neither may be pruned
+independently. No log or receipt garbage collection is implemented. The existing
+receipt limit bounds new accepted operations; restart also bounds redo loading
+at 1,048,576 entries. Recovery time grows with the cumulative affected ranges.
+Do not prune redo merely because a receipt is no longer wanted; checkpointing
+and coordinated reclamation require a separate atomic protocol.
 
 Close may overlap already admitted work. Its checkpoint records the pending
 immutable transition and closed gate, without serializing volatile pins. The
@@ -139,8 +163,8 @@ pins and transaction buffers do not.
 |---|---|
 | `Stage` / `Sync` / `Crash` | Prepared owning buffers; SQLite batch transaction; abrupt process exit and reopen |
 | `Admit` / `host.queue` | `host_authority::admit`, including queued and executing operation pins |
-| `PrepareWrite` | SQLite backend stages a separate Dataset and allocates its request/result receipt |
-| `Flush(Host)` for a write | One `sqlite_store::commit` batch containing data and receipt |
+| `PrepareWrite` | Backend validates a prepared add and allocates its redo, version head and request/result receipt |
+| `Flush(Host)` for a write | One `sqlite_store::commit` batch atomically publishing redo, version head and receipt |
 | `ObserveWriteCommit` | Backend finishes publication/resource access; completion can still be posted |
 | `CompleteWrite` | Owner-loop `authority.complete`, followed by delivery outside authority locking |
 | `Replay` | Durable receipt lookup before fresh admission; canonical-payload equality check |
@@ -149,7 +173,7 @@ pins and transaction buffers do not.
 | `ReceiveConfigure` / `ObserveCloseCommit` | Shared authority Close; runtime checkpoint before returning to the event loop |
 | `PrepareInstall` / `ObserveInstallCommit` | Final pin retirement, authority checkpoint, then `authority_replies::flush` |
 | `PrepareTableConfirmation` / `PublishGrant` | Matching ACK/current-state observation, Table journal commit, then command completion |
-| `RecoverHost` | Backend create/restore, authority recovery, drained recovery installation and checkpoint before serving |
+| `RecoverHost` | Validate the base/head, replay contiguous receipt-bound redo, recover authority, then checkpoint any drained installation before serving |
 | `RecoverTable` | Journal decode, restored sequence, exact pending target marked uncertain |
 
 The projection fixes one logical object, one immutable Table authority change
@@ -193,11 +217,15 @@ commit boundaries, and ambiguous-commit fail-closed behavior in exception builds
 `durable_table_test` uses actual loopback RPC and terminates both processes before
 and after the intent/confirmation barriers, then restores the exact pending target
 or committed result. Its failed retry keeps prior uncertainty intact.
+`durable_lifecycle_test` covers 32 drained reopen cycles, eight observer-detach
+and Close/Drain cycles, eight loopback disconnect/retry cycles, and eight crashes
+after native publication but before owner-loop completion. It checks retained
+backend lifetimes, exactly-once observer completion, and Linux fd/thread counts.
 
 These tests use abrupt process termination, not a physical power cut. SQLite's
 flush guarantee plus the model's power-loss abstraction support the intended
 power-loss contract; actual hardware power interruption has not been tested.
-GCC exception builds passed the complete 55-test suite; GCC strict/no-exception,
+GCC exception builds passed the complete 57-test suite; GCC strict/no-exception,
 Clang relaxed/no-exception and ASan/UBSan checks cover the new paths. CI runs GCC
 and Clang exception/strict/relaxed variants, while nightly also verifies the larger
 formal bound. Runtime hooks have their own strict/relaxed compile-negative checks.
@@ -209,7 +237,41 @@ journaling; a durable Dataset alone would not make those protocols durable.
 The memory frontends continue to demonstrate those features.
 
 There is no replication, automatic failover, split-brain protection, client-side
-request journal, durable receipt eviction, backup/restore protocol, schema upgrade,
-or repair of corrupted storage. Do not discard either actor's journal and reuse
-its old control session. Whole-snapshot staging and synchronous checkpoints favor
-reviewable commit ordering; performance tuning needs its own measurements.
+request journal, durable receipt eviction, general backup/restore or schema
+migration framework, or repair of corrupted storage. The one-time legacy Dataset
+format upgrade above and the physical SQLite layout upgrade below are the only
+supported storage migrations. Do not discard
+either actor's journal and reuse its old control session. Synchronous checkpoints
+retain their durability contract; performance needs separate measurements.
+
+## SQLite physical layout and statement lifetime
+
+New databases use a rowid table with a narrow primary-key index, rather than
+placing large Dataset base images in a WITHOUT ROWID key tree. Existing stores
+with the exact legacy table definition and no additional explicit indexes or
+triggers are copied and renamed in one BEGIN IMMEDIATE transaction. Unknown
+legacy layouts are rejected rather than silently discarding schema information.
+A crash exposes either the old or new complete mapping; keys and values are
+preserved byte-for-byte. This first-open conversion requires writer exclusion,
+extra disk/WAL space and time proportional to the retained database. Back up
+before upgrading. This physical change does not remove the application-envelope
+downgrade restriction documented above.
+
+Get/put prepared statements are cached per store, used under its mutex, reset
+and cleared on every exit, and finalized before database close. SQLite
+[`prepare_v2`](https://www.sqlite.org/c3ref/prepare.html) handles schema
+invalidation across cooperating connections. WAL FULL
+and the business-state/receipt transaction boundary are unchanged. Tests cover
+two-connection prepared statements across conversion, before/after-commit crash
+cuts, large/empty values, and refusal of unknown legacy schema.
+
+## Shared Dataset mutation semantics
+
+The ordinary `add_range`, durable prepare/publication and snapshot redo now share
+one range/version validator and one unsigned mutation loop. The direct call
+preserves range-error precedence over version exhaustion. Publication checks its
+prepared version/range and aborts on a broken exclusive-lane contract; after a
+successful durable commit it remains allocation-free and noexcept. Recovery
+instead rejects malformed input without changing the staged snapshot. Backend
+format, receipt coupling and redo ordering checks remain separate. No on-disk
+format or transaction-boundary change is introduced by this refactor.

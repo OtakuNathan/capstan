@@ -173,6 +173,14 @@ public:
     std::size_t resource_bytes() const noexcept { return native_.resource_bytes(); }
     std::size_t snapshot_bytes() const noexcept {return resource_bytes()+60;}
     std::uint64_t bind_count() const noexcept { return ctx_.bind_count.load(); }
+    using prepared_add=portal::capstan_native::dataset::prepared_add;
+    bool prepare_add(const grant& g,const std::vector<wire::value>& args,prepared_add& out) const noexcept {
+        if(g.key!=ctx_.key || args.size()!=3) return false;
+        for(const auto& a:args) if(!wire::is_number(a)) return false;
+        return native_.prepare_add(wire::number(args[0]),wire::number(args[1]),wire::number(args[2]),out);
+    }
+    void publish_add(const prepared_add& p) noexcept {native_.publish_add(p);}
+
     // Caller must hold an admitted Host operation pin and the object lane.
     bool try_dispatch(method which,const grant& g,const std::vector<wire::value>& args,wire::value& out) PORTAL_NOEXCEPT_IF_DISABLED {
         if(g.key!=ctx_.key) return false;

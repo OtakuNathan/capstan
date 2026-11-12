@@ -14,13 +14,18 @@ struct statement {
     sqlite3_stmt* value=nullptr;
     ~statement() noexcept {if(value) sqlite3_finalize(value);}
 };
+// Cached plans never retain caller data or an active read across operations.
+struct reset_statement {
+    sqlite3_stmt* value;
+    ~reset_statement() noexcept {if(value) {sqlite3_reset(value);sqlite3_clear_bindings(value);}}
+};
 int text(sqlite3_stmt* s,int n,const std::string& value) noexcept {
     if(value.size()>INT_MAX) return SQLITE_TOOBIG;
     return sqlite3_bind_text(s,n,value.data(),static_cast<int>(value.size()),SQLITE_TRANSIENT);
 }
 }
 bool sqlite_store::exec(const char* sql) noexcept {error_=sqlite3_exec(db_,sql,nullptr,nullptr,nullptr);return error_==SQLITE_OK;}
-sqlite_store::sqlite_store(const std::string& path) {
+sqlite_store::sqlite_store(const std::string& path,fault_hook layout_hook) {
     // Refuse in-memory/URI databases: this class promises on-disk commits.
     if(path.empty() || path==":memory:" || path.find("file:")==0)
         CAPSTAN_RAISE(std::invalid_argument("persistent SQLite needs a local file path"));
@@ -37,15 +42,52 @@ sqlite_store::sqlite_store(const std::string& path) {
 #ifdef __APPLE__
     if(!exec("PRAGMA fullfsync=ON")) {fail();return;}
 #endif
-    statement mode,sync;
+    { statement mode,sync;
     if(sqlite3_prepare_v2(db_,"PRAGMA journal_mode",-1,&mode.value,nullptr)!=SQLITE_OK ||
        sqlite3_step(mode.value)!=SQLITE_ROW ||
        std::strcmp(reinterpret_cast<const char*>(sqlite3_column_text(mode.value,0)),"wal") ||
        sqlite3_prepare_v2(db_,"PRAGMA synchronous",-1,&sync.value,nullptr)!=SQLITE_OK ||
-       sqlite3_step(sync.value)!=SQLITE_ROW || sqlite3_column_int(sync.value,0)!=2) {fail();return;}
-    if(!exec("CREATE TABLE IF NOT EXISTS capstan_records(key TEXT PRIMARY KEY NOT NULL,value BLOB NOT NULL) WITHOUT ROWID")) {fail();return;}
+       sqlite3_step(sync.value)!=SQLITE_ROW || sqlite3_column_int(sync.value,0)!=2) {fail();return;} }
+    // WITHOUT ROWID places large immutable base BLOBs inside the key tree.
+    // Small-key searches/rebalances can then pull their overflow pages. Keep a
+    // narrow key->rowid index and the values in the rowid table instead.
+    // The layout conversion is one local transaction; the logical records and
+    // application envelopes are unchanged. Recheck after taking the writer lock.
+    if(!exec("BEGIN IMMEDIATE")) {fail();return;}
+    bool changed=false;
+    bool layout_ok=false;
+    CAPSTAN_TRY { layout_ok=[&]() -> bool {
+        if(!exec("CREATE TABLE IF NOT EXISTS capstan_records(key TEXT PRIMARY KEY NOT NULL,value BLOB NOT NULL)")) {return false;}
+        {
+            statement probe;
+            const int rc=sqlite3_prepare_v2(db_,"SELECT rowid FROM capstan_records LIMIT 0",-1,&probe.value,nullptr);
+            if(rc!=SQLITE_OK) {
+                // Only the known legacy WITHOUT ROWID layout may be rebuilt.
+                statement schema;
+                if(rc!=SQLITE_ERROR || sqlite3_prepare_v2(db_,"SELECT sql FROM sqlite_master WHERE type='table' AND name='capstan_records'",-1,&schema.value,nullptr)!=SQLITE_OK ||
+                   sqlite3_step(schema.value)!=SQLITE_ROW || !sqlite3_column_text(schema.value,0) ||
+                   std::strcmp(reinterpret_cast<const char*>(sqlite3_column_text(schema.value,0)),
+                       "CREATE TABLE capstan_records(key TEXT PRIMARY KEY NOT NULL,value BLOB NOT NULL) WITHOUT ROWID")) {return false;}
+                statement extras;
+                if(sqlite3_prepare_v2(db_,"SELECT count(*) FROM sqlite_master WHERE tbl_name='capstan_records' AND type IN ('index','trigger') AND sql IS NOT NULL",-1,&extras.value,nullptr)!=SQLITE_OK ||
+                   sqlite3_step(extras.value)!=SQLITE_ROW || sqlite3_column_int(extras.value,0)!=0) return false;
+                changed=true;
+            }
+        }
+        if(changed && (!exec("CREATE TABLE capstan_records_rowid_upgrade(key TEXT PRIMARY KEY NOT NULL,value BLOB NOT NULL)") ||
+           !exec("INSERT INTO capstan_records_rowid_upgrade SELECT key,value FROM capstan_records") ||
+           !exec("DROP TABLE capstan_records") ||
+           !exec("ALTER TABLE capstan_records_rowid_upgrade RENAME TO capstan_records"))) {return false;}
+        if(changed && layout_hook) layout_hook(fault_point::before_layout_commit);
+        if(!exec("COMMIT")) {return false;}
+        if(changed && layout_hook) layout_hook(fault_point::after_layout_commit);
+        return true;
+    }(); } CAPSTAN_CATCH_ALL {layout_ok=false;}
+    if(!layout_ok) {sqlite3_exec(db_,"ROLLBACK",nullptr,nullptr,nullptr);fail();return;}
 }
 sqlite_store::~sqlite_store() noexcept {
+    if(get_statement_) sqlite3_finalize(get_statement_);
+    if(put_statement_) sqlite3_finalize(put_statement_);
     if(db_) sqlite3_close(db_);
     for(int fd:locks_) ::close(fd);
 }
@@ -69,8 +111,9 @@ bool sqlite_store::get(const std::string& key,bytes& value,bool& found) noexcept
     std::lock_guard<std::mutex> lock(mutex_);
     if(failed_) return false;
     CAPSTAN_TRY {
-        statement s;
-        error_=sqlite3_prepare_v2(db_,"SELECT value FROM capstan_records WHERE key=?1",-1,&s.value,nullptr);
+        if(!get_statement_) error_=sqlite3_prepare_v2(db_,"SELECT value FROM capstan_records WHERE key=?1",-1,&get_statement_,nullptr);
+        else error_=SQLITE_OK;
+        reset_statement s{get_statement_};
         if(error_==SQLITE_OK) error_=text(s.value,1,key);
         if(error_!=SQLITE_OK) {failed_=true;return false;}
         error_=sqlite3_step(s.value);
@@ -109,8 +152,9 @@ commit_result sqlite_store::commit(const std::vector<record>& batch,fault_hook h
     bool committing=false;
     CAPSTAN_TRY {
         if(!exec("BEGIN IMMEDIATE")) {failed_=true;return {commit_outcome::not_committed,error_};}
-        statement s;
-        error_=sqlite3_prepare_v2(db_,"INSERT INTO capstan_records(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value",-1,&s.value,nullptr);
+        if(!put_statement_) error_=sqlite3_prepare_v2(db_,"INSERT INTO capstan_records(key,value) VALUES(?1,?2) ON CONFLICT(key) DO UPDATE SET value=excluded.value",-1,&put_statement_,nullptr);
+        else error_=SQLITE_OK;
+        reset_statement s{put_statement_};
         if(error_==SQLITE_OK) for(const auto& row:batch) {
             sqlite3_reset(s.value);sqlite3_clear_bindings(s.value);
             error_=text(s.value,1,row.key);

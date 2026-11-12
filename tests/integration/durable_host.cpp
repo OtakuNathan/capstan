@@ -38,6 +38,48 @@ void bootstrap(const std::string& path) {
 }
 }
 int main() {
+    // All three mutation entry points implement one arithmetic/version contract.
+    using native_dataset=portal::capstan_native::dataset;
+    static_assert(noexcept(std::declval<native_dataset&>().publish_add(std::declval<const native_dataset::prepared_add&>())),"postcommit publication must not throw");
+    static_assert(noexcept(native_dataset::replay_add(std::declval<migration::dataset_snapshot&>(),std::declval<const native_dataset::prepared_add&>())),"redo must not throw");
+    for(auto version:{std::uint64_t(0),std::numeric_limits<std::uint64_t>::max()-1,std::numeric_limits<std::uint64_t>::max()})
+    for(auto begin:{std::uint64_t(0),std::uint64_t(2),std::uint64_t(4),std::uint64_t(5)})
+    for(auto end:{std::uint64_t(0),std::uint64_t(2),std::uint64_t(4),std::uint64_t(5)})
+    for(auto delta:{std::uint64_t(0),std::uint64_t(7),std::numeric_limits<std::uint64_t>::max()}) {
+        migration::dataset_snapshot original{version,{0,1,std::numeric_limits<std::uint64_t>::max(),41}};
+        auto normal=native_dataset::restore(original),transactional=native_dataset::restore(original);
+        auto replay=original;
+        native_dataset::prepared_add prepared{123,456,789,999};
+        const bool valid=begin<=end && end<=4 && version!=std::numeric_limits<std::uint64_t>::max();
+        CHECK(normal->can_add_range(begin,end)==valid);
+        CHECK(transactional->prepare_add(begin,end,delta,prepared)==valid);
+        CHECK(native_dataset::replay_add(replay,{version,begin,end,delta})==valid);
+        if(valid) {
+            CHECK(normal->add_range(begin,end,delta)==version+1);
+            transactional->publish_add(prepared);
+            auto expected=original;
+            for(std::size_t i=0;i<expected.words.size();++i) if(i>=begin && i<end) expected.words[i]+=delta;
+            expected.version=version+1;
+            CHECK(replay.version==expected.version && replay.words==expected.words);
+            auto a=normal->capture(),b=transactional->capture();
+            CHECK(a.version==b.version && a.words==b.words && a.version==replay.version && a.words==replay.words);
+        } else {
+            CHECK(prepared.before==123 && prepared.begin==456 && prepared.end==789 && prepared.delta==999);
+            CHECK(replay.version==original.version && replay.words==original.words);
+            auto untouched=transactional->capture();CHECK(untouched.version==original.version && untouched.words==original.words);
+#if CAPSTAN_HAS_EXCEPTIONS
+            bool rejected=false;
+            try {(void)normal->add_range(begin,end,delta);}
+            catch(const std::out_of_range&) {rejected=begin>end || end>4;}
+            catch(const std::overflow_error&) {rejected=begin<=end && end<=4 && version==std::numeric_limits<std::uint64_t>::max();}
+            CHECK(rejected);auto unchanged=normal->capture();CHECK(unchanged.version==original.version && unchanged.words==original.words);
+#endif
+        }
+        auto mismatch=original;
+        CHECK(!native_dataset::replay_add(mismatch,{version^1,begin,end,delta}));
+        CHECK(mismatch.version==original.version && mismatch.words==original.words);
+    }
+
     // Recovery imports a coherent authority checkpoint, never partial history.
     {
         host_authority source_core(config().key,config().control);
@@ -152,5 +194,76 @@ int main() {
     }
     g_main_context_unref(context);std::remove(file.c_str());std::remove((file+".host.lock").c_str());
 #endif
+    // Incremental storage preserves the exact Dataset image, including empty
+    // ranges and modulo-2^64 arithmetic, across multiple reopen/retry cycles.
+    {
+        auto file=temporary();examples::single_process_owner_backend memory;
+        auto expected=memory.create(config().key,1024,19);
+        // Start from a legacy, nonzero-version snapshot and a retained receipt.
+        wire::value v;CHECK(expected->try_dispatch(method::add_range,initial(),{wire::u(0),wire::u(4),wire::u(3)},v));
+        bytes base;CHECK(expected->capture_snapshot(base)==status::ok);
+        wire::call prior{{initial(),1,method::add_range},{wire::u(0),wire::u(4),wire::u(3)}};
+        auto prior_response=wire::encode_reply(outcome::completed,status::ok,{wire::u(1)});
+        durable::image_writer old_receipt(0x31524343);old_receipt.blob(wire::encode_call(prior.header,prior.args));old_receipt.blob(prior_response);
+        durable::image_writer identity(0x31444943);identity.number(1);identity.number(2);identity.number(3);
+        {
+            durable::sqlite_store store(file);
+            CHECK(store.commit({{"host/identity",identity.value},{"host/data",base},{"host/receipt/1/1",old_receipt.value}}).outcome==durable::commit_outcome::committed);
+        }
+        for(unsigned cycle=0;cycle<3;++cycle) {
+            backend_type b(file);auto object=b.create(config().key,2048,999);CHECK(object);
+            host_authority authority(config().key,config().control);CHECK(b.initialize(authority,config().control,128));
+            CHECK(b.execute(*object,prior)==prior_response);
+            auto conflict=prior;conflict.args[2]=wire::u(4);
+            CHECK(wire::decode_reply(b.execute(*object,conflict)).code==status::conflict);
+            bytes actual;CHECK(object->capture_snapshot(actual)==status::ok);
+            bytes reference;CHECK(expected->capture_snapshot(reference)==status::ok);CHECK(actual==reference);
+            for(unsigned i=0;i<4;++i) {
+                const id rid=10+cycle*4+i,begin=i==0 ? 0:2,end=i==0 ? 0:17,delta=i==2 ? std::numeric_limits<id>::max():7;
+                wire::call call{{initial(),rid,method::add_range},{wire::u(begin),wire::u(end),wire::u(delta)}};
+                auto result=b.execute(*object,call);CHECK(wire::decode_reply(result).code==status::ok);
+                CHECK(expected->try_dispatch(method::add_range,initial(),call.args,v));
+                CHECK(b.execute(*object,call)==result); // No second effect.
+            }
+            wire::call invalid{{initial(),100+cycle,method::add_range},{wire::u(0),wire::u(129),wire::u(1)}};
+            CHECK(wire::decode_reply(b.execute(*object,invalid)).code==status::invalid);
+            CHECK(object->capture_snapshot(actual)==status::ok && expected->capture_snapshot(reference)==status::ok && actual==reference);
+            std::vector<durable::record> deltas;CHECK(b.store->list("host/delta/",deltas));CHECK(deltas.size()==4*(cycle+1));
+            bytes head;bool found;CHECK(b.store->get("host/data",head,found)&&found);
+            migration::dataset_snapshot legacy;
+            CHECK(migration::decode(head,legacy)!=status::ok); // Old binary refuses, cannot silently read stale base.
+        }
+        // Missing/torn tail is detected using the durable head, not silently
+        // accepted as an older state. Normal commits cannot produce this image.
+        {durable::sqlite_store store(file);CHECK(store.commit({{"host/data",backend_type::manifest(1,99)}}).outcome==durable::commit_outcome::committed);}
+        {backend_type b(file);CHECK(!b.create(config().key,1024,19)&&!b.healthy());}
+        // A correctly sized log still cannot contain a wrong predecessor, or
+        // a delta pointing at a missing committed request receipt.
+        const std::string first_delta="host/delta/00000000000000000002";
+        bytes original;
+        {durable::sqlite_store store(file);bool found;CHECK(store.get(first_delta,original,found)&&found);
+            auto bad=original;bad[16]^=1;
+            CHECK(store.commit({{"host/data",backend_type::manifest(1,13)},{first_delta,bad}}).outcome==durable::commit_outcome::committed);}
+        {backend_type b(file);CHECK(!b.create(config().key,1024,19)&&!b.healthy());}
+        {durable::sqlite_store store(file);
+            durable::image_writer missing(0x314c4443);missing.number(1);missing.number(0);missing.number(0);missing.number(7);missing.number(1);missing.number(999);
+            CHECK(store.commit({{first_delta,missing.value}}).outcome==durable::commit_outcome::committed);}
+        {backend_type b(file);CHECK(!b.create(config().key,1024,19)&&!b.healthy());}
+        std::remove(file.c_str());std::remove((file+".host.lock").c_str());
+    }
+    // Legacy format upgrade itself is atomic at the existing crash boundaries.
+    for(auto point:{durable::fault_point::before_commit,durable::fault_point::after_commit}) {
+        auto file=temporary();examples::single_process_owner_backend memory;auto native=memory.create(config().key,1024,23);
+        bytes image;CHECK(native->capture_snapshot(image)==status::ok);
+        durable::image_writer identity(0x31444943);identity.number(1);identity.number(2);identity.number(3);
+        {durable::sqlite_store store(file);CHECK(store.commit({{"host/identity",identity.value},{"host/data",image}}).outcome==durable::commit_outcome::committed);}
+        auto child=fork();CHECK(child>=0);
+        if(child==0) {backend_type b(file);b.fault=crash;crash_at=point;(void)b.create(config().key,1024,23);_exit(99);}
+        int result;CHECK(waitpid(child,&result,0)==child&&WIFEXITED(result)&&WEXITSTATUS(result)==87);
+        {durable::sqlite_store store(file);bytes data;bool found;CHECK(store.get("host/data",data,found)&&found);
+            migration::dataset_snapshot decoded;CHECK((migration::decode(data,decoded)==status::ok)==(point==durable::fault_point::before_commit));}
+        {backend_type b(file);auto restored=b.create(config().key,1024,23);CHECK(restored);bytes out;CHECK(restored->capture_snapshot(out)==status::ok&&out==image);}
+        std::remove(file.c_str());std::remove((file+".host.lock").c_str());
+    }
     std::cout<<"Durable RPC replay, payload binding, Close recovery and real Drain passed\n";
 }

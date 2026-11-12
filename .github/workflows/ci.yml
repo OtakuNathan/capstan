@@ -58,7 +58,7 @@ jobs:
             options+=(-DCAPSTAN_NO_EXCEPTION_STRICT=OFF)
           fi
           cmake -S . -B build-durable "${options[@]}"
-      - run: cmake --build build-durable --target capstan_durable_host capstan_durable_table durable_store_test durable_host_test durable_table_test -j 2
+      - run: cmake --build build-durable --target capstan_durable_host capstan_durable_table durable_store_test durable_host_test durable_lifecycle_test durable_table_test -j 2
       - run: ctest --test-dir build-durable -R '^(durable_.*|noexception_policy_matrix)$' --output-on-failure
       - uses: actions/upload-artifact@v4
         if: always()
