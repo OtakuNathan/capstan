@@ -5,6 +5,7 @@
 #include <future>
 #include <cstdio>
 #include <dirent.h>
+#include <fstream>
 using backend_type=examples::sqlite_owner_backend;
 using runtime_type=basic_host_runtime<backend_type>;
 namespace {
@@ -34,6 +35,39 @@ std::size_t entries(const char* name) {
     while(auto* e=readdir(d)) if(e->d_name[0]!='.')++n;
     closedir(d);return n;
 }
+// pthread_join synchronizes C++ thread completion, but Linux may retain the
+// exiting task in /proc briefly. Do not mistake that observation window for a
+// leaked live worker. Keep a deadline so a genuinely retained thread still fails.
+bool threads_settled(std::size_t limit,std::chrono::milliseconds timeout) {
+    const auto deadline=std::chrono::steady_clock::now()+timeout;
+    do {
+        if(entries("/proc/self/task")<=limit)return true;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    } while(std::chrono::steady_clock::now()<deadline);
+    return entries("/proc/self/task")<=limit;
+}
+void dump_threads(unsigned cycle,std::size_t baseline) {
+    std::cerr<<"thread teardown deadline exceeded: cycle="<<cycle
+             <<" baseline="<<baseline<<" observed="<<entries("/proc/self/task")<<'\n';
+    auto* d=opendir("/proc/self/task");if(!d)return;
+    while(auto* e=readdir(d)) if(e->d_name[0]!='.') {
+        std::ifstream f(std::string("/proc/self/task/")+e->d_name+"/status");
+        std::string line;std::cerr<<"tid="<<e->d_name<<'\n';
+        while(std::getline(f,line))if(line.compare(0,5,"Name:")==0||line.compare(0,6,"State:")==0)std::cerr<<line<<'\n';
+    }
+    closedir(d);
+}
+void check_thread_observer() {
+    const auto baseline=entries("/proc/self/task");if(!baseline)return;
+    std::promise<void> entered,release;auto ready=entered.get_future();auto gate=release.get_future();
+    std::thread held([&]{entered.set_value();gate.wait();});
+    ready.wait();
+    // Negative control: a live retained thread must not pass bounded settling.
+    const bool falsely_settled=threads_settled(baseline,std::chrono::milliseconds(20));
+    release.set_value();held.join();
+    CHECK(!falsely_settled);
+    CHECK(threads_settled(baseline,std::chrono::milliseconds(1000)));
+}
 struct local_endpoint final:io_endpoint {
     runtime_type& host;unsigned completions=0;
     explicit local_endpoint(runtime_type& h):host(h) {}
@@ -46,7 +80,9 @@ struct local_endpoint final:io_endpoint {
 int main() {
     // The demo Host has process lifetime. Test graceful teardown only after
     // native work and its owner-loop continuations have truly drained.
-    auto path=temporary();std::size_t baseline_fds=0,baseline_threads=0;
+    check_thread_observer();
+    auto path=temporary();std::size_t baseline_fds=0;
+    const auto baseline_threads=entries("/proc/self/task");
     id version=0;bytes expected;
     for(unsigned cycle=0;cycle<32;++cycle) {
         auto* c=g_main_context_new();std::weak_ptr<backend_type> weak;
@@ -68,9 +104,16 @@ int main() {
         }
         CHECK(weak.expired()); // No posted continuation keeps the backend alive.
         while(g_main_context_iteration(c,FALSE)) {}g_main_context_unref(c);
-        const auto fds=entries("/proc/self/fd"),threads=entries("/proc/self/task");
-        if(cycle==1) {baseline_fds=fds;baseline_threads=threads;}
-        if(cycle>1) {if(baseline_fds)CHECK(fds<=baseline_fds);if(baseline_threads)CHECK(threads<=baseline_threads);}
+        const auto fds=entries("/proc/self/fd");
+        if(cycle==1)baseline_fds=fds;
+        if(cycle>1) {
+            if(baseline_fds)CHECK(fds<=baseline_fds);
+            if(baseline_threads) {
+                const bool settled=threads_settled(baseline_threads,std::chrono::milliseconds(1000));
+                if(!settled)dump_threads(cycle,baseline_threads);
+                CHECK(settled);
+            }
+        }
     }
     remove_files(path);
     // Timeout detaches only the observer. Destroying its wrapper must neither
