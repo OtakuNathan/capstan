@@ -136,6 +136,10 @@ capacity. The [latest native concurrency report](bench/concurrency/latest/README
 includes matched controls, raw samples and perf evidence. Concurrency sweeps are
 bounded experiments, not indefinite-service claims.
 
+A [matched Portal / FF dependency comparison](bench/upstream/latest/README.md)
+records four dependency combinations on the 3700X, including worker and migration
+paths. Direct upgrades showed no broad RPC speedup; the existing lock is retained.
+
 To build, verify and measure your own Linux or Apple Silicon machine, run
 `python3 scripts/bench_machine.py`. See [the machine benchmark guide](docs/benchmark-your-machine.md)
 for one-time dependencies, a quick check and the generated comparison report.

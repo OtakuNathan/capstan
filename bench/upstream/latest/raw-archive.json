@@ -1,0 +1,8 @@
+{
+  "file": "raw-results.tar.gz",
+  "sha256": "4a49fa4cf544eff06e6e1fb0bd2a641e584e428dcf22593b5d463ecb5d9eaa15",
+  "bytes": 33845772,
+  "local_path": "work/upstream-20261118/raw-results.tar.gz",
+  "remote_path": "~/capstan-upstream-20261118/raw-results.tar.gz",
+  "contents": "Full per-call CSVs, batch reports, process logs, build/test evidence, experiment scripts and exact dependency matrix. Archive is retained outside Git."
+}

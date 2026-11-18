@@ -1,0 +1,256 @@
+{
+  "baseline": {
+    "tests": 56,
+    "all_stages_passed": true,
+    "stages": [
+      {
+        "stage": "configure",
+        "command": [
+          "cmake",
+          "-S",
+          "/home/nathan/capstan-upstream-20261118/sources/baseline",
+          "-B",
+          "/home/nathan/capstan-upstream-20261118/builds/baseline",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_CXX_COMPILER=g++",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DCAPSTAN_SQLITE=ON",
+          "-DCAPSTAN_REQUIRE_GIO=ON",
+          "-DCAPSTAN_NO_EXCEPTIONS=ON",
+          "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+          "-DCAPSTAN_FAST_RUNNER=ON",
+          "-DCAPSTAN_UV_WORKER=ON",
+          "-DCAPSTAN_LTO=ON",
+          "-DCAPSTAN_NATIVE_ARCH=ON",
+          "-DCAPSTAN_ERASED_INVOCATIONS=OFF",
+          "-DCAPSTAN_SHA256_BACKEND=OPENSSL",
+          "-DCAPSTAN_LEASE_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/lease.git",
+          "-DCAPSTAN_PORTAL_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/portal.git",
+          "-DCAPSTAN_FF_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/flux_foundry.git"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0925968590017874
+      },
+      {
+        "stage": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "/home/nathan/capstan-upstream-20261118/builds/baseline",
+          "-j3"
+        ],
+        "exit_code": 0,
+        "seconds": 71.09156273600092
+      },
+      {
+        "stage": "tests",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "/home/nathan/capstan-upstream-20261118/builds/baseline",
+          "--output-on-failure",
+          "--timeout",
+          "90"
+        ],
+        "exit_code": 0,
+        "seconds": 36.22428405299797
+      }
+    ]
+  },
+  "portal": {
+    "tests": 5,
+    "all_stages_passed": true,
+    "stages": [
+      {
+        "stage": "configure",
+        "command": [
+          "cmake",
+          "-S",
+          "/home/nathan/capstan-upstream-20261118/sources/portal",
+          "-B",
+          "/home/nathan/capstan-upstream-20261118/builds/portal",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_CXX_COMPILER=g++",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DCAPSTAN_SQLITE=ON",
+          "-DCAPSTAN_REQUIRE_GIO=ON",
+          "-DCAPSTAN_NO_EXCEPTIONS=ON",
+          "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+          "-DCAPSTAN_FAST_RUNNER=ON",
+          "-DCAPSTAN_UV_WORKER=ON",
+          "-DCAPSTAN_LTO=ON",
+          "-DCAPSTAN_NATIVE_ARCH=ON",
+          "-DCAPSTAN_ERASED_INVOCATIONS=OFF",
+          "-DCAPSTAN_SHA256_BACKEND=OPENSSL",
+          "-DCAPSTAN_LEASE_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/lease.git",
+          "-DCAPSTAN_PORTAL_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/portal.git",
+          "-DCAPSTAN_FF_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/flux_foundry.git"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0360718839983747
+      },
+      {
+        "stage": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "/home/nathan/capstan-upstream-20261118/builds/portal",
+          "-j3",
+          "--target",
+          "capstan_host",
+          "capstan_table",
+          "capstan_client",
+          "capstan_throughput",
+          "capstan_migration_demo",
+          "async_typed_test",
+          "host_execution_test",
+          "worker_test"
+        ],
+        "exit_code": 0,
+        "seconds": 34.0537111679987
+      },
+      {
+        "stage": "tests",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "/home/nathan/capstan-upstream-20261118/builds/portal",
+          "--output-on-failure",
+          "--timeout",
+          "90",
+          "-R",
+          "^(async_typed_test|host_execution_test|worker_test|noexception_policy_matrix|tcp_throughput_smoke)$"
+        ],
+        "exit_code": 0,
+        "seconds": 4.210972413999116
+      }
+    ]
+  },
+  "ff": {
+    "tests": 5,
+    "all_stages_passed": true,
+    "stages": [
+      {
+        "stage": "configure",
+        "command": [
+          "cmake",
+          "-S",
+          "/home/nathan/capstan-upstream-20261118/sources/ff",
+          "-B",
+          "/home/nathan/capstan-upstream-20261118/builds/ff",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_CXX_COMPILER=g++",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DCAPSTAN_SQLITE=ON",
+          "-DCAPSTAN_REQUIRE_GIO=ON",
+          "-DCAPSTAN_NO_EXCEPTIONS=ON",
+          "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+          "-DCAPSTAN_FAST_RUNNER=ON",
+          "-DCAPSTAN_UV_WORKER=ON",
+          "-DCAPSTAN_LTO=ON",
+          "-DCAPSTAN_NATIVE_ARCH=ON",
+          "-DCAPSTAN_ERASED_INVOCATIONS=OFF",
+          "-DCAPSTAN_SHA256_BACKEND=OPENSSL",
+          "-DCAPSTAN_LEASE_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/lease.git",
+          "-DCAPSTAN_PORTAL_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/portal.git",
+          "-DCAPSTAN_FF_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/flux_foundry.git"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0941361450022669
+      },
+      {
+        "stage": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "/home/nathan/capstan-upstream-20261118/builds/ff",
+          "-j3",
+          "--target",
+          "capstan_host",
+          "capstan_table",
+          "capstan_client",
+          "capstan_throughput",
+          "capstan_migration_demo",
+          "async_typed_test",
+          "host_execution_test",
+          "worker_test"
+        ],
+        "exit_code": 0,
+        "seconds": 35.007099188998836
+      },
+      {
+        "stage": "tests",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "/home/nathan/capstan-upstream-20261118/builds/ff",
+          "--output-on-failure",
+          "--timeout",
+          "90",
+          "-R",
+          "^(async_typed_test|host_execution_test|worker_test|noexception_policy_matrix|tcp_throughput_smoke)$"
+        ],
+        "exit_code": 0,
+        "seconds": 4.071101402001659
+      }
+    ]
+  },
+  "both": {
+    "tests": 56,
+    "all_stages_passed": true,
+    "stages": [
+      {
+        "stage": "configure",
+        "command": [
+          "cmake",
+          "-S",
+          "/home/nathan/capstan-upstream-20261118/sources/both",
+          "-B",
+          "/home/nathan/capstan-upstream-20261118/builds/both",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_CXX_COMPILER=g++",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DCAPSTAN_SQLITE=ON",
+          "-DCAPSTAN_REQUIRE_GIO=ON",
+          "-DCAPSTAN_NO_EXCEPTIONS=ON",
+          "-DCAPSTAN_NO_EXCEPTION_STRICT=ON",
+          "-DCAPSTAN_FAST_RUNNER=ON",
+          "-DCAPSTAN_UV_WORKER=ON",
+          "-DCAPSTAN_LTO=ON",
+          "-DCAPSTAN_NATIVE_ARCH=ON",
+          "-DCAPSTAN_ERASED_INVOCATIONS=OFF",
+          "-DCAPSTAN_SHA256_BACKEND=OPENSSL",
+          "-DCAPSTAN_LEASE_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/lease.git",
+          "-DCAPSTAN_PORTAL_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/portal.git",
+          "-DCAPSTAN_FF_SOURCE=/home/nathan/capstan-upstream-20261118/deps-source/flux_foundry.git"
+        ],
+        "exit_code": 0,
+        "seconds": 1.1980287349979335
+      },
+      {
+        "stage": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "/home/nathan/capstan-upstream-20261118/builds/both",
+          "-j3"
+        ],
+        "exit_code": 0,
+        "seconds": 70.83237405099862
+      },
+      {
+        "stage": "tests",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "/home/nathan/capstan-upstream-20261118/builds/both",
+          "--output-on-failure",
+          "--timeout",
+          "90"
+        ],
+        "exit_code": 0,
+        "seconds": 36.37777628200274
+      }
+    ]
+  }
+}

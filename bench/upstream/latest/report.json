@@ -1,0 +1,9149 @@
+{
+  "experiment": {
+    "capstan_commit": "602ab1666c8a8b2784577d9b60410183568c894f",
+    "variants": {
+      "baseline": {
+        "schema_version": 1,
+        "verified_at": "2026-11-18",
+        "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+        "dependencies": [
+          {
+            "name": "portal",
+            "repository": "https://github.com/OtakuNathan/portal.git",
+            "commit": "7a6f53bbc30d3b4159e36de138486bffe90f3e62"
+          },
+          {
+            "name": "flux_foundry",
+            "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+            "commit": "2be3825e7958c08634c71da41392f219efd5c1bf"
+          },
+          {
+            "name": "lease",
+            "repository": "https://github.com/OtakuNathan/lease.git",
+            "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+          }
+        ]
+      },
+      "portal": {
+        "schema_version": 1,
+        "verified_at": "2026-11-18",
+        "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+        "dependencies": [
+          {
+            "name": "portal",
+            "repository": "https://github.com/OtakuNathan/portal.git",
+            "commit": "7c0ac2fded1a8937996f55fde7234143dd90be9e"
+          },
+          {
+            "name": "flux_foundry",
+            "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+            "commit": "2be3825e7958c08634c71da41392f219efd5c1bf"
+          },
+          {
+            "name": "lease",
+            "repository": "https://github.com/OtakuNathan/lease.git",
+            "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+          }
+        ]
+      },
+      "ff": {
+        "schema_version": 1,
+        "verified_at": "2026-11-18",
+        "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+        "dependencies": [
+          {
+            "name": "portal",
+            "repository": "https://github.com/OtakuNathan/portal.git",
+            "commit": "7a6f53bbc30d3b4159e36de138486bffe90f3e62"
+          },
+          {
+            "name": "flux_foundry",
+            "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+            "commit": "030bd9e7c8e833392267832517ff352b2d49444d"
+          },
+          {
+            "name": "lease",
+            "repository": "https://github.com/OtakuNathan/lease.git",
+            "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+          }
+        ]
+      },
+      "both": {
+        "schema_version": 1,
+        "verified_at": "2026-11-18",
+        "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+        "dependencies": [
+          {
+            "name": "portal",
+            "repository": "https://github.com/OtakuNathan/portal.git",
+            "commit": "7c0ac2fded1a8937996f55fde7234143dd90be9e"
+          },
+          {
+            "name": "flux_foundry",
+            "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+            "commit": "030bd9e7c8e833392267832517ff352b2d49444d"
+          },
+          {
+            "name": "lease",
+            "repository": "https://github.com/OtakuNathan/lease.git",
+            "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+          }
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1646779647
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.89,
+        "p95_us": 38.65,
+        "p99_us": 60.33
+      },
+      "success_per_second": 30362.289266257856,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1589067536
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 27.0,
+        "p95_us": 36.31,
+        "p99_us": 46.16
+      },
+      "success_per_second": 31464.99369426423,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1603390718
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.82,
+        "p95_us": 35.97,
+        "p99_us": 43.37
+      },
+      "success_per_second": 31183.915086129367,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1661782492
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 28.31,
+        "p95_us": 40.35,
+        "p99_us": 50.679
+      },
+      "success_per_second": 30088.173536973332,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1020606952
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.07,
+        "p95_us": 46.77,
+        "p99_us": 60.62
+      },
+      "success_per_second": 48990.45602425017,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 978900080
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 33.3,
+        "p95_us": 43.29,
+        "p99_us": 53.45
+      },
+      "success_per_second": 51077.73614647166,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 993808574
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.789,
+        "p95_us": 43.39,
+        "p99_us": 58.15
+      },
+      "success_per_second": 50311.49992875791,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1014790872
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.93,
+        "p95_us": 45.99,
+        "p99_us": 59.049
+      },
+      "success_per_second": 49271.235462985125,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 800560084
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 55.2,
+        "p95_us": 74.21,
+        "p99_us": 99.39
+      },
+      "success_per_second": 62456.27405025605,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 906501262
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 66.6,
+        "p95_us": 97.409,
+        "p99_us": 142.209
+      },
+      "success_per_second": 55157.121226379495,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 865674642
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 65.47,
+        "p95_us": 89.64,
+        "p99_us": 129.81
+      },
+      "success_per_second": 57758.42051291136,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 793191799
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 56.26,
+        "p95_us": 71.67,
+        "p99_us": 89.08
+      },
+      "success_per_second": 63036.4560791431,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 882902662
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 128.02,
+        "p95_us": 190.569,
+        "p99_us": 226.379
+      },
+      "success_per_second": 56631.384355255235,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 889120174
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 143.52,
+        "p95_us": 166.059,
+        "p99_us": 213.609
+      },
+      "success_per_second": 56235.36779629972,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 842304278
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 116.109,
+        "p95_us": 163.909,
+        "p99_us": 199.329
+      },
+      "success_per_second": 59360.971214252815,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 854965161
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 121.599,
+        "p95_us": 163.999,
+        "p99_us": 197.529
+      },
+      "success_per_second": 58481.91514788519,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 925197473
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 263.999,
+        "p95_us": 353.389,
+        "p99_us": 423.048
+      },
+      "success_per_second": 54042.516823865124,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 906596843
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 261.429,
+        "p95_us": 345.349,
+        "p99_us": 401.718
+      },
+      "success_per_second": 55151.306102662,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 930243479
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 267.788,
+        "p95_us": 347.689,
+        "p99_us": 423.498
+      },
+      "success_per_second": 53749.3689864393,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 947367415
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 272.018,
+        "p95_us": 348.679,
+        "p99_us": 426.889
+      },
+      "success_per_second": 52777.833824905196,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1120992885
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 656.227,
+        "p95_us": 849.456,
+        "p99_us": 938.566
+      },
+      "success_per_second": 44603.31610400899,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1183718408
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 711.657,
+        "p95_us": 865.596,
+        "p99_us": 1001.876
+      },
+      "success_per_second": 42239.775661239866,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1117287137
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 665.228,
+        "p95_us": 842.487,
+        "p99_us": 1036.596
+      },
+      "success_per_second": 44751.25358934478,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1079668991
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 666.467,
+        "p95_us": 834.176,
+        "p99_us": 1002.486
+      },
+      "success_per_second": 46310.48998979725,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1283433994
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1175.445,
+        "p95_us": 1478.124,
+        "p99_us": 1591.863
+      },
+      "success_per_second": 38957.9832182628,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1257628131
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1174.165,
+        "p95_us": 1462.004,
+        "p99_us": 1639.513
+      },
+      "success_per_second": 39757.38039530224,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1266823148
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1177.645,
+        "p95_us": 1466.404,
+        "p99_us": 1607.564
+      },
+      "success_per_second": 39468.80831703906,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1327708578
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1187.975,
+        "p95_us": 1516.703,
+        "p99_us": 1768.543
+      },
+      "success_per_second": 37658.86643235953,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1293359579
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2428.939,
+        "p95_us": 3290.266,
+        "p99_us": 4105.822
+      },
+      "success_per_second": 395.86825528896475,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1308827611
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2444.91,
+        "p95_us": 3283.816,
+        "p99_us": 3979.754
+      },
+      "success_per_second": 391.18979130399777,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1335072026
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2498.73,
+        "p95_us": 3431.555,
+        "p99_us": 4284.303
+      },
+      "success_per_second": 383.4999086408841,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1323110494
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2480.189,
+        "p95_us": 3402.856,
+        "p99_us": 4194.833
+      },
+      "success_per_second": 386.96692553025736,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1297803594
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 19795.307,
+        "p95_us": 22116.228,
+        "p99_us": 22663.245
+      },
+      "success_per_second": 394.51270004727695,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1293840927
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 19790.878,
+        "p95_us": 21993.359,
+        "p99_us": 22671.656
+      },
+      "success_per_second": 395.7209803118247,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1296869010
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 19962.257,
+        "p95_us": 22016.219,
+        "p99_us": 22617.226
+      },
+      "success_per_second": 394.79700420939196,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1304628503
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 20164.817,
+        "p95_us": 22038.858,
+        "p99_us": 22995.655
+      },
+      "success_per_second": 392.44888397168495,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1298821843
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 81138.016,
+        "p95_us": 83142.788,
+        "p99_us": 83528.075
+      },
+      "success_per_second": 394.2034103902886,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1298328080
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 81114.977,
+        "p95_us": 82871.539,
+        "p99_us": 83333.386
+      },
+      "success_per_second": 394.35332862861594,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1297902478
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 80692.818,
+        "p95_us": 83778.087,
+        "p99_us": 85481.71
+      },
+      "success_per_second": 394.4826430942372,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1303069791
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 81427.177,
+        "p95_us": 83689.398,
+        "p99_us": 84746.614
+      },
+      "success_per_second": 392.9183252779436,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1089653087
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 31.04,
+        "p95_us": 41.76,
+        "p99_us": 54.13
+      },
+      "success_per_second": 27531.69826058594,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1174769062
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 35.02,
+        "p95_us": 43.59,
+        "p99_us": 54.66
+      },
+      "success_per_second": 25536.933998692588,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1152858143
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 33.76,
+        "p95_us": 42.48,
+        "p99_us": 53.97
+      },
+      "success_per_second": 26022.28225749714,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1165789615
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 35.26,
+        "p95_us": 43.19,
+        "p99_us": 54.81
+      },
+      "success_per_second": 25733.631192108365,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 582293859
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 139.239,
+        "p95_us": 192.959,
+        "p99_us": 224.419
+      },
+      "success_per_second": 51520.37847611922,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 570206901
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 134.569,
+        "p95_us": 192.989,
+        "p99_us": 222.449
+      },
+      "success_per_second": 52612.481447326434,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 586887469
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 143.299,
+        "p95_us": 198.209,
+        "p99_us": 232.97
+      },
+      "success_per_second": 51117.124806084415,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 597798849
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 157.919,
+        "p95_us": 199.469,
+        "p99_us": 224.27
+      },
+      "success_per_second": 50184.10465357052,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 690292911
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 679.087,
+        "p95_us": 857.896,
+        "p99_us": 1039.526
+      },
+      "success_per_second": 43459.811801544056,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 678240944
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 680.287,
+        "p95_us": 879.566,
+        "p99_us": 1016.276
+      },
+      "success_per_second": 44232.06865553077,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 662488801
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 670.688,
+        "p95_us": 860.746,
+        "p99_us": 1033.036
+      },
+      "success_per_second": 45283.7843518505,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 694615708
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 689.187,
+        "p95_us": 899.006,
+        "p99_us": 1079.286
+      },
+      "success_per_second": 43189.348663563476,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 0,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1255802751
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1171.315,
+        "p95_us": 1435.754,
+        "p99_us": 1626.694
+      },
+      "success_per_second": 39815.16998603867,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1236786570
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1169.475,
+        "p95_us": 1269.345,
+        "p99_us": 1457.475
+      },
+      "success_per_second": 40427.34713718633,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1274010829
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1185.096,
+        "p95_us": 1460.704,
+        "p99_us": 1633.604
+      },
+      "success_per_second": 39246.13422575547,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1262144751
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1162.185,
+        "p95_us": 1454.665,
+        "p99_us": 1574.214
+      },
+      "success_per_second": 39615.10750679341,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1086273617
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 663.047,
+        "p95_us": 850.377,
+        "p99_us": 1140.566
+      },
+      "success_per_second": 46028.91869737825,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1108981309
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 669.977,
+        "p95_us": 863.797,
+        "p99_us": 993.536
+      },
+      "success_per_second": 45086.42264231344,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1138094958
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 671.867,
+        "p95_us": 908.297,
+        "p99_us": 1093.456
+      },
+      "success_per_second": 43933.06520561881,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1072533035
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 641.577,
+        "p95_us": 833.887,
+        "p99_us": 912.997
+      },
+      "success_per_second": 46618.610679903206,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 909275781
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 269.729,
+        "p95_us": 352.559,
+        "p99_us": 416.878
+      },
+      "success_per_second": 54988.81752355835,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 912888605
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 260.739,
+        "p95_us": 338.119,
+        "p99_us": 424.748
+      },
+      "success_per_second": 54771.19522156814,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 929127770
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 261.969,
+        "p95_us": 360.139,
+        "p99_us": 427.118
+      },
+      "success_per_second": 53813.911944532665,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 967078492
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 325.669,
+        "p95_us": 359.528,
+        "p99_us": 463.669
+      },
+      "success_per_second": 51702.11147659356,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 841030287
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 121.23,
+        "p95_us": 157.089,
+        "p99_us": 191.469
+      },
+      "success_per_second": 59450.891094960054,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 890403684
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 143.77,
+        "p95_us": 152.739,
+        "p99_us": 202.609
+      },
+      "success_per_second": 56154.30495006802,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 860337808
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 142.129,
+        "p95_us": 164.18,
+        "p99_us": 201.579
+      },
+      "success_per_second": 58116.706641352204,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 871229963
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 143.359,
+        "p95_us": 159.089,
+        "p99_us": 204.979
+      },
+      "success_per_second": 57390.1290399031,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 812615965
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 56.19,
+        "p95_us": 79.09,
+        "p99_us": 112.46
+      },
+      "success_per_second": 61529.67964393857,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 784838107
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 54.58,
+        "p95_us": 76.659,
+        "p99_us": 105.699
+      },
+      "success_per_second": 63707.40609311418,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 857945495
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 65.939,
+        "p95_us": 87.61,
+        "p99_us": 112.43
+      },
+      "success_per_second": 58278.760470675355,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 807545362
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 54.439,
+        "p95_us": 85.659,
+        "p99_us": 114.42
+      },
+      "success_per_second": 61916.02645846166,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1081700601
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 35.06,
+        "p95_us": 50.929,
+        "p99_us": 73.819
+      },
+      "success_per_second": 46223.51134295062,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1041947362
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.22,
+        "p95_us": 48.07,
+        "p99_us": 65.81
+      },
+      "success_per_second": 47987.069043512776,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1052676453
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.78,
+        "p95_us": 47.46,
+        "p99_us": 66.159
+      },
+      "success_per_second": 47497.97514469529,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1081134976
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.75,
+        "p95_us": 56.1,
+        "p99_us": 83.939
+      },
+      "success_per_second": 46247.69442293947,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1708521849
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 28.519,
+        "p95_us": 41.829,
+        "p99_us": 58.19
+      },
+      "success_per_second": 29265.063264637243,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1602351609
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.65,
+        "p95_us": 36.71,
+        "p99_us": 53.619
+      },
+      "success_per_second": 31204.137543322428,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1600551007
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.94,
+        "p95_us": 37.13,
+        "p99_us": 56.59
+      },
+      "success_per_second": 31239.241849416423,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1601032188
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.61,
+        "p95_us": 36.86,
+        "p99_us": 53.05
+      },
+      "success_per_second": 31229.85307525872,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1357921017
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 83842.641,
+        "p95_us": 93446.055,
+        "p99_us": 97033.062
+      },
+      "success_per_second": 377.0469663479698,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1341568271
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 82669.926,
+        "p95_us": 87179.778,
+        "p99_us": 92785.678
+      },
+      "success_per_second": 381.64289590596616,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1311544737
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 81802.12,
+        "p95_us": 84655.37,
+        "p99_us": 85130.497
+      },
+      "success_per_second": 390.37936378071106,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1369210900
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 82482.618,
+        "p95_us": 102533.624,
+        "p99_us": 118048.968
+      },
+      "success_per_second": 373.9380105723669,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1335453099
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 20412.526,
+        "p95_us": 23512.854,
+        "p99_us": 29663.632
+      },
+      "success_per_second": 383.39047652320437,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1300716498
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 20023.888,
+        "p95_us": 22404.419,
+        "p99_us": 23714.214
+      },
+      "success_per_second": 393.6292042018829,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1367847830
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 20985.273,
+        "p95_us": 24275.102,
+        "p99_us": 25367.788
+      },
+      "success_per_second": 374.31064243454625,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1349597619
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 20713.985,
+        "p95_us": 24393.572,
+        "p99_us": 26125.405
+      },
+      "success_per_second": 379.3723349774226,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1406552710
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2565.241,
+        "p95_us": 3683.176,
+        "p99_us": 4488.234
+      },
+      "success_per_second": 364.01053182002687,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1361258588
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2521.601,
+        "p95_us": 3410.707,
+        "p99_us": 4317.325
+      },
+      "success_per_second": 376.12251229374795,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1392044533
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2503.381,
+        "p95_us": 3971.016,
+        "p99_us": 4695.734
+      },
+      "success_per_second": 367.80432512211877,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1362750881
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2519.741,
+        "p95_us": 3417.258,
+        "p99_us": 3943.476
+      },
+      "success_per_second": 375.71063584584834,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 738273099
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 753.637,
+        "p95_us": 899.587,
+        "p99_us": 1027.226
+      },
+      "success_per_second": 40635.36927003756,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 818154409
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 875.137,
+        "p95_us": 1000.357,
+        "p99_us": 1136.426
+      },
+      "success_per_second": 36667.89504522489,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 695608400
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 690.617,
+        "p95_us": 930.357,
+        "p99_us": 1099.106
+      },
+      "success_per_second": 43127.71381139158,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 708421120
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 709.767,
+        "p95_us": 942.067,
+        "p99_us": 1150.775
+      },
+      "success_per_second": 42347.69285252252,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 594960646
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 152.53,
+        "p95_us": 198.239,
+        "p99_us": 244.509
+      },
+      "success_per_second": 50423.503137046144,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 596235754
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 141.569,
+        "p95_us": 216.43,
+        "p99_us": 297.669
+      },
+      "success_per_second": 50315.66758406776,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 687765425
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 162.029,
+        "p95_us": 242.559,
+        "p99_us": 453.278
+      },
+      "success_per_second": 43619.523328030045,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 606151196
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 153.349,
+        "p95_us": 200.239,
+        "p99_us": 282.119
+      },
+      "success_per_second": 49492.60217247843,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1348247965
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 37.9,
+        "p95_us": 58.33,
+        "p99_us": 105.909
+      },
+      "success_per_second": 22251.099781930694,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1217201497
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 35.599,
+        "p95_us": 49.07,
+        "p99_us": 74.66
+      },
+      "success_per_second": 24646.699888178005,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1306779228
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 37.139,
+        "p95_us": 57.05,
+        "p99_us": 96.3
+      },
+      "success_per_second": 22957.20605072244,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1260287923
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 35.86,
+        "p95_us": 54.119,
+        "p99_us": 86.109
+      },
+      "success_per_second": 23804.08433065656,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 1,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1072459977
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 33.67,
+        "p95_us": 56.23,
+        "p99_us": 95.699
+      },
+      "success_per_second": 46621.78642774657,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1198120622
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 35.53,
+        "p95_us": 66.9,
+        "p99_us": 126.37
+      },
+      "success_per_second": 41732.02520839342,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1085303243
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 34.59,
+        "p95_us": 54.749,
+        "p99_us": 83.06
+      },
+      "success_per_second": 46070.073338940536,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c2",
+      "workload": "version",
+      "concurrency": 2,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 2,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1067204915
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 35.04,
+        "p95_us": 53.55,
+        "p99_us": 83.77
+      },
+      "success_per_second": 46851.35843850569,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 883772105
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 65.22,
+        "p95_us": 94.229,
+        "p99_us": 127.92
+      },
+      "success_per_second": 56575.67116807788,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 833342075
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 58.459,
+        "p95_us": 82.33,
+        "p99_us": 106.58
+      },
+      "success_per_second": 59999.37060660234,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 812260003
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 60.44,
+        "p95_us": 75.11,
+        "p99_us": 99.35
+      },
+      "success_per_second": 61556.64419684592,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c4",
+      "workload": "version",
+      "concurrency": 4,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 4,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 861058522
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 67.39,
+        "p95_us": 75.16,
+        "p99_us": 109.799
+      },
+      "success_per_second": 58068.062416784254,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 881540529
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 143.97,
+        "p95_us": 169.94,
+        "p99_us": 218.799
+      },
+      "success_per_second": 56718.88966548014,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 908656944
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 144.029,
+        "p95_us": 169.68,
+        "p99_us": 217.249
+      },
+      "success_per_second": 55026.26742706101,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 881776592
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 121.0,
+        "p95_us": 182.93,
+        "p99_us": 223.089
+      },
+      "success_per_second": 56703.70528502303,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 808701327
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 116.339,
+        "p95_us": 153.28,
+        "p99_us": 202.01
+      },
+      "success_per_second": 61827.523129562025,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 923137856
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 268.809,
+        "p95_us": 344.459,
+        "p99_us": 435.498
+      },
+      "success_per_second": 54163.091324899586,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 914215353
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 266.779,
+        "p95_us": 341.189,
+        "p99_us": 405.419
+      },
+      "success_per_second": 54691.70894573677,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 919217984
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 259.83,
+        "p95_us": 358.019,
+        "p99_us": 433.039
+      },
+      "success_per_second": 54394.061985627995,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c16",
+      "workload": "version",
+      "concurrency": 16,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 16,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 952084981
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 286.939,
+        "p95_us": 355.689,
+        "p99_us": 453.599
+      },
+      "success_per_second": 52516.320494294196,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1120957525
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 655.758,
+        "p95_us": 861.697,
+        "p99_us": 997.557
+      },
+      "success_per_second": 44604.7230915373,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1110481950
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 657.838,
+        "p95_us": 844.697,
+        "p99_us": 995.987
+      },
+      "success_per_second": 45025.495461677696,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1107912009
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 668.108,
+        "p95_us": 845.837,
+        "p99_us": 1032.067
+      },
+      "success_per_second": 45129.937751220816,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1115860192
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 668.937,
+        "p95_us": 863.627,
+        "p99_us": 1036.217
+      },
+      "success_per_second": 44808.480810112094,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1257157366
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1176.416,
+        "p95_us": 1371.015,
+        "p99_us": 1597.615
+      },
+      "success_per_second": 39772.26825555584,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1245938075
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1171.406,
+        "p95_us": 1296.936,
+        "p99_us": 1610.385
+      },
+      "success_per_second": 40130.40535742517,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1261775616
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1173.806,
+        "p95_us": 1451.745,
+        "p99_us": 1591.115
+      },
+      "success_per_second": 39626.69698635229,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c48",
+      "workload": "version",
+      "concurrency": 48,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 48,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1279694949
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 1177.817,
+        "p95_us": 1488.715,
+        "p99_us": 1639.435
+      },
+      "success_per_second": 39071.81163688409,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1703870960
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 28.34,
+        "p95_us": 41.81,
+        "p99_us": 65.68
+      },
+      "success_per_second": 29344.945229889945,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1761544075
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 29.129,
+        "p95_us": 44.26,
+        "p99_us": 72.85
+      },
+      "success_per_second": 28384.189024620347,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1667408393
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 27.19,
+        "p95_us": 38.93,
+        "p99_us": 59.75
+      },
+      "success_per_second": 29986.654865062803,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 50000,
+        "ok": 50000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1704295724
+      },
+      "latency": {
+        "n": 50000,
+        "p50_us": 26.79,
+        "p95_us": 45.33,
+        "p99_us": 78.77
+      },
+      "success_per_second": 29337.63154826762,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        51002,
+        51002,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 50000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1393113345
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 21008.972,
+        "p95_us": 26110.626,
+        "p99_us": 31623.168
+      },
+      "success_per_second": 367.52214156702377,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1436870868
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 21543.601,
+        "p95_us": 29418.236,
+        "p99_us": 36863.682
+      },
+      "success_per_second": 356.329863317961,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1530374025
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 23422.876,
+        "p95_us": 28946.278,
+        "p99_us": 30646.952
+      },
+      "success_per_second": 334.5587363847214,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c8",
+      "workload": "summary",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1484482827
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 22599.318,
+        "p95_us": 28304.8,
+        "p99_us": 30046.445
+      },
+      "success_per_second": 344.90126169711493,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1382190506
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 86263.297,
+        "p95_us": 91442.69,
+        "p99_us": 92096.148
+      },
+      "success_per_second": 370.42650617077817,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1418536675
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 84898.612,
+        "p95_us": 108514.688,
+        "p99_us": 111271.459
+      },
+      "success_per_second": 360.9353279498396,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1523542777
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 92373.059,
+        "p95_us": 111560.158,
+        "p99_us": 114770.648
+      },
+      "success_per_second": 336.0588279694886,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c32",
+      "workload": "summary",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1472458674
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 91481.813,
+        "p95_us": 96868.116,
+        "p99_us": 98436.101
+      },
+      "success_per_second": 347.7177383927041,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1441188037
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2639.392,
+        "p95_us": 3774.228,
+        "p99_us": 4435.556
+      },
+      "success_per_second": 355.26245490199,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1397564537
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2615.782,
+        "p95_us": 3575.169,
+        "p99_us": 4361.357
+      },
+      "success_per_second": 366.3515969710099,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1370494496
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2568.092,
+        "p95_us": 3440.029,
+        "p99_us": 4199.317
+      },
+      "success_per_second": 373.587782726856,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "summary-r0-c1",
+      "workload": "summary",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 512,
+        "ok": 512,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1458700464
+      },
+      "latency": {
+        "n": 512,
+        "p50_us": 2697.581,
+        "p95_us": 3855.398,
+        "p99_us": 4665.196
+      },
+      "success_per_second": 350.99735184563565,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        522,
+        522,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 512
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 1
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 621621407
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 156.89,
+        "p95_us": 190.91,
+        "p99_us": 271.22
+      },
+      "success_per_second": 48260.88622781294,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 629297996
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 158.37,
+        "p95_us": 209.73,
+        "p99_us": 256.069
+      },
+      "success_per_second": 47672.16833787597,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 607635346
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 155.5,
+        "p95_us": 186.15,
+        "p99_us": 228.18
+      },
+      "success_per_second": 49371.71643731206,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c8",
+      "workload": "version-worker",
+      "concurrency": 8,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 8,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 597000391
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 152.18,
+        "p95_us": 184.799,
+        "p99_us": 222.489
+      },
+      "success_per_second": 50251.22336980178,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 779980882
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 835.207,
+        "p95_us": 1029.477,
+        "p99_us": 1194.597
+      },
+      "success_per_second": 38462.481186814526,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 699914452
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 695.038,
+        "p95_us": 943.477,
+        "p99_us": 1098.976
+      },
+      "success_per_second": 42862.381129972724,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 763701280
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 778.138,
+        "p95_us": 1049.246,
+        "p99_us": 1264.786
+      },
+      "success_per_second": 39282.3749097291,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c32",
+      "workload": "version-worker",
+      "concurrency": 32,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 32,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 766231298
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 777.268,
+        "p95_us": 1011.977,
+        "p99_us": 1200.166
+      },
+      "success_per_second": 39152.66849358064,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1282135480
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 36.38,
+        "p95_us": 57.49,
+        "p99_us": 97.039
+      },
+      "success_per_second": 23398.463319960538,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "both",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1311404732
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 37.05,
+        "p95_us": 56.33,
+        "p99_us": 96.4
+      },
+      "success_per_second": 22876.232842508914,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "ff",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1264328307
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 37.299,
+        "p95_us": 49.369,
+        "p99_us": 70.659
+      },
+      "success_per_second": 23728.01418263271,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "portal",
+      "cycle": 2,
+      "inline_version": 0
+    },
+    {
+      "name": "version-r0-c1",
+      "workload": "version-worker",
+      "concurrency": 1,
+      "repeat": 0,
+      "counters": {
+        "concurrency": 1,
+        "attempts": 30000,
+        "ok": 30000,
+        "errors": 0,
+        "warm_errors": 0,
+        "wall_ns": 1218201428
+      },
+      "latency": {
+        "n": 30000,
+        "p50_us": 35.45,
+        "p95_us": 49.09,
+        "p99_us": 73.63
+      },
+      "success_per_second": 24626.469244296437,
+      "host_before": [
+        1,
+        1,
+        0,
+        4,
+        0,
+        1,
+        0
+      ],
+      "host_after": [
+        30130,
+        30130,
+        0,
+        5,
+        0,
+        1,
+        0
+      ],
+      "status_counts": {
+        "ok": 30000
+      },
+      "variant": "baseline",
+      "cycle": 2,
+      "inline_version": 0
+    }
+  ],
+  "summary": [
+    {
+      "workload": "summary",
+      "connections": 1,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 376.12251229374795,
+      "rpc_s_min": 350.99735184563565,
+      "rpc_s_max": 395.86825528896475,
+      "p50_us_median": 2521.601,
+      "p95_us_median": 3410.707,
+      "p99_us_median": 4317.325,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "summary",
+      "connections": 1,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 367.80432512211877,
+      "rpc_s_min": 355.26245490199,
+      "rpc_s_max": 386.96692553025736,
+      "p50_us_median": 2503.381,
+      "p95_us_median": 3774.228,
+      "p99_us_median": 4435.556,
+      "rpc_s_change_pct": -2.211563227338209,
+      "p99_change_pct": 2.73852443353233
+    },
+    {
+      "workload": "summary",
+      "connections": 1,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 375.71063584584834,
+      "rpc_s_min": 366.3515969710099,
+      "rpc_s_max": 383.4999086408841,
+      "p50_us_median": 2519.741,
+      "p95_us_median": 3431.555,
+      "p99_us_median": 4284.303,
+      "rpc_s_change_pct": -0.10950592810512472,
+      "p99_change_pct": -0.7648717666610683
+    },
+    {
+      "workload": "summary",
+      "connections": 1,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 373.587782726856,
+      "rpc_s_min": 364.01053182002687,
+      "rpc_s_max": 391.18979130399777,
+      "p50_us_median": 2565.241,
+      "p95_us_median": 3440.029,
+      "p99_us_median": 4199.317,
+      "rpc_s_change_pct": -0.6739106232791392,
+      "p99_change_pct": -2.733359198114571
+    },
+    {
+      "workload": "summary",
+      "connections": 8,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 374.31064243454625,
+      "rpc_s_min": 356.329863317961,
+      "rpc_s_max": 392.44888397168495,
+      "p50_us_median": 20985.273,
+      "p95_us_median": 24275.102,
+      "p99_us_median": 25367.788,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "summary",
+      "connections": 8,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 379.3723349774226,
+      "rpc_s_min": 334.5587363847214,
+      "rpc_s_max": 394.79700420939196,
+      "p50_us_median": 20713.985,
+      "p95_us_median": 24393.572,
+      "p99_us_median": 26125.405,
+      "rpc_s_change_pct": 1.3522705392384093,
+      "p99_change_pct": 2.986531580916707
+    },
+    {
+      "workload": "summary",
+      "connections": 8,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 383.39047652320437,
+      "rpc_s_min": 344.90126169711493,
+      "rpc_s_max": 395.7209803118247,
+      "p50_us_median": 20412.526,
+      "p95_us_median": 23512.854,
+      "p99_us_median": 29663.632,
+      "rpc_s_change_pct": 2.4257483115099676,
+      "p99_change_pct": 16.934247479520103
+    },
+    {
+      "workload": "summary",
+      "connections": 8,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 393.6292042018829,
+      "rpc_s_min": 367.52214156702377,
+      "rpc_s_max": 394.51270004727695,
+      "p50_us_median": 20023.888,
+      "p95_us_median": 22404.419,
+      "p99_us_median": 23714.214,
+      "rpc_s_change_pct": 5.161104060971167,
+      "p99_change_pct": -6.518400421826298
+    },
+    {
+      "workload": "summary",
+      "connections": 32,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 373.9380105723669,
+      "rpc_s_min": 370.42650617077817,
+      "rpc_s_max": 394.4826430942372,
+      "p50_us_median": 82482.618,
+      "p95_us_median": 91442.69,
+      "p99_us_median": 92096.148,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "summary",
+      "connections": 32,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 377.0469663479698,
+      "rpc_s_min": 360.9353279498396,
+      "rpc_s_max": 394.35332862861594,
+      "p50_us_median": 83842.641,
+      "p95_us_median": 93446.055,
+      "p99_us_median": 97033.062,
+      "rpc_s_change_pct": 0.8314094014791884,
+      "p99_change_pct": 5.360608567472336
+    },
+    {
+      "workload": "summary",
+      "connections": 32,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 381.64289590596616,
+      "rpc_s_min": 336.0588279694886,
+      "rpc_s_max": 394.2034103902886,
+      "p50_us_median": 82669.926,
+      "p95_us_median": 87179.778,
+      "p99_us_median": 92785.678,
+      "rpc_s_change_pct": 2.0604712855496476,
+      "p99_change_pct": 0.7487066668629749
+    },
+    {
+      "workload": "summary",
+      "connections": 32,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 390.37936378071106,
+      "rpc_s_min": 347.7177383927041,
+      "rpc_s_max": 392.9183252779436,
+      "p50_us_median": 81802.12,
+      "p95_us_median": 84655.37,
+      "p99_us_median": 85130.497,
+      "rpc_s_change_pct": 4.3968125046122575,
+      "p99_change_pct": -7.563455314113677
+    },
+    {
+      "workload": "version",
+      "connections": 1,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 30362.289266257856,
+      "rpc_s_min": 29337.63154826762,
+      "rpc_s_max": 31204.137543322428,
+      "p50_us_median": 26.79,
+      "p95_us_median": 38.65,
+      "p99_us_median": 60.33,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 1,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 30088.173536973332,
+      "rpc_s_min": 29344.945229889945,
+      "rpc_s_max": 31239.241849416423,
+      "p50_us_median": 28.31,
+      "p95_us_median": 40.35,
+      "p99_us_median": 56.59,
+      "rpc_s_change_pct": -0.9028164078166312,
+      "p99_change_pct": -6.199237526935186
+    },
+    {
+      "workload": "version",
+      "connections": 1,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 31183.915086129367,
+      "rpc_s_min": 28384.189024620347,
+      "rpc_s_max": 31229.85307525872,
+      "p50_us_median": 26.82,
+      "p95_us_median": 36.86,
+      "p99_us_median": 53.05,
+      "rpc_s_change_pct": 2.706073355228189,
+      "p99_change_pct": -12.066965025692033
+    },
+    {
+      "workload": "version",
+      "connections": 1,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 29986.654865062803,
+      "rpc_s_min": 29265.063264637243,
+      "rpc_s_max": 31464.99369426423,
+      "p50_us_median": 27.19,
+      "p95_us_median": 38.93,
+      "p99_us_median": 58.19,
+      "rpc_s_change_pct": -1.2371741732020936,
+      "p99_change_pct": -3.5471573015083746
+    },
+    {
+      "workload": "version",
+      "connections": 2,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 47497.97514469529,
+      "rpc_s_min": 41732.02520839342,
+      "rpc_s_max": 49271.235462985125,
+      "p50_us_median": 34.93,
+      "p95_us_median": 47.46,
+      "p99_us_median": 66.159,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 2,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 46247.69442293947,
+      "rpc_s_min": 46070.073338940536,
+      "rpc_s_max": 50311.49992875791,
+      "p50_us_median": 34.75,
+      "p95_us_median": 54.749,
+      "p99_us_median": 83.06,
+      "rpc_s_change_pct": -2.6322821508643846,
+      "p99_change_pct": 25.54603304161187
+    },
+    {
+      "workload": "version",
+      "connections": 2,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 46851.35843850569,
+      "rpc_s_min": 46223.51134295062,
+      "rpc_s_max": 51077.73614647166,
+      "p50_us_median": 35.04,
+      "p95_us_median": 50.929,
+      "p99_us_median": 73.819,
+      "rpc_s_change_pct": -1.3613563614444213,
+      "p99_change_pct": 11.578167747396417
+    },
+    {
+      "workload": "version",
+      "connections": 2,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 47987.069043512776,
+      "rpc_s_min": 46621.78642774657,
+      "rpc_s_max": 48990.45602425017,
+      "p50_us_median": 34.07,
+      "p95_us_median": 48.07,
+      "p99_us_median": 65.81,
+      "rpc_s_change_pct": 1.0297152611822735,
+      "p99_change_pct": -0.5275170422769482
+    },
+    {
+      "workload": "version",
+      "connections": 4,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 57758.42051291136,
+      "rpc_s_min": 56575.67116807788,
+      "rpc_s_max": 61916.02645846166,
+      "p50_us_median": 65.22,
+      "p95_us_median": 89.64,
+      "p99_us_median": 127.92,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 4,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 59999.37060660234,
+      "rpc_s_min": 55157.121226379495,
+      "rpc_s_max": 61529.67964393857,
+      "p50_us_median": 58.459,
+      "p95_us_median": 82.33,
+      "p99_us_median": 112.46,
+      "rpc_s_change_pct": 3.8798673401916117,
+      "p99_change_pct": -12.085678549093192
+    },
+    {
+      "workload": "version",
+      "connections": 4,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 62456.27405025605,
+      "rpc_s_min": 61556.64419684592,
+      "rpc_s_max": 63707.40609311418,
+      "p50_us_median": 55.2,
+      "p95_us_median": 75.11,
+      "p99_us_median": 99.39,
+      "rpc_s_change_pct": 8.133625358218598,
+      "p99_change_pct": -22.303001876172612
+    },
+    {
+      "workload": "version",
+      "connections": 4,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 58278.760470675355,
+      "rpc_s_min": 58068.062416784254,
+      "rpc_s_max": 63036.4560791431,
+      "p50_us_median": 65.939,
+      "p95_us_median": 75.16,
+      "p99_us_median": 109.799,
+      "rpc_s_change_pct": 0.9008902133112784,
+      "p99_change_pct": -14.165884928080041
+    },
+    {
+      "workload": "version",
+      "connections": 8,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 59450.891094960054,
+      "rpc_s_min": 56235.36779629972,
+      "rpc_s_max": 61827.523129562025,
+      "p50_us_median": 121.23,
+      "p95_us_median": 157.089,
+      "p99_us_median": 202.01,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 8,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 56631.384355255235,
+      "rpc_s_min": 56154.30495006802,
+      "rpc_s_max": 56718.88966548014,
+      "p50_us_median": 143.77,
+      "p95_us_median": 169.94,
+      "p99_us_median": 218.799,
+      "rpc_s_change_pct": -4.742581124984757,
+      "p99_change_pct": 8.310974704222573
+    },
+    {
+      "workload": "version",
+      "connections": 8,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 58116.706641352204,
+      "rpc_s_min": 55026.26742706101,
+      "rpc_s_max": 58481.91514788519,
+      "p50_us_median": 142.129,
+      "p95_us_median": 164.18,
+      "p99_us_median": 201.579,
+      "rpc_s_change_pct": -2.244179067857499,
+      "p99_change_pct": -0.21335577446660592
+    },
+    {
+      "workload": "version",
+      "connections": 8,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 57390.1290399031,
+      "rpc_s_min": 56703.70528502303,
+      "rpc_s_max": 59360.971214252815,
+      "p50_us_median": 121.0,
+      "p95_us_median": 163.909,
+      "p99_us_median": 204.979,
+      "rpc_s_change_pct": -3.4663266052065267,
+      "p99_change_pct": 1.4697292213256885
+    },
+    {
+      "workload": "version",
+      "connections": 16,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 54394.061985627995,
+      "rpc_s_min": 54042.516823865124,
+      "rpc_s_max": 54771.19522156814,
+      "p50_us_median": 260.739,
+      "p95_us_median": 353.389,
+      "p99_us_median": 424.748,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 16,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 52777.833824905196,
+      "rpc_s_min": 52516.320494294196,
+      "rpc_s_max": 53813.911944532665,
+      "p50_us_median": 272.018,
+      "p95_us_median": 355.689,
+      "p99_us_median": 427.118,
+      "rpc_s_change_pct": -2.97133198316728,
+      "p99_change_pct": 0.5579779069000868
+    },
+    {
+      "workload": "version",
+      "connections": 16,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 53749.3689864393,
+      "rpc_s_min": 51702.11147659356,
+      "rpc_s_max": 54163.091324899586,
+      "p50_us_median": 268.809,
+      "p95_us_median": 347.689,
+      "p99_us_median": 435.498,
+      "rpc_s_change_pct": -1.1852267980262843,
+      "p99_change_pct": 2.5309124469097055
+    },
+    {
+      "workload": "version",
+      "connections": 16,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 54988.81752355835,
+      "rpc_s_min": 54691.70894573677,
+      "rpc_s_max": 55151.306102662,
+      "p50_us_median": 266.779,
+      "p95_us_median": 345.349,
+      "p99_us_median": 405.419,
+      "rpc_s_change_pct": 1.093419973098353,
+      "p99_change_pct": -4.5506982964016345
+    },
+    {
+      "workload": "version",
+      "connections": 32,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 45025.495461677696,
+      "rpc_s_min": 43933.06520561881,
+      "rpc_s_max": 46310.48998979725,
+      "p50_us_median": 666.467,
+      "p95_us_median": 844.697,
+      "p99_us_median": 1002.486,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 32,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 45129.937751220816,
+      "rpc_s_min": 44751.25358934478,
+      "rpc_s_max": 46618.610679903206,
+      "p50_us_median": 665.228,
+      "p95_us_median": 842.487,
+      "p99_us_median": 1032.067,
+      "rpc_s_change_pct": 0.23196255470860905,
+      "p99_change_pct": 2.9507643997023436
+    },
+    {
+      "workload": "version",
+      "connections": 32,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 44808.480810112094,
+      "rpc_s_min": 42239.775661239866,
+      "rpc_s_max": 46028.91869737825,
+      "p50_us_median": 668.937,
+      "p95_us_median": 863.627,
+      "p99_us_median": 1036.217,
+      "rpc_s_change_pct": -0.48198170689828235,
+      "p99_change_pct": 3.3647352681234644
+    },
+    {
+      "workload": "version",
+      "connections": 32,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 44604.7230915373,
+      "rpc_s_min": 44603.31610400899,
+      "rpc_s_max": 45086.42264231344,
+      "p50_us_median": 656.227,
+      "p95_us_median": 861.697,
+      "p99_us_median": 993.536,
+      "rpc_s_change_pct": -0.9345202441992551,
+      "p99_change_pct": -0.8927805475587691
+    },
+    {
+      "workload": "version",
+      "connections": 48,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 39615.10750679341,
+      "rpc_s_min": 39468.80831703906,
+      "rpc_s_max": 39772.26825555584,
+      "p50_us_median": 1176.416,
+      "p95_us_median": 1454.665,
+      "p99_us_median": 1597.615,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version",
+      "connections": 48,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 39815.16998603867,
+      "rpc_s_min": 39757.38039530224,
+      "rpc_s_max": 40130.40535742517,
+      "p50_us_median": 1171.406,
+      "p95_us_median": 1435.754,
+      "p99_us_median": 1626.694,
+      "rpc_s_change_pct": 0.5050156161029218,
+      "p99_change_pct": 1.8201506620806551
+    },
+    {
+      "workload": "version",
+      "connections": 48,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 39626.69698635229,
+      "rpc_s_min": 38957.9832182628,
+      "rpc_s_max": 40427.34713718633,
+      "p50_us_median": 1173.806,
+      "p95_us_median": 1451.745,
+      "p99_us_median": 1591.115,
+      "rpc_s_change_pct": 0.02925520158412187,
+      "p99_change_pct": -0.4068564704262312
+    },
+    {
+      "workload": "version",
+      "connections": 48,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 39071.81163688409,
+      "rpc_s_min": 37658.86643235953,
+      "rpc_s_max": 39246.13422575547,
+      "p50_us_median": 1185.096,
+      "p95_us_median": 1488.715,
+      "p99_us_median": 1639.435,
+      "rpc_s_change_pct": -1.3714360608920395,
+      "p99_change_pct": 2.6176519374192075
+    },
+    {
+      "workload": "version-worker",
+      "connections": 1,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 24646.699888178005,
+      "rpc_s_min": 24626.469244296437,
+      "rpc_s_max": 27531.69826058594,
+      "p50_us_median": 35.45,
+      "p95_us_median": 49.07,
+      "p99_us_median": 73.63,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version-worker",
+      "connections": 1,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 23398.463319960538,
+      "rpc_s_min": 22957.20605072244,
+      "rpc_s_max": 25733.631192108365,
+      "p50_us_median": 36.38,
+      "p95_us_median": 57.05,
+      "p99_us_median": 96.3,
+      "rpc_s_change_pct": -5.064518064814816,
+      "p99_change_pct": 30.789080537824255
+    },
+    {
+      "workload": "version-worker",
+      "connections": 1,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 23804.08433065656,
+      "rpc_s_min": 22876.232842508914,
+      "rpc_s_max": 26022.28225749714,
+      "p50_us_median": 35.86,
+      "p95_us_median": 54.119,
+      "p99_us_median": 86.109,
+      "rpc_s_change_pct": -3.41877639336865,
+      "p99_change_pct": 16.948254787450768
+    },
+    {
+      "workload": "version-worker",
+      "connections": 1,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 23728.01418263271,
+      "rpc_s_min": 22251.099781930694,
+      "rpc_s_max": 25536.933998692588,
+      "p50_us_median": 37.299,
+      "p95_us_median": 49.369,
+      "p99_us_median": 70.659,
+      "rpc_s_change_pct": -3.727418720207454,
+      "p99_change_pct": -4.03504006519081
+    },
+    {
+      "workload": "version-worker",
+      "connections": 8,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 47672.16833787597,
+      "rpc_s_min": 43619.523328030045,
+      "rpc_s_max": 50184.10465357052,
+      "p50_us_median": 158.37,
+      "p95_us_median": 209.73,
+      "p99_us_median": 256.069,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version-worker",
+      "connections": 8,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 49492.60217247843,
+      "rpc_s_min": 49371.71643731206,
+      "rpc_s_max": 51117.124806084415,
+      "p50_us_median": 153.349,
+      "p95_us_median": 198.209,
+      "p99_us_median": 232.97,
+      "rpc_s_change_pct": 3.818651213219737,
+      "p99_change_pct": -9.02061553721849
+    },
+    {
+      "workload": "version-worker",
+      "connections": 8,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 50423.503137046144,
+      "rpc_s_min": 50251.22336980178,
+      "rpc_s_max": 52612.481447326434,
+      "p50_us_median": 152.18,
+      "p95_us_median": 192.989,
+      "p99_us_median": 222.489,
+      "rpc_s_change_pct": 5.771364918142852,
+      "p99_change_pct": -13.11365296072543
+    },
+    {
+      "workload": "version-worker",
+      "connections": 8,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 50315.66758406776,
+      "rpc_s_min": 48260.88622781294,
+      "rpc_s_max": 51520.37847611922,
+      "p50_us_median": 141.569,
+      "p95_us_median": 192.959,
+      "p99_us_median": 271.22,
+      "rpc_s_change_pct": 5.5451625935200255,
+      "p99_change_pct": 5.916764622035475
+    },
+    {
+      "workload": "version-worker",
+      "connections": 32,
+      "variant": "baseline",
+      "batches": 3,
+      "rpc_s_median": 42347.69285252252,
+      "rpc_s_min": 38462.481186814526,
+      "rpc_s_max": 45283.7843518505,
+      "p50_us_median": 709.767,
+      "p95_us_median": 942.067,
+      "p99_us_median": 1150.775,
+      "rpc_s_change_pct": 0.0,
+      "p99_change_pct": 0.0
+    },
+    {
+      "workload": "version-worker",
+      "connections": 32,
+      "variant": "both",
+      "batches": 3,
+      "rpc_s_median": 42862.381129972724,
+      "rpc_s_min": 40635.36927003756,
+      "rpc_s_max": 44232.06865553077,
+      "p50_us_median": 695.038,
+      "p95_us_median": 899.587,
+      "p99_us_median": 1027.226,
+      "rpc_s_change_pct": 1.2153868198738094,
+      "p99_change_pct": -10.73615606873628
+    },
+    {
+      "workload": "version-worker",
+      "connections": 32,
+      "variant": "ff",
+      "batches": 3,
+      "rpc_s_median": 39282.3749097291,
+      "rpc_s_min": 36667.89504522489,
+      "rpc_s_max": 43459.811801544056,
+      "p50_us_median": 778.138,
+      "p95_us_median": 1000.357,
+      "p99_us_median": 1136.426,
+      "rpc_s_change_pct": -7.238453233966046,
+      "p99_change_pct": -1.2468988290500027
+    },
+    {
+      "workload": "version-worker",
+      "connections": 32,
+      "variant": "portal",
+      "batches": 3,
+      "rpc_s_median": 43127.71381139158,
+      "rpc_s_min": 39152.66849358064,
+      "rpc_s_max": 43189.348663563476,
+      "p50_us_median": 690.617,
+      "p95_us_median": 930.357,
+      "p99_us_median": 1099.106,
+      "rpc_s_change_pct": 1.8419444043516364,
+      "p99_change_pct": -4.489930698876854
+    }
+  ],
+  "migration": [
+    {
+      "variant": "baseline",
+      "mib": 1,
+      "samples": 6,
+      "cut_ms_median": 4.055065,
+      "cut_ms_min": 3.8287500000000003,
+      "cut_ms_max": 4.33418,
+      "package_mib_s_median": 246.8895,
+      "copy_ms_median": 2.01099,
+      "first_paste_ms_median": 3.7029449999999997,
+      "second_paste_ms_median": 2.50928
+    },
+    {
+      "variant": "baseline",
+      "mib": 8,
+      "samples": 6,
+      "cut_ms_median": 19.058550000000004,
+      "cut_ms_min": 17.7426,
+      "cut_ms_max": 20.066,
+      "package_mib_s_median": 419.7975,
+      "copy_ms_median": 6.962345,
+      "first_paste_ms_median": 14.77135,
+      "second_paste_ms_median": 13.5317
+    },
+    {
+      "variant": "baseline",
+      "mib": 32,
+      "samples": 6,
+      "cut_ms_median": 71.0329,
+      "cut_ms_min": 69.53059999999999,
+      "cut_ms_max": 72.1066,
+      "package_mib_s_median": 450.5155,
+      "copy_ms_median": 23.85545,
+      "first_paste_ms_median": 53.98965,
+      "second_paste_ms_median": 49.39495
+    },
+    {
+      "variant": "baseline",
+      "mib": 64,
+      "samples": 6,
+      "cut_ms_median": 136.142,
+      "cut_ms_min": 131.737,
+      "cut_ms_max": 141.603,
+      "package_mib_s_median": 470.20950000000005,
+      "copy_ms_median": 45.9365,
+      "first_paste_ms_median": 99.1523,
+      "second_paste_ms_median": 102.8935
+    },
+    {
+      "variant": "both",
+      "mib": 1,
+      "samples": 6,
+      "cut_ms_median": 4.4645600000000005,
+      "cut_ms_min": 3.9874000000000005,
+      "cut_ms_max": 4.87146,
+      "package_mib_s_median": 224.3665,
+      "copy_ms_median": 2.040985,
+      "first_paste_ms_median": 3.461825,
+      "second_paste_ms_median": 2.26407
+    },
+    {
+      "variant": "both",
+      "mib": 8,
+      "samples": 6,
+      "cut_ms_median": 19.11915,
+      "cut_ms_min": 16.8996,
+      "cut_ms_max": 21.4898,
+      "package_mib_s_median": 418.51149999999996,
+      "copy_ms_median": 7.042535,
+      "first_paste_ms_median": 13.30885,
+      "second_paste_ms_median": 13.19905
+    },
+    {
+      "variant": "both",
+      "mib": 32,
+      "samples": 6,
+      "cut_ms_median": 73.17609999999999,
+      "cut_ms_min": 66.84360000000001,
+      "cut_ms_max": 75.3527,
+      "package_mib_s_median": 437.31050000000005,
+      "copy_ms_median": 24.2787,
+      "first_paste_ms_median": 46.93385,
+      "second_paste_ms_median": 45.5278
+    },
+    {
+      "variant": "both",
+      "mib": 64,
+      "samples": 6,
+      "cut_ms_median": 137.07150000000001,
+      "cut_ms_min": 125.84699999999998,
+      "cut_ms_max": 146.51600000000002,
+      "package_mib_s_median": 467.4895,
+      "copy_ms_median": 45.68130000000001,
+      "first_paste_ms_median": 92.84174999999999,
+      "second_paste_ms_median": 90.8485
+    }
+  ],
+  "step_count": 162,
+  "all_steps_passed": true,
+  "method": {
+    "rpc_batches_per_point": 3,
+    "version_calls_per_batch": 50000,
+    "version_warmup": 1000,
+    "worker_calls_per_batch": 30000,
+    "worker_warmup": 128,
+    "summary_calls_per_batch": 512,
+    "summary_warmup": 8,
+    "dataset_mib": 64,
+    "history_limit": 65536,
+    "latency_aggregation": "Median of per-batch percentiles; not pooled percentiles.",
+    "migration": "Three alternating old/new blocks; two measured runs per size/block plus a discarded warmup. Six samples per size/variant.",
+    "source": "Identical Capstan source; only locked dependency revisions differ."
+  },
+  "confirmation": {
+    "affinity": "0-3 (four physical cores in one L3/CCX)",
+    "runs": [
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 837229592
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 128.29,
+          "p95_us": 141.809,
+          "p99_us": 174.7
+        },
+        "success_per_second": 59720.77489587826,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "baseline",
+        "cycle": 0,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 835014192
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 126.79,
+          "p95_us": 156.349,
+          "p99_us": 171.189
+        },
+        "success_per_second": 59879.2217893226,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "both",
+        "cycle": 0,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 840880422
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 141.839,
+          "p95_us": 152.84,
+          "p99_us": 182.419
+        },
+        "success_per_second": 59461.48666546074,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "both",
+        "cycle": 1,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 818364044
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 116.75,
+          "p95_us": 150.889,
+          "p99_us": 174.53
+        },
+        "success_per_second": 61097.50344798873,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "baseline",
+        "cycle": 1,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 801198331
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 118.14,
+          "p95_us": 148.47,
+          "p99_us": 164.889
+        },
+        "success_per_second": 62406.52041498075,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "baseline",
+        "cycle": 2,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 808739147
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 116.05,
+          "p95_us": 151.22,
+          "p99_us": 190.249
+        },
+        "success_per_second": 61824.631817903086,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "both",
+        "cycle": 2,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 788407872
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 116.87,
+          "p95_us": 148.829,
+          "p99_us": 170.789
+        },
+        "success_per_second": 63418.95074330257,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "both",
+        "cycle": 3,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 50000,
+          "ok": 50000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 821703143
+        },
+        "latency": {
+          "n": 50000,
+          "p50_us": 115.489,
+          "p95_us": 152.18,
+          "p99_us": 175.54
+        },
+        "success_per_second": 60849.22569171675,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          51002,
+          51002,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 50000
+        },
+        "variant": "baseline",
+        "cycle": 3,
+        "inline_version": 1,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1085580181
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 32.819,
+          "p95_us": 39.32,
+          "p99_us": 47.45
+        },
+        "success_per_second": 27634.992352536327,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 0,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1079326164
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 33.04,
+          "p95_us": 38.58,
+          "p99_us": 46.88
+        },
+        "success_per_second": 27795.119770672027,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 0,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1099235152
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 33.47,
+          "p95_us": 41.0,
+          "p99_us": 50.75
+        },
+        "success_per_second": 27291.703640860276,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 1,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1046646448
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 31.55,
+          "p95_us": 38.07,
+          "p99_us": 45.77
+        },
+        "success_per_second": 28662.974070495293,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 1,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1057443048
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 31.96,
+          "p95_us": 37.83,
+          "p99_us": 45.06
+        },
+        "success_per_second": 28370.322218998597,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 2,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1080886247
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 33.22,
+          "p95_us": 38.42,
+          "p99_us": 45.14
+        },
+        "success_per_second": 27755.002048795614,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 2,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1109790763
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 33.96,
+          "p95_us": 40.86,
+          "p99_us": 50.83
+        },
+        "success_per_second": 27032.12263084947,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 3,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c1",
+        "workload": "version-worker",
+        "concurrency": 1,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 1,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 1055759091
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 31.63,
+          "p95_us": 37.93,
+          "p99_us": 44.81
+        },
+        "success_per_second": 28415.573453963276,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 3,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 570219870
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 146.55,
+          "p95_us": 177.89,
+          "p99_us": 199.77
+        },
+        "success_per_second": 52611.28483649649,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 0,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 517212292
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 127.23,
+          "p95_us": 175.34,
+          "p99_us": 183.99
+        },
+        "success_per_second": 58003.26184049779,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 0,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 509790361
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 126.1,
+          "p95_us": 175.639,
+          "p99_us": 187.429
+        },
+        "success_per_second": 58847.71917058667,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 1,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 517236815
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 128.55,
+          "p95_us": 170.949,
+          "p99_us": 180.949
+        },
+        "success_per_second": 58000.511815849764,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 1,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 505691155
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 128.42,
+          "p95_us": 147.08,
+          "p99_us": 179.499
+        },
+        "success_per_second": 59324.74733515954,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 2,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 567573296
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 130.45,
+          "p95_us": 184.039,
+          "p99_us": 356.129
+        },
+        "success_per_second": 52856.60937790139,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 2,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 539827566
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 132.639,
+          "p95_us": 182.91,
+          "p99_us": 201.389
+        },
+        "success_per_second": 55573.30134563747,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "both",
+        "cycle": 3,
+        "inline_version": 0,
+        "affinity": "0-3"
+      },
+      {
+        "name": "version-r0-c8",
+        "workload": "version-worker",
+        "concurrency": 8,
+        "repeat": 0,
+        "counters": {
+          "concurrency": 8,
+          "attempts": 30000,
+          "ok": 30000,
+          "errors": 0,
+          "warm_errors": 0,
+          "wall_ns": 533879952
+        },
+        "latency": {
+          "n": 30000,
+          "p50_us": 132.86,
+          "p95_us": 173.73,
+          "p99_us": 204.619
+        },
+        "success_per_second": 56192.40783928144,
+        "host_before": [
+          1,
+          1,
+          0,
+          4,
+          0,
+          1,
+          0
+        ],
+        "host_after": [
+          30130,
+          30130,
+          0,
+          5,
+          0,
+          1,
+          0
+        ],
+        "status_counts": {
+          "ok": 30000
+        },
+        "variant": "baseline",
+        "cycle": 3,
+        "inline_version": 0,
+        "affinity": "0-3"
+      }
+    ],
+    "summary": [
+      {
+        "workload": "version",
+        "connections": 8,
+        "variant": "baseline",
+        "batches": 4,
+        "rpc_s_median": 60973.36456985274,
+        "rpc_s_min": 59720.77489587826,
+        "rpc_s_max": 62406.52041498075,
+        "p99_us_median": 174.615,
+        "rpc_s_change_pct": 0.0
+      },
+      {
+        "workload": "version",
+        "connections": 8,
+        "variant": "both",
+        "batches": 4,
+        "rpc_s_median": 60851.92680361284,
+        "rpc_s_min": 59461.48666546074,
+        "rpc_s_max": 63418.95074330257,
+        "p99_us_median": 176.804,
+        "rpc_s_change_pct": -0.19916527010868101
+      },
+      {
+        "workload": "version-worker",
+        "connections": 1,
+        "variant": "baseline",
+        "batches": 4,
+        "rpc_s_median": 28392.947836480937,
+        "rpc_s_min": 27634.992352536327,
+        "rpc_s_max": 28662.974070495293,
+        "p99_us_median": 45.415000000000006,
+        "rpc_s_change_pct": 0.0
+      },
+      {
+        "workload": "version-worker",
+        "connections": 1,
+        "variant": "both",
+        "batches": 4,
+        "rpc_s_median": 27523.352844827947,
+        "rpc_s_min": 27032.12263084947,
+        "rpc_s_max": 27795.119770672027,
+        "p99_us_median": 48.815,
+        "rpc_s_change_pct": -3.062714715855186
+      },
+      {
+        "workload": "version-worker",
+        "connections": 8,
+        "variant": "baseline",
+        "batches": 4,
+        "rpc_s_median": 57096.4598275656,
+        "rpc_s_min": 52611.28483649649,
+        "rpc_s_max": 59324.74733515954,
+        "p99_us_median": 190.35950000000003,
+        "rpc_s_change_pct": 0.0
+      },
+      {
+        "workload": "version-worker",
+        "connections": 8,
+        "variant": "both",
+        "batches": 4,
+        "rpc_s_median": 56788.28159306763,
+        "rpc_s_min": 52856.60937790139,
+        "rpc_s_max": 58847.71917058667,
+        "p99_us_median": 194.409,
+        "rpc_s_change_pct": -0.539750162144359
+      }
+    ]
+  },
+  "interpretation": {
+    "overall": "No broad end-to-end speedup from dependency replacement alone. Primary scalar results vary by concurrency; four-core affinity confirmation is close to flat, with a small single-connection worker decrease. Some large Paste medians improve; Cut is essentially unchanged.",
+    "decision": "Keep the repository dependency lock unchanged; candidate revisions are recorded for follow-up profiling.",
+    "not_exercised": [
+      "Portal direct typed RPC imports",
+      "Portal runtime registration",
+      "Explicit FF identity/controller pooling policies",
+      "GPU workloads",
+      "Durable SQLite throughput"
+    ]
+  }
+}

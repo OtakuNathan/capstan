@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "schema_version": 1,
+    "verified_at": "2026-11-18",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "portal",
+        "repository": "https://github.com/OtakuNathan/portal.git",
+        "commit": "7a6f53bbc30d3b4159e36de138486bffe90f3e62"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "2be3825e7958c08634c71da41392f219efd5c1bf"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "portal": {
+    "schema_version": 1,
+    "verified_at": "2026-11-18",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "portal",
+        "repository": "https://github.com/OtakuNathan/portal.git",
+        "commit": "7c0ac2fded1a8937996f55fde7234143dd90be9e"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "2be3825e7958c08634c71da41392f219efd5c1bf"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "ff": {
+    "schema_version": 1,
+    "verified_at": "2026-11-18",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "portal",
+        "repository": "https://github.com/OtakuNathan/portal.git",
+        "commit": "7a6f53bbc30d3b4159e36de138486bffe90f3e62"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "030bd9e7c8e833392267832517ff352b2d49444d"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  },
+  "both": {
+    "schema_version": 1,
+    "verified_at": "2026-11-18",
+    "note": "Exact upstream revisions tested together; no floating branches or local working-tree changes.",
+    "dependencies": [
+      {
+        "name": "portal",
+        "repository": "https://github.com/OtakuNathan/portal.git",
+        "commit": "7c0ac2fded1a8937996f55fde7234143dd90be9e"
+      },
+      {
+        "name": "flux_foundry",
+        "repository": "https://github.com/OtakuNathan/flux_foundry.git",
+        "commit": "030bd9e7c8e833392267832517ff352b2d49444d"
+      },
+      {
+        "name": "lease",
+        "repository": "https://github.com/OtakuNathan/lease.git",
+        "commit": "5105f106d4f30df59207954434bbe5e1d8975780"
+      }
+    ]
+  }
+}

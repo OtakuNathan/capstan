@@ -1,0 +1,117 @@
+Test project /home/nathan/capstan-upstream-20261118/builds/baseline
+      Start  1: probe_lease
+ 1/56 Test  #1: probe_lease ........................   Passed    0.00 sec
+      Start  2: probe_object
+ 2/56 Test  #2: probe_object .......................   Passed    0.13 sec
+      Start  3: probe_readonly
+ 3/56 Test  #3: probe_readonly .....................   Passed    0.00 sec
+      Start  4: probe_async
+ 4/56 Test  #4: probe_async ........................   Passed    0.00 sec
+      Start  5: negative_exclusive_copy
+ 5/56 Test  #5: negative_exclusive_copy ............   Passed    0.55 sec
+      Start  6: negative_readonly_write
+ 6/56 Test  #6: negative_readonly_write ............   Passed    0.64 sec
+      Start  7: negative_wrong_receiver
+ 7/56 Test  #7: negative_wrong_receiver ............   Passed    0.30 sec
+      Start  8: negative_const_generated
+ 8/56 Test  #8: negative_const_generated ...........   Passed    0.29 sec
+      Start  9: negative_async_return
+ 9/56 Test  #9: negative_async_return ..............   Passed    0.34 sec
+      Start 10: authority_model
+10/56 Test #10: authority_model ....................   Passed    0.08 sec
+      Start 11: authority_test
+11/56 Test #11: authority_test .....................   Passed    0.01 sec
+      Start 12: random_test
+12/56 Test #12: random_test ........................   Passed    0.00 sec
+      Start 13: migration_test
+13/56 Test #13: migration_test .....................   Passed    0.00 sec
+      Start 14: migration_authority_test
+14/56 Test #14: migration_authority_test ...........   Passed    0.00 sec
+      Start 15: migration_wire_test
+15/56 Test #15: migration_wire_test ................   Passed    0.00 sec
+      Start 16: reply_codec_test
+16/56 Test #16: reply_codec_test ...................   Passed    0.02 sec
+      Start 17: grant_codec_test
+17/56 Test #17: grant_codec_test ...................   Passed    0.01 sec
+      Start 18: async_typed_test
+18/56 Test #18: async_typed_test ...................   Passed    0.00 sec
+      Start 19: direct_transfer_test
+19/56 Test #19: direct_transfer_test ...............   Passed    0.00 sec
+      Start 20: direct_transfer_integration_test
+20/56 Test #20: direct_transfer_integration_test ...   Passed    0.00 sec
+      Start 21: sealed_registry_test
+21/56 Test #21: sealed_registry_test ...............   Passed    0.04 sec
+      Start 22: authority_replies_test
+22/56 Test #22: authority_replies_test .............   Passed    0.00 sec
+      Start 23: checked_errors_test
+23/56 Test #23: checked_errors_test ................   Passed    0.07 sec
+      Start 24: dataset_probe_test
+24/56 Test #24: dataset_probe_test .................   Passed    0.07 sec
+      Start 25: noexception_policy_matrix
+25/56 Test #25: noexception_policy_matrix ..........   Passed    3.84 sec
+      Start 26: authority_faults_test
+26/56 Test #26: authority_faults_test ..............   Passed    0.00 sec
+      Start 27: benchmark_policy_test
+27/56 Test #27: benchmark_policy_test ..............   Passed    0.00 sec
+      Start 28: negative_production_benchmark
+28/56 Test #28: negative_production_benchmark ......   Passed    0.29 sec
+      Start 29: wire_test
+29/56 Test #29: wire_test ..........................   Passed    3.85 sec
+      Start 30: loopback_test
+30/56 Test #30: loopback_test ......................   Passed    0.31 sec
+      Start 31: callback_test
+31/56 Test #31: callback_test ......................   Passed    0.58 sec
+      Start 32: p2_compile_negative
+32/56 Test #32: p2_compile_negative ................   Passed    2.22 sec
+      Start 33: allocation_test
+33/56 Test #33: allocation_test ....................   Passed    0.07 sec
+      Start 34: transport_test
+34/56 Test #34: transport_test .....................   Passed    6.08 sec
+      Start 35: snapshot_digest_test
+35/56 Test #35: snapshot_digest_test ...............   Passed    0.00 sec
+      Start 36: table_observation_test
+36/56 Test #36: table_observation_test .............   Passed    0.00 sec
+      Start 37: tcp_ack_faults
+37/56 Test #37: tcp_ack_faults .....................   Passed    1.09 sec
+      Start 38: worker_test
+38/56 Test #38: worker_test ........................   Passed    0.00 sec
+      Start 39: host_execution_test
+39/56 Test #39: host_execution_test ................   Passed    0.00 sec
+      Start 40: clipboard_test
+40/56 Test #40: clipboard_test .....................   Passed    0.10 sec
+      Start 41: migration_peer_test
+41/56 Test #41: migration_peer_test ................   Passed    0.04 sec
+      Start 42: migration_host_test
+42/56 Test #42: migration_host_test ................   Passed    0.02 sec
+      Start 43: migration_capture_abort_test
+43/56 Test #43: migration_capture_abort_test .......   Passed    0.01 sec
+      Start 44: migration_process_demo
+44/56 Test #44: migration_process_demo .............   Passed    0.09 sec
+      Start 45: migration_profile_read
+45/56 Test #45: migration_profile_read .............   Passed    0.23 sec
+      Start 46: migration_profile_write
+46/56 Test #46: migration_profile_write ............   Passed    0.23 sec
+      Start 47: tcp_throughput_smoke
+47/56 Test #47: tcp_throughput_smoke ...............   Passed    0.16 sec
+      Start 48: tcp_direct_transfer
+48/56 Test #48: tcp_direct_transfer ................   Passed    2.25 sec
+      Start 49: direct_transfer_demo
+49/56 Test #49: direct_transfer_demo ...............   Passed    2.13 sec
+      Start 50: four_process_demo
+50/56 Test #50: four_process_demo ..................   Passed    1.31 sec
+      Start 51: tcp_fault_suite
+51/56 Test #51: tcp_fault_suite ....................   Passed    8.23 sec
+      Start 52: tcp_execution_modes
+52/56 Test #52: tcp_execution_modes ................   Passed    0.09 sec
+      Start 53: durable_store_test
+53/56 Test #53: durable_store_test .................   Passed    0.23 sec
+      Start 54: durable_host_test
+54/56 Test #54: durable_host_test ..................   Passed    0.02 sec
+      Start 55: durable_lifecycle_test
+55/56 Test #55: durable_lifecycle_test .............   Passed    0.14 sec
+      Start 56: durable_table_test
+56/56 Test #56: durable_table_test .................   Passed    0.02 sec
+
+100% tests passed out of 56
+
+Total Test time (real) =  36.22 sec
