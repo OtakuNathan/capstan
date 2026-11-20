@@ -226,10 +226,10 @@ template<class R> auto bind_async_operation(io_endpoint& endpoint,invocation<R>&
     context->async_endpoint=&endpoint;context->async_request_id=pending.request_id;
     context->async_authority=std::move(pending.authority);
 #ifdef CAPSTAN_ERASED_INVOCATIONS
-    return portal::bind_async<portal::dataset>(context,
+    return portal::bind_erased_async<portal::dataset>(context,
         dataset_delegate::object_t(pending.call.header.capability));
 #else
-    return portal::bind_static_async<portal::dataset>(context,
+    return portal::bind_async<portal::dataset>(context,
         dataset_delegate::object_t(pending.call.header.capability));
 #endif
 }
